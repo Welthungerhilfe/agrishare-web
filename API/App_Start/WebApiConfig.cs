@@ -12,8 +12,10 @@ namespace API
     {
         public static void Register(HttpConfiguration config)
         {
-            var cors = new EnableCorsAttribute(Config.WebURL, "*", "*");
-            cors.SupportsCredentials = true;
+            var cors = new EnableCorsAttribute(Config.WebURL, "*", "*")
+            {
+                SupportsCredentials = true
+            };
             config.EnableCors(cors);
 
             config.MapHttpAttributeRoutes();

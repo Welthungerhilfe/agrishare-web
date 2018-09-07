@@ -14,8 +14,38 @@ namespace Agrishare.Core.Entities
     {
         #region Common Settings
 
-        public static string ApplicationName => Find(Key: "Application Name").Value;
-        public static string WebURL => Find(Key: "Web URL").Value;
+        private static string _applicationName { get; set; }
+        public static string ApplicationName
+        {
+            get
+            {
+                if (_applicationName.IsEmpty())
+                    _applicationName = Find(Key: "Application Name").Value;
+                return _applicationName;
+            }
+        }
+
+        private static string _applicationEmailAddress { get; set; }
+        public static string ApplicationEmailAddress
+        {
+            get
+            {
+                if (_applicationEmailAddress.IsEmpty())
+                    _applicationEmailAddress = Find(Key: "Application Email Address").Value;
+                return _applicationEmailAddress;
+            }
+        }
+
+        private static string _webURL { get; set; }
+        public static string WebURL
+        {
+            get
+            {
+                if (_webURL.IsEmpty())
+                    _webURL = Find(Key: "Web URL").Value;
+                return _webURL;
+            }
+        }
 
         #endregion
 
@@ -32,7 +62,7 @@ namespace Agrishare.Core.Entities
 
         public static Config Find(int Id = 0, string Key = "", bool IgnoreCache = false)
         {
-            if (Id == 0 || Key.IsEmpty())
+            if (Id == 0 && Key.IsEmpty())
                 return new Config
                 {
                     DateCreated = DateTime.UtcNow,
@@ -58,7 +88,7 @@ namespace Agrishare.Core.Entities
 
                 var item = query.FirstOrDefault();
 
-                if (item != null)
+                if (item != null && !IgnoreCache)
                     Cache.Instance.Add(CacheKey(item.Key), item);
 
                 return item;

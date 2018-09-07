@@ -20,15 +20,22 @@ namespace Agrishare.API
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             var allowedRoles = Roles.Split(',').Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true));
+            if (allowedRoles.Count() == 0)
+                return true;
 
-            var authorizationHeader = actionContext.Request.Headers.Where(e => e.Key == "Authorization").FirstOrDefault();
-            var encryptedToken = authorizationHeader.Value.FirstOrDefault() ?? string.Empty;
-            var token = Encryption.DecryptWithRC4(encryptedToken, Config.EncryptionSalt);
+            if (actionContext.Request.Headers.TryGetValues("Authorization", out var authorizationValues))
+            {
+                var token = authorizationValues.First();
+                var user = User.Find(AuthToken: token);
+                if (user?.Roles.Intersect(allowedRoles).Count() > 0)
+                {
+                    actionContext.Request.Properties["CurrentUser"] = user;
+                    return true;
+                }
+            }
 
-            var user = User.Find(AuthToken: token);
-            var allowed = user.Roles.Intersect(allowedRoles).Count() > 0;
-
-            return allowed;
+            return false;
+            
         }
     }
 }

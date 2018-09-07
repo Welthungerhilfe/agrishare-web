@@ -14,16 +14,6 @@ namespace Agrishare.Core.Entities
     
     public partial class User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.Bookings = new HashSet<Booking>();
-            this.Listings = new HashSet<Listing>();
-            this.Notifications = new HashSet<Notification>();
-            this.Transactions = new HashSet<Transaction>();
-            this.Ratings = new HashSet<Rating>();
-        }
-    
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -37,28 +27,13 @@ namespace Agrishare.Core.Entities
         public string Password { get; set; }
         public string Salt { get; set; }
         public string AuthToken { get; set; }
-        public string PasswordResetToken { get; set; }
         public int FailedLoginAttempts { get; set; }
         public string VerificationCode { get; set; }
         public Nullable<System.DateTime> VerificationCodeExpiry { get; set; }
-        public string FacebookId { get; set; }
-        public string GoogleId { get; set; }
-        public string AvatarUrl { get; set; }
         public string SignalRConnectionId { get; set; }
         public UserStatus StatusId { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Booking> Bookings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Listing> Listings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Notification> Notifications { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transaction> Transactions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }

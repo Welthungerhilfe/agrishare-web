@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Agrishare.Core.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,12 +18,24 @@ namespace Agrishare.Core.Entities
         public string ClearPassword { get; set; }
         public string Interest => $"{InterestId}".ExplodeCamelCase();
         public string Gender => $"{GenderId}".ExplodeCamelCase();
-        public string Status => $"{Status}".ExplodeCamelCase();
-        public List<Role> Roles => RoleList.Split(',').Where(e => !e.Trim().IsEmpty()).Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true)).ToList();
+        public string Status => $"{StatusId}".ExplodeCamelCase();
+        public List<Role> Roles => RoleList?.Split(',').Where(e => !e.Trim().IsEmpty()).Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true)).ToList();
 
-        public static User Find(int Id = 0, string EmailAddress = "", string AuthToken = "", string PasswordResetToken = "")
+        private static string CacheKey(string AuthToken)
         {
-            if (Id == 0 && EmailAddress.IsEmpty() && AuthToken.IsEmpty() && PasswordResetToken.IsEmpty())
+            return $"User:{AuthToken}";
+        }
+
+        public static User Find(int Id = 0, string EmailAddress = "", string Telephone = "", string AuthToken = "")
+        {
+            if (!AuthToken.IsEmpty())
+            {
+                var item = Cache.Instance.Get<User>(CacheKey(AuthToken));
+                if (item != null)
+                    return item;
+            }
+
+            if (Id == 0 && EmailAddress.IsEmpty() && Telephone.IsEmpty() && AuthToken.IsEmpty())
                 return new User {
                     DateCreated = DateTime.UtcNow,
                     LastModified = DateTime.UtcNow,
@@ -38,11 +51,11 @@ namespace Agrishare.Core.Entities
                 if (!EmailAddress.IsEmpty())
                     query = query.Where(e => e.EmailAddress.Equals(EmailAddress, StringComparison.InvariantCultureIgnoreCase));
 
+                if (!Telephone.IsEmpty())
+                    query = query.Where(e => e.Telephone.Equals(Telephone, StringComparison.InvariantCultureIgnoreCase));
+
                 if (!AuthToken.IsEmpty())
                     query = query.Where(e => e.AuthToken.Equals(AuthToken));
-
-                if (!PasswordResetToken.IsEmpty())
-                    query = query.Where(e => e.PasswordResetToken.Equals(PasswordResetToken));
 
                 return query.FirstOrDefault();
             }
@@ -89,6 +102,9 @@ namespace Agrishare.Core.Entities
             else
                 success = Update();
 
+            if (!AuthToken.IsEmpty())
+                Cache.Instance.Add(CacheKey(AuthToken), this);
+
             return success;
         }
 
@@ -103,7 +119,7 @@ namespace Agrishare.Core.Entities
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Users.Attach(this);
-                ctx.Entry(this).State = EntityState.Modified;
+                ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
         }
@@ -129,50 +145,120 @@ namespace Agrishare.Core.Entities
             if (Id == 0)
                 return false;
 
+            if (!AuthToken.IsEmpty())
+                Cache.Instance.Remove(CacheKey(AuthToken));
+
             Deleted = true;
             return Update();
         }
 
-        public object Json(bool Admin = false)
+        public object Json()
         {
-            if (Admin)
-                return new
-                {
-                    Id,
-                    FirstName,
-                    LastName,
-                    EmailAddress,
-                    Telephone,
-                    DateOfBirth,
-                    GenderId,
-                    Gender,
-                    AuthToken,
-                    PasswordResetToken,
-                    FailedLoginAttempts,
-                    VerificationCode,
-                    VerificationCodeExpiry,
-                    NotificationPreferences,
-                    InterestId,
-                    Interest,
-                    FacebookId,
-                    GoogleId,
-                    AvatarUrl,
-                    StatusId,
-                    Status,
-                    Roles,
-                    DateCreated,
-                    LastModified
-                };
+            return new
+            {
+                Id,
+                FirstName,
+                LastName
+            };
+        }
 
+        public object ProfileJson()
+        {   
             return new
             {
                 Id,
                 FirstName,
                 LastName,
                 EmailAddress,
-                Telephone                    
+                Telephone,
+                DateOfBirth,
+                GenderId,
+                Gender,
+                AuthToken,
+                NotificationPreferences = new
+                {
+                    SMS = (NotificationPreferences & (int)Agrishare.Core.Entities.NotificationPreferences.SMS) > 0,
+                    PushNotifications = (NotificationPreferences & (int)Agrishare.Core.Entities.NotificationPreferences.PushNotifications) > 0,
+                    Email = (NotificationPreferences & (int)Agrishare.Core.Entities.NotificationPreferences.Email) > 0
+                },
+                InterestId,
+                Interest
             };
         }
 
+        public object AdminJson()
+        {
+            return new
+            {
+                Id,
+                FirstName,
+                LastName,
+                EmailAddress,
+                Telephone,
+                DateOfBirth,
+                GenderId,
+                Gender,
+                AuthToken,
+                FailedLoginAttempts,
+                VerificationCode,
+                VerificationCodeExpiry,
+                NotificationPreferences,
+                InterestId,
+                Interest,
+                StatusId,
+                Status,
+                Roles,
+                DateCreated,
+                LastModified
+            };
+        }
+
+        #region Authorisation
+
+        public bool UniqueTelephone()
+        {
+            using (var ctx = new AgrishareEntities())
+                return ctx.Users.Count(o => !o.Deleted && o.Id != Id && o.Telephone == Telephone) == 0;
+        }
+
+        public bool UniqueEmailAddress()
+        {
+            using (var ctx = new AgrishareEntities())
+                return ctx.Users.Count(o => !o.Deleted && o.Id != Id && o.EmailAddress == EmailAddress) == 0;
+        }
+
+        public bool ValidatePassword(string ClearPassword)
+        {
+            string encryptedPassowrd = Utils.Encryption.GetSHAHash(ClearPassword, Salt);
+            return encryptedPassowrd == Password;
+        }
+
+        public bool SendVerificationCode()
+        {
+            if (VerificationCode.IsEmpty() || VerificationCodeExpiry < DateTime.UtcNow)
+            {
+                VerificationCode = GeneratePIN(4);
+                VerificationCodeExpiry = DateTime.UtcNow.AddDays(1);
+                Save();
+            }
+            var message = $"Your verification code is {VerificationCode}";
+            return SMS.SendMessage(Telephone, message);
+        }
+
+        #endregion
+
+        #region Utils
+
+        private static Random random = new Random();
+
+        public static string GeneratePIN(int length)
+        {  
+            var randomString = "";
+            for (int i = 0; i < length; i++)
+                randomString = randomString + (char)random.Next(48, 58);
+            return randomString;
+        }
+
+        #endregion
     }
 }

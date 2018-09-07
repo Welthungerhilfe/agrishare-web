@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{516A3AE1-49E9-4CDC-A77A-58635A430188}"
 	ProjectSection(SolutionItems) = preProject
 		Database\agrishare-schema.sql = Database\agrishare-schema.sql
+		Database\agrishare.sql = Database\agrishare.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{44D26D89-4622-4DC7-A265-DBEED8DA64E3}"

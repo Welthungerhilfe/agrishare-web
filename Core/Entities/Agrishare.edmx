@@ -239,15 +239,11 @@
           <Property Name="Password" Type="varchar" MaxLength="1024" />
           <Property Name="Salt" Type="varchar" MaxLength="512" />
           <Property Name="AuthToken" Type="varchar" MaxLength="1024" />
-          <Property Name="PasswordResetToken" Type="varchar" MaxLength="2048" />
           <Property Name="FailedLoginAttempts" Type="int" Nullable="false" />
           <Property Name="VerificationCode" Type="varchar" MaxLength="8" />
           <Property Name="VerificationCodeExpiry" Type="datetime" Precision="0" />
           <Property Name="NotificationPreferences" Type="smallint" Nullable="false" />
           <Property Name="InterestId" Type="smallint" Nullable="false" />
-          <Property Name="FacebookId" Type="varchar" MaxLength="256" />
-          <Property Name="GoogleId" Type="varchar" MaxLength="256" />
-          <Property Name="AvatarUrl" Type="varchar" MaxLength="1024" />
           <Property Name="SignalRConnectionId" Type="varchar" MaxLength="256" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
           <Property Name="RoleList" Type="varchar" MaxLength="1024" />
@@ -634,7 +630,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="SubcategoryId" Type="Int32" />
           <Property Name="Title" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
           <Property Name="AverageRating" Type="Decimal" Nullable="false" />
@@ -655,7 +650,6 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Bookings" Relationship="Self.bookings_ibfk_2" FromRole="Listings" ToRole="Bookings" />
           <NavigationProperty Name="Category" Relationship="Self.listings_ibfk_2" FromRole="Listings" ToRole="Categories" />
-          <NavigationProperty Name="Subcategory" Relationship="Self.listings_ibfk_3" FromRole="Listings" ToRole="Categories" />
           <NavigationProperty Name="User" Relationship="Self.listings_ibfk_1" FromRole="Listings" ToRole="Users" />
           <NavigationProperty Name="Ratings" Relationship="AgrishareModel.ratings_ibfk_1" FromRole="Listing" ToRole="Rating" />
           <NavigationProperty Name="Services" Relationship="AgrishareModel.services_ibfk_1" FromRole="Listing" ToRole="Service" />
@@ -756,23 +750,14 @@
           <Property Name="Password" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="Salt" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
           <Property Name="AuthToken" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
-          <Property Name="PasswordResetToken" Type="String" MaxLength="2048" FixedLength="false" Unicode="false" />
           <Property Name="FailedLoginAttempts" Type="Int32" Nullable="false" />
           <Property Name="VerificationCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="VerificationCodeExpiry" Type="DateTime" />
-          <Property Name="FacebookId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="GoogleId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="AvatarUrl" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="SignalRConnectionId" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="StatusId" Type="AgrishareModel.UserStatus" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Bookings" Relationship="Self.bookings_ibfk_1" FromRole="Users" ToRole="Bookings" />
-          <NavigationProperty Name="Listings" Relationship="Self.listings_ibfk_1" FromRole="Users" ToRole="Listings" />
-          <NavigationProperty Name="Notifications" Relationship="Self.notifications_ibfk_1" FromRole="Users" ToRole="Notifications" />
-          <NavigationProperty Name="Transactions" Relationship="Self.transactions_ibfk_1" FromRole="Users" ToRole="Transactions" />
-          <NavigationProperty Name="Ratings" Relationship="AgrishareModel.ratings_ibfk_2" FromRole="User" ToRole="Rating" />
         </EntityType>
         <Association Name="bookings_ibfk_1">
           <End Role="Users" Type="Self.User" Multiplicity="1">
@@ -872,20 +857,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="listings_ibfk_3">
-          <End Role="Categories" Type="Self.Category" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Listings" Type="Self.Listing" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Listings">
-              <PropertyRef Name="SubcategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="listings_ibfk_1">
           <End Role="Users" Type="Self.User" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -980,10 +951,6 @@
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
           <AssociationSet Name="listings_ibfk_2" Association="Self.listings_ibfk_2">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Listings" EntitySet="Listings" />
-          </AssociationSet>
-          <AssociationSet Name="listings_ibfk_3" Association="Self.listings_ibfk_3">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Listings" EntitySet="Listings" />
           </AssociationSet>
@@ -1362,13 +1329,9 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />
                 <ScalarProperty Name="AuthToken" ColumnName="AuthToken" />
-                <ScalarProperty Name="PasswordResetToken" ColumnName="PasswordResetToken" />
                 <ScalarProperty Name="FailedLoginAttempts" ColumnName="FailedLoginAttempts" />
                 <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
                 <ScalarProperty Name="VerificationCodeExpiry" ColumnName="VerificationCodeExpiry" />
-                <ScalarProperty Name="FacebookId" ColumnName="FacebookId" />
-                <ScalarProperty Name="GoogleId" ColumnName="GoogleId" />
-                <ScalarProperty Name="AvatarUrl" ColumnName="AvatarUrl" />
                 <ScalarProperty Name="SignalRConnectionId" ColumnName="SignalRConnectionId" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

@@ -24,7 +24,6 @@
         <AssociationConnector Association="AgrishareModel.transactions_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="AgrishareModel.transactions_ibfk_3" ManuallyRouted="false" />
         <AssociationConnector Association="AgrishareModel.listings_ibfk_2" ManuallyRouted="false" />
-        <AssociationConnector Association="AgrishareModel.listings_ibfk_3" ManuallyRouted="false" />
         <AssociationConnector Association="AgrishareModel.listings_ibfk_1" ManuallyRouted="false" >
         </AssociationConnector>
         <AssociationConnector Association="AgrishareModel.notifications_ibfk_1" ManuallyRouted="false" />

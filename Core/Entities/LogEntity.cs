@@ -77,7 +77,7 @@ namespace Agrishare.Core.Entities
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Logs.Attach(this);
-                ctx.Entry(this).State = EntityState.Modified;
+                ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
         }
@@ -114,6 +114,16 @@ namespace Agrishare.Core.Entities
                 DateCreated,
                 LastModified
             };
+        }
+
+        public static void Error(string Title, string Description)
+        {
+            new Log
+            {
+                Description = Description,
+                LevelId = LogLevel.Error,
+                Title = Title
+            }.Save();
         }
 
         public static void Error(string Title, Exception Exception)

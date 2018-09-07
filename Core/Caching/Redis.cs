@@ -20,12 +20,16 @@ namespace Agrishare.Core.Caching
                 return connectionString;
             }
         }
-        private static Lazy<ConnectionMultiplexer> connection;
-        private static ConnectionMultiplexer RedisConnection() => connection.Value;
 
-        static Redis()
+        private static ConnectionMultiplexer connection;
+        private static ConnectionMultiplexer Connection
         {
-            connection = new Lazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.Connect(ConnectionString));
+            get
+            {
+                if (connection == null)
+                    connection = ConnectionMultiplexer.Connect(ConnectionString);
+                return connection;
+            }
         }
 
         public static bool Add(string Key, string Value)
@@ -35,8 +39,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                return db.StringSet(Key, Value);
+                return Connection.GetDatabase().StringSet(Key, Value);
             }
             catch (Exception ex)
             {
@@ -52,8 +55,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                return db.StringGet(Key);
+                return Connection.GetDatabase().StringGet(Key);
             }
             catch (Exception ex)
             {
@@ -69,8 +71,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                return db.KeyDelete(Key);
+                return Connection.GetDatabase().KeyDelete(Key);
             }
             catch (Exception ex)
             {
@@ -86,8 +87,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                db.HashSet(Key, Entries);
+                Connection.GetDatabase().HashSet(Key, Entries);
             }
             catch (Exception ex)
             {
@@ -103,8 +103,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                return db.HashGetAll(Key);
+                return Connection.GetDatabase().HashGetAll(Key);
             }
             catch (Exception ex)
             {
@@ -120,8 +119,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                return db.KeyDelete(Key);
+                return Connection.GetDatabase().KeyDelete(Key);
             }
             catch (Exception ex)
             {
@@ -137,8 +135,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                return db.HashSet(Key, Field, Value);
+                return Connection.GetDatabase().HashSet(Key, Field, Value);
             }
             catch (Exception ex)
             {
@@ -154,8 +151,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                return db.HashGet(Key, Field);
+                return Connection.GetDatabase().HashGet(Key, Field);
             }
             catch (Exception ex)
             {
@@ -171,8 +167,7 @@ namespace Agrishare.Core.Caching
 
             try
             {
-                var db = RedisConnection().GetDatabase();
-                return db.HashDelete(Key, Field);
+                return Connection.GetDatabase().HashDelete(Key, Field);
             }
             catch (Exception ex)
             {
