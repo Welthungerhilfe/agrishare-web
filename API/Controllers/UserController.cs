@@ -140,25 +140,29 @@ namespace Agri.API.Controllers
             return Error("Phone number or PIN not recognised.");
         }
 
-        [@Authorize(Roles = "User")]
         [Route("pin/change")]
         [AcceptVerbs("GET")]
-        public object ChangePin(string Code, string PIN)
+        public object ChangePin(string Telephone, string Code, string PIN)
         {
-            if (CurrentUser.VerificationCode != Code)
+            var user = Entities.User.Find(Telephone: Telephone);
+
+            if (user == null || user?.Id == 0)
                 return Error("Invalid code");
 
-            CurrentUser.ClearPassword = PIN;
-            if (CurrentUser.Save())
+            if (user.VerificationCode != Code)
+                return Error("Invalid code");
+
+            user.ClearPassword = PIN;
+            if (user.Save())
             {
-                CurrentUser.FailedLoginAttempts = 0;
-                if (CurrentUser.AuthToken.IsEmpty())
-                    CurrentUser.AuthToken = Guid.NewGuid().ToString();
-                CurrentUser.Save();
+                user.FailedLoginAttempts = 0;
+                if (user.AuthToken.IsEmpty())
+                    user.AuthToken = Guid.NewGuid().ToString();
+                user.Save();
 
                 return Success(new
                 {
-                    User = CurrentUser.ProfileJson()
+                    User = user.ProfileJson()
                 });
             }
 
