@@ -137,6 +137,9 @@
     <Compile Include="App_Code\ExceptionFilter.cs" />
     <Compile Include="App_Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ListingsController.cs" />
+    <Compile Include="Controllers\CountersController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\FaqsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
@@ -144,6 +147,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\ListingModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

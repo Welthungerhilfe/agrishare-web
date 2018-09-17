@@ -80,7 +80,7 @@ namespace Agrishare.Core.Entities
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Templates.Attach(this);
-                ctx.Entry(this).State = EntityState.Modified;
+                ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
         }

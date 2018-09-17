@@ -10,13 +10,12 @@ namespace Agri.API.Controllers
 {
     public class UserController : BaseApiController
     {
+        private const int MaxFailedLoginAttempts = 5;
+
         [Route("register/telephone/lookup")]
         [AcceptVerbs("GET")]
         public object FindTelephone(string Telephone)
         {
-            if (!ModelState.IsValid)
-                return Error(ModelState);
-
             var user = Entities.User.Find(Telephone: Telephone);            
             if (user?.Id > 0 && !user.Telephone.IsEmpty())
                 return Success(new
@@ -84,6 +83,10 @@ namespace Agri.API.Controllers
         public object VerifyCode(int UserId, string Code)
         {
             var user = Entities.User.Find(Id: UserId);
+
+            if (user?.FailedLoginAttempts > MaxFailedLoginAttempts)
+                return Error("Your account has been locked - please reset your PIN.");
+
             if (user?.VerificationCode == Code)
             {
                 if (user.VerificationCodeExpiry < DateTime.UtcNow)
@@ -100,6 +103,12 @@ namespace Agri.API.Controllers
                 };
             }
 
+            if (user.Id > 0)
+            {
+                user.FailedLoginAttempts += 1;
+                user.Save();
+            }
+
             return Error("Invalid code");
         }
 
@@ -107,15 +116,15 @@ namespace Agri.API.Controllers
         [AcceptVerbs("GET")]
         public object Login(string Telephone, string PIN)
         {
-            if (!ModelState.IsValid)
-                return Error(ModelState);
-
             var user = Entities.User.Find(Telephone: Telephone);
 
             if (user?.Id == 0)
                 return Error("Phone number or PIN not recognised.");
 
-            if (user.FailedLoginAttempts > 5)
+            if (user?.StatusId == Entities.UserStatus.Pending)
+                return Error("Your account has not been verified - please reset your PIN.");
+
+            if (user.FailedLoginAttempts > MaxFailedLoginAttempts)
                 return Error("Your account has been locked - please reset your PIN.");
 
             if (user.ValidatePassword(PIN))
@@ -134,8 +143,11 @@ namespace Agri.API.Controllers
                 });
             }
 
-            user.FailedLoginAttempts += 1;
-            user.Save();
+            if (user.Id > 0)
+            {
+                user.FailedLoginAttempts += 1;
+                user.Save();
+            }
 
             return Error("Phone number or PIN not recognised.");
         }
@@ -173,9 +185,6 @@ namespace Agri.API.Controllers
         [AcceptVerbs("GET")]
         public object SendCode(string Telephone)
         {
-            if (!ModelState.IsValid)
-                return Error(ModelState);
-
             var user = Entities.User.Find(Telephone: Telephone);
             if (user?.Id > 0 && user.SendVerificationCode())
                 return Success("Please check your messages");
@@ -235,7 +244,18 @@ namespace Agri.API.Controllers
                     User = CurrentUser.ProfileJson()
                 });
 
-            return Error("Unable to send verification code - please try again");
+            return Error("Could not update preferences");
+        }
+
+        [@Authorize(Roles = "User")]
+        [Route("me")]
+        [AcceptVerbs("GET")]
+        public object Me()
+        {
+            return Success(new
+            {
+                User = CurrentUser.ProfileJson()
+            });
         }
     }
 }

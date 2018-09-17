@@ -22,11 +22,12 @@ namespace Agrishare.Core.Entities
     
         public int Id { get; set; }
         public int ListingId { get; set; }
+        public int SubcategoryId { get; set; }
         public bool Mobile { get; set; }
         public decimal TotalVolume { get; set; }
-        public short QuantityUnitId { get; set; }
-        public short TimeUnitId { get; set; }
-        public short DistanceUnitId { get; set; }
+        public QuantityUnit QuantityUnitId { get; set; }
+        public TimeUnit TimeUnitId { get; set; }
+        public DistanceUnit DistanceUnitId { get; set; }
         public decimal MinimumQuantity { get; set; }
         public decimal MaximumDistance { get; set; }
         public decimal PricePerQuantityUnit { get; set; }
@@ -40,5 +41,6 @@ namespace Agrishare.Core.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual Listing Listing { get; set; }
+        public virtual Category Subcategory { get; set; }
     }
 }

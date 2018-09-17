@@ -82,6 +82,8 @@
     <EntitySetMapping Name="Listings">
       <EntityTypeMapping TypeName="AgrishareModel.Listing">
         <MappingFragment StoreEntitySet="Listings">
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
           <ScalarProperty Name="RatingCount" ColumnName="RatingCount" />
           <ScalarProperty Name="AverageRating" ColumnName="AverageRating" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -90,15 +92,12 @@
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Location" ColumnName="Location" />
-          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="Brand" ColumnName="Brand" />
           <ScalarProperty Name="HorsePower" ColumnName="HorsePower" />
           <ScalarProperty Name="Year" ColumnName="Year" />
-          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
           <ScalarProperty Name="ConditionId" ColumnName="ConditionId" />
           <ScalarProperty Name="GroupServices" ColumnName="GroupServices" />
-          <ScalarProperty Name="Photos" ColumnName="Photos" />
+          <ScalarProperty Name="PhotoPaths" ColumnName="Photos" />
           <ScalarProperty Name="StatusId" ColumnName="StatusId" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="LastModified" ColumnName="LastModified" />
@@ -229,6 +228,7 @@
     <EntitySetMapping Name="Services">
       <EntityTypeMapping TypeName="AgrishareModel.Service">
         <MappingFragment StoreEntitySet="Services">
+          <ScalarProperty Name="SubcategoryId" ColumnName="SubcategoryId" />
           <ScalarProperty Name="Deleted" ColumnName="Deleted" />
           <ScalarProperty Name="LastModified" ColumnName="LastModified" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

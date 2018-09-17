@@ -57,6 +57,7 @@
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Services" Relationship="AgrishareModel.services_ibfk_2" FromRole="Category" ToRole="Service" />
   </EntityType>
   <EntityType Name="Config">
     <Key>
@@ -98,11 +99,10 @@
     <Property Name="Brand" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="HorsePower" Type="Int32" />
     <Property Name="Year" Type="Int32" />
-    <Property Name="Mobile" Type="Boolean" Nullable="false" />
-    <Property Name="ConditionId" Type="Int16" Nullable="false" />
+    <Property Name="ConditionId" Type="AgrishareModel.ListingCondition" Nullable="false" />
     <Property Name="GroupServices" Type="Boolean" Nullable="false" />
-    <Property Name="Photos" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-    <Property Name="StatusId" Type="Int16" Nullable="false" />
+    <Property Name="PhotoPaths" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+    <Property Name="StatusId" Type="AgrishareModel.ListingStatus" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
@@ -447,6 +447,10 @@
       <End Role="Rating" EntitySet="Ratings" />
     </AssociationSet>
     <EntitySet Name="Counters" EntityType="AgrishareModel.Counter" />
+    <AssociationSet Name="services_ibfk_2" Association="AgrishareModel.services_ibfk_2">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Service" EntitySet="Services" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Rating">
     <Key>
@@ -469,11 +473,12 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ListingId" Type="Int32" Nullable="false" />
+    <Property Name="SubcategoryId" Type="Int32" Nullable="false" />
     <Property Name="Mobile" Type="Boolean" Nullable="false" />
     <Property Name="TotalVolume" Type="Decimal" Nullable="false" />
-    <Property Name="QuantityUnitId" Type="Int16" Nullable="false" />
-    <Property Name="TimeUnitId" Type="Int16" Nullable="false" />
-    <Property Name="DistanceUnitId" Type="Int16" Nullable="false" />
+    <Property Name="QuantityUnitId" Type="AgrishareModel.QuantityUnit" Nullable="false" />
+    <Property Name="TimeUnitId" Type="AgrishareModel.TimeUnit" Nullable="false" />
+    <Property Name="DistanceUnitId" Type="AgrishareModel.DistanceUnit" Nullable="false" />
     <Property Name="MinimumQuantity" Type="Decimal" Nullable="false" />
     <Property Name="MaximumDistance" Type="Decimal" Nullable="false" />
     <Property Name="PricePerQuantityUnit" Type="Decimal" Nullable="false" />
@@ -485,6 +490,7 @@
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Bookings" Relationship="AgrishareModel.bookings_ibfk_3" FromRole="Service" ToRole="Booking" />
     <NavigationProperty Name="Listing" Relationship="AgrishareModel.services_ibfk_1" FromRole="Service" ToRole="Listing" />
+    <NavigationProperty Name="Subcategory" Relationship="AgrishareModel.services_ibfk_2" FromRole="Service" ToRole="Category" />
   </EntityType>
   <Association Name="bookings_ibfk_3">
     <End Type="AgrishareModel.Service" Role="Service" Multiplicity="1">
@@ -581,4 +587,43 @@
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
   </EntityType>
+  <EnumType Name="ListingStatus" UnderlyingType="Int16">
+    <Member Name="None" Value="0" />
+    <Member Name="Live" Value="1" />
+    <Member Name="Hidden" Value="2" />
+  </EnumType>
+  <EnumType Name="ListingCondition" UnderlyingType="Int16">
+    <Member Name="None" Value="0" />
+    <Member Name="New" Value="1" />
+    <Member Name="Used" Value="2" />
+  </EnumType>
+  <EnumType Name="QuantityUnit" UnderlyingType="Int16">
+    <Member Name="None" Value="0" />
+    <Member Name="Hectare" Value="1" />
+    <Member Name="Bags" Value="2" />
+  </EnumType>
+  <EnumType Name="TimeUnit" UnderlyingType="Int16">
+    <Member Name="None" Value="0" />
+    <Member Name="HectaresPerHour" Value="1" />
+    <Member Name="HoursPer100Kms" Value="2" />
+    <Member Name="BagsPerHour" Value="3" />
+  </EnumType>
+  <EnumType Name="DistanceUnit" UnderlyingType="Int16">
+    <Member Name="None" Value="0" />
+    <Member Name="Km" Value="1" />
+  </EnumType>
+  <Association Name="services_ibfk_2">
+    <End Type="AgrishareModel.Category" Role="Category" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="AgrishareModel.Service" Role="Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Service">
+        <PropertyRef Name="SubcategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

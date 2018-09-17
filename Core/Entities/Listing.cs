@@ -35,11 +35,10 @@ namespace Agrishare.Core.Entities
         public string Brand { get; set; }
         public Nullable<int> HorsePower { get; set; }
         public Nullable<int> Year { get; set; }
-        public bool Mobile { get; set; }
-        public short ConditionId { get; set; }
+        public ListingCondition ConditionId { get; set; }
         public bool GroupServices { get; set; }
-        public string Photos { get; set; }
-        public short StatusId { get; set; }
+        public string PhotoPaths { get; set; }
+        public ListingStatus StatusId { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }

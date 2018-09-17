@@ -91,3 +91,5 @@ C:\Users\brad\Documents\Working Files\Agrishare\API\bin\MySql.Data.Entity.EF6.dl
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\EntityFramework.SqlServer.xml
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\MySql.Data.xml
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\MySql.Data.Entity.EF6.xml
+C:\Users\brad\Documents\Working Files\Agrishare\API\bin\SqlServerTypes\x86\msvcr120.dll
+C:\Users\brad\Documents\Working Files\Agrishare\API\bin\SqlServerTypes\x86\SqlServerSpatial140.dll

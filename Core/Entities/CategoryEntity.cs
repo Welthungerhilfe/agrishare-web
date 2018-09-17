@@ -33,7 +33,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<Category> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", int ParentId = 0)
+        public static List<Category> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", int? ParentId = null)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -42,10 +42,11 @@ namespace Agrishare.Core.Entities
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
 
-                if (ParentId == 0)
-                    query = query.Where(e => e.ParentId == null);
-                else
-                    query = query.Where(e => e.ParentId == ParentId);
+                if (ParentId.HasValue)
+                    if (ParentId == 0)
+                        query = query.Where(e => e.ParentId == null);
+                    else
+                        query = query.Where(e => e.ParentId == ParentId);
 
                 return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
@@ -86,7 +87,7 @@ namespace Agrishare.Core.Entities
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Categories.Attach(this);
-                ctx.Entry(this).State = EntityState.Modified;
+                ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
         }
@@ -115,10 +116,7 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Id,
-                ParentId,
-                Title,
-                DateCreated,
-                LastModified
+                Title
             };
         }
     }

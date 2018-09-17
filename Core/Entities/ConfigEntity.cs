@@ -47,6 +47,17 @@ namespace Agrishare.Core.Entities
             }
         }
 
+        private static string _cdnURL { get; set; }
+        public static string CDNURL
+        {
+            get
+            {
+                if (_cdnURL.IsEmpty())
+                    _cdnURL = Find(Key: "CDN URL").Value;
+                return _cdnURL;
+            }
+        }
+
         #endregion
 
         public static string EncryptionPassword = "@DzaRtTxBBCTwG&53Ryh*t#x#m87Kg%$aH7P";
@@ -147,7 +158,7 @@ namespace Agrishare.Core.Entities
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Configs.Attach(this);
-                ctx.Entry(this).State = EntityState.Modified;
+                ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
         }

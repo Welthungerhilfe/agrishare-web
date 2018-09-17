@@ -96,12 +96,11 @@
     <Property Name="Title" Type="varchar" MaxLength="256" />
     <Property Name="Description" Type="varchar" MaxLength="2048" />
     <Property Name="Location" Type="varchar" MaxLength="256" />
-    <Property Name="Latitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
-    <Property Name="Longitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+    <Property Name="Latitude" Type="decimal" Precision="10" Scale="6" Nullable="false" />
+    <Property Name="Longitude" Type="decimal" Precision="10" Scale="6" Nullable="false" />
     <Property Name="Brand" Type="varchar" MaxLength="256" />
     <Property Name="HorsePower" Type="int" />
     <Property Name="Year" Type="int" />
-    <Property Name="Mobile" Type="bool" Nullable="false" />
     <Property Name="ConditionId" Type="smallint" Nullable="false" />
     <Property Name="GroupServices" Type="bool" Nullable="false" />
     <Property Name="Photos" Type="text" />
@@ -178,6 +177,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ListingId" Type="int" Nullable="false" />
+    <Property Name="SubcategoryId" Type="int" Nullable="false" />
     <Property Name="Mobile" Type="bool" Nullable="false" />
     <Property Name="TotalVolume" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="QuantityUnitId" Type="smallint" Nullable="false" />
@@ -414,6 +414,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="services_ibfk_2">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Services" Type="Self.Services" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Services">
+        <PropertyRef Name="SubcategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="transactions_ibfk_1">
     <End Role="Users" Type="Self.Users" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -518,6 +532,10 @@
     </AssociationSet>
     <AssociationSet Name="services_ibfk_1" Association="Self.services_ibfk_1">
       <End Role="Listings" EntitySet="Listings" />
+      <End Role="Services" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="services_ibfk_2" Association="Self.services_ibfk_2">
+      <End Role="Categories" EntitySet="Categories" />
       <End Role="Services" EntitySet="Services" />
     </AssociationSet>
     <AssociationSet Name="transactions_ibfk_1" Association="Self.transactions_ibfk_1">

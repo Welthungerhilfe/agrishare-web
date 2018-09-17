@@ -203,6 +203,9 @@
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\CounterEntity.cs" />
+    <Compile Include="Entities\DistanceUnit.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Faq.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -214,6 +217,14 @@
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Listing.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ListingCondition.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ListingSearchResult.cs" />
+    <Compile Include="Entities\ServiceEntity.cs" />
+    <Compile Include="Entities\ListingStatus.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Log.cs">
@@ -228,6 +239,9 @@
     <Compile Include="Entities\NotificationPreferences.cs" />
     <Compile Include="Entities\Language.cs" />
     <Compile Include="Entities\Page.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\QuantityUnit.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Rating.cs">
@@ -248,12 +262,16 @@
     <Compile Include="Entities\TemplateType.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TimeUnit.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Transaction.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\User.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ListingEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\UserStatus.cs">
@@ -268,6 +286,8 @@
     <Compile Include="Encryption\HexEncoding.cs" />
     <Compile Include="Encryption\Rc4Encryption.cs" />
     <Compile Include="Utils\SMS.cs" />
+    <Compile Include="Utils\Geometry.cs" />
+    <Compile Include="Utils\SQL.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Entities\Agrishare.edmx">

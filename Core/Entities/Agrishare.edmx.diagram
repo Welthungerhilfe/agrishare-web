@@ -36,6 +36,7 @@
         <AssociationConnector Association="AgrishareModel.services_ibfk_1" />
         <AssociationConnector Association="AgrishareModel.ratings_ibfk_2" />
         <EntityTypeShape EntityType="AgrishareModel.Counter" Width="1.5" PointX="0.75" PointY="5.75" />
+        <AssociationConnector Association="AgrishareModel.services_ibfk_2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

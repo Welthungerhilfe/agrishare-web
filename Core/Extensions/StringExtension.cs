@@ -28,7 +28,7 @@ namespace Agrishare.Core
 
         public static string ExplodeCamelCase(this string str)
         {
-            return String.Join(" ", Regex.Split(str, @"(?<!^)(?=[A-Z][^A-Z])"));
+            return string.Join(" ", Regex.Split(str, @"(?<!^)(?=[A-Z][^A-Z])"));
         }
     }
 }
