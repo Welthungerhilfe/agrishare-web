@@ -65,20 +65,6 @@ CREATE TABLE `Bookings` (
   CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`ServiceId`) REFERENCES `Services` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*Table structure for table `Categories` */
-
-DROP TABLE IF EXISTS `Categories`;
-
-CREATE TABLE `Categories` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `ParentId` int(11) DEFAULT NULL,
-  `Title` varchar(256) DEFAULT NULL,
-  `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `Deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 /*Table structure for table `Config` */
 
 DROP TABLE IF EXISTS `Config`;
@@ -91,7 +77,7 @@ CREATE TABLE `Config` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Counters` */
 
@@ -107,7 +93,7 @@ CREATE TABLE `Counters` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Faqs` */
 
@@ -135,12 +121,11 @@ CREATE TABLE `Listings` (
   `Title` varchar(256) DEFAULT NULL,
   `Description` varchar(2048) DEFAULT NULL,
   `Location` varchar(256) DEFAULT NULL,
-  `Latitude` decimal(11,8) NOT NULL DEFAULT '0.00000000',
-  `Longitude` decimal(11,8) NOT NULL DEFAULT '0.00000000',
+  `Latitude` decimal(10,6) NOT NULL DEFAULT '0.000000',
+  `Longitude` decimal(10,6) NOT NULL DEFAULT '0.000000',
   `Brand` varchar(256) DEFAULT NULL,
   `HorsePower` int(11) DEFAULT NULL,
   `Year` int(11) DEFAULT NULL,
-  `Mobile` tinyint(1) NOT NULL DEFAULT '0',
   `ConditionId` smallint(6) NOT NULL DEFAULT '0',
   `GroupServices` tinyint(1) NOT NULL DEFAULT '0',
   `Photos` text,
@@ -155,7 +140,7 @@ CREATE TABLE `Listings` (
   KEY `CategoryId` (`CategoryId`),
   CONSTRAINT `listings_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `listings_ibfk_2` FOREIGN KEY (`CategoryId`) REFERENCES `Categories` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Log` */
 
@@ -171,7 +156,7 @@ CREATE TABLE `Log` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Notifications` */
 
@@ -246,6 +231,7 @@ DROP TABLE IF EXISTS `Services`;
 CREATE TABLE `Services` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `ListingId` int(11) NOT NULL,
+  `SubcategoryId` int(11) NOT NULL,
   `Mobile` tinyint(1) NOT NULL DEFAULT '0',
   `TotalVolume` decimal(10,3) NOT NULL DEFAULT '0.000',
   `QuantityUnitId` smallint(6) NOT NULL DEFAULT '0',
@@ -262,8 +248,10 @@ CREATE TABLE `Services` (
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`),
   KEY `ListingId` (`ListingId`),
-  CONSTRAINT `services_ibfk_1` FOREIGN KEY (`ListingId`) REFERENCES `Listings` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  KEY `SubcategoryId` (`SubcategoryId`),
+  CONSTRAINT `services_ibfk_1` FOREIGN KEY (`ListingId`) REFERENCES `Listings` (`Id`) ON DELETE CASCADE,
+  CONSTRAINT `services_ibfk_2` FOREIGN KEY (`SubcategoryId`) REFERENCES `Categories` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Templates` */
 
@@ -301,7 +289,7 @@ CREATE TABLE `Transactions` (
   KEY `BookingUserId` (`BookingUserId`),
   CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`BookingId`) REFERENCES `Bookings` (`Id`) ON DELETE CASCADE,
-  CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`BookingUserId`) REFERENCES `bookingusers` (`Id`) ON DELETE CASCADE
+  CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`BookingUserId`) REFERENCES `BookingUsers` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Users` */
@@ -332,6 +320,31 @@ CREATE TABLE `Users` (
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8mb4;
+
+/*Table structure for table `categories` */
+
+DROP TABLE IF EXISTS `categories`;
+
+CREATE TABLE `categories` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ParentId` int(11) DEFAULT NULL,
+  `Title` varchar(256) DEFAULT NULL,
+  `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+
+/* Function  structure for function  `GetDistance` */
+
+/*!50003 DROP FUNCTION IF EXISTS `GetDistance` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `GetDistance`(a DOUBLE, b DOUBLE, c DOUBLE, d DOUBLE) RETURNS double
+BEGIN
+	RETURN ST_Distance(POINT(a, b), POINT(c, d));
+    END */$$
+DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
