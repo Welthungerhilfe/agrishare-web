@@ -65,3 +65,5 @@ C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Debug\Newtonsoft.Json.x
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Debug\StackExchange.Redis.StrongName.xml
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Debug\RestSharp.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Debug\Mandrill.net.dll
+C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Debug\AWSSDK.dll
+C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Debug\AWSSDK.pdb

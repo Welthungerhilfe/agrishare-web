@@ -63,42 +63,28 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        private Image _image;
-        private Image Image
+        public bool Resize(int Width, int Height, string Destination, long Compression = 50L)
         {
-            get
-            {
-                if (_image == null)
-                {
-                    using (var stream = new FileStream(MapPath(FilePath), FileMode.Open))
-                        _image = Image.FromStream(stream, false, false);
-                }
-                return _image;
-            }
-        }
-
-        public bool Resize(int Width, int Height, string Destination, long Compression = 95L)
-        {
-            Image image;
+            Image image = null;
             Bitmap bitmap = null;
             Graphics graphics = null;
             EncoderParameters encoder = null;
-            Image workingImage = null;
-
-            using (var stream = new FileStream(MapPath(FilePath), FileMode.Open))
-                image = Image.FromStream(stream, false, false);
-            if (image == null)
-                return false;
+            FileStream stream = null;
 
             bool success = false;
             try
             {
+                stream = new FileStream(MapPath(FilePath), FileMode.Open);
+                image = Image.FromStream(stream, false, false);
+                if (image == null)
+                    return false;
+
                 var imageWidth = Width;
-                var imageHeight = (int)(((double)imageWidth / (double)Image.Width) * Image.Height);                
+                var imageHeight = (int)(((double)imageWidth / (double)image.Width) * image.Height);                
                 if (imageHeight > Height)
                 {
                     imageHeight = Height;
-                    imageWidth = (int)(((double)imageHeight / (double)Image.Height) * Image.Width);
+                    imageWidth = (int)(((double)imageHeight / (double)image.Height) * image.Width);
                 }
 
                 var offsetX = (imageWidth - Width) / 2;
@@ -110,7 +96,7 @@ namespace Agrishare.Core.Entities
                 graphics = Graphics.FromImage(bitmap);
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.FillRectangle(Brushes.White, 0, 0, imageWidth, imageHeight);
-                graphics.DrawImage(Image, new Rectangle(0, 0, imageWidth, imageHeight), 0, 0, Image.Width, Image.Height, GraphicsUnit.Pixel, attributes);
+                graphics.DrawImage(image, new Rectangle(0, 0, imageWidth, imageHeight), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
 
                 encoder = new EncoderParameters(1);
                 encoder.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, Compression);
@@ -119,7 +105,7 @@ namespace Agrishare.Core.Entities
             }
             finally
             {
-                if (workingImage != null) workingImage.Dispose();
+                if (stream != null) stream.Dispose();
                 if (encoder != null) encoder.Dispose();
                 if (graphics != null) graphics.Dispose();
                 if (bitmap != null) bitmap.Dispose();
@@ -174,7 +160,7 @@ namespace Agrishare.Core.Entities
         #region Utils
 
         private static string _cdnAbsolutePath { get; set; }
-        public static string CDNAbsolutePath
+        private static string CDNAbsolutePath
         {
             get
             {
@@ -184,7 +170,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static string CreateDirectory(string DirectoryPath)
+        private static string CreateDirectory(string DirectoryPath)
         {
             DirectoryPath = MapPath(DirectoryPath);
 
@@ -202,7 +188,7 @@ namespace Agrishare.Core.Entities
             return DirectoryPath;
         }
 
-        public static string MapPath(string Path)
+        private static string MapPath(string Path)
         {
             if (IsAbsolutePath(Path))
                 return Path;
@@ -212,7 +198,7 @@ namespace Agrishare.Core.Entities
             return Regex.Replace(Path, @"[\\]+", "\\");
         }
 
-        public static bool IsAbsolutePath(string Path)
+        private static bool IsAbsolutePath(string Path)
         {
             return Regex.IsMatch(Path, @"^[a-zA-Z]+:");
         }
@@ -241,6 +227,7 @@ namespace Agrishare.Core.Entities
             var gb = mb / 1024;
             return $"{Math.Round(gb, 2)}GB";
         }
+
         #endregion
     }
 }

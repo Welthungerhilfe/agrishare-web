@@ -74,6 +74,18 @@
     <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Deleted" Type="bool" Nullable="false" />
   </EntityType>
+  <EntityType Name="Devices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Token" Type="varchar" MaxLength="1024" />
+    <Property Name="EndpointARN" Type="varchar" MaxLength="1024" />
+    <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Deleted" Type="bool" Nullable="false" />
+  </EntityType>
   <EntityType Name="Faqs">
     <Key>
       <PropertyRef Name="Id" />
@@ -177,7 +189,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ListingId" Type="int" Nullable="false" />
-    <Property Name="SubcategoryId" Type="int" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
     <Property Name="Mobile" Type="bool" Nullable="false" />
     <Property Name="TotalVolume" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="QuantityUnitId" Type="smallint" Nullable="false" />
@@ -299,6 +311,20 @@
       </Principal>
       <Dependent Role="BookingUsers">
         <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="devices_ibfk_1">
+    <End Role="Users" Type="Self.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Devices">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -424,7 +450,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Services">
-        <PropertyRef Name="SubcategoryId" />
+        <PropertyRef Name="CategoryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -476,6 +502,7 @@
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="agrishare" store:Type="Tables" />
     <EntitySet Name="Config" EntityType="Self.Config" Schema="agrishare" store:Type="Tables" />
     <EntitySet Name="Counters" EntityType="Self.Counters" Schema="agrishare" store:Type="Tables" />
+    <EntitySet Name="Devices" EntityType="Self.Devices" Schema="agrishare" store:Type="Tables" />
     <EntitySet Name="Faqs" EntityType="Self.Faqs" Schema="agrishare" store:Type="Tables" />
     <EntitySet Name="Listings" EntityType="Self.Listings" Schema="agrishare" store:Type="Tables" />
     <EntitySet Name="Log" EntityType="Self.Log" Schema="agrishare" store:Type="Tables" />
@@ -501,6 +528,10 @@
     <AssociationSet Name="bookingusers_ibfk_1" Association="Self.bookingusers_ibfk_1">
       <End Role="Bookings" EntitySet="Bookings" />
       <End Role="BookingUsers" EntitySet="BookingUsers" />
+    </AssociationSet>
+    <AssociationSet Name="devices_ibfk_1" Association="Self.devices_ibfk_1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Devices" EntitySet="Devices" />
     </AssociationSet>
     <AssociationSet Name="listings_ibfk_1" Association="Self.listings_ibfk_1">
       <End Role="Users" EntitySet="Users" />

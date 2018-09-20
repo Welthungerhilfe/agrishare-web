@@ -65,6 +65,20 @@ CREATE TABLE `Bookings` (
   CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`ServiceId`) REFERENCES `Services` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+/*Table structure for table `Categories` */
+
+DROP TABLE IF EXISTS `Categories`;
+
+CREATE TABLE `Categories` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ParentId` int(11) DEFAULT NULL,
+  `Title` varchar(256) DEFAULT NULL,
+  `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+
 /*Table structure for table `Config` */
 
 DROP TABLE IF EXISTS `Config`;
@@ -77,7 +91,7 @@ CREATE TABLE `Config` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Counters` */
 
@@ -93,6 +107,23 @@ CREATE TABLE `Counters` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+/*Table structure for table `Devices` */
+
+DROP TABLE IF EXISTS `Devices`;
+
+CREATE TABLE `Devices` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `UserId` int(11) NOT NULL,
+  `Token` varchar(1024) DEFAULT NULL,
+  `EndpointARN` varchar(1024) DEFAULT NULL,
+  `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `Deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Id`),
+  KEY `SnsDeviceUser` (`UserId`),
+  CONSTRAINT `devices_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Faqs` */
@@ -140,7 +171,7 @@ CREATE TABLE `Listings` (
   KEY `CategoryId` (`CategoryId`),
   CONSTRAINT `listings_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `listings_ibfk_2` FOREIGN KEY (`CategoryId`) REFERENCES `Categories` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Log` */
 
@@ -156,7 +187,7 @@ CREATE TABLE `Log` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Notifications` */
 
@@ -231,7 +262,7 @@ DROP TABLE IF EXISTS `Services`;
 CREATE TABLE `Services` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `ListingId` int(11) NOT NULL,
-  `SubcategoryId` int(11) NOT NULL,
+  `CategoryId` int(11) NOT NULL,
   `Mobile` tinyint(1) NOT NULL DEFAULT '0',
   `TotalVolume` decimal(10,3) NOT NULL DEFAULT '0.000',
   `QuantityUnitId` smallint(6) NOT NULL DEFAULT '0',
@@ -248,10 +279,10 @@ CREATE TABLE `Services` (
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`),
   KEY `ListingId` (`ListingId`),
-  KEY `SubcategoryId` (`SubcategoryId`),
+  KEY `CategoryId` (`CategoryId`),
   CONSTRAINT `services_ibfk_1` FOREIGN KEY (`ListingId`) REFERENCES `Listings` (`Id`) ON DELETE CASCADE,
-  CONSTRAINT `services_ibfk_2` FOREIGN KEY (`SubcategoryId`) REFERENCES `Categories` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  CONSTRAINT `services_ibfk_2` FOREIGN KEY (`CategoryId`) REFERENCES `Categories` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Templates` */
 
@@ -320,20 +351,6 @@ CREATE TABLE `Users` (
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8mb4;
-
-/*Table structure for table `categories` */
-
-DROP TABLE IF EXISTS `categories`;
-
-CREATE TABLE `categories` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `ParentId` int(11) DEFAULT NULL,
-  `Title` varchar(256) DEFAULT NULL,
-  `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `Deleted` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 /* Function  structure for function  `GetDistance` */
 

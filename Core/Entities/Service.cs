@@ -14,15 +14,9 @@ namespace Agrishare.Core.Entities
     
     public partial class Service
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Service()
-        {
-            this.Bookings = new HashSet<Booking>();
-        }
-    
         public int Id { get; set; }
         public int ListingId { get; set; }
-        public int SubcategoryId { get; set; }
+        public int CategoryId { get; set; }
         public bool Mobile { get; set; }
         public decimal TotalVolume { get; set; }
         public QuantityUnit QuantityUnitId { get; set; }
@@ -38,9 +32,6 @@ namespace Agrishare.Core.Entities
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual Listing Listing { get; set; }
-        public virtual Category Subcategory { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

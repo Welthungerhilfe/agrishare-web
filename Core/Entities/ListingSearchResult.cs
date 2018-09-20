@@ -18,8 +18,12 @@ namespace Agrishare.Core.Entities
         public bool Available { get; set; }
         public double Price { get; set; }
 
-        public static List<Listing> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int CategoryId = 0)
+        public static List<Listing> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int CategoryId = 0, int SubcategoryId = 0, double Latitude = 0, double Longitude = 0)
         {
+            // TODO calculate distance
+            // TODO calculate price
+            // TODO determine if available
+
             using (var ctx = new AgrishareEntities())
             {
                 var sql = @"SELECT 
@@ -31,7 +35,7 @@ namespace Agrishare.Core.Entities
                                 Listings.Photos AS Photos,
                                 {DISTANCE FORMULA} AS Distance,
                                 {AVAILABLE} AS Available,
-                                Listings.Price AS Price
+                                {PRICE} AS Price
                             FROM 
                                 Listings 
                             INNER JOIN 

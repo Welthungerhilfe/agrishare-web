@@ -15,7 +15,7 @@ namespace Agrishare.Core.Entities
     public partial class Service : IEntity
     {
         public static string DefaultSort = "DateCreated DESC";
-        public string Title => Subcategory?.Title ?? "Service";
+        public string Title => Category?.Title ?? "Service";
         public string QuantityUnit => $"{QuantityUnitId}".ExplodeCamelCase();
         public string TimeUnit => $"{TimeUnitId}".ExplodeCamelCase();
         public string DistanceUnit => $"{DistanceUnitId}".ExplodeCamelCase();
@@ -31,7 +31,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Services.Include(o => o.Subcategory).Where(o => !o.Deleted);
+                var query = ctx.Services.Include(o => o.Category).Where(o => !o.Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
@@ -44,7 +44,8 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Services.Include(o => o.Subcategory).Where(o => !o.Deleted);
+                var query = ctx.Services.Include(o => o.Category).Where(o => !o.Deleted);
+
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
@@ -84,17 +85,17 @@ namespace Agrishare.Core.Entities
         {
             var success = false;
 
-            var subcategory = Subcategory;
-            if (subcategory != null)
-                SubcategoryId = subcategory.Id;
-            subcategory = null;
+            var category = Category;
+            if (category != null)
+                CategoryId = category.Id;
+            Category = null;
 
             if (Id == 0)
                 success = Add();
             else
                 success = Update();
 
-            Subcategory = subcategory;
+            Category = category;
 
             return success;
         }
@@ -134,7 +135,7 @@ namespace Agrishare.Core.Entities
             {
                 Id,
                 ListingId,
-                Subcategory = Subcategory.Json(),
+                Category = Category.Json(),
                 Mobile,
                 TotalVolume,
                 QuantityUnitId,

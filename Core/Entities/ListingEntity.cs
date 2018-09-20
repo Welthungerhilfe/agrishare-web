@@ -30,7 +30,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Include(o => o.Category).Include(o => o.Services.Select(s => s.Subcategory)).Where(o => !o.Deleted);
+                var query = ctx.Listings.Include(o => o.Category).Include(o => o.Services.Select(s => s.Category)).Where(o => !o.Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
@@ -44,7 +44,7 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Include(o => o.Category).Include(o => o.Services.Select(s => s.Subcategory)).Where(o => !o.Deleted);
+                var query = ctx.Listings.Include(o => o.Category).Include(o => o.Services.Select(s => s.Category)).Where(o => !o.Deleted);
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
@@ -157,7 +157,7 @@ namespace Agrishare.Core.Entities
             {
                 Id,
                 UserId,
-                Category = Category.Json(),
+                Category = Category?.Json(),
                 Title,
                 Description,
                 Location,
@@ -169,7 +169,7 @@ namespace Agrishare.Core.Entities
                 ConditionId,
                 Condition,
                 GroupServices,
-                Photos,
+                Photos = Photos?.Select(e => e.JSON()),
                 AverageRating,
                 RatingCount,
                 Services = Services?.Select(e => e.Json()),

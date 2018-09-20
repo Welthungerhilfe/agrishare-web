@@ -64,7 +64,7 @@ namespace Agri.API.Controllers
                     PricePerDistanceUnit = service.PricePerDistanceUnit,
                     PricePerQuantityUnit = service.PricePerQuantityUnit,
                     QuantityUnitId = service.QuantityUnitId,
-                    SubcategoryId = service.SubcategoryId,
+                    CategoryId = service.CategoryId,
                     TimePerQuantityUnit = service.TimePerQuantityUnit,
                     TimeUnitId = service.TimeUnitId,
                     TotalVolume = service.TotalVolume
@@ -135,7 +135,7 @@ namespace Agri.API.Controllers
                     PricePerDistanceUnit = service.PricePerDistanceUnit,
                     PricePerQuantityUnit = service.PricePerQuantityUnit,
                     QuantityUnitId = service.QuantityUnitId,
-                    SubcategoryId = service.SubcategoryId,
+                    CategoryId = service.CategoryId,
                     TimePerQuantityUnit = service.TimePerQuantityUnit,
                     TimeUnitId = service.TimeUnitId,
                     TotalVolume = service.TotalVolume

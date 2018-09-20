@@ -50,7 +50,7 @@ namespace Agrishare.API.Models
         public int Id { get; set; }
 
         [Required]
-        public int SubcategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         public bool Mobile { get; set; }
         public decimal TotalVolume { get; set; }

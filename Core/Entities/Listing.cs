@@ -17,8 +17,6 @@ namespace Agrishare.Core.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Listing()
         {
-            this.Bookings = new HashSet<Booking>();
-            this.Ratings = new HashSet<Rating>();
             this.Services = new HashSet<Service>();
         }
     
@@ -43,12 +41,8 @@ namespace Agrishare.Core.Entities
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Booking> Bookings { get; set; }
         public virtual Category Category { get; set; }
         public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rating> Ratings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Service> Services { get; set; }
     }

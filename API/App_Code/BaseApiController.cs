@@ -88,7 +88,7 @@ namespace Agrishare.API
                 return Request.CreateResponse(HttpStatusCode.OK, new { Message = ResponseData });
 
             if (ResponseData == null)
-                return Request.CreateResponse(HttpStatusCode.OK, new { });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Message = "OK" });
 
             return Request.CreateResponse(HttpStatusCode.OK, ResponseData);
         }

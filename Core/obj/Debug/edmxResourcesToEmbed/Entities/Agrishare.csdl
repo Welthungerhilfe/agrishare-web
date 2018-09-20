@@ -5,9 +5,10 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ListingId" Type="Int32" Nullable="false" />
+    <Property Name="ServiceId" Type="Int32" Nullable="false" />
     <Property Name="ForId" Type="Int16" Nullable="false" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
-    <Property Name="ListingId" Type="Int32" Nullable="false" />
     <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Latitude" Type="Decimal" Nullable="false" />
     <Property Name="Longitude" Type="Decimal" Nullable="false" />
@@ -22,12 +23,8 @@
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Self.bookings_ibfk_1" FromRole="Bookings" ToRole="Users" />
-    <NavigationProperty Name="Listing" Relationship="Self.bookings_ibfk_2" FromRole="Bookings" ToRole="Listings" />
     <NavigationProperty Name="BookingUsers" Relationship="Self.bookingusers_ibfk_1" FromRole="Bookings" ToRole="BookingUsers" />
-    <NavigationProperty Name="Notifications" Relationship="Self.notifications_ibfk_2" FromRole="Bookings" ToRole="Notifications" />
     <NavigationProperty Name="Transactions" Relationship="Self.transactions_ibfk_2" FromRole="Bookings" ToRole="Transactions" />
-    <Property Name="ServiceId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Service" Relationship="AgrishareModel.bookings_ibfk_3" FromRole="Booking" ToRole="Service" />
   </EntityType>
   <EntityType Name="BookingUser">
     <Key>
@@ -57,7 +54,6 @@
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Services" Relationship="AgrishareModel.services_ibfk_2" FromRole="Category" ToRole="Service" />
   </EntityType>
   <EntityType Name="Config">
     <Key>
@@ -106,10 +102,8 @@
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Bookings" Relationship="Self.bookings_ibfk_2" FromRole="Listings" ToRole="Bookings" />
     <NavigationProperty Name="Category" Relationship="Self.listings_ibfk_2" FromRole="Listings" ToRole="Categories" />
     <NavigationProperty Name="User" Relationship="Self.listings_ibfk_1" FromRole="Listings" ToRole="Users" />
-    <NavigationProperty Name="Ratings" Relationship="AgrishareModel.ratings_ibfk_1" FromRole="Listing" ToRole="Rating" />
     <NavigationProperty Name="Services" Relationship="AgrishareModel.services_ibfk_1" FromRole="Listing" ToRole="Service" />
   </EntityType>
   <EntityType Name="Log">
@@ -447,7 +441,12 @@
       <End Role="Rating" EntitySet="Ratings" />
     </AssociationSet>
     <EntitySet Name="Counters" EntityType="AgrishareModel.Counter" />
-    <AssociationSet Name="services_ibfk_2" Association="AgrishareModel.services_ibfk_2">
+    <EntitySet Name="Devices" EntityType="AgrishareModel.Device" />
+    <AssociationSet Name="devices_ibfk_1" Association="AgrishareModel.devices_ibfk_1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Device" EntitySet="Devices" />
+    </AssociationSet>
+    <AssociationSet Name="services_ibfk_21" Association="AgrishareModel.services_ibfk_21">
       <End Role="Category" EntitySet="Categories" />
       <End Role="Service" EntitySet="Services" />
     </AssociationSet>
@@ -473,7 +472,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ListingId" Type="Int32" Nullable="false" />
-    <Property Name="SubcategoryId" Type="Int32" Nullable="false" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
     <Property Name="Mobile" Type="Boolean" Nullable="false" />
     <Property Name="TotalVolume" Type="Decimal" Nullable="false" />
     <Property Name="QuantityUnitId" Type="AgrishareModel.QuantityUnit" Nullable="false" />
@@ -488,9 +487,7 @@
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Bookings" Relationship="AgrishareModel.bookings_ibfk_3" FromRole="Service" ToRole="Booking" />
-    <NavigationProperty Name="Listing" Relationship="AgrishareModel.services_ibfk_1" FromRole="Service" ToRole="Listing" />
-    <NavigationProperty Name="Subcategory" Relationship="AgrishareModel.services_ibfk_2" FromRole="Service" ToRole="Category" />
+    <NavigationProperty Name="Category" Relationship="AgrishareModel.services_ibfk_21" FromRole="Service" ToRole="Category" />
   </EntityType>
   <Association Name="bookings_ibfk_3">
     <End Type="AgrishareModel.Service" Role="Service" Multiplicity="1">
@@ -612,7 +609,34 @@
     <Member Name="None" Value="0" />
     <Member Name="Km" Value="1" />
   </EnumType>
-  <Association Name="services_ibfk_2">
+  <EntityType Name="Device">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Token" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+    <Property Name="EndpointARN" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="AgrishareModel.devices_ibfk_1" FromRole="Device" ToRole="User" />
+  </EntityType>
+  <Association Name="devices_ibfk_1">
+    <End Type="AgrishareModel.User" Role="User" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="AgrishareModel.Device" Role="Device" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Device">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="services_ibfk_21">
     <End Type="AgrishareModel.Category" Role="Category" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -622,7 +646,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Service">
-        <PropertyRef Name="SubcategoryId" />
+        <PropertyRef Name="CategoryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

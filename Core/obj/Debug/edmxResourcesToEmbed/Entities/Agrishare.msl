@@ -228,7 +228,7 @@
     <EntitySetMapping Name="Services">
       <EntityTypeMapping TypeName="AgrishareModel.Service">
         <MappingFragment StoreEntitySet="Services">
-          <ScalarProperty Name="SubcategoryId" ColumnName="SubcategoryId" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="Deleted" ColumnName="Deleted" />
           <ScalarProperty Name="LastModified" ColumnName="LastModified" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -258,6 +258,19 @@
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Category" ColumnName="Category" />
           <ScalarProperty Name="Event" ColumnName="Event" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Devices">
+      <EntityTypeMapping TypeName="AgrishareModel.Device">
+        <MappingFragment StoreEntitySet="Devices">
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="EndpointARN" ColumnName="EndpointARN" />
+          <ScalarProperty Name="Token" ColumnName="Token" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

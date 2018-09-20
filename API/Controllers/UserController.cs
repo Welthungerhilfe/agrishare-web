@@ -257,5 +257,36 @@ namespace Agri.API.Controllers
                 User = CurrentUser.ProfileJson()
             });
         }
+
+        [@Authorize(Roles = "User")]
+        [Route("device/register")]
+        [AcceptVerbs("GET")]
+        public object RegisterDevice(string Token)
+        {
+            var device = Entities.Device.Find(Token: Token);
+
+            if (device == null)
+                device = new Entities.Device
+                {
+                    Token = Token,
+                    User = CurrentUser
+                };
+
+            if (device.Save())
+                return Success();
+
+            return Error("Could not register device");
+        }
+
+        [Route("logout")]
+        [AcceptVerbs("GET")]
+        public object Logout(string Token)
+        {
+            var device = Entities.Device.Find(Token: Token);
+            if (device?.Delete() ?? false)
+                return Success();
+
+            return Error("Device not found");
+        }
     }
 }

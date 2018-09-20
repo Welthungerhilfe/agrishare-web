@@ -14,20 +14,11 @@ namespace Agrishare.Core.Entities
     
     public partial class Category
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category()
-        {
-            this.Services = new HashSet<Service>();
-        }
-    
         public int Id { get; set; }
         public Nullable<int> ParentId { get; set; }
         public string Title { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Service> Services { get; set; }
     }
 }
