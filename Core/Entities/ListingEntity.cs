@@ -19,6 +19,22 @@ namespace Agrishare.Core.Entities
         public string Status => $"{StatusId}".ExplodeCamelCase();
         public List<File> Photos => PhotoPaths?.Split(',').Select(e => new File(e)).ToList();
 
+        private Category _category;
+        public Category Category
+        {
+            get
+            {
+                if (_category == null)
+                    _category = Category.Find(CategoryId);
+                return _category;
+            }
+            set
+            {
+                _category = value;
+                CategoryId = value.Id;
+            }
+        }
+
         public static Listing Find(int Id = 0)
         {
             if (Id == 0)
@@ -30,7 +46,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Include(o => o.Category).Include(o => o.Services.Select(s => s.Category)).Where(o => !o.Deleted);
+                var query = ctx.Listings.Include(o => o.Services.Select(s => s.Category)).Where(o => !o.Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
@@ -44,7 +60,7 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Include(o => o.Category).Include(o => o.Services.Select(s => s.Category)).Where(o => !o.Deleted);
+                var query = ctx.Listings.Where(o => !o.Deleted);
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));

@@ -18,6 +18,7 @@ namespace Agrishare.Core.Entities
         public AgrishareEntities()
             : base("name=AgrishareEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

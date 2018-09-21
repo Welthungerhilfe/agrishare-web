@@ -365,7 +365,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="AgrishareEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="AgrishareEntities" annotation:LazyLoadingEnabled="false">
     <EntitySet Name="Bookings" EntityType="Self.Booking" />
     <EntitySet Name="BookingUsers" EntityType="Self.BookingUser" />
     <EntitySet Name="Categories" EntityType="Self.Category" />
@@ -488,6 +488,7 @@
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Category" Relationship="AgrishareModel.services_ibfk_21" FromRole="Service" ToRole="Category" />
+    <NavigationProperty Name="Listing" Relationship="AgrishareModel.services_ibfk_1" FromRole="Service" ToRole="Listing" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
   </EntityType>
   <Association Name="bookings_ibfk_3">
     <End Type="AgrishareModel.Service" Role="Service" Multiplicity="1">

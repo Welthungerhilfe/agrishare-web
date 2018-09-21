@@ -12,34 +12,15 @@ using System.Web;
 
 namespace Agrishare.Core.Entities
 {
-    public partial class Service : IEntity
+    public partial class Rating : IEntity
     {
         public static string DefaultSort = "DateCreated DESC";
-        public string Title => Category?.Title ?? "Service";
-        public string QuantityUnit => $"{QuantityUnitId}".ExplodeCamelCase();
-        public string TimeUnit => $"{TimeUnitId}".ExplodeCamelCase();
-        public string DistanceUnit => $"{DistanceUnitId}".ExplodeCamelCase();
+        public string Title => User?.Title ?? "User";
 
-        private Category _category;
-        public Category Category
-        {
-            get
-            {
-                if (_category == null)
-                    _category = Category.Find(CategoryId);
-                return _category;
-            }
-            set
-            {
-                _category = value;
-                CategoryId = value.Id;
-            }
-        }
-
-        public static Service Find(int Id = 0)
+        public static Rating Find(int Id = 0)
         {
             if (Id == 0)
-                return new Service
+                return new Rating
                 {
                     DateCreated = DateTime.UtcNow,
                     LastModified = DateTime.UtcNow,
@@ -47,7 +28,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Services.Include(o => o.Listing).Where(o => !o.Deleted);
+                var query = ctx.Ratings.Include(o => o.User).Where(o => !o.Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
@@ -56,38 +37,43 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<Service> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string StartsWith = "", int ListingId = 0)
+        public static List<Rating> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", 
+            string Keywords = "", string StartsWith = "", int UserId = 0, int ListingId = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Services.Where(o => !o.Deleted);
+                var query = ctx.Ratings.Include(o => o.User).Where(o => !o.Deleted);
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
 
                 if (!StartsWith.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().StartsWith(Keywords.ToLower()));
+
+                if (UserId > 0)
+                    query = query.Where(o => o.UserId == UserId);
 
                 if (ListingId > 0)
                     query = query.Where(o => o.ListingId == ListingId);
 
-                query = query.OrderBy(Sort.Coalesce(DefaultSort));
-
-                return query.Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
         }
 
-        public static int Count(string Keywords = "", string StartsWith = "", int ListingId = 0)
+        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int ListingId = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Services.Where(o => !o.Deleted);
+                var query = ctx.Ratings.Where(o => !o.Deleted);
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
 
                 if (!StartsWith.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().StartsWith(Keywords.ToLower()));
+
+                if (UserId > 0)
+                    query = query.Where(o => o.UserId == UserId);
 
                 if (ListingId > 0)
                     query = query.Where(o => o.ListingId == ListingId);
@@ -100,17 +86,23 @@ namespace Agrishare.Core.Entities
         {
             var success = false;
 
-            var category = Category;
-            if (category != null)
-                CategoryId = category.Id;
-            Category = null;
+            var user = User;
+            if (user != null)
+                UserId = user.Id;
+            User = null;
+
+            var listing = Listing;
+            if (listing != null)
+                ListingId = listing.Id;
+            Listing = null;
 
             if (Id == 0)
                 success = Add();
             else
                 success = Update();
 
-            Category = category;
+            User = user;
+            Listing = listing;
 
             return success;
         }
@@ -119,7 +111,7 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                ctx.Services.Attach(this);
+                ctx.Ratings.Attach(this);
                 ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
@@ -129,7 +121,7 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                ctx.Services.Attach(this);
+                ctx.Ratings.Attach(this);
                 ctx.Entry(this).State = EntityState.Modified;
                 return ctx.SaveChanges() > 0;
             }
@@ -149,21 +141,11 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Id,
-                Category = Category?.Json(),
-                Mobile,
-                TotalVolume,
-                QuantityUnitId,
-                QuantityUnit,
-                TimeUnitId,
-                TimeUnit,
-                DistanceUnitId,
-                DistanceUnit,
-                MinimumQuantity,
-                MaximumDistance,
-                PricePerQuantityUnit,
-                FuelPerQuantityUnit,
-                TimePerQuantityUnit,
-                PricePerDistanceUnit,
+                ListingId,
+                User = User?.Json(),
+                Title,
+                Comments,
+                Stars,
                 DateCreated
             };
         }

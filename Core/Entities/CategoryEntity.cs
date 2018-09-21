@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Agrishare.Core.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,8 +14,20 @@ namespace Agrishare.Core.Entities
     {
         public static string DefaultSort = "Title";
 
+        private static string CacheKey(int Id)
+        {
+            return $"Category:{Id}";
+        }
+
         public static Category Find(int Id = 0)
         {
+            if (Id > 0)
+            {
+                var item = Cache.Instance.Get<Category>(CacheKey(Id));
+                if (item != null)
+                    return item;
+            }
+
             if (Id == 0)
                 return new Category
                 {
@@ -29,7 +42,12 @@ namespace Agrishare.Core.Entities
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
 
-                return query.FirstOrDefault();
+                var category = query.FirstOrDefault();
+
+                if (category != null)
+                    Cache.Instance.Add(CacheKey(Id), category);
+
+                return category;
             }
         }
 

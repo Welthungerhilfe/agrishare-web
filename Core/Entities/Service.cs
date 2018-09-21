@@ -32,6 +32,6 @@ namespace Agrishare.Core.Entities
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }
     
-        public virtual Category Category { get; set; }
+        public virtual Listing Listing { get; set; }
     }
 }

@@ -28,6 +28,21 @@ namespace Agri.API.Controllers
             });
         }
 
+        [Route("listings/detail")]
+        [AcceptVerbs("GET")]
+        public object Detail(int ListingId)
+        {
+            var listing = Entities.Listing.Find(Id: ListingId);
+
+            if (listing == null)
+                return Error("Listing not found");
+
+            return Success(new
+            {
+                Listing = listing.Json()
+            });
+        }
+
         [Route("listings/add")]
         [AcceptVerbs("POST")]
         public object Add(ListingModel Model)
