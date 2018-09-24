@@ -28,6 +28,7 @@ namespace Agrishare.Core.Entities
         public decimal FuelPerQuantityUnit { get; set; }
         public decimal TimePerQuantityUnit { get; set; }
         public decimal PricePerDistanceUnit { get; set; }
+        public decimal FuelPrice { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }

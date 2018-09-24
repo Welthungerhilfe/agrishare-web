@@ -7,7 +7,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ListingId" Type="Int32" Nullable="false" />
     <Property Name="ServiceId" Type="Int32" Nullable="false" />
-    <Property Name="ForId" Type="Int16" Nullable="false" />
+    <Property Name="ForId" Type="AgrishareModel.BookingFor" Nullable="false" />
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Latitude" Type="Decimal" Nullable="false" />
@@ -18,13 +18,15 @@
     <Property Name="StartDate" Type="DateTime" Nullable="false" />
     <Property Name="EndDate" Type="DateTime" Nullable="false" />
     <Property Name="Price" Type="Decimal" Nullable="false" />
-    <Property Name="StatusId" Type="Int16" Nullable="false" />
+    <Property Name="StatusId" Type="AgrishareModel.BookingStatus" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Self.bookings_ibfk_1" FromRole="Bookings" ToRole="Users" />
     <NavigationProperty Name="BookingUsers" Relationship="Self.bookingusers_ibfk_1" FromRole="Bookings" ToRole="BookingUsers" />
     <NavigationProperty Name="Transactions" Relationship="Self.transactions_ibfk_2" FromRole="Bookings" ToRole="Transactions" />
+    <NavigationProperty Name="Listing" Relationship="AgrishareModel.bookings_ibfk_2" FromRole="Bookings" ToRole="Listings" />
+    <NavigationProperty Name="Service" Relationship="AgrishareModel.bookings_ibfk_3" FromRole="Booking" ToRole="Service" />
   </EntityType>
   <EntityType Name="BookingUser">
     <Key>
@@ -102,7 +104,6 @@
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Category" Relationship="Self.listings_ibfk_2" FromRole="Listings" ToRole="Categories" />
     <NavigationProperty Name="User" Relationship="Self.listings_ibfk_1" FromRole="Listings" ToRole="Users" />
     <NavigationProperty Name="Services" Relationship="AgrishareModel.services_ibfk_1" FromRole="Listing" ToRole="Service" />
   </EntityType>
@@ -487,7 +488,6 @@
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Category" Relationship="AgrishareModel.services_ibfk_21" FromRole="Service" ToRole="Category" />
     <NavigationProperty Name="Listing" Relationship="AgrishareModel.services_ibfk_1" FromRole="Service" ToRole="Listing" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
   </EntityType>
   <Association Name="bookings_ibfk_3">
@@ -651,4 +651,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EnumType Name="BookingFor" UnderlyingType="Int16">
+    <Member Name="Me" Value="0" />
+    <Member Name="Friend" Value="1" />
+    <Member Name="Group" Value="2" />
+  </EnumType>
+  <EnumType Name="BookingStatus" UnderlyingType="Int16">
+    <Member Name="Pending" Value="0" />
+    <Member Name="Approved" Value="1" />
+    <Member Name="Declined" Value="2" />
+    <Member Name="InProgress" Value="3" />
+    <Member Name="Complete" Value="4" />
+  </EnumType>
 </Schema>

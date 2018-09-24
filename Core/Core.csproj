@@ -202,6 +202,9 @@
     <Compile Include="Entities\BookingUser.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\BookingUserStatus.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Category.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -234,6 +237,15 @@
     <Compile Include="Entities\ListingCondition.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\NotificationGroup.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationStatus.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationType.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\RatingEntity.cs" />
     <Compile Include="Entities\ListingSearchResult.cs" />
     <Compile Include="Entities\DeviceEntity.cs" />
@@ -262,6 +274,7 @@
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\BookingEntity.cs" />
+    <Compile Include="Entities\NotificationEntity.cs" />
     <Compile Include="Entities\ServiceEntity.cs" />
     <Compile Include="Entities\NotificationPreferences.cs" />
     <Compile Include="Entities\Language.cs" />
@@ -287,6 +300,7 @@
     <Compile Include="Entities\User.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\BookingUserEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\UserStatus.cs">

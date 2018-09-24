@@ -1,5 +1,6 @@
 ﻿using Agrishare.Core.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Agrishare.API.Models
@@ -23,13 +24,27 @@ namespace Agrishare.API.Models
         [Required]
         public decimal Longitude { get; set; }
 
+        [Required]
         public decimal Quantity { get; set; }
-
-        public decimal Distance { get; set; }
 
         public bool IncludeFuel { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
+
+        [Required]
+        public List<BookingUserModel> Users { get; set; }
+    }
+
+    public class BookingUserModel
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Telephone { get; set; }
+
+        [Required]
+        public decimal Quantity { get; set; }
     }
 }

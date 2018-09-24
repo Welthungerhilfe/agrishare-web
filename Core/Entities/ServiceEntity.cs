@@ -164,6 +164,7 @@ namespace Agrishare.Core.Entities
                 FuelPerQuantityUnit,
                 TimePerQuantityUnit,
                 PricePerDistanceUnit,
+                FuelPrice,
                 DateCreated
             };
         }

@@ -23,6 +23,9 @@
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="HireCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="FuelCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="TransportCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -148,9 +151,9 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="BookingId" Type="int" />
-          <Property Name="Title" Type="varchar" MaxLength="1024" />
           <Property Name="TypeId" Type="smallint" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
+          <Property Name="GroupId" Type="smallint" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Deleted" Type="bool" Nullable="false" />
@@ -206,6 +209,7 @@
           <Property Name="FuelPerQuantityUnit" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="TimePerQuantityUnit" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="PricePerDistanceUnit" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="FuelPrice" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Deleted" Type="bool" Nullable="false" />
@@ -609,6 +613,9 @@
           <Property Name="StartDate" Type="DateTime" Nullable="false" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" />
           <Property Name="Price" Type="Decimal" Nullable="false" />
+          <Property Name="HireCost" Type="Decimal" Nullable="false" />
+          <Property Name="FuelCost" Type="Decimal" Nullable="false" />
+          <Property Name="TransportCost" Type="Decimal" Nullable="false" />
           <Property Name="StatusId" Type="AgrishareModel.BookingStatus" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
@@ -630,7 +637,7 @@
           <Property Name="Ratio" Type="Decimal" Nullable="false" />
           <Property Name="VerificationCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="VerificationCodeExpiry" Type="DateTime" Nullable="false" />
-          <Property Name="StatusId" Type="Int16" Nullable="false" />
+          <Property Name="StatusId" Type="AgrishareModel.BookingUserStatus" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
@@ -718,9 +725,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="BookingId" Type="Int32" />
-          <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
-          <Property Name="TypeId" Type="Int16" Nullable="false" />
-          <Property Name="StatusId" Type="Int16" Nullable="false" />
+          <Property Name="TypeId" Type="AgrishareModel.NotificationType" Nullable="false" />
+          <Property Name="StatusId" Type="AgrishareModel.NotificationStatus" Nullable="false" />
+          <Property Name="GroupId" Type="AgrishareModel.NotificationGroup" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
@@ -1076,6 +1083,7 @@
           <Property Name="FuelPerQuantityUnit" Type="Decimal" Nullable="false" />
           <Property Name="TimePerQuantityUnit" Type="Decimal" Nullable="false" />
           <Property Name="PricePerDistanceUnit" Type="Decimal" Nullable="false" />
+          <Property Name="FuelPrice" Type="Decimal" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
@@ -1254,6 +1262,29 @@
           <Member Name="InProgress" Value="3" />
           <Member Name="Complete" Value="4" />
         </EnumType>
+        <EnumType Name="BookingUserStatus" UnderlyingType="Int16">
+          <Member Name="Pending" Value="0" />
+          <Member Name="Verified" Value="1" />
+          <Member Name="Paid" Value="2" />
+        </EnumType>
+        <EnumType Name="NotificationType" UnderlyingType="Int16">
+          <Member Name="None" Value="0" />
+          <Member Name="NewBooking" Value="1" />
+          <Member Name="BookingConfirmed" Value="2" />
+          <Member Name="BookingCancelled" Value="3" />
+          <Member Name="ServiceComplete" Value="4" />
+          <Member Name="NewReview" Value="5" />
+          <Member Name="PaymentReceived" Value="6" />
+        </EnumType>
+        <EnumType Name="NotificationStatus" UnderlyingType="Int16">
+          <Member Name="Unread" Value="0" />
+          <Member Name="Read" Value="1" />
+        </EnumType>
+        <EnumType Name="NotificationGroup" UnderlyingType="Int16">
+          <Member Name="None" Value="0" />
+          <Member Name="Offering" Value="1" />
+          <Member Name="Seeking" Value="2" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1263,6 +1294,9 @@
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="AgrishareModel.Booking">
               <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="TransportCost" ColumnName="TransportCost" />
+                <ScalarProperty Name="FuelCost" ColumnName="FuelCost" />
+                <ScalarProperty Name="HireCost" ColumnName="HireCost" />
                 <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ForId" ColumnName="ForId" />
@@ -1381,10 +1415,10 @@
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="AgrishareModel.Notification">
               <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="BookingId" ColumnName="BookingId" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -1487,6 +1521,7 @@
           <EntitySetMapping Name="Services">
             <EntityTypeMapping TypeName="AgrishareModel.Service">
               <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="FuelPrice" ColumnName="FuelPrice" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="LastModified" ColumnName="LastModified" />

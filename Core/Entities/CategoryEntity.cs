@@ -12,6 +12,10 @@ namespace Agrishare.Core.Entities
 {
     public partial class Category : IEntity
     {
+        public const int TractorsId = 1;
+        public const int LorriesId = 2;
+        public const int ProcessingId = 3;
+
         public static string DefaultSort = "Title";
 
         private static string CacheKey(int Id)

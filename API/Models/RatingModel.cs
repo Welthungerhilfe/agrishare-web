@@ -7,7 +7,7 @@ namespace Agrishare.API.Models
     public class RatingModel
     {
         [Required]
-        public int ListingId { get; set; }
+        public int BookingId { get; set; }
 
         [Required]
         public int Rating { get; set; }

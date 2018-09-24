@@ -17,9 +17,9 @@ namespace Agrishare.Core.Entities
         public int Id { get; set; }
         public int UserId { get; set; }
         public Nullable<int> BookingId { get; set; }
-        public string Title { get; set; }
-        public short TypeId { get; set; }
-        public short StatusId { get; set; }
+        public NotificationType TypeId { get; set; }
+        public NotificationStatus StatusId { get; set; }
+        public NotificationGroup GroupId { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }

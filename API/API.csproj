@@ -137,6 +137,7 @@
     <Compile Include="App_Code\ExceptionFilter.cs" />
     <Compile Include="App_Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />

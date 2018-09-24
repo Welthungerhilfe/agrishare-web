@@ -72,6 +72,7 @@ namespace Agri.API.Controllers
                 listing.Services.Add(new Entities.Service
                 {
                     DistanceUnitId = service.DistanceUnitId,
+                    FuelPrice = service.FuelPrice,
                     FuelPerQuantityUnit = service.FuelPerQuantityUnit,
                     MaximumDistance = service.MaximumDistance,
                     MinimumQuantity = service.MinimumQuantity,

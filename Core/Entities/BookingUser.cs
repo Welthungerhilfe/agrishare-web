@@ -27,7 +27,7 @@ namespace Agrishare.Core.Entities
         public decimal Ratio { get; set; }
         public string VerificationCode { get; set; }
         public System.DateTime VerificationCodeExpiry { get; set; }
-        public short StatusId { get; set; }
+        public BookingUserStatus StatusId { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }

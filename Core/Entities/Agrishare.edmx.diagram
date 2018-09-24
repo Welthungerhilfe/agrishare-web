@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="AgrishareModel.Category" Width="1.5" PointX="12.5" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Config" Width="1.5" PointX="4.5" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Faq" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgrishareModel.Listing" Width="1.5" PointX="12.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgrishareModel.Listing" Width="1.75" PointX="12.5" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Log" Width="1.5" PointX="2.625" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Notification" Width="1.5" PointX="12.5" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Page" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />

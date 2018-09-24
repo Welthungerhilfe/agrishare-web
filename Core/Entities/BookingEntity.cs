@@ -146,6 +146,9 @@ namespace Agrishare.Core.Entities
                 StartDate,
                 EndDate,
                 Price,
+                HireCost,
+                FuelCost,
+                TransportCost,
                 StatusId,
                 Status,
                 DateCreated

@@ -52,6 +52,9 @@ CREATE TABLE `Bookings` (
   `StartDate` date NOT NULL,
   `EndDate` date NOT NULL,
   `Price` decimal(10,3) NOT NULL DEFAULT '0.000',
+  `HireCost` decimal(10,3) NOT NULL DEFAULT '0.000',
+  `FuelCost` decimal(10,3) NOT NULL DEFAULT '0.000',
+  `TransportCost` decimal(10,3) NOT NULL DEFAULT '0.000',
   `StatusId` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Enum: Pending, Approved, Declined, In Progress, Complete',
   `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -197,9 +200,9 @@ CREATE TABLE `Notifications` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `UserId` int(11) NOT NULL,
   `BookingId` int(11) DEFAULT NULL,
-  `Title` varchar(1024) DEFAULT NULL,
   `TypeId` smallint(6) NOT NULL DEFAULT '0',
   `StatusId` smallint(6) NOT NULL DEFAULT '0',
+  `GroupId` smallint(6) NOT NULL DEFAULT '0',
   `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
@@ -274,6 +277,7 @@ CREATE TABLE `Services` (
   `FuelPerQuantityUnit` decimal(10,3) NOT NULL DEFAULT '0.000',
   `TimePerQuantityUnit` decimal(10,3) NOT NULL DEFAULT '0.000',
   `PricePerDistanceUnit` decimal(10,3) NOT NULL DEFAULT '0.000',
+  `FuelPrice` decimal(10,3) NOT NULL DEFAULT '0.000',
   `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
@@ -297,7 +301,7 @@ CREATE TABLE `Templates` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Transactions` */
 

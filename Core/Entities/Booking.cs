@@ -35,6 +35,9 @@ namespace Agrishare.Core.Entities
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public decimal Price { get; set; }
+        public decimal HireCost { get; set; }
+        public decimal FuelCost { get; set; }
+        public decimal TransportCost { get; set; }
         public BookingStatus StatusId { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }

@@ -36,10 +36,14 @@ namespace Agri.API.Controllers
             if (!ModelState.IsValid)
                 return Error(ModelState);
 
+            var booking = Entities.Booking.Find(Id: Model.BookingId);
+            if (booking == null || booking.UserId != CurrentUser.Id)
+                return Error("Booking not found");
+
             var rating = new Entities.Rating
             {
                 Comments = Model.Comments,
-                ListingId = Model.ListingId,
+                ListingId = booking.ListingId,
                 Stars = Model.Rating,
                 User = CurrentUser
             };
@@ -50,6 +54,13 @@ namespace Agri.API.Controllers
                 listing.AverageRating = ((listing.AverageRating * listing.RatingCount) + rating.Stars)  / (listing.RatingCount + 1);
                 listing.RatingCount += 1;
                 listing.Save();
+
+                new Entities.Notification
+                {
+                    BookingId = booking.Id,
+                    TypeId = Entities.NotificationType.NewReview,
+                    UserId = booking.Listing.UserId
+                }.Save(Notify: true);
 
                 return Success(new
                 {
