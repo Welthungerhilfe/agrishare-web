@@ -4,6 +4,9 @@
     <EntitySetMapping Name="Bookings">
       <EntityTypeMapping TypeName="AgrishareModel.Booking">
         <MappingFragment StoreEntitySet="Bookings">
+          <ScalarProperty Name="TransportCost" ColumnName="TransportCost" />
+          <ScalarProperty Name="FuelCost" ColumnName="FuelCost" />
+          <ScalarProperty Name="HireCost" ColumnName="HireCost" />
           <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ForId" ColumnName="ForId" />
@@ -122,10 +125,10 @@
     <EntitySetMapping Name="Notifications">
       <EntityTypeMapping TypeName="AgrishareModel.Notification">
         <MappingFragment StoreEntitySet="Notifications">
+          <ScalarProperty Name="GroupId" ColumnName="GroupId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="BookingId" ColumnName="BookingId" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="TypeId" ColumnName="TypeId" />
           <ScalarProperty Name="StatusId" ColumnName="StatusId" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -171,8 +174,8 @@
     <EntitySetMapping Name="Transactions">
       <EntityTypeMapping TypeName="AgrishareModel.Transaction">
         <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="Log" ColumnName="Log" />
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="BookingId" ColumnName="BookingId" />
           <ScalarProperty Name="BookingUserId" ColumnName="BookingUserId" />
           <ScalarProperty Name="Reference" ColumnName="Reference" />
@@ -228,6 +231,7 @@
     <EntitySetMapping Name="Services">
       <EntityTypeMapping TypeName="AgrishareModel.Service">
         <MappingFragment StoreEntitySet="Services">
+          <ScalarProperty Name="FuelPrice" ColumnName="FuelPrice" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="Deleted" ColumnName="Deleted" />
           <ScalarProperty Name="LastModified" ColumnName="LastModified" />

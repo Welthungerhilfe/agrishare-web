@@ -237,6 +237,7 @@
     <Compile Include="Entities\ListingCondition.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TransactionEntity.cs" />
     <Compile Include="Entities\NotificationGroup.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -295,6 +296,9 @@
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Transaction.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TransactionStatus.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\User.cs">

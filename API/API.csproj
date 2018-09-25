@@ -140,6 +140,7 @@
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
+    <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ListingsController.cs" />

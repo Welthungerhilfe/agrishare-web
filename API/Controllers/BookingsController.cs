@@ -98,7 +98,7 @@ namespace Agri.API.Controllers
             return Error("An unknown error occurred");
         }
 
-        [Route("bookings/confirm")]
+        [Route("booking/confirm")]
         [AcceptVerbs("GET")]
         public object ConfirmBooking(int BookingId)
         {
@@ -158,6 +158,106 @@ namespace Agri.API.Controllers
                     {
                         Id = BookingId
                     }
+                });
+            }
+
+            return Error("An unknown error occurred");
+        }
+
+        [Route("bookings/complete")]
+        [AcceptVerbs("GET")]
+        public object CompleteBooking(int BookingId)
+        {
+            var booking = Entities.Booking.Find(Id: BookingId);
+            if (booking == null || booking.Listing.UserId != CurrentUser.Id)
+                return Error("Booking not found");
+
+            if (booking.StatusId == Entities.BookingStatus.Complete)
+                return Error("This booking has already been updated");
+
+            booking.StatusId = Entities.BookingStatus.Complete;
+            if (booking.Save())
+            {
+                new Entities.Notification
+                {
+                    BookingId = booking.Id,
+                    TypeId = Entities.NotificationType.ServiceComplete,
+                    UserId = booking.Listing.UserId
+                }.Save(Notify: true);
+
+                return Success(new
+                {
+                    Booking = new
+                    {
+                        Id = BookingId
+                    }
+                });
+            }
+
+            return Error("An unknown error occurred");
+        }
+
+        [Route("bookings/seeking")]
+        [AcceptVerbs("GET")]
+        public object SeekingList(int PageIndex = 0, int PageSize = 25)
+        {
+            var bookings = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, UserId: CurrentUser.Id);
+
+            return Success(new
+            {
+                Bookings = bookings.Select(e => e.Json())
+            });
+        }
+
+        [Route("bookings/offering")]
+        [AcceptVerbs("GET")]
+        public object OfferingList(int PageIndex = 0, int PageSize = 25)
+        {
+            var bookings = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, SupplierId: CurrentUser.Id);
+
+            return Success(new
+            {
+                Bookings = bookings.Select(e => e.Json())
+            });
+        }
+
+        [Route("bookings/detail")]
+        [AcceptVerbs("GET")]
+        public object BookingDetail(int BookingId)
+        {
+            var booking = Entities.Booking.Find(Id: BookingId);
+            if (booking == null || booking.UserId != CurrentUser.Id)
+                return Error("Booking does not exist");
+
+            var bookingUsers = Entities.BookingUser.List(BookingId: booking.Id);
+
+            return Success(new
+            {
+                Booking = booking.Json(),
+                Users = bookingUsers.Select(e => e.Json())
+            });
+        }
+
+        [Route("bookings/users/verify")]
+        [AcceptVerbs("GET")]
+        public object VerifyUser(int BookingUserId, string VerificationCode)
+        {
+            var bookingUser = Entities.BookingUser.Find(Id: BookingUserId);
+            if (bookingUser == null)
+                return Error("User does not exist");
+
+            var booking = Entities.Booking.Find(Id: bookingUser.BookingId);
+            if (booking == null || booking.UserId != CurrentUser.Id)
+                return Error("Booking does not exist");
+
+            if (bookingUser.VerificationCode == VerificationCode)
+            {
+                bookingUser.StatusId = Entities.BookingUserStatus.Verified;
+                bookingUser.Save();
+
+                return Success(new
+                {
+                    BookingUser = bookingUser.Json()
                 });
             }
 

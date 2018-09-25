@@ -58,6 +58,17 @@ namespace Agrishare.Core.Entities
             }
         }
 
+        private static string _apiURL { get; set; }
+        public static string APIURL
+        {
+            get
+            {
+                if (_apiURL.IsEmpty())
+                    _apiURL = Find(Key: "API URL").Value;
+                return _apiURL;
+            }
+        }
+
         #endregion
 
         public static string EncryptionPassword = "@DzaRtTxBBCTwG&53Ryh*t#x#m87Kg%$aH7P";

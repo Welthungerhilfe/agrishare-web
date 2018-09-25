@@ -39,7 +39,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<Booking> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int ListingId = 0, int UserId = 0)
+        public static List<Booking> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int ListingId = 0, int UserId = 0, int SupplierId = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -51,23 +51,29 @@ namespace Agrishare.Core.Entities
                 if (UserId > 0)
                     query = query.Where(o => o.UserId == UserId);
 
+                if (SupplierId > 0)
+                    query = query.Where(o => o.Listing.UserId == SupplierId);
+
                 query = query.OrderBy(Sort.Coalesce(DefaultSort));
 
                 return query.Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
         }
 
-        public static int Count(int ListingId = 0, int UserId = 0)
+        public static int Count(int ListingId = 0, int UserId = 0, int SupplierId = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Bookings.Where(o => !o.Deleted);
+                var query = ctx.Bookings.Include(o => o.Listing).Where(o => !o.Deleted);
 
                 if (ListingId > 0)
                     query = query.Where(o => o.ListingId == ListingId);
 
                 if (UserId > 0)
                     query = query.Where(o => o.UserId == UserId);
+
+                if (SupplierId > 0)
+                    query = query.Where(o => o.Listing.UserId == SupplierId);
 
                 return query.Count();
             }

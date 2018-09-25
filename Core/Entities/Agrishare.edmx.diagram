@@ -5,18 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f49fb05094a048a188b3286fabeb77f2" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="AgrishareModel.Booking" Width="1.5" PointX="8" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgrishareModel.BookingUser" Width="1.5" PointX="5.5" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgrishareModel.Category" Width="1.5" PointX="12.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgrishareModel.Booking" Width="1.75" PointX="7.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgrishareModel.BookingUser" Width="2" PointX="5" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgrishareModel.Category" Width="1.5" PointX="11.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Config" Width="1.5" PointX="4.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgrishareModel.Faq" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgrishareModel.Faq" Width="1.5" PointX="6.375" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Listing" Width="1.75" PointX="12.5" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Log" Width="1.5" PointX="2.625" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgrishareModel.Notification" Width="1.5" PointX="12.5" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgrishareModel.Notification" Width="1.625" PointX="12.5" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Page" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgrishareModel.Template" Width="1.5" PointX="10.125" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgrishareModel.Template" Width="1.5" PointX="8.375" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AgrishareModel.Transaction" Width="1.5" PointX="5.625" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="AgrishareModel.User" Width="2.375" PointX="17.125" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="AgrishareModel.User" Width="2.125" PointX="17.125" PointY="4" IsExpanded="true" />
         <AssociationConnector Association="AgrishareModel.bookings_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="AgrishareModel.bookings_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="AgrishareModel.bookingusers_ibfk_1" ManuallyRouted="false" />
@@ -28,15 +28,14 @@
         </AssociationConnector>
         <AssociationConnector Association="AgrishareModel.notifications_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="AgrishareModel.pages_ibfk_1" ManuallyRouted="false" />
-        <AssociationConnector Association="AgrishareModel.transactions_ibfk_1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="AgrishareModel.Rating" Width="1.5" PointX="14.875" PointY="4" />
-        <EntityTypeShape EntityType="AgrishareModel.Service" Width="1.5" PointX="10.125" PointY="4" />
+        <EntityTypeShape EntityType="AgrishareModel.Service" Width="1.875" PointX="10.125" PointY="4" />
         <AssociationConnector Association="AgrishareModel.bookings_ibfk_3" />
         <AssociationConnector Association="AgrishareModel.ratings_ibfk_1" />
         <AssociationConnector Association="AgrishareModel.services_ibfk_1" />
         <AssociationConnector Association="AgrishareModel.ratings_ibfk_2" />
-        <EntityTypeShape EntityType="AgrishareModel.Counter" Width="1.5" PointX="0.75" PointY="5.75" />
-        <EntityTypeShape EntityType="AgrishareModel.Device" Width="1.5" PointX="20.25" PointY="5.25" />
+        <EntityTypeShape EntityType="AgrishareModel.Counter" Width="1.5" PointX="2.625" PointY="3.625" />
+        <EntityTypeShape EntityType="AgrishareModel.Device" Width="1.5" PointX="20" PointY="4" />
         <AssociationConnector Association="AgrishareModel.devices_ibfk_1" />
         <AssociationConnector Association="AgrishareModel.services_ibfk_21" />
       </Diagram>

@@ -231,12 +231,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="BookingId" Type="int" Nullable="false" />
           <Property Name="BookingUserId" Type="int" />
           <Property Name="Reference" Type="varchar" MaxLength="256" />
           <Property Name="Amount" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
+          <Property Name="Log" Type="text" />
           <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Deleted" Type="bool" Nullable="false" />
@@ -463,20 +463,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="transactions_ibfk_1">
-          <End Role="Users" Type="Self.Users" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Transactions">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="transactions_ibfk_2">
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -577,10 +563,6 @@
           <AssociationSet Name="services_ibfk_2" Association="Self.services_ibfk_2">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Services" EntitySet="Services" />
-          </AssociationSet>
-          <AssociationSet Name="transactions_ibfk_1" Association="Self.transactions_ibfk_1">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
           <AssociationSet Name="transactions_ibfk_2" Association="Self.transactions_ibfk_2">
             <End Role="Bookings" EntitySet="Bookings" />
@@ -771,18 +753,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="BookingId" Type="Int32" Nullable="false" />
           <Property Name="BookingUserId" Type="Int32" />
           <Property Name="Reference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Amount" Type="Decimal" Nullable="false" />
-          <Property Name="StatusId" Type="Int16" Nullable="false" />
+          <Property Name="StatusId" Type="AgrishareModel.TransactionStatus" Nullable="false" />
+          <Property Name="Log" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Booking" Relationship="Self.transactions_ibfk_2" FromRole="Transactions" ToRole="Bookings" />
           <NavigationProperty Name="BookingUser" Relationship="Self.transactions_ibfk_3" FromRole="Transactions" ToRole="BookingUsers" />
-          <NavigationProperty Name="User" Relationship="Self.transactions_ibfk_1" FromRole="Transactions" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -950,20 +931,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="transactions_ibfk_1">
-          <End Role="Users" Type="Self.User" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Transactions">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="AgrishareEntities" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="Bookings" EntityType="Self.Booking" />
           <EntitySet Name="BookingUsers" EntityType="Self.BookingUser" />
@@ -1016,10 +983,6 @@
           <AssociationSet Name="pages_ibfk_1" Association="Self.pages_ibfk_1">
             <End Role="Pages" EntitySet="Pages" />
             <End Role="Pages1" EntitySet="Pages" />
-          </AssociationSet>
-          <AssociationSet Name="transactions_ibfk_1" Association="Self.transactions_ibfk_1">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
           <EntitySet Name="Ratings" EntityType="AgrishareModel.Rating" />
           <EntitySet Name="Services" EntityType="AgrishareModel.Service" />
@@ -1285,6 +1248,22 @@
           <Member Name="Offering" Value="1" />
           <Member Name="Seeking" Value="2" />
         </EnumType>
+        <EnumType Name="TransactionStatus" UnderlyingType="Int16">
+          <Member Name="None" Value="0" />
+          <Member Name="Cancelled" Value="1" />
+          <Member Name="CreatedNotPaid" Value="2" />
+          <Member Name="AwaitingRedirect" Value="3" />
+          <Member Name="Paid" Value="4" />
+          <Member Name="Failed" Value="5" />
+          <Member Name="Initiated" Value="6" />
+          <Member Name="Processing" Value="7" />
+          <Member Name="Refund" Value="8" />
+          <Member Name="Refused" Value="9" />
+          <Member Name="Denied" Value="10" />
+          <Member Name="PendingSubscriberValidation" Value="11" />
+          <Member Name="Deleted" Value="12" />
+          <Member Name="Pending" Value="13" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1464,8 +1443,8 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="AgrishareModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Log" ColumnName="Log" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="BookingId" ColumnName="BookingId" />
                 <ScalarProperty Name="BookingUserId" ColumnName="BookingUserId" />
                 <ScalarProperty Name="Reference" ColumnName="Reference" />

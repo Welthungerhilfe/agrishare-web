@@ -35,7 +35,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<BookingUser> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string StartsWith = "")
+        public static List<BookingUser> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string StartsWith = "", int BookingId = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -46,13 +46,17 @@ namespace Agrishare.Core.Entities
 
                 if (!StartsWith.IsEmpty())
                     query = query.Where(o => o.Name.ToLower().StartsWith(Keywords.ToLower()));
+
+                if (BookingId > 0)
+                    query = query.Where(o => o.BookingId == BookingId);
 
                 return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
         }
 
-        public static int Count(string Keywords = "", string StartsWith = "")
+        public static int Count(string Keywords = "", string StartsWith = "", int BookingId = 0)
         {
+
             using (var ctx = new AgrishareEntities())
             {
                 var query = ctx.BookingUsers.Where(o => !o.Deleted);
@@ -62,6 +66,9 @@ namespace Agrishare.Core.Entities
 
                 if (!StartsWith.IsEmpty())
                     query = query.Where(o => o.Name.ToLower().StartsWith(Keywords.ToLower()));
+
+                if (BookingId > 0)
+                    query = query.Where(o => o.BookingId == BookingId);
 
                 return query.Count();
             }
@@ -117,8 +124,6 @@ namespace Agrishare.Core.Entities
                 Name,
                 Telephone,
                 Ratio,
-                VerificationCode,
-                VerificationCodeExpiry,
                 StatusId,
                 Status,
                 DateCreated,
