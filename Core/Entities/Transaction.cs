@@ -16,7 +16,7 @@ namespace Agrishare.Core.Entities
     {
         public int Id { get; set; }
         public int BookingId { get; set; }
-        public Nullable<int> BookingUserId { get; set; }
+        public int BookingUserId { get; set; }
         public string Reference { get; set; }
         public decimal Amount { get; set; }
         public TransactionStatus StatusId { get; set; }

@@ -237,19 +237,6 @@
     <Compile Include="Entities\ListingCondition.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\TransactionEntity.cs" />
-    <Compile Include="Entities\NotificationGroup.cs">
-      <DependentUpon>Agrishare.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\NotificationStatus.cs">
-      <DependentUpon>Agrishare.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\NotificationType.cs">
-      <DependentUpon>Agrishare.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\RatingEntity.cs" />
-    <Compile Include="Entities\ListingSearchResult.cs" />
-    <Compile Include="Entities\DeviceEntity.cs" />
     <Compile Include="Entities\ListingStatus.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -260,6 +247,15 @@
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Notification.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationGroup.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationStatus.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationType.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Page.cs">
@@ -274,21 +270,9 @@
     <Compile Include="Entities\Service.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\BookingEntity.cs" />
-    <Compile Include="Entities\NotificationEntity.cs" />
-    <Compile Include="Entities\ServiceEntity.cs" />
-    <Compile Include="Entities\NotificationPreferences.cs" />
-    <Compile Include="Entities\Language.cs" />
     <Compile Include="Entities\Template.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\TemplateEntity.cs" />
-    <Compile Include="Entities\FaqEntity.cs" />
-    <Compile Include="Entities\CategoryEntity.cs" />
-    <Compile Include="Entities\Role.cs" />
-    <Compile Include="Entities\ConfigEntity.cs" />
-    <Compile Include="Entities\LogEntity.cs" />
-    <Compile Include="Entities\ListingEntity.cs" />
     <Compile Include="Entities\TemplateType.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -298,13 +282,29 @@
     <Compile Include="Entities\Transaction.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TransactionEntity.cs" />
+    <Compile Include="Entities\RatingEntity.cs" />
+    <Compile Include="Entities\ListingSearchResult.cs" />
+    <Compile Include="Entities\DeviceEntity.cs" />
+    <Compile Include="Entities\BookingEntity.cs" />
+    <Compile Include="Entities\NotificationEntity.cs" />
+    <Compile Include="Entities\ServiceEntity.cs" />
+    <Compile Include="Entities\NotificationPreferences.cs" />
+    <Compile Include="Entities\Language.cs" />
+    <Compile Include="Entities\TemplateEntity.cs" />
+    <Compile Include="Entities\FaqEntity.cs" />
+    <Compile Include="Entities\CategoryEntity.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\ConfigEntity.cs" />
+    <Compile Include="Entities\LogEntity.cs" />
+    <Compile Include="Entities\ListingEntity.cs" />
+    <Compile Include="Entities\BookingUserEntity.cs" />
     <Compile Include="Entities\TransactionStatus.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\User.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\BookingUserEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\UserStatus.cs">
@@ -319,7 +319,7 @@
     <Compile Include="Encryption\HexEncoding.cs" />
     <Compile Include="Encryption\Rc4Encryption.cs" />
     <Compile Include="Utils\SMS.cs" />
-    <Compile Include="Utils\Geometry.cs" />
+    <Compile Include="Utils\Location.cs" />
     <Compile Include="Utils\SNS.cs" />
     <Compile Include="Utils\SQL.cs" />
   </ItemGroup>

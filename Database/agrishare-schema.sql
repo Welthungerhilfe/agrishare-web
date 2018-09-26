@@ -17,7 +17,7 @@ MySQL - 5.7.21-log : Database - agrishare
 DROP TABLE IF EXISTS `BookingUsers`;
 
 CREATE TABLE `BookingUsers` (
-  `Id` int(11) NOT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `BookingId` int(11) NOT NULL,
   `Name` varchar(256) DEFAULT NULL,
   `Telephone` varchar(16) DEFAULT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `BookingUsers` (
   PRIMARY KEY (`Id`),
   KEY `BookingId` (`BookingId`),
   CONSTRAINT `bookingusers_ibfk_1` FOREIGN KEY (`BookingId`) REFERENCES `Bookings` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 /*Table structure for table `Bookings` */
 
@@ -66,7 +66,7 @@ CREATE TABLE `Bookings` (
   CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`ListingId`) REFERENCES `Listings` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`ServiceId`) REFERENCES `Services` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5000 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5014 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Categories` */
 
@@ -190,7 +190,7 @@ CREATE TABLE `Log` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Notifications` */
 
@@ -211,7 +211,7 @@ CREATE TABLE `Notifications` (
   KEY `BookingId` (`BookingId`),
   CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`BookingId`) REFERENCES `Bookings` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Pages` */
 
@@ -308,9 +308,9 @@ CREATE TABLE `Templates` (
 DROP TABLE IF EXISTS `Transactions`;
 
 CREATE TABLE `Transactions` (
-  `Id` int(11) NOT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `BookingId` int(11) NOT NULL,
-  `BookingUserId` int(11) DEFAULT NULL,
+  `BookingUserId` int(11) NOT NULL,
   `Reference` varchar(256) DEFAULT NULL,
   `Amount` decimal(10,3) NOT NULL DEFAULT '0.000',
   `StatusId` smallint(6) NOT NULL DEFAULT '0',
@@ -323,7 +323,7 @@ CREATE TABLE `Transactions` (
   KEY `BookingUserId` (`BookingUserId`),
   CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`BookingId`) REFERENCES `Bookings` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`BookingUserId`) REFERENCES `BookingUsers` (`Id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2001 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Users` */
 

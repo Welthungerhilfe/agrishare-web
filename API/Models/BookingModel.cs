@@ -31,20 +31,5 @@ namespace Agrishare.API.Models
 
         [Required]
         public DateTime StartDate { get; set; }
-
-        [Required]
-        public List<BookingUserModel> Users { get; set; }
-    }
-
-    public class BookingUserModel
-    {
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string Telephone { get; set; }
-
-        [Required]
-        public decimal Quantity { get; set; }
     }
 }

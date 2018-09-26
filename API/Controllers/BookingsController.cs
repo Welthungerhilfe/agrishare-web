@@ -45,9 +45,8 @@ namespace Agri.API.Controllers
 
             if (booking.Service.Mobile)
             {
-                var origin = Geometry.CreatePoint(booking.Listing.Latitude, booking.Listing.Longitude);
-                var destination = Geometry.CreatePoint(booking.Latitude, booking.Longitude);
-                booking.Distance = (decimal)(origin.Distance(destination) ?? 0) * 2;
+                var distance = Location.GetDistance(Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude), Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude));
+                booking.Distance = (decimal)distance / 1000;
             }
             else
                 booking.Distance = 0;
@@ -62,31 +61,11 @@ namespace Agri.API.Controllers
 
             if (booking.Save())
             {
-                booking.BookingUsers = new List<Entities.BookingUser>();
-                foreach (var user in Model.Users)
-                {
-                    var bookingUser = new Entities.BookingUser
-                    {
-                        Booking = booking,
-                        Name = user.Name,
-                        Ratio = user.Quantity / booking.Quantity,
-                        StatusId = Entities.BookingUserStatus.Pending,
-                        Telephone = user.Telephone,
-                        VerificationCode = Entities.User.GeneratePIN(4),
-                        VerificationCodeExpiry = DateTime.Now.AddDays(1)
-                    };
-
-                    if (bookingUser.Save())
-                        bookingUser.SendVerificationCode();
-
-                    booking.BookingUsers.Add(bookingUser);
-                }
-
                 new Entities.Notification
                 {
-                    BookingId = booking.Id,
+                    Booking = booking,
                     TypeId = Entities.NotificationType.NewBooking,
-                    UserId = booking.Listing.UserId
+                    User = Entities.User.Find(Id: booking.Listing.UserId)
                 }.Save(Notify: true);
 
                 return Success(new
@@ -98,7 +77,7 @@ namespace Agri.API.Controllers
             return Error("An unknown error occurred");
         }
 
-        [Route("booking/confirm")]
+        [Route("bookings/confirm")]
         [AcceptVerbs("GET")]
         public object ConfirmBooking(int BookingId)
         {
@@ -114,9 +93,9 @@ namespace Agri.API.Controllers
             {
                 new Entities.Notification
                 {
-                    BookingId = booking.Id,
+                    Booking = booking,
                     TypeId = Entities.NotificationType.BookingConfirmed,
-                    UserId = booking.UserId
+                    User = Entities.User.Find(Id: booking.UserId)
                 }.Save(Notify: true);
 
                 return Success(new
@@ -147,9 +126,9 @@ namespace Agri.API.Controllers
             {
                 new Entities.Notification
                 {
-                    BookingId = booking.Id,
+                    Booking = booking,
                     TypeId = Entities.NotificationType.BookingCancelled,
-                    UserId = booking.UserId
+                    User = Entities.User.Find(Id: booking.UserId)
                 }.Save(Notify: true);
 
                 return Success(new
@@ -180,9 +159,9 @@ namespace Agri.API.Controllers
             {
                 new Entities.Notification
                 {
-                    BookingId = booking.Id,
+                    Booking = booking,
                     TypeId = Entities.NotificationType.ServiceComplete,
-                    UserId = booking.Listing.UserId
+                    User = Entities.User.Find(Id: booking.Listing.UserId)
                 }.Save(Notify: true);
 
                 return Success(new
@@ -243,11 +222,11 @@ namespace Agri.API.Controllers
         public object VerifyUser(int BookingUserId, string VerificationCode)
         {
             var bookingUser = Entities.BookingUser.Find(Id: BookingUserId);
-            if (bookingUser == null)
+            if (bookingUser == null || bookingUser.Id == 0)
                 return Error("User does not exist");
 
             var booking = Entities.Booking.Find(Id: bookingUser.BookingId);
-            if (booking == null || booking.UserId != CurrentUser.Id)
+            if (booking == null || booking.Id == 0 || booking.UserId != CurrentUser.Id)
                 return Error("Booking does not exist");
 
             if (bookingUser.VerificationCode == VerificationCode)
@@ -261,7 +240,7 @@ namespace Agri.API.Controllers
                 });
             }
 
-            return Error("An unknown error occurred");
+            return Error("Invalid code");
         }
     }
 }

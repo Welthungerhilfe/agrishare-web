@@ -93,6 +93,11 @@ namespace Agrishare.Core.Entities
                 ListingId = listing.Id;
             Listing = null;
 
+            var user = User;
+            if (user != null)
+                UserId = user.Id;
+            User = null;
+
             if (Id == 0)
                 success = Add();
             else
@@ -100,6 +105,7 @@ namespace Agrishare.Core.Entities
 
             Service = service;
             Listing = listing;
+            User = user;
 
             return success;
         }

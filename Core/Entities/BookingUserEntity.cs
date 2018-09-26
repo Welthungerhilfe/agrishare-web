@@ -78,10 +78,16 @@ namespace Agrishare.Core.Entities
         {
             var success = false;
 
+            var booking = Booking;
+            if (booking != null) BookingId = booking.Id;
+            Booking = null;
+
             if (Id == 0)
                 success = Add();
             else
                 success = Update();
+
+            Booking = booking;
 
             return success;
         }

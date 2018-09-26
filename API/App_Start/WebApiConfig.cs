@@ -30,6 +30,8 @@ namespace API
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));
 
             config.Filters.Add(new ValidateViewModelAttribute());
+            config.Filters.Add(new ExceptionFilter());
+
         }
     }
 }

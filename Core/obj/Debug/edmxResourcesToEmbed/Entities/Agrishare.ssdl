@@ -30,7 +30,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BookingId" Type="int" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="256" />
     <Property Name="Telephone" Type="varchar" MaxLength="16" />
@@ -225,9 +225,9 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BookingId" Type="int" Nullable="false" />
-    <Property Name="BookingUserId" Type="int" />
+    <Property Name="BookingUserId" Type="int" Nullable="false" />
     <Property Name="Reference" Type="varchar" MaxLength="256" />
     <Property Name="Amount" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />
@@ -473,7 +473,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="transactions_ibfk_3">
-    <End Role="BookingUsers" Type="Self.BookingUsers" Multiplicity="0..1">
+    <End Role="BookingUsers" Type="Self.BookingUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />

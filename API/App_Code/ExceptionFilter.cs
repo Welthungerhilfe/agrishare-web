@@ -8,7 +8,8 @@ namespace Agrishare.API
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
             var exception = actionExecutedContext.Exception;
-            Log.Error(exception.Message, exception);
+            var path = actionExecutedContext.Request.RequestUri.LocalPath;
+            Log.Error(path, exception);
         }
     }
 }

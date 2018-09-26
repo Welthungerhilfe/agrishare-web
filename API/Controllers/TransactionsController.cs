@@ -15,21 +15,19 @@ using Newtonsoft.Json;
 
 namespace Agri.API.Controllers
 {
-    [@Authorize(Roles = "User")]
     public class TransactionsController : BaseApiController
     {
         [Route("transactions/ecocash/notify")]
         [AcceptVerbs("POST")]
-        public void EcoCashNotification([FromBody] string JsonString)
+        public object EcoCashNotification(EcoCashModel Model)
         {
-            dynamic jsonObject = JsonConvert.DeserializeObject(JsonString);
-            if (jsonObject.transactionOperationStatus == "COMPLETED")
-            {
-                var id = Convert.ToInt32(jsonObject.clientCorrelator.ToString());
-                Entities.Transaction.Find(Id: id).RequestEcoCashStatus();
-            }
+            if (Model.TransactionOperationStatus == "COMPLETED")
+                Entities.Transaction.Find(Id: Model.ClientCorrelator).RequestEcoCashStatus();
+
+            return Success(Model);
         }
 
+        [@Authorize(Roles = "User")]
         [Route("transactions/ecocash/poll")]
         [AcceptVerbs("GET")]
         public object PollEcoCash(int BookingId)
@@ -48,24 +46,44 @@ namespace Agri.API.Controllers
             });
         }
 
+        [@Authorize(Roles = "User")]
         [Route("transactions/create")]
-        [AcceptVerbs("GET")]
-        public object CreateTransaction(int BookingId)
+        [AcceptVerbs("POST")]
+        public object CreateTransaction(TransactionModel Model)
         {
-            var booking = Entities.Booking.Find(Id: BookingId);
+            if (!ModelState.IsValid)
+                return Error(ModelState);
+
+            var booking = Entities.Booking.Find(Id: Model.BookingId);
             if (booking == null || booking.UserId != CurrentUser.Id)
                 return Error("Booking not found");
 
+            booking.BookingUsers = new List<Entities.BookingUser>();
+            foreach (var user in Model.Users)
+            {
+                var bookingUser = new Entities.BookingUser
+                {
+                    Booking = booking,
+                    Name = user.Name,
+                    Ratio = user.Quantity / booking.Quantity,
+                    StatusId = Entities.BookingUserStatus.Pending,
+                    Telephone = user.Telephone
+                };
+
+                bookingUser.Save();
+                booking.BookingUsers.Add(bookingUser);
+            }
+
             var transactions = new List<Entities.Transaction>();
 
-            var bookingUsers = Entities.BookingUser.List(BookingId: booking.Id);
-            foreach (var bookingUser in bookingUsers)
+            foreach (var bookingUser in booking.BookingUsers)
             {
                 var transaction = new Entities.Transaction
                 {
                     Amount = booking.Price * bookingUser.Ratio,
                     Booking = booking,
-                    BookingUser = bookingUser
+                    BookingUser = bookingUser,
+                    StatusId = Entities.TransactionStatus.Pending
                 };
 
                 transaction.Save();
@@ -79,6 +97,7 @@ namespace Agri.API.Controllers
             });
         }
 
+        [@Authorize(Roles = "User")]
         [Route("transactions")]
         [AcceptVerbs("GET")]
         public object TransactionList(int BookingId)

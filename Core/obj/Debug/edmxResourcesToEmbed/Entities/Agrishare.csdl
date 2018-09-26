@@ -35,7 +35,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="BookingId" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Telephone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
@@ -175,9 +175,9 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="BookingId" Type="Int32" Nullable="false" />
-    <Property Name="BookingUserId" Type="Int32" />
+    <Property Name="BookingUserId" Type="Int32" Nullable="false" />
     <Property Name="Reference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Amount" Type="Decimal" Nullable="false" />
     <Property Name="StatusId" Type="AgrishareModel.TransactionStatus" Nullable="false" />
@@ -285,7 +285,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="transactions_ibfk_3">
-    <End Role="BookingUsers" Type="Self.BookingUser" Multiplicity="0..1">
+    <End Role="BookingUsers" Type="Self.BookingUser" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />

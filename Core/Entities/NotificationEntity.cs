@@ -105,24 +105,24 @@ namespace Agrishare.Core.Entities
             else
                 success = Update();
 
+            User = user;
+            Booking = booking;
+
             if (Notify)
             {
-                if ((User.NotificationPreferences & (int)Entities.NotificationPreferences.Email) > 0)
+                if ((User.NotificationPreferences & (int)NotificationPreferences.Email) > 0)
                     SendEmail();
 
-                if ((User.NotificationPreferences & (int)Entities.NotificationPreferences.PushNotifications) > 0)
+                if ((User.NotificationPreferences & (int)NotificationPreferences.PushNotifications) > 0)
                 {
                     var devices = Device.List(UserId: UserId);
                     foreach (var device in devices)
                         SendPushNotification(device.EndpointARN);
                 }
 
-                if ((User.NotificationPreferences & (int)Entities.NotificationPreferences.SMS) > 0)
+                if ((User.NotificationPreferences & (int)NotificationPreferences.SMS) > 0)
                     SendSMS();
             }
-
-            User = user;
-            Booking = booking;
 
             return success;
         }
@@ -223,22 +223,22 @@ namespace Agrishare.Core.Entities
             switch (TypeId)
             {
                 case NotificationType.BookingCancelled:
-                    message = $"Booking #{Id} cancelled by supplier";
+                    message = $"Booking {BookingId} cancelled by supplier";
                     break;
                 case NotificationType.BookingConfirmed:
-                    message = $"Booking #{Id}  confirmed by supplier";
+                    message = $"Booking {BookingId} confirmed by supplier";
                     break;
                 case NotificationType.NewBooking:
-                    message = $"New booking received (#{Id})";
+                    message = $"New booking received: {BookingId}";
                     break;
                 case NotificationType.NewReview:
-                    message = $"New review received (#{Id})";
+                    message = $"New review received for booking {BookingId}";
                     break;
                 case NotificationType.PaymentReceived:
                     message = $"Payment received: {Title}";
                     break;
                 case NotificationType.ServiceComplete:
-                    message = $"Service (#{Id}) complete";
+                    message = $"Booking {BookingId} completed";
                     break;
             }
 
