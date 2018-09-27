@@ -102,7 +102,9 @@ namespace Agri.API.Controllers
                 {
                     Booking = new
                     {
-                        Id = BookingId
+                        booking.Id,
+                        booking.StatusId,
+                        booking.Status
                     }
                 });
             }
@@ -135,7 +137,9 @@ namespace Agri.API.Controllers
                 {
                     Booking = new
                     {
-                        Id = BookingId
+                        booking.Id,
+                        booking.StatusId,
+                        booking.Status
                     }
                 });
             }
@@ -168,7 +172,9 @@ namespace Agri.API.Controllers
                 {
                     Booking = new
                     {
-                        Id = BookingId
+                        booking.Id,
+                        booking.StatusId,
+                        booking.Status
                     }
                 });
             }
@@ -180,11 +186,20 @@ namespace Agri.API.Controllers
         [AcceptVerbs("GET")]
         public object SeekingList(int PageIndex = 0, int PageSize = 25)
         {
+            var startDate = DateTime.Today.StartOfDay().AddDays(-(DateTime.Today.Day - 1));
+            var monthlySpend = Entities.Booking.SeekingSummary(CurrentUser.Id, startDate);
+            var totalSpend = Entities.Booking.SeekingSummary(CurrentUser.Id);
+
             var bookings = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, UserId: CurrentUser.Id);
 
             return Success(new
             {
-                Bookings = bookings.Select(e => e.Json())
+                Bookings = bookings.Select(e => e.Json()),
+                Summary = new
+                {
+                    Month = monthlySpend,
+                    Total = totalSpend
+                }
             });
         }
 
@@ -192,11 +207,20 @@ namespace Agri.API.Controllers
         [AcceptVerbs("GET")]
         public object OfferingList(int PageIndex = 0, int PageSize = 25)
         {
+            var startDate = DateTime.Today.StartOfDay().AddDays(-(DateTime.Today.Day - 1));
+            var monthlySpend = Entities.Booking.SeekingSummary(CurrentUser.Id, startDate);
+            var totalSpend = Entities.Booking.SeekingSummary(CurrentUser.Id);
+
             var bookings = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, SupplierId: CurrentUser.Id);
 
             return Success(new
             {
-                Bookings = bookings.Select(e => e.Json())
+                Bookings = bookings.Select(e => e.Json()),
+                Summary = new
+                {
+                    Month = monthlySpend,
+                    Total = totalSpend
+                }
             });
         }
 

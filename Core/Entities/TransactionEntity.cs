@@ -1,5 +1,6 @@
 ﻿using Agrishare.Core.Utils;
 using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -159,7 +160,7 @@ namespace Agrishare.Core.Entities
         private static string EcoCashMerchantNumber => Config.Find(Key: "EcoCash Merchant Number").Value;
         private static bool EcoCashLog => Config.Find(Key: "EcoCash Log").Value.Equals("True", StringComparison.InvariantCultureIgnoreCase);
 
-        public void RequestEcoCashPayment()
+        public bool RequestEcoCashPayment()
         {
             Save();
 
@@ -195,37 +196,33 @@ namespace Agrishare.Core.Entities
             if (EcoCashLog)
                 Log += resourceUri + Environment.NewLine + json;
 
+            var client = new RestClient(resourceUri);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Cache-Control", "no-cache");
+            //TODO authorisation
+            request.AddHeader("Authorization", "Basic Q0VDTGlxdWlkOkwxcXUxZEBDM0Mh");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddParameter("undefined", json, ParameterType.RequestBody);
+            var response = client.Execute<dynamic>(request);
 
-            //bool success = false;
-            //string response = Utilities.JsonRequestBack("POST", resourceUri, json, out success);
-            //Audit += Environment.NewLine + response;
+            if (EcoCashLog)
+                Log += Environment.NewLine + Environment.NewLine + JsonConvert.SerializeObject(response);
 
-            //if (!Config.ApplicationLive)
-            //    GlooEventHistory.Log("EcoCash Payment (response)", response);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Reference = response.Data.serverReferenceCode;
+                StatusId = TransactionStatus.PendingSubscriberValidation;
+                Save();
 
-            //if (success)
-            //{
-            //    dynamic jsonObject = JsonConvert.DeserializeObject(response);
+                return true;
+            }
+            else
+            {
+                StatusId = TransactionStatus.Failed;
+                Save();
 
-            //    if (jsonObject.text != null)
-            //    {
-            //        Status = GlooTransactionStatus.Failed;
-            //        EcoCashErrorMessage = jsonObject.text;
-            //    }
-            //    else
-            //    {
-            //        Status = GlooTransactionStatus.PendingSubscriberValidation;
-            //        EcoCashReference = jsonObject.serverReferenceCode;
-            //    }
-
-            //}
-            //else
-            //{
-            //    Status = GlooTransactionStatus.Failed;
-            //    EcoCashErrorMessage = "Unable to send details to EcoCash server";
-            //}
-
-            Save();
+                return false;
+            }
         }
 
         public void RequestEcoCashStatus()
@@ -262,7 +259,10 @@ namespace Agrishare.Core.Entities
             Save();
 
             if (previousStatusId != TransactionStatus.Paid && StatusId == TransactionStatus.Paid)
+            {
+                //TODO update booking status -> in progress
                 SendPaymentNotification();
+            }
         }
 
         public void RequestEcoCashRefund()

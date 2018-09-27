@@ -34,7 +34,7 @@ namespace Agri.API.Controllers
         {
             var listing = Entities.Listing.Find(Id: ListingId);
 
-            if (listing == null)
+            if (listing == null || listing.Id == 0)
                 return Error("Listing not found");
 
             return Success(new
@@ -196,6 +196,38 @@ namespace Agri.API.Controllers
                 });
 
             return Error("An unknown error occurred");
+        }
+
+        [Route("listings/availability")]
+        [AcceptVerbs("GET")]
+        public object Availability(int ListingId, DateTime StartDate, DateTime EndDate)
+        {
+            var listing = Entities.Listing.Find(Id: ListingId);
+            if (listing == null || listing.Id == 0)
+                return Error("Listing not found");
+
+            var bookings = Entities.Booking.List(ListingId: ListingId, StartDate: StartDate, EndDate: EndDate);
+
+            var list = new List<object>();
+
+            var date = StartDate;
+            while (date <= EndDate)
+            {
+                var available = bookings.Where(o => o.StartDate <= date.StartOfDay() && o.EndDate >= date.EndOfDay()).Count() == 0;
+
+                list.Add(new
+                {
+                    Date = date,
+                    Available = available
+                });
+
+                date = date.AddDays(1);
+            }
+
+            return Success(new
+            {
+                Calendar = list
+            });
         }
     }
 }

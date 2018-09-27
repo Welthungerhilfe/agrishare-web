@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Agrishare.Core.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace Agrishare.Core.Entities
 {
+    public enum ListingSearchResultSort
+    {
+        Distance,
+        Price
+    }
+
     public class ListingSearchResult
     {
         public int ServiceId { get; set; }
@@ -19,12 +26,17 @@ namespace Agrishare.Core.Entities
         public bool Available { get; set; }
         public double Price { get; set; }
         public List<File> Photos => PhotoPaths?.Split(',').Select(e => new File(e)).ToList();
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int Days { get; set; }
 
-        public static List<ListingSearchResult> List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, double Latitude, double Longitude, DateTime StartDate, int Size)
+        public static List<ListingSearchResult> List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel)
         {
-            // TODO calculate distance
-            // TODO calculate price
-            // TODO determine if available
+            var sort = ListingSearchResultSort.Distance;
+            try { sort = (ListingSearchResultSort)Enum.Parse(typeof(ListingSearchResultSort), Sort); }
+            catch { }
+
+            var distance = SQL.Distance(Latitude, Longitude, "Listings");
 
             using (var ctx = new AgrishareEntities())
             {
@@ -33,23 +45,29 @@ namespace Agrishare.Core.Entities
                 sql.AppendLine("SELECT");
                 sql.AppendLine("Services.Id AS ServiceId,");
                 sql.AppendLine("Listings.Title AS Title,");
-                sql.AppendLine("Listings.Year AS Year,");
+                sql.AppendLine("Listings.Year AS YEAR,");
                 sql.AppendLine("Listings.ConditionId AS ConditionId,");
                 sql.AppendLine("Listings.AverageRating AS AverageRating,");
                 sql.AppendLine("Listings.Photos AS PhotoPaths,");
-                sql.AppendLine("99 AS Price,");
-                sql.AppendLine("100 AS Distance");
+                sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.ListingId = Listings.Id AND Bookings.StartDate < DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL CEIL((Services.TimePerQuantityUnit * {Size}) / 8) DAY) AND Bookings.EndDate > DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
+
+                sql.AppendLine($"(Services.PricePerQuantityUnit * {Size}) + (Services.PricePerDistanceUnit * {distance} * 2)");
+                if (IncludeFuel)
+                    sql.AppendLine($"+ (Services.FuelPerQuantityUnit * {Size})");
+                sql.AppendLine("AS Price,");
+
+                sql.AppendLine($"{distance} AS Distance,");
+                sql.AppendLine($"CEIL((Services.TimePerQuantityUnit * {Size}) / 8) AS Days,");
+                sql.AppendLine($"DATE('{SQL.Safe(StartDate)}') AS StartDate,");
+                sql.AppendLine($"DATE_ADD('{SQL.Safe(StartDate)}', INTERVAL CEIL((Services.TimePerQuantityUnit * {Size}) / 8) DAY) AS EndDate");
                 sql.AppendLine("FROM Listings");
                 sql.AppendLine("INNER JOIN Services ON Listings.Id = Services.ListingId");
                 sql.AppendLine("WHERE Listings.Deleted = 0 AND Services.Deleted = 0");
+                sql.AppendLine($"AND Listings.CategoryId = {CategoryId}");
+                sql.AppendLine($"AND Services.CategoryId = {ServiceId}");
+                sql.AppendLine($"GROUP BY Services.Id ORDER BY {sort} LIMIT {PageIndex * PageSize}, {PageSize}");
 
-                if (CategoryId > 0)
-                    sql.AppendLine($"AND Listings.CategoryId = {CategoryId}");
-
-                if (ServiceId > 0)
-                    sql.AppendLine($"AND Services.CategoryId = {ServiceId}");
-
-                sql.AppendLine($"GROUP BY Services.Id ORDER BY {Sort.Coalesce("Distance")} LIMIT {PageIndex * PageSize}, {PageSize}");
+                Log.Debug("Search SQL", sql.ToString());
 
                 return ctx.Database.SqlQuery<ListingSearchResult>(sql.ToString()).ToList();
             }
@@ -67,7 +85,10 @@ namespace Agrishare.Core.Entities
                 Photos = Photos?.Select(e => e.JSON()),
                 Distance,
                 Available,
-                Price
+                Price,
+                StartDate,
+                EndDate,
+                Days
             };
         }
 

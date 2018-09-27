@@ -39,7 +39,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<Booking> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int ListingId = 0, int UserId = 0, int SupplierId = 0)
+        public static List<Booking> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int ListingId = 0, int UserId = 0, int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -54,13 +54,25 @@ namespace Agrishare.Core.Entities
                 if (SupplierId > 0)
                     query = query.Where(o => o.Listing.UserId == SupplierId);
 
+                if (StartDate.HasValue)
+                {
+                    var startDate = StartDate.Value.StartOfDay();
+                    query = query.Where(o => o.EndDate >= startDate);
+                }
+
+                if (EndDate.HasValue)
+                {
+                    var endDate = EndDate.Value.StartOfDay();
+                    query = query.Where(o => o.StartDate <= endDate);
+                }
+
                 query = query.OrderBy(Sort.Coalesce(DefaultSort));
 
                 return query.Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
         }
 
-        public static int Count(int ListingId = 0, int UserId = 0, int SupplierId = 0)
+        public static int Count(int ListingId = 0, int UserId = 0, int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -75,8 +87,56 @@ namespace Agrishare.Core.Entities
                 if (SupplierId > 0)
                     query = query.Where(o => o.Listing.UserId == SupplierId);
 
+                if (StartDate.HasValue)
+                {
+                    var startDate = StartDate.Value.StartOfDay();
+                    query = query.Where(o => o.EndDate >= startDate);
+                }
+
+                if (EndDate.HasValue)
+                {
+                    var endDate = EndDate.Value.StartOfDay();
+                    query = query.Where(o => o.StartDate <= endDate);
+                }
+
                 return query.Count();
             }
+        }
+
+        public static decimal SeekingSummary(int UserId, DateTime? StartDate = null)
+        {
+            using (var ctx = new AgrishareEntities())
+            {
+                var query = ctx.Bookings.Include(o => o.Listing)
+                        .Where(o => !o.Deleted && o.UserId == UserId && (o.StatusId == BookingStatus.Approved || o.StatusId == BookingStatus.Complete || o.StatusId == BookingStatus.InProgress));
+
+                if (StartDate.HasValue)
+                {
+                    var startDate = StartDate.Value.StartOfDay();
+                    query = query.Where(o => o.StartDate >= startDate);
+                }
+
+                return query.Select(o => o.Price).DefaultIfEmpty(0).Sum();
+            }
+
+        }
+
+        public static decimal OfferingSummary(int UserId, DateTime? StartDate = null)
+        {
+            using (var ctx = new AgrishareEntities())
+            {
+                var query = ctx.Bookings.Include(o => o.Listing)
+                        .Where(o => !o.Deleted && o.Listing.UserId == UserId && (o.StatusId == BookingStatus.Approved || o.StatusId == BookingStatus.Complete || o.StatusId == BookingStatus.InProgress));
+
+                if (StartDate.HasValue)
+                {
+                    var startDate = StartDate.Value.StartOfDay();
+                    query = query.Where(o => o.StartDate >= startDate);
+                }
+
+                return query.Select(o => o.Price).DefaultIfEmpty(0).Sum();
+            }
+
         }
 
         public bool Save()

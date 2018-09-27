@@ -47,11 +47,12 @@ namespace Agrishare.Core.Utils
             }
         }
 
-        public static string Distance(decimal Latitude, decimal Longitude)
+        public static string Distance(decimal Latitude, decimal Longitude, string TableName = "")
         {
-            return  $"ROUND(ACOS(COS(RADIANS(latitude)) * COS(RADIANS(longitude)) * COS(RADIANS({Latitude})) * COS(RADIANS({Longitude})) + " +
-                    $"COS(RADIANS(latitude)) * SIN(RADIANS(longitude)) * COS(RADIANS({Latitude})) * SIN(RADIANS({Longitude})) + SIN(RADIANS(latitude)) * " +
-                    $"SIN(RADIANS({Latitude}))) * 3963.1) AS Distance";
+            if (!TableName.IsEmpty())
+                TableName += ".";
+            return  $"6371 * ACOS(COS(RADIANS({Latitude})) * COS(RADIANS({TableName}Latitude)) * COS(RADIANS({TableName}Longitude) - " +
+                    $"RADIANS({Longitude})) + SIN(RADIANS({Latitude})) * SIN(RADIANS({TableName}Latitude)))";            
         }
     }
 }

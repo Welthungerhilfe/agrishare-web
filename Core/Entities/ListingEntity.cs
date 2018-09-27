@@ -46,7 +46,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Include(o => o.Services.Select(s => s.Category)).Where(o => !o.Deleted);
+                var query = ctx.Listings.Include(o => o.Services).Where(o => !o.Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
