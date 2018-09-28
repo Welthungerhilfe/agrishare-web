@@ -31,7 +31,8 @@ namespace Agrishare.Core.Entities
             set
             {
                 _category = value;
-                CategoryId = value.Id;
+                if (value != null)
+                    CategoryId = value.Id;
             }
         }
 

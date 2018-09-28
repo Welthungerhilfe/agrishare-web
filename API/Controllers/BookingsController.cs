@@ -224,6 +224,22 @@ namespace Agri.API.Controllers
             });
         }
 
+        [Route("bookings/listing")]
+        [AcceptVerbs("GET")]
+        public object ListingBookings(int ListingId, int PageIndex = 0, int PageSize = 25)
+        {
+            var listing = Entities.Listing.Find(Id: ListingId);
+            if (listing == null || listing.Id == 0 || listing.UserId != CurrentUser.Id)
+                return Error("Listing not found");
+
+            var bookings = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, ListingId: ListingId);
+
+            return Success(new
+            {
+                Bookings = bookings.Select(e => e.Json())
+            });
+        }
+
         [Route("bookings/detail")]
         [AcceptVerbs("GET")]
         public object BookingDetail(int BookingId)
