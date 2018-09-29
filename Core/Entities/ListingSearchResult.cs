@@ -15,6 +15,7 @@ namespace Agrishare.Core.Entities
 
     public class ListingSearchResult
     {
+        public int ListingId { get; set; }
         public int ServiceId { get; set; }
         public string Title { get; set; }
         public int Year { get; set; }
@@ -44,6 +45,7 @@ namespace Agrishare.Core.Entities
 
                 sql.AppendLine("SELECT");
                 sql.AppendLine("Services.Id AS ServiceId,");
+                sql.AppendLine("Listings.Id AS ListingId,");
                 sql.AppendLine("Listings.Title AS Title,");
                 sql.AppendLine("Listings.Year AS YEAR,");
                 sql.AppendLine("Listings.ConditionId AS ConditionId,");
@@ -78,6 +80,7 @@ namespace Agrishare.Core.Entities
             return new
             {
                 ServiceId,
+                ListingId,
                 Title,
                 Year,
                 Condition,
