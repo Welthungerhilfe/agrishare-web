@@ -31,7 +31,7 @@ namespace Agrishare.Core.Entities
         public DateTime EndDate { get; set; }
         public int Days { get; set; }
 
-        public static List<ListingSearchResult> List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel)
+        public static List<ListingSearchResult> List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile)
         {
             var sort = ListingSearchResultSort.Distance;
             try { sort = (ListingSearchResultSort)Enum.Parse(typeof(ListingSearchResultSort), Sort); }
@@ -64,8 +64,9 @@ namespace Agrishare.Core.Entities
                 sql.AppendLine($"DATE_ADD('{SQL.Safe(StartDate)}', INTERVAL CEIL((Services.TimePerQuantityUnit * {Size}) / 8) DAY) AS EndDate");
                 sql.AppendLine("FROM Listings");
                 sql.AppendLine("INNER JOIN Services ON Listings.Id = Services.ListingId");
-                sql.AppendLine("WHERE Listings.Deleted = 0 AND Services.Deleted = 0");
+                sql.AppendLine("WHERE Listings.Deleted = 0 AND Services.Deleted = 0 AND Listings.StatusId = 1");
                 sql.AppendLine($"AND Listings.CategoryId = {CategoryId}");
+                sql.AppendLine($"AND Services.Mobile = {SQL.Safe(Mobile)}");
                 sql.AppendLine($"AND Services.CategoryId = {ServiceId}");
                 sql.AppendLine($"GROUP BY Services.Id ORDER BY {sort} LIMIT {PageIndex * PageSize}, {PageSize}");
 

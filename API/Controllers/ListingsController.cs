@@ -232,5 +232,41 @@ namespace Agri.API.Controllers
                 Calendar = list
             });
         }
+
+        [Route("listings/hide")]
+        [AcceptVerbs("GET")]
+        public object Hide(int ListingId)
+        {
+            var listing = Entities.Listing.Find(Id: ListingId);
+            if (listing == null || listing.Id == 0 || listing.UserId != CurrentUser.Id)
+                return Error("Listing not found");
+
+            listing.StatusId = Entities.ListingStatus.Hidden;
+            if (listing.Save())
+                return Success(new
+                {
+                    Listing = listing.Json()
+                });
+
+            return Error("An unknown error occurred");
+        }
+
+        [Route("listings/show")]
+        [AcceptVerbs("GET")]
+        public object Show(int ListingId)
+        {
+            var listing = Entities.Listing.Find(Id: ListingId);
+            if (listing == null || listing.Id == 0 || listing.UserId != CurrentUser.Id)
+                return Error("Listing not found");
+
+            listing.StatusId = Entities.ListingStatus.Live;
+            if (listing.Save())
+                return Success(new
+                {
+                    Listing = listing.Json()
+                });
+
+            return Error("An unknown error occurred");
+        }
     }
 }

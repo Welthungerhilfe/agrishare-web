@@ -19,9 +19,9 @@ namespace Agri.API.Controllers
     {
         [Route("search")]
         [AcceptVerbs("GET")]
-        public object List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel)
+        public object List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile)
         {
-            var list = Entities.ListingSearchResult.List(PageIndex, PageSize, Sort, CategoryId, ServiceId, Latitude, Longitude, StartDate, Size, IncludeFuel);
+            var list = Entities.ListingSearchResult.List(PageIndex, PageSize, Sort, CategoryId, ServiceId, Latitude, Longitude, StartDate, Size, IncludeFuel, Mobile);
             return Success(new
             {
                 List = list.Select(e => e.Json())
