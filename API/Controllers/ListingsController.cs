@@ -79,7 +79,7 @@ namespace Agri.API.Controllers
                     FuelPerQuantityUnit = service.FuelPerQuantityUnit,
                     MaximumDistance = service.MaximumDistance,
                     MinimumQuantity = service.MinimumQuantity,
-                    Mobile = service.Mobile,
+                    Mobile = service.Mobile || listing.CategoryId == Entities.Category.TractorsId || listing.CategoryId == Entities.Category.LorriesId,
                     PricePerDistanceUnit = service.PricePerDistanceUnit,
                     PricePerQuantityUnit = service.PricePerQuantityUnit,
                     QuantityUnitId = service.QuantityUnitId,
