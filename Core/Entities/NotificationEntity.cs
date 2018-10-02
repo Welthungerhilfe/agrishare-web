@@ -44,7 +44,7 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Notifications.Include(o => o.Booking).Include(o => o.Booking.Service).Include(o => o.Booking.Service.Listing).Where(o => !o.Deleted);
+                var query = ctx.Notifications.Include(o => o.Booking).Include(o => o.Booking.Service).Include(o => o.Booking.Service.Listing).Where(o => !o.Deleted && !o.Booking.Deleted && !o.Booking.Service.Deleted && !o.Booking.Service.Listing.Deleted);
 
                 if (UserId > 0)
                     query = query.Where(o => o.UserId == UserId);
@@ -62,7 +62,7 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Notifications.Where(o => !o.Deleted);
+                var query = ctx.Notifications.Include(o => o.Booking).Include(o => o.Booking.Service).Include(o => o.Booking.Service.Listing).Where(o => !o.Deleted && !o.Booking.Deleted && !o.Booking.Service.Deleted && !o.Booking.Service.Listing.Deleted);
 
                 if (UserId > 0)
                     query = query.Where(o => o.UserId == UserId);

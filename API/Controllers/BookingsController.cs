@@ -245,7 +245,7 @@ namespace Agri.API.Controllers
         public object BookingDetail(int BookingId)
         {
             var booking = Entities.Booking.Find(Id: BookingId);
-            if (booking == null || booking.UserId != CurrentUser.Id)
+            if (booking == null || (booking.UserId != CurrentUser.Id && booking.Listing.UserId != CurrentUser.Id))
                 return Error("Booking does not exist");
 
             var bookingUsers = Entities.BookingUser.List(BookingId: booking.Id);

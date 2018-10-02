@@ -87,7 +87,7 @@ namespace Agri.API.Controllers
                 };
 
                 transaction.Save();
-                transaction.RequestEcoCashPayment();
+                //transaction.RequestEcoCashPayment();
                 transactions.Add(transaction);
             }
 

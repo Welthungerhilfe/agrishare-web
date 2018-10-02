@@ -122,8 +122,16 @@ namespace Agrishare.Core.Utils
                     MessageStructure = "json"
                 };
 
-                var resp = client.Publish(request);
-                return (resp.HttpStatusCode == System.Net.HttpStatusCode.OK);
+                try
+                {
+                    var resp = client.Publish(request);
+                    return (resp.HttpStatusCode == System.Net.HttpStatusCode.OK);
+                }
+                catch (Exception ex)
+                {
+                    Entities.Log.Error("SNS.SendMessage", ex);
+                    return false;
+                }
             }
         }
         

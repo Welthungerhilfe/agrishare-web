@@ -37,9 +37,12 @@ namespace Agri.API.Controllers
             if (listing == null || listing.Id == 0)
                 return Error("Listing not found");
 
+            var upcomingBookings = Entities.Booking.Count(UserId: CurrentUser.Id, StartDate: DateTime.Now);
+
             return Success(new
             {
-                Listing = listing.Json()
+                Listing = listing.Json(),
+                UpcomingBookings = upcomingBookings
             });
         }
 

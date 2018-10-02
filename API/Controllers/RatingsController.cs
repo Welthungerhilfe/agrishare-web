@@ -57,9 +57,9 @@ namespace Agri.API.Controllers
 
                 new Entities.Notification
                 {
-                    BookingId = booking.Id,
+                    Booking = booking,
                     TypeId = Entities.NotificationType.NewReview,
-                    UserId = booking.Listing.UserId
+                    User = Entities.User.Find(Id: listing.UserId)
                 }.Save(Notify: true);
 
                 return Success(new
