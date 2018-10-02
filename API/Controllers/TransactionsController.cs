@@ -91,6 +91,10 @@ namespace Agri.API.Controllers
                 transactions.Add(transaction);
             }
 
+            // BS: temporary fake success
+            booking.StatusId = Entities.BookingStatus.InProgress;
+            booking.Save();
+
             return Success(new
             {
                 Transactions = transactions.Select(e => e.Json())

@@ -152,7 +152,7 @@ namespace Agri.API.Controllers
         public object CompleteBooking(int BookingId)
         {
             var booking = Entities.Booking.Find(Id: BookingId);
-            if (booking == null || booking.Listing.UserId != CurrentUser.Id)
+            if (booking == null || booking.UserId != CurrentUser.Id)
                 return Error("Booking not found");
 
             if (booking.StatusId == Entities.BookingStatus.Complete)
