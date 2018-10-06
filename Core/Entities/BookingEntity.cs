@@ -18,6 +18,7 @@ namespace Agrishare.Core.Entities
         public string Title => Id.ToString() ?? "00000";
         public string For => $"{ForId}".ExplodeCamelCase();
         public string Status => $"{StatusId}".ExplodeCamelCase();
+        public decimal AgriShareCommission => Transaction.AgriShareCommission * Price;
 
         public static Booking Find(int Id = 0)
         {
@@ -30,7 +31,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Bookings.Include(o => o.Service).Include(o => o.Listing).Where(o => !o.Deleted);
+                var query = ctx.Bookings.Include(o => o.User).Include(o => o.Service).Include(o => o.Listing).Where(o => !o.Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
@@ -43,7 +44,7 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Bookings.Include(o => o.Service).Include(o => o.Listing).Where(o => !o.Deleted);
+                var query = ctx.Bookings.Include(o => o.User).Include(o => o.Service).Include(o => o.Listing).Where(o => !o.Deleted);
 
                 if (ListingId > 0)
                     query = query.Where(o => o.ListingId == ListingId);
@@ -206,18 +207,22 @@ namespace Agrishare.Core.Entities
                 Id,
                 ForId,
                 For,
-                UserId,
+                User = User?.Json(),
                 Listing = Listing?.Json(),
                 Service = Service?.Json(),
                 Location,
                 Latitude,
                 Longitude,
+                Destination,
+                DestinationLatitude,
+                DestinationLongitude,
                 Quantity,
                 Distance,
                 IncludeFuel,
                 StartDate,
                 EndDate,
                 Price,
+                AgriShareCommission,
                 HireCost,
                 FuelCost,
                 TransportCost,

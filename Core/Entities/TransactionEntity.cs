@@ -15,6 +15,8 @@ namespace Agrishare.Core.Entities
 {
     public partial class Transaction : IEntity
     {
+        public static decimal AgriShareCommission => Convert.ToDecimal(Config.Find(Key: "AgriShare Commission").Value);
+
         public static string DefaultSort = "DateCreated DESC";
         public string Title => Id.ToString().PadLeft(8, '0');
         public string Status => $"{StatusId}".ExplodeCamelCase();

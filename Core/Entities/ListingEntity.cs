@@ -122,18 +122,17 @@ namespace Agrishare.Core.Entities
 
             if (success)
             {
-                var current = Service.List(ListingId: Id);
 
-                var add = services.Except(current);
-                foreach(var item in add)
+                var current = Service.List(ListingId: Id);
+                var remove = current.Where(e => !services.Any(s => s.Id == e.Id));
+                foreach (var item in remove)
+                    item.Delete();
+
+                foreach (var item in services)
                 {
                     item.ListingId = Id;
                     item.Save();
                 }
-
-                var remove = current.Except(services);
-                foreach (var item in remove)
-                    item.Delete();
             }
 
             return success;
@@ -186,6 +185,7 @@ namespace Agrishare.Core.Entities
                 ConditionId,
                 Condition,
                 GroupServices,
+                AvailableWithoutFuel,
                 Photos = Photos?.Select(e => e.JSON()),
                 AverageRating,
                 RatingCount,

@@ -17,6 +17,9 @@
           <Property Name="Location" Type="varchar" MaxLength="256" />
           <Property Name="Latitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
           <Property Name="Longitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+          <Property Name="Destination" Type="varchar" MaxLength="256" />
+          <Property Name="DestinationLatitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+          <Property Name="DestinationLongitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="Distance" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="IncludeFuel" Type="bool" Nullable="false" />
@@ -124,6 +127,7 @@
           <Property Name="ConditionId" Type="smallint" Nullable="false" />
           <Property Name="GroupServices" Type="bool" Nullable="false" />
           <Property Name="Photos" Type="text" />
+          <Property Name="AvailableWithoutFuel" Type="bool" Nullable="false" />
           <Property Name="AverageRating" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="RatingCount" Type="int" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
@@ -607,6 +611,9 @@
           <NavigationProperty Name="Transactions" Relationship="Self.transactions_ibfk_2" FromRole="Bookings" ToRole="Transactions" />
           <NavigationProperty Name="Listing" Relationship="AgrishareModel.bookings_ibfk_2" FromRole="Bookings" ToRole="Listings" />
           <NavigationProperty Name="Service" Relationship="AgrishareModel.bookings_ibfk_3" FromRole="Booking" ToRole="Service" />
+          <Property Name="DestinationLatitude" Type="Decimal" Nullable="false" />
+          <Property Name="DestinationLongitude" Type="Decimal" Nullable="false" />
+          <Property Name="Destination" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="BookingUser">
           <Key>
@@ -686,6 +693,7 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.listings_ibfk_1" FromRole="Listings" ToRole="Users" />
           <NavigationProperty Name="Services" Relationship="AgrishareModel.services_ibfk_1" FromRole="Listing" ToRole="Service" />
+          <Property Name="AvailableWithoutFuel" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -1154,8 +1162,11 @@
         </EnumType>
         <EnumType Name="ListingCondition" UnderlyingType="Int16">
           <Member Name="None" Value="0" />
-          <Member Name="New" Value="1" />
-          <Member Name="Used" Value="2" />
+          <Member Name="VeryGood" Value="1" />
+          <Member Name="Good" Value="2" />
+          <Member Name="Fair" Value="3" />
+          <Member Name="Poor" Value="4" />
+          <Member Name="VeryPoor" Value="5" />
         </EnumType>
         <EnumType Name="QuantityUnit" UnderlyingType="Int16">
           <Member Name="None" Value="0" />
@@ -1273,6 +1284,9 @@
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="AgrishareModel.Booking">
               <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="DestinationLongitude" ColumnName="DestinationLongitude" />
+                <ScalarProperty Name="DestinationLatitude" ColumnName="DestinationLatitude" />
                 <ScalarProperty Name="TransportCost" ColumnName="TransportCost" />
                 <ScalarProperty Name="FuelCost" ColumnName="FuelCost" />
                 <ScalarProperty Name="HireCost" ColumnName="HireCost" />
@@ -1354,6 +1368,7 @@
           <EntitySetMapping Name="Listings">
             <EntityTypeMapping TypeName="AgrishareModel.Listing">
               <MappingFragment StoreEntitySet="Listings">
+                <ScalarProperty Name="AvailableWithoutFuel" ColumnName="AvailableWithoutFuel" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="RatingCount" ColumnName="RatingCount" />

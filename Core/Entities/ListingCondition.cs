@@ -14,7 +14,10 @@ namespace Agrishare.Core.Entities
     public enum ListingCondition : short
     {
         None = 0,
-        New = 1,
-        Used = 2
+        VeryGood = 1,
+        Good = 2,
+        Fair = 3,
+        Poor = 4,
+        VeryPoor = 5
     }
 }

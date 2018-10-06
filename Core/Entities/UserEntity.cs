@@ -158,7 +158,8 @@ namespace Agrishare.Core.Entities
             {
                 Id,
                 FirstName,
-                LastName
+                LastName,
+                Telephone
             };
         }
 

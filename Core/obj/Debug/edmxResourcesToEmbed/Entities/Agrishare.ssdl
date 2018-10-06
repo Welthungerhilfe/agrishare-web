@@ -12,6 +12,9 @@
     <Property Name="Location" Type="varchar" MaxLength="256" />
     <Property Name="Latitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
     <Property Name="Longitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+    <Property Name="Destination" Type="varchar" MaxLength="256" />
+    <Property Name="DestinationLatitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
+    <Property Name="DestinationLongitude" Type="decimal" Precision="11" Scale="8" Nullable="false" />
     <Property Name="Quantity" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="Distance" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="IncludeFuel" Type="bool" Nullable="false" />
@@ -119,6 +122,7 @@
     <Property Name="ConditionId" Type="smallint" Nullable="false" />
     <Property Name="GroupServices" Type="bool" Nullable="false" />
     <Property Name="Photos" Type="text" />
+    <Property Name="AvailableWithoutFuel" Type="bool" Nullable="false" />
     <Property Name="AverageRating" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="RatingCount" Type="int" Nullable="false" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />

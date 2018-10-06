@@ -4,6 +4,9 @@
     <EntitySetMapping Name="Bookings">
       <EntityTypeMapping TypeName="AgrishareModel.Booking">
         <MappingFragment StoreEntitySet="Bookings">
+          <ScalarProperty Name="Destination" ColumnName="Destination" />
+          <ScalarProperty Name="DestinationLongitude" ColumnName="DestinationLongitude" />
+          <ScalarProperty Name="DestinationLatitude" ColumnName="DestinationLatitude" />
           <ScalarProperty Name="TransportCost" ColumnName="TransportCost" />
           <ScalarProperty Name="FuelCost" ColumnName="FuelCost" />
           <ScalarProperty Name="HireCost" ColumnName="HireCost" />
@@ -85,6 +88,7 @@
     <EntitySetMapping Name="Listings">
       <EntityTypeMapping TypeName="AgrishareModel.Listing">
         <MappingFragment StoreEntitySet="Listings">
+          <ScalarProperty Name="AvailableWithoutFuel" ColumnName="AvailableWithoutFuel" />
           <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="Latitude" ColumnName="Latitude" />
           <ScalarProperty Name="RatingCount" ColumnName="RatingCount" />

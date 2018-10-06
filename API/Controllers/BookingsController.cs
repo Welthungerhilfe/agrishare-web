@@ -26,6 +26,9 @@ namespace Agri.API.Controllers
 
             var booking = new Entities.Booking
             {
+                DestinationLatitude = Model.DestinationLatitude,
+                Destination = Model.Destination,
+                DestinationLongitude = Model.DestinationLongitude,
                 ForId = Model.ForId,
                 IncludeFuel = Model.IncludeFuel,
                 Latitude = Model.Latitude,
@@ -210,7 +213,7 @@ namespace Agri.API.Controllers
             var startDate = DateTime.Today.StartOfDay().AddDays(-(DateTime.Today.Day - 1));
             var monthlySpend = Entities.Booking.SeekingSummary(CurrentUser.Id, startDate);
             var totalSpend = Entities.Booking.SeekingSummary(CurrentUser.Id);
-
+            
             var bookings = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, SupplierId: CurrentUser.Id);
 
             return Success(new
@@ -219,7 +222,9 @@ namespace Agri.API.Controllers
                 Summary = new
                 {
                     Month = monthlySpend,
-                    Total = totalSpend
+                    MonthCommission = monthlySpend * Entities.Transaction.AgriShareCommission,
+                    Total = totalSpend,
+                    TotalCommission = totalSpend * Entities.Transaction.AgriShareCommission
                 }
             });
         }
@@ -248,12 +253,15 @@ namespace Agri.API.Controllers
             if (booking == null || (booking.UserId != CurrentUser.Id && booking.Listing.UserId != CurrentUser.Id))
                 return Error("Booking does not exist");
 
+            var ratingCount = Entities.Rating.Count(ListingId: booking.ListingId, UserId: CurrentUser.Id);
+
             var bookingUsers = Entities.BookingUser.List(BookingId: booking.Id);
 
             return Success(new
             {
                 Booking = booking.Json(),
-                Users = bookingUsers.Select(e => e.Json())
+                Users = bookingUsers.Select(e => e.Json()),
+                Rated = ratingCount > 0
             });
         }
 

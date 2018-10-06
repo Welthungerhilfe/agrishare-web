@@ -24,6 +24,12 @@ namespace Agrishare.API.Models
         [Required]
         public decimal Longitude { get; set; }
 
+        public string Destination { get; set; }
+
+        public decimal DestinationLatitude { get; set; }
+
+        public decimal DestinationLongitude { get; set; }
+
         [Required]
         public decimal Quantity { get; set; }
 

@@ -55,6 +55,7 @@ namespace Agri.API.Controllers
 
             var listing = new Entities.Listing
             {
+                AvailableWithoutFuel = Model.AvailableWithoutFuel,
                 Brand = Model.Brand,
                 CategoryId = Model.CategoryId,
                 ConditionId = Model.ConditionId,
@@ -80,7 +81,7 @@ namespace Agri.API.Controllers
                     MaximumDistance = service.MaximumDistance,
                     MinimumQuantity = service.MinimumQuantity,
                     Mobile = service.Mobile || listing.CategoryId == Entities.Category.TractorsId || listing.CategoryId == Entities.Category.LorriesId,
-                    PricePerDistanceUnit = service.PricePerDistanceUnit,
+                    PricePerDistanceUnit = service.Mobile ? service.PricePerDistanceUnit : 0,
                     PricePerQuantityUnit = service.PricePerQuantityUnit,
                     QuantityUnitId = service.QuantityUnitId,
                     CategoryId = service.CategoryId,
@@ -128,6 +129,7 @@ namespace Agri.API.Controllers
             if (listing.UserId != CurrentUser.Id)
                 return Error("Listing not found");
 
+            listing.AvailableWithoutFuel = Model.AvailableWithoutFuel;
             listing.Brand = Model.Brand;
             listing.Category = null;
             listing.CategoryId = Model.CategoryId;
