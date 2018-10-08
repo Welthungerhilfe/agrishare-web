@@ -70,15 +70,19 @@ namespace Agrishare.Core.Entities
 
                 sql.AppendLine("AS Price,");
 
-                sql.AppendLine($"{distance} AS Distance,");
 
                 if (CategoryId == Category.TractorsId || CategoryId == Category.ProcessingId)
+                {
+                    sql.AppendLine($"{distance} AS Distance,");
                     sql.AppendLine($"CEIL((Services.TimePerQuantityUnit * {Size}) / 8) AS Days,");
+                }
                 else
                 {
                     var depotToPickup = SQL.Distance(Latitude, Longitude, "Listings");
                     var pickupToDropoff = SQL.Distance(Latitude, Longitude, DestinationLatitude, DestinationLongitude);
                     var dropoffToDepot = SQL.Distance(DestinationLatitude, DestinationLongitude, "Listings");
+
+                    sql.AppendLine($"({depotToPickup} + {pickupToDropoff} + {dropoffToDepot}) AS Distance,");
                     sql.AppendLine($"CEIL((Services.TimePerQuantityUnit * ({depotToPickup} + {pickupToDropoff} + {dropoffToDepot})) / 8) AS Days,");
                 }
 
