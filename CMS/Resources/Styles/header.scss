@@ -1,0 +1,37 @@
+﻿@import "global";
+
+header {
+    padding: 30px 40px;
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px #ddd;
+
+    @media all and (max-width: $mobile-breakpoint) {
+        padding: 20px;
+    }
+
+    > a {
+        margin-right: 20px;
+    }
+
+    > strong {
+        flex: 1;
+        font-size: 24px;
+        font-weight: 300;
+        padding: 10px 0;
+    }
+
+    ng-transclude {
+        display: flex;
+        align-items: center;
+    }
+
+    input[type=search] {
+        background: white;
+        border-radius: 100px;
+        padding: 10px 15px;
+        border: 0;
+        width: 150px;
+        margin: 0 10px;
+    }
+}

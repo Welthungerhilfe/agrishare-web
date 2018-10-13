@@ -1,0 +1,20 @@
+﻿
+<div ng-controller="ListViewController" ag-title="Users" ag-selected-url="#/users/list" ag-api-route="/cms/users/">
+
+    <ag-title-bar>
+        <ag-icon-button ag-icon="add" ng-click="app.go('/users/edit?'+app.returnUrlQs())">Add user</ag-icon-button>
+        <input type="search" ng-model="list.query" gl-enter-keypress="list.refresh()" placeholder="Search" />
+        <ag-icon-button ag-icon="refresh" ng-click="list.refresh()"></ag-icon-button>
+    </ag-title-bar>
+
+    <ag-section ag-controller="list">
+        <ag-list ag-controller="list">
+            <div ng-repeat="item in list.data">
+                {{item.FirstName}} {{item.LastName}}
+            </div>
+        </ag-list>
+    </ag-section>
+
+    <ag-status-bar></ag-status-bar>
+
+</div>

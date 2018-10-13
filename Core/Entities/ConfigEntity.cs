@@ -58,6 +58,17 @@ namespace Agrishare.Core.Entities
             }
         }
 
+        private static string _cmsURL { get; set; }
+        public static string CMSURL
+        {
+            get
+            {
+                if (_cmsURL.IsEmpty())
+                    _cmsURL = Find(Key: "CMS URL").Value;
+                return _cmsURL;
+            }
+        }
+
         private static string _apiURL { get; set; }
         public static string APIURL
         {

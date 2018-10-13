@@ -1,17 +1,22 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web;
-using Newtonsoft.Json;
-using System.Text;
-using System.Web.Http.ModelBinding;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Entities = Agrishare.Core.Entities;
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
+ */
+
 using Agrishare.Core;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+using Entities = Agrishare.Core.Entities;
 
 namespace Agrishare.API
 {

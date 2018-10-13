@@ -12,6 +12,7 @@ namespace Agrishare.Core.Entities
 {
     public partial class User : IEntity
     {
+        public static string AuthCookieName = "agrishare";
         public static string DefaultSort = "FirstName";
         public string FullName => $"{FirstName} {LastName}".Trim();
         public string Title => FullName;
@@ -161,6 +162,11 @@ namespace Agrishare.Core.Entities
                 LastName,
                 Telephone
             };
+        }
+
+        public string ProfileJsonString()
+        {
+            return JsonConvert.SerializeObject(ProfileJson(), Formatting.None);
         }
 
         public object ProfileJson()
