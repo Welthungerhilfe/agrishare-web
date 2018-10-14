@@ -138,18 +138,18 @@
     <Compile Include="App_Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="CMS\UsersController.cs" />
-    <Compile Include="Controllers\NotificationsController.cs" />
-    <Compile Include="Controllers\RatingsController.cs" />
-    <Compile Include="Controllers\BookingsController.cs" />
-    <Compile Include="Controllers\TransactionsController.cs" />
-    <Compile Include="Controllers\ServicesController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\ListingsController.cs" />
-    <Compile Include="Controllers\CountersController.cs" />
-    <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\FaqsController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="App\NotificationsController.cs" />
+    <Compile Include="App\RatingsController.cs" />
+    <Compile Include="App\BookingsController.cs" />
+    <Compile Include="App\TransactionsController.cs" />
+    <Compile Include="App\ServicesController.cs" />
+    <Compile Include="App\SearchController.cs" />
+    <Compile Include="App\ListingsController.cs" />
+    <Compile Include="App\CountersController.cs" />
+    <Compile Include="App\CategoriesController.cs" />
+    <Compile Include="App\FaqsController.cs" />
+    <Compile Include="App\UserController.cs" />
+    <Compile Include="App\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

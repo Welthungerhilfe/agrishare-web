@@ -4,29 +4,28 @@
  * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
  */
 
-agrishareApp.directive('agTextbox', function () {
+agrishareApp.directive('glTextbox', function () {
     return {
         restrict: 'E',
-
         replace: true,
 
         scope: {
-            label: '@agLabel',
-            icon: '@agIcon',
-            agRequired: '=',
-            agDisabled: '=',
-            agHint: '@',
+            label: '@glLabel',
+            icon: '@glIcon',
+            glRequired: '=',
+            glDisabled: '=',
+            glHint: '@',
             ngModel: '='
         },
 
         template: function (element, attrs) {
-            var type = attrs.agType || 'text';
-            var required = attrs.agRequired || false;
-            var label = attrs.agLabel || '';
-            var name = attrs.agRequired ? attrs.agName || label : '';
+            var type = attrs.glType || 'text';
+            var required = attrs.glRequired || false;
+            var label = attrs.glLabel || '';
+            var name = attrs.glRequired ? attrs.glName || label : '';
             if (required && label)
                 label += ' *';
-            var placeholder = attrs.agPlaceholder || label;
+            var placeholder = attrs.glPlaceholder || label;
             var requiredAttr = required ? 'required' : '';
 
             var customAttributes = [];
@@ -34,20 +33,20 @@ agrishareApp.directive('agTextbox', function () {
             customAttributes.push('type="' + type + '"');
             customAttributes.push('name="' + name + '"');
             customAttributes.push('placeholder="' + placeholder + '"');
-            if (attrs.agMin)
-                customAttributes.push('min="' + attrs.agMin + '"');
-            if (attrs.agMax)
-                customAttributes.push('max="' + attrs.agMax + '"');
-            if (attrs.agPattern)
-                customAttributes.push('pattern="' + attrs.agPattern + '"');
+            if (attrs.glMin)
+                customAttributes.push('min="' + attrs.glMin + '"');
+            if (attrs.glMax)
+                customAttributes.push('max="' + attrs.glMax + '"');
+            if (attrs.glPattern)
+                customAttributes.push('pattern="' + attrs.glPattern + '"');
 
             return '<div class="row">' +
                 '<label ng-show="label">' + label + '</label>' +
                 '<div ng-class="{\'icon\':icon}">' +
                 '<i class="material-icons" ng-if="icon">{{icon}}</i>' +
-                '<input ' + customAttributes.join(' ') + ' ng-required="agRequired" ng-disabled="agDisabled" />' +
+                '<input ' + customAttributes.join(' ') + ' ng-required="glRequired" ng-disabled="glDisabled" />' +
                 '</div>' +
-                '<em class="hint" ng-if="agHint">{{agHint}}</em>' +
+                '<em class="hint" ng-if="glHint">{{glHint}}</em>' +
                 '</div>';
         },
 

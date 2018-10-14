@@ -4,8 +4,16 @@
  * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
  */
 
-agrishareApp.factory('Utils', function ($ngConfirm, ngToast) {
+agrishareApp.factory('Utils', function ($ngConfirm, $timeout, $window, ngToast) {
     var utils = {
+
+        focus: function (id) {
+            $timeout(function () {
+                var element = $window.document.getElementById(id);
+                if (element)
+                    element.focus();
+            });
+        },
 
         confirm: function(title, content, callback) {
             $ngConfirm({

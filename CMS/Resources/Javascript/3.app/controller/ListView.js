@@ -19,6 +19,8 @@ agrishareApp.controller('ListViewController', function ($attrs, $controller, $ht
     list.data = [];
     list.recordCount = 0;
     list.error = '';
+    list.searching = false;
+    list.query = '';
 
     $scope.list = list;
 
@@ -90,6 +92,19 @@ agrishareApp.controller('ListViewController', function ($attrs, $controller, $ht
             App.status = 'Showing ' + list.data.length + ' of ' + list.recordCount + ' results';
         else
             App.status = 'Showing ' + list.data.length + ' results';
+    };
+
+    list.showSearch = function () {
+        list.searching = true;
+        Utils.focus('titleBarSearch');
+    };
+
+    list.hideSearch = function () {
+        list.searching = false;
+        if (list.query !== '') {
+            list.query = '';
+            list.refresh();
+        }
     };
 
     list.refresh();

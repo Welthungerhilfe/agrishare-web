@@ -288,5 +288,32 @@ namespace Agri.API.Controllers
 
             return Error("Device not found");
         }
+
+        [Route("delete")]
+        [AcceptVerbs("GET")]
+        public object Delete()
+        {
+            var bookings = Entities.Booking.Count(UserId: CurrentUser.Id, StartDate: DateTime.Now);
+            if (bookings > 0)
+                return Error("Can not delete account - you have upcoming bookings");
+
+            var listings = Entities.Listing.List(UserId: CurrentUser.Id);
+            foreach(var listing in listings)
+            {
+                bookings = Entities.Booking.Count(ListingId: listing.Id, StartDate: DateTime.Now);
+                if (bookings > 0)
+                    return Error("Can not delete account - you have upcoming bookings");
+            }
+            foreach (var listing in listings)
+                listing.Delete();
+
+            var devices = Entities.Device.List(UserId: CurrentUser.Id);
+            foreach(var device in devices)
+                device.Delete();            
+
+            CurrentUser.Delete();
+
+            return Success("OK");
+        }
     }
 }

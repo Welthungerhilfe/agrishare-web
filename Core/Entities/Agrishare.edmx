@@ -77,8 +77,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Event" Type="varchar" MaxLength="16" />
-          <Property Name="Category" Type="varchar" MaxLength="16" />
+          <Property Name="Event" Type="varchar" MaxLength="32" />
+          <Property Name="Category" Type="varchar" MaxLength="32" />
+          <Property Name="Subcategory" Type="varchar" MaxLength="32" />
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="Hits" Type="int" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -1147,8 +1148,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Event" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="Category" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Event" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Category" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Subcategory" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" />
           <Property Name="Hits" Type="Int32" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
@@ -1539,6 +1541,7 @@
           <EntitySetMapping Name="Counters">
             <EntityTypeMapping TypeName="AgrishareModel.Counter">
               <MappingFragment StoreEntitySet="Counters">
+                <ScalarProperty Name="Subcategory" ColumnName="Subcategory" />
                 <ScalarProperty Name="Hits" ColumnName="Hits" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="LastModified" ColumnName="LastModified" />

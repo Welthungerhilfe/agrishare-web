@@ -1,16 +1,15 @@
 ﻿/* Title: Gloo Framework
  * Author: Bradley Searle (C2 Digital)
  * Source: www.c2.co.zw
- * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
- */
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode) */
 
-agrishareApp.directive('agList', function ($timeout, $parse) {
+agrishareApp.directive('glList', function ($timeout, $parse) {
     return {
         restrict: 'E',
         transclude: true,
 
         scope: {
-            controller: '=agController'
+            controller: '=glController'
         },
 
         template: '' +
@@ -19,10 +18,10 @@ agrishareApp.directive('agList', function ($timeout, $parse) {
 
         link: function (scope, element, attrs) {
 
-            if (attrs.agInfinite) {
+            if (attrs.glInfinite) {
 
                 var tick;
-                var callback = $parse(attrs.agInfinite);
+                var callback = $parse(attrs.glInfinite);
                 var body = angular.element(document.body);
 
                 var check = function () {

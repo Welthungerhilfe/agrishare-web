@@ -72,8 +72,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Event" Type="varchar" MaxLength="16" />
-    <Property Name="Category" Type="varchar" MaxLength="16" />
+    <Property Name="Event" Type="varchar" MaxLength="32" />
+    <Property Name="Category" Type="varchar" MaxLength="32" />
+    <Property Name="Subcategory" Type="varchar" MaxLength="32" />
     <Property Name="Date" Type="date" Nullable="false" />
     <Property Name="Hits" Type="int" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />

@@ -14,7 +14,7 @@ namespace Agrishare.Core.Entities
         public static string DefaultSort = "Date";
         public string Title => $"{Event}: {Category}";
 
-        public static Counter Find(int Id = 0, string Event = "", string Category = "", DateTime? Date = null)
+        public static Counter Find(int Id = 0, string Event = "", string Category = "", string Subcategory = "", DateTime? Date = null)
         {
             if (Id == 0 && Event.IsEmpty() && Category.IsEmpty() && !Date.HasValue)
                 return new Counter
@@ -36,6 +36,9 @@ namespace Agrishare.Core.Entities
                 if (!Category.IsEmpty())
                     query = query.Where(o => o.Category.Equals(Category, StringComparison.InvariantCultureIgnoreCase));
 
+                if (!Subcategory.IsEmpty())
+                    query = query.Where(o => o.Subcategory.Equals(Subcategory, StringComparison.InvariantCultureIgnoreCase));
+
                 if (Date.HasValue)
                 {
                     var start = Date.Value.StartOfDay();
@@ -47,7 +50,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<Counter> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string Event = "", string Category = "", DateTime? StartDate = null, DateTime? EndDate = null)
+        public static List<Counter> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string Event = "", string Category = "", string Subcategory = "", DateTime? StartDate = null, DateTime? EndDate = null)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -61,6 +64,9 @@ namespace Agrishare.Core.Entities
 
                 if (!Category.IsEmpty())
                     query = query.Where(o => o.Category.Equals(Category, StringComparison.InvariantCultureIgnoreCase));
+
+                if (!Subcategory.IsEmpty())
+                    query = query.Where(o => o.Subcategory.Equals(Subcategory, StringComparison.InvariantCultureIgnoreCase));
 
                 if (StartDate.HasValue)
                 {
@@ -78,7 +84,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static int Count(string Keywords = "", string Event = "", string Category = "", DateTime? StartDate = null, DateTime? EndDate = null)
+        public static int Count(string Keywords = "", string Event = "", string Category = "", string Subcategory = "", DateTime? StartDate = null, DateTime? EndDate = null)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -92,6 +98,9 @@ namespace Agrishare.Core.Entities
 
                 if (!Category.IsEmpty())
                     query = query.Where(o => o.Category.Equals(Category, StringComparison.InvariantCultureIgnoreCase));
+
+                if (!Subcategory.IsEmpty())
+                    query = query.Where(o => o.Subcategory.Equals(Subcategory, StringComparison.InvariantCultureIgnoreCase));
 
                 if (StartDate.HasValue)
                 {
@@ -158,6 +167,7 @@ namespace Agrishare.Core.Entities
                 Title,
                 Event,
                 Category,
+                Subcategory,
                 Date,
                 Hits,
                 DateCreated,

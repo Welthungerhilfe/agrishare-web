@@ -15,6 +15,14 @@ namespace Agrishare.CMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //var brad = Core.Entities.User.Find(Id: 10000);
+            //brad.ClearPassword = "1234";
+            //brad.Roles = new List<Role>
+            //{
+            //    Role.Administrator,
+            //    Role.User
+            //};
+            //brad.Save();
         }
 
         public void Authenticate(object s, EventArgs e)

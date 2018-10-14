@@ -5,6 +5,7 @@ header {
     display: flex;
     align-items: center;
     border-bottom: solid 1px #ddd;
+    position: relative;
 
     @media all and (max-width: $mobile-breakpoint) {
         padding: 20px;
@@ -26,12 +27,37 @@ header {
         align-items: center;
     }
 
-    input[type=search] {
+    .search {
         background: white;
         border-radius: 100px;
-        padding: 10px 15px;
-        border: 0;
-        width: 150px;
-        margin: 0 10px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 40px;
+        right: 40px;
+        transform: translateY(-50%);
+        z-index: 9;
+
+        @media all and (max-width: $mobile-breakpoint) {
+            left: 20px;
+            right: 20px;
+        }
+
+        i {
+            margin-left: 15px;
+        }
+
+        input[type=search] {
+            padding: 15px 10px;
+            border: 0;
+            flex: 1;
+        }
+
+        a {
+            cursor: pointer;
+            color: red;
+            margin-right: 15px;
+        }
     }
 }

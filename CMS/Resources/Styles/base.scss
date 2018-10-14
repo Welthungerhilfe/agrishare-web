@@ -1,8 +1,7 @@
 ﻿/* Title: Gloo Framework
  * Author: Bradley Searle (C2 Digital)
  * Source: www.c2.co.zw
- * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
- */
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode) */
 
 @import "global";
 
@@ -74,6 +73,7 @@ body {
     overflow: hidden;
     line-height: 1.5;
     color: #333;
+    background: #eee;
 
     @media all and (max-width: $mobile-breakpoint) {
         height: auto;

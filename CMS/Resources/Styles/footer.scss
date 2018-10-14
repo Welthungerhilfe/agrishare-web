@@ -3,7 +3,7 @@
 footer {
     display: flex;
     align-items: center;
-    padding: 40px;
+    padding: 30px 40px;
     border-top: solid 1px #ddd;
 
     @media all and (max-width: $mobile-breakpoint) {
@@ -16,5 +16,6 @@ footer {
 
     > span {
         flex: 1;
+        padding: 10px 0;
     }
 }

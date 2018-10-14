@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.IO;
-using Agrishare.API;
+﻿using Agrishare.API;
 using Agrishare.Core;
+using System.Linq;
+using System.Web.Http;
 using Entities = Agrishare.Core.Entities;
-using System.Text.RegularExpressions;
-using Agrishare.API.Models;
-using Agrishare.Core.Utils;
 
 namespace Agri.API.CMS
 {
@@ -44,6 +36,42 @@ namespace Agri.API.CMS
             };
 
             return Success(data);
+        }
+
+        [Route("users/find")]
+        [AcceptVerbs("GET")]
+        public object Find(int Id = 0)
+        {
+            var data = new
+            {
+                Entity = Entities.User.Find(Id: Id).AdminJson(),
+                Roles = EnumInfo.ToList<Entities.Role>(),
+                Genders = EnumInfo.ToList<Entities.Gender>()
+            };
+
+            return Success(data);
+        }
+
+        [Route("users/save")]
+        [AcceptVerbs("POST")]
+        public object Save(Entities.User User)
+        {
+            if (!ModelState.IsValid)
+                return Error(ModelState);
+
+            if (User.DateOfBirth.HasValue)
+                User.DateOfBirth = User.DateOfBirth.Value.AddMinutes(UTCOffset);
+
+            if (User.Id > 0)
+                User.Password = Entities.User.Find(Id: User.Id).Password;
+
+            if (User.Save())
+                return Success(new
+                {
+                    Entity = User.AdminJson()
+                });
+
+            return Error();
         }
     }
 

@@ -40,7 +40,7 @@ var agrishareApp =
                     }
                 })
                 .state('Detail', {
-                    url: '/{path:[a-z\/]+}/{id:[\d]+}',
+                    url: '/{path:[a-z\/]+}/{id:[0-9]+}',
                     templateUrl: function ($stateParams) {
                         return '/Pages/' + $stateParams.path + '.html';
                     },
@@ -71,13 +71,13 @@ var agrishareApp =
                 var units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'],
                     number = Math.floor(Math.log(bytes) / Math.log(1024));
                 return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
-            }
+            };
         })
         .filter('percent', function () {
             return function (value) {
                 if (isNaN(parseFloat(value)) || !isFinite(value)) return '-';
                 return (value * 100) + '%';
-            }
+            };
         })
         .directive('glEnterKeypress', function () {
             return function (scope, element, attrs) {
@@ -104,7 +104,7 @@ var agrishareApp =
         })
         .config(["$httpProvider", function ($httpProvider) {
 
-            var regexIso8601 = /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/;
+            var jsonDateRegex = /^[\d]{4}-[\d]{2}-[\d]{2}T[\d]{2}:[\d]{2}:[\d]{2}(.[\d]+\+[\d]{2}:[\d]{2})?$/;
 
             var convertDateStringsToDates = function (input) {
                 if (typeof input !== "object") return input;
@@ -112,7 +112,7 @@ var agrishareApp =
                     if (!input.hasOwnProperty(key)) continue;
                     var value = input[key];
                     var match;
-                    if (typeof value === "string" && (match = value.match(regexIso8601))) {
+                    if (typeof value === "string" && (match = value.match(jsonDateRegex))) {
                         var milliseconds = Date.parse(match[0]);
                         if (!isNaN(milliseconds)) {
                             input[key] = new Date(milliseconds);

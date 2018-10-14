@@ -20,7 +20,22 @@ namespace Agrishare.Core.Entities
         public string Interest => $"{InterestId}".ExplodeCamelCase();
         public string Gender => $"{GenderId}".ExplodeCamelCase();
         public string Status => $"{StatusId}".ExplodeCamelCase();
-        public List<Role> Roles => RoleList?.Split(',').Where(e => !e.Trim().IsEmpty()).Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true)).ToList();
+
+        private List<Role> roles { get; set; }
+        public List<Role> Roles
+        {
+            get
+            {
+                if (roles == null)
+                    roles = RoleList?.Split(',').Where(e => !e.Trim().IsEmpty()).Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true)).ToList();
+                return roles;
+            }
+            set
+            {
+                roles = value;
+                RoleList = string.Join(",", roles);
+            }
+        }
 
         private static string CacheKey(string AuthToken)
         {
@@ -98,6 +113,12 @@ namespace Agrishare.Core.Entities
         {
             var success = false;
 
+            if (!ClearPassword.IsEmpty())
+            {
+                Salt = Utils.Encryption.GetSalt();
+                Password = Utils.Encryption.GetSHAHash(ClearPassword, Salt);
+            }
+
             if (Id == 0)
                 success = Add();
             else
@@ -111,12 +132,6 @@ namespace Agrishare.Core.Entities
 
         private bool Add()
         {
-            if (!ClearPassword.IsEmpty())
-            {
-                Salt = Utils.Encryption.GetSalt();
-                Password = Utils.Encryption.GetSHAHash(ClearPassword, Salt);
-            }
-
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Users.Attach(this);
@@ -127,12 +142,6 @@ namespace Agrishare.Core.Entities
 
         private bool Update()
         {
-            if (!ClearPassword.IsEmpty())
-            {
-                Salt = Utils.Encryption.GetSalt();
-                Password = Utils.Encryption.GetSHAHash(ClearPassword, Salt);
-            }
-
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Users.Attach(this);
@@ -218,6 +227,18 @@ namespace Agrishare.Core.Entities
                 DateCreated,
                 LastModified
             };
+        }
+
+        public static int CleanDeletedAccounts()
+        {
+            using (var ctx = new AgrishareEntities())
+            {
+                var oneYearAgo = DateTime.Now.AddYears(-1);
+                var users = ctx.Users.Where(o => o.Deleted && o.LastModified > oneYearAgo);
+                foreach(var user in users)
+                    ctx.Entry(user).State = EntityState.Deleted;
+                return ctx.SaveChanges();
+            }
         }
 
         #region Authorisation

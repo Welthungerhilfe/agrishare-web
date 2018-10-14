@@ -259,6 +259,7 @@
     <EntitySetMapping Name="Counters">
       <EntityTypeMapping TypeName="AgrishareModel.Counter">
         <MappingFragment StoreEntitySet="Counters">
+          <ScalarProperty Name="Subcategory" ColumnName="Subcategory" />
           <ScalarProperty Name="Hits" ColumnName="Hits" />
           <ScalarProperty Name="Deleted" ColumnName="Deleted" />
           <ScalarProperty Name="LastModified" ColumnName="LastModified" />

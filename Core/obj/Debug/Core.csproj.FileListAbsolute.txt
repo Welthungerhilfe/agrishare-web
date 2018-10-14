@@ -66,3 +66,4 @@ C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Core.csproj.CoreC
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Core.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Agrishare.Core.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Agrishare.Core.pdb
+C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Core.csprojAssemblyReference.cache

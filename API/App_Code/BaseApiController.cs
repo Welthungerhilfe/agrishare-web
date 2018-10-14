@@ -44,13 +44,13 @@ namespace Agrishare.API
             }
         }
 
-        public object Error(string Message)
+        public object Error(string Message = "")
         {
             if (LogAPI)
             {
                 new Entities.Log
                 {
-                    Description = Log(Message),
+                    Description = Log(Message.Coalesce("An unknown error occurred")),
                     LevelId = Entities.LogLevel.Log,
                     Title = HttpContext.Current.Request.Path,
                     User = CurrentUser.Title

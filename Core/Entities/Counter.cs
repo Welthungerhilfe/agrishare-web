@@ -17,6 +17,7 @@ namespace Agrishare.Core.Entities
         public int Id { get; set; }
         public string Event { get; set; }
         public string Category { get; set; }
+        public string Subcategory { get; set; }
         public System.DateTime Date { get; set; }
         public int Hits { get; set; }
         public System.DateTime DateCreated { get; set; }

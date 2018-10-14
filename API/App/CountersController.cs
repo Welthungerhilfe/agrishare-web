@@ -18,7 +18,7 @@ namespace Agri.API.Controllers
     {
         [Route("counter/update")]
         [AcceptVerbs("GET")]
-        public object Update(string Event, string Category, DateTime Date, int Hits)
+        public object Update(string Event, string Category, string Subcategory, DateTime Date, int Hits)
         {
             var textInfo = new CultureInfo("en-US", false).TextInfo;
             Event = textInfo.ToTitleCase(Event.ToLower());
@@ -31,6 +31,7 @@ namespace Agri.API.Controllers
                 counter = new Entities.Counter
                 {
                     Category = Category,
+                    Subcategory = Subcategory,
                     Date = Date,
                     Event = Event,
                     Hits = Hits

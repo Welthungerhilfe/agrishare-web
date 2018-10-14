@@ -566,8 +566,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Event" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-    <Property Name="Category" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="Event" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="Category" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="Subcategory" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
     <Property Name="Date" Type="DateTime" Nullable="false" />
     <Property Name="Hits" Type="Int32" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />

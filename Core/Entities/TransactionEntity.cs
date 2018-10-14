@@ -160,6 +160,8 @@ namespace Agrishare.Core.Entities
         private static string EcoCashMerchantCode => Config.Find(Key: "EcoCash Merchant Code").Value;
         private static string EcoCashMerchantPin => Config.Find(Key: "EcoCash Merchant Pin").Value;
         private static string EcoCashMerchantNumber => Config.Find(Key: "EcoCash Merchant Number").Value;
+        private static string EcoCashUsername => Config.Find(Key: "EcoCash Username").Value;
+        private static string EcoCashPassword => Config.Find(Key: "EcoCash Password").Value;
         private static bool EcoCashLog => Config.Find(Key: "EcoCash Log").Value.Equals("True", StringComparison.InvariantCultureIgnoreCase);
 
         public bool RequestEcoCashPayment()

@@ -97,6 +97,22 @@
     <Content Include="Resources\Javascript\3.app\controller\ListView.js" />
     <Content Include="Resources\Javascript\3.app\controller\View.js" />
     <Content Include="Resources\Javascript\3.app\controller\App.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Flex.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Autocomplete.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Checkbox.js" />
+    <Content Include="Resources\Javascript\3.app\directive\CheckboxList.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Date.js" />
+    <Content Include="Resources\Javascript\3.app\directive\DropdownList.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Editor.js" />
+    <Content Include="Resources\Javascript\3.app\directive\IconLabel.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Link.js" />
+    <Content Include="Resources\Javascript\3.app\directive\ListPhoto.js" />
+    <Content Include="Resources\Javascript\3.app\directive\PopupMenu.js" />
+    <Content Include="Resources\Javascript\3.app\directive\RadioGroup.js" />
+    <Content Include="Resources\Javascript\3.app\directive\SmartSearch.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Textarea.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Time.js" />
+    <Content Include="Resources\Javascript\3.app\directive\Upload.js" />
     <Content Include="Resources\Javascript\3.app\directive\IconButton.js" />
     <Content Include="Resources\Javascript\3.app\directive\Section.js" />
     <Content Include="Resources\Javascript\3.app\directive\List.js" />
@@ -117,6 +133,10 @@
     <Content Include="Resources\Javascript\3.app\factory\App.js" />
     <Content Include="Resources\Javascript\3.app\factory\Utils.js" />
     <Content Include="Resources\Styles\.normalize.min.css" />
+    <Content Include="Resources\Styles\angular-confirm.min.css" />
+    <Content Include="Resources\Styles\angular-toast-alerts.css" />
+    <Content Include="Resources\Styles\angular-toast-animations.min.css" />
+    <Content Include="Resources\Styles\angular-toast.min.css" />
     <Content Include="Resources\Styles\ngToast-alerts.css" />
     <Content Include="Resources\Styles\ngToast-animations.min.css" />
     <Content Include="Resources\Styles\ngToast.min.css" />
@@ -154,8 +174,21 @@
     <Content Include="Resources\Styles\main.scss" />
     <Content Include="Resources\Styles\footer.scss" />
     <Content Include="Resources\Styles\login.scss" />
-    <Content Include="Resources\Styles\ag-icon-button.scss" />
-    <Content Include="Resources\Styles\list.scss" />
+    <Content Include="Resources\Styles\gl-autocomplete.scss" />
+    <Content Include="Resources\Styles\gl-checkbox-list.scss" />
+    <Content Include="Resources\Styles\gl-checkbox.scss" />
+    <Content Include="Resources\Styles\gl-date.scss" />
+    <Content Include="Resources\Styles\gl-dropdown-list.scss" />
+    <Content Include="Resources\Styles\gl-editor.scss" />
+    <Content Include="Resources\Styles\gl-icon-button.scss" />
+    <Content Include="Resources\Styles\gl-icon-label.scss" />
+    <Content Include="Resources\Styles\gl-lightbox.scss" />
+    <Content Include="Resources\Styles\gl-list.scss" />
+    <Content Include="Resources\Styles\gl-popup-menu.scss" />
+    <Content Include="Resources\Styles\gl-radio-group.scss" />
+    <Content Include="Resources\Styles\gl-time.scss" />
+    <Content Include="Resources\Styles\gl-upload.scss" />
+    <Content Include="Resources\Styles\form-view.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
