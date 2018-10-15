@@ -46,7 +46,7 @@ namespace Agrishare.API
 
         public object Error(string Message = "")
         {
-            if (LogAPI)
+            if (LogAPI && !HttpContext.Current.Request.Path.StartsWith("/cms/"))
             {
                 new Entities.Log
                 {
@@ -62,7 +62,7 @@ namespace Agrishare.API
 
         public object Error(ModelStateDictionary ModelState)
         {
-            if (LogAPI)
+            if (LogAPI && !HttpContext.Current.Request.Path.StartsWith("/cms/"))
             {
                 new Entities.Log
                 {
@@ -78,7 +78,7 @@ namespace Agrishare.API
 
         public object Success(object ResponseData = null)
         {
-            if (LogAPI)
+            if (LogAPI && !HttpContext.Current.Request.Path.StartsWith("/cms/"))
             {
                 new Entities.Log
                 {
@@ -158,7 +158,10 @@ namespace Agrishare.API
             {
                 requestData.AppendLine("-FORM-");
                 foreach (var key in req.Form.AllKeys)
-                    requestData.AppendLine($"{key}: {req.Form[key]}");
+                    if (key.Equals("PIN", StringComparison.InvariantCultureIgnoreCase) || key.Contains("Password"))
+                        requestData.AppendLine($"{key}: ********");
+                    else
+                        requestData.AppendLine($"{key}: {req.Form[key]}");
                 requestData.AppendLine("");
             }
 
@@ -176,7 +179,10 @@ namespace Agrishare.API
             {
                 requestData.AppendLine("-QUERYSTRING-");
                 foreach (var key in req.QueryString.AllKeys)
-                    requestData.AppendLine($"{key}: {req.QueryString[key]}");
+                    if (key.Equals("PIN", StringComparison.InvariantCultureIgnoreCase) || key.Contains("Password"))
+                        requestData.AppendLine($"{key}: ********");
+                    else
+                        requestData.AppendLine($"{key}: {req.QueryString[key]}");
                 requestData.AppendLine("");
             }
 

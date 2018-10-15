@@ -104,7 +104,20 @@ namespace Agrishare.Core.Entities
             return Update();
         }
 
-        public object Json()
+        public object ListJson()
+        {
+            return new
+            {
+                Id,
+                TypeId,
+                Type,
+                Title,
+                DateCreated,
+                LastModified
+            };
+        }
+
+        public object DetailJson()
         {
             return new
             {
@@ -113,6 +126,7 @@ namespace Agrishare.Core.Entities
                 Type,
                 Title,
                 HTML,
+                EmailHTML = EmailHtml(),
                 DateCreated,
                 LastModified
             };

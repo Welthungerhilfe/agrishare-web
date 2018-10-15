@@ -104,7 +104,21 @@ namespace Agrishare.Core.Entities
             return Update();
         }
 
-        public object Json()
+        public object ListJson()
+        {
+            return new
+            {
+                Id,
+                User,
+                Title,
+                LevelId,
+                Level,
+                DateCreated,
+                LastModified
+            };
+        }
+
+        public object DetailJson()
         {
             return new
             {

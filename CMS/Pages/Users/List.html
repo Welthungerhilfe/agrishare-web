@@ -14,7 +14,8 @@
     </ag-title-bar>
 
     <ag-section ag-controller="list">
-        <gl-list gl-controller="list">
+
+        <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
                 <icon>
                     <i class="material-icons">person</i>
@@ -34,6 +35,7 @@
                 </action>
             </div>
         </gl-list>
+
     </ag-section>
 
     <ag-status-bar></ag-status-bar>

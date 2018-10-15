@@ -33,16 +33,6 @@ ui-view {
             > ng-transclude {
                 flex: 1;
                 overflow: auto;
-                display: flex;
-
-                main {
-                    flex: 1;
-                }
-
-                aside {
-                    width: 250px;
-                    background: #ddd;
-                }
             }
         }
 

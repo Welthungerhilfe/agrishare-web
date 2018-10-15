@@ -1,26 +1,42 @@
 ﻿
-<div ng-controller="ListViewController" ag-title="Listings" ag-selected-url="#/listings/list" ag-api-route="">
+<div ng-controller="ListViewController" ag-title="Listings" ag-selected-url="#/listings/list" ag-api-route="/cms/listings/">
 
     <ag-title-bar>
+
+        <ag-title-bar-search ag-controller="list"></ag-title-bar-search>
+
+        <gl-popup-menu gl-position="top right" class="responsive">
+            <gl-menu-item gl-icon="add" ng-click="app.go('/listings/edit?'+app.returnUrlQs())">Add</gl-menu-item>
+            <gl-menu-item gl-icon="search" ng-click="list.showSearch()">Search</gl-menu-item>
+            <gl-menu-item gl-icon="refresh" gl-label-optional="true" ng-click="list.refresh()">Refresh</gl-menu-item>
+        </gl-popup-menu>
+
     </ag-title-bar>
 
-    <section>
-        <main>
+    <ag-section ag-controller="list">
 
-            <div ng-repeat="item in data">
-
+        <gl-list gl-controller="list" gl-infinite="list.next()">
+            <div ng-repeat="item in list.data">
+                <icon>
+                    <i class="material-icons">local_shipping</i>
+                </icon>
+                <row>
+                    <strong>{{item.Title}}</strong>
+                </row>
+                <action>
+                    <gl-popup-menu gl-position="top right">
+                        <gl-menu-item gl-icon="visibility" ng-click="app.go('/listings/detail/'+item.Id+'?'+app.returnUrlQs())">View</gl-menu-item>
+                        <gl-menu-item gl-icon="local_shipping" ng-click="app.go('/services/list/filter/listing/'+item.Id+'?'+app.returnUrlQs())">Services</gl-menu-item>
+                        <gl-menu-item gl-icon="star_rate" ng-click="app.go('/ratings/list/filter/listing/'+item.Id+'?'+app.returnUrlQs())">Ratings</gl-menu-item>
+                        <gl-menu-item gl-icon="edit" ng-click="app.go('/listings/edit/'+item.Id+'?'+app.returnUrlQs())">Edit</gl-menu-item>
+                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/listings/delete?id=' + item.Id)">Delete</gl-menu-item>
+                    </gl-popup-menu>
+                </action>
             </div>
+        </gl-list>
 
+    </ag-section>
 
-        </main>
-        <aside>
-
-           
-
-        </aside>
-    </section>
-
-    <ag-status-bar>
-    </ag-status-bar>
+    <ag-status-bar></ag-status-bar>
 
 </div>

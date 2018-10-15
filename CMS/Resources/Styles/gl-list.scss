@@ -8,9 +8,15 @@
 gl-list {
     width: 100%;
     padding: 35px 40px;
+    display: flex;
+    flex: 1;
 
     @media all and (max-width: $mobile-breakpoint) {
         padding: 15px 20px;
+    }
+
+    > div {
+        flex: 1;
     }
 
     ng-transclude {
@@ -22,6 +28,14 @@ gl-list {
             background: white;
             display: flex;
             align-items: center;
+
+            &.hotspot {
+                cursor: pointer;
+
+                &:hover {
+                    background: #fafafa;
+                }
+            }
 
             icon {
                 width: 40px;
@@ -41,6 +55,54 @@ gl-list {
                 small {
                     color: gray;
                 }
+
+                &.setting {
+
+                    strong {
+                        flex: 1;
+                    }
+
+                    span {
+                        word-break: break-all;
+                    }
+
+                    @media all and (max-width: $mobile-breakpoint) {
+                        flex-direction: column;
+
+                        > * {
+                            margin: 2px 0 !important;
+                        }
+                    }
+                }
+
+                &.log {
+                    display: flex;
+
+                    strong {
+                        margin-right: 20px;
+                    }
+
+                    em {
+                        margin-left: 20px;
+                    }
+
+                    span {
+                        flex: 1;
+                        margin-right: 20px;
+                    }
+
+                    @media all and (max-width: $mobile-breakpoint) {
+                        flex-direction: column;
+
+                        > * {
+                            margin: 2px 0 !important;
+                        }
+                    }
+                }
+            }
+
+            action {
+                margin-left: 15px;
             }
         }
     }

@@ -1,14 +1,40 @@
 ﻿
 <div ng-controller="ViewController" ag-title="Dashboard" ag-selected-url="#/dashboard">
 
-    <ag-title-bar>
-    </ag-title-bar>
+    <ag-title-bar></ag-title-bar>
 
     <ag-section>
 
+        <small>Filter: This Month, This Year, All Time</small>
+
+        <h2>Overview</h2>
+        <ul>
+            <li>Total number of active listings / Total number of listings</li>
+            <li>Total number of active users / Total number of users</li>
+            <li>Total number of paid bookings / Total number of bookings</li>
+        </ul>
+
+        <h2>Finance</h2>
+        <ul>
+            <li>Total value of paid bookings</li>
+            <li>Total commission for AgriShare</li>
+        </ul>
+
+        <h2>Activity</h2>
+        <ul>
+            <li>Total number of users searching / Male, Female</li>
+            <li>Total number of users booking / Male, Female</li>
+            <li>Total number of users paying / Male, Female</li>
+            <li>Total number of matches / By service</li>            
+        </ul>
+
+        <h2>Services</h2>
+        <ul>
+            <li>Number of requests / service</li>
+        </ul>
+
     </ag-section>
 
-    <ag-status-bar>
-    </ag-status-bar>
+    <ag-status-bar></ag-status-bar>
 
 </div>
