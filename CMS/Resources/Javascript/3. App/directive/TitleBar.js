@@ -12,7 +12,9 @@
 
         link: function ($scope, element, attrs) {
 
-            $scope.$watch('App.title', function () {
+            $scope.$watch(function () {
+                return App.title;
+            }, function () {
                 $scope.title = App.title;
             });
 

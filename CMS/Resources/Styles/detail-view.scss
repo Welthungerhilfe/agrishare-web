@@ -81,6 +81,8 @@
             }
 
             > div:last-child {
+                text-align: right;
+
                 @media all and (max-width: $mobile-breakpoint) {
                     padding-top: 0;
 

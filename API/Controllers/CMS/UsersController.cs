@@ -22,7 +22,7 @@ namespace Agrishare.API.Controllers.CMS
 
         [Route("users/list")]
         [AcceptVerbs("GET")]
-        public object List(int PageIndex, int PageSize, string Query = "")
+        public object List(int PageIndex = 0, int PageSize = 25, string Query = "")
         {
             var recordCount = Entities.User.Count(Keywords: Query);
             var list = Entities.User.List(PageIndex: PageIndex, PageSize: PageSize, Keywords: Query);

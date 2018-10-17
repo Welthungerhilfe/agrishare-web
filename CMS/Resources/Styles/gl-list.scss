@@ -7,8 +7,10 @@
 
 gl-list {
     width: 100%;
+    min-height: 100%;
     padding: 35px 40px;
     display: flex;
+    flex-direction: column;
     flex: 1;
 
     @media all and (max-width: $mobile-breakpoint) {
@@ -29,12 +31,61 @@ gl-list {
             display: flex;
             align-items: center;
 
+            @media all and (max-width: $mobile-breakpoint) {
+                align-items: flex-start;
+            }
+
             &.hotspot {
                 cursor: pointer;
 
                 &:hover {
                     background: #fafafa;
                 }
+            }
+
+            calendar {
+                display: flex;
+                flex-direction: column;
+                width: 60px;
+                height: 60px;
+                border-radius: 2px;
+                overflow: hidden;
+                margin-right: 10px;
+
+                > small {
+                    background: $pink;
+                    color: white;
+                    display: block;
+                    text-align: center;
+                    padding: 3px;
+                    font-size: 10px;
+                    text-transform: uppercase;
+                }
+
+                > big {
+                    border: solid 1px #eee;
+                    color: #555;
+                    font-weight: bold;
+                    display: block;
+                    text-align: center;
+                    padding: 3px;
+                    font-size: 16px;
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            photo {
+                width: 60px;
+                height: 60px;
+                border-radius: 2px;
+                background-position: center center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-color: $pink;
+                margin-right: 20px;
             }
 
             icon {
@@ -54,6 +105,48 @@ gl-list {
 
                 small {
                     color: gray;
+                }
+
+                &.booking {
+                    display: flex;
+                    align-items: center;
+
+                    > div:first-child {
+                        flex: 1;
+                    }
+
+                    > div:nth-child(2) {
+                        text-align: right;
+                        margin-right: 20px;
+                    }
+
+                    > div:last-child {
+
+                        > em {
+                            display: inline-block;
+                            width: 80px;
+                            text-align: center;
+                        }
+                    }
+
+                    @media all and (max-width: $mobile-breakpoint) {
+                        flex-direction: column;
+                        align-items: flex-start;
+
+                        > * {
+                            margin: 2px 0 !important;
+                            text-align: left !important;
+                        }
+                    }
+                }
+
+                &.listing {
+                    display: flex;
+                    align-items: center;
+
+                    > div:first-child {
+                        flex: 1;
+                    }
                 }
 
                 &.setting {

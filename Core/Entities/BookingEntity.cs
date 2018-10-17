@@ -205,6 +205,7 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Id,
+                Title,
                 ForId,
                 For,
                 User = User?.Json(),

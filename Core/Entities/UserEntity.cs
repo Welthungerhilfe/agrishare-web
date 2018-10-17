@@ -169,7 +169,8 @@ namespace Agrishare.Core.Entities
                 Id,
                 FirstName,
                 LastName,
-                Telephone
+                Telephone,
+                Title
             };
         }
 

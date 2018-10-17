@@ -12,17 +12,24 @@ namespace Agrishare.API.Controllers.CMS
     {
         [Route("bookings/list")]
         [AcceptVerbs("GET")]
-        public object List(int PageIndex, int PageSize, string Query = "")
+        public object List(int PageIndex, int PageSize, string Query = "", int UserId = 0)
         {
-            var recordCount = Entities.Booking.Count();
-            var list = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize);
+            var recordCount = Entities.Booking.Count(UserId: UserId);
+            var list = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, UserId: UserId);
+            var title = "Bookings";
+
+            if (UserId > 0)
+            {
+                var user = Entities.User.Find(Id: UserId);
+                title = $"{user.FirstName} {user.LastName}";
+            }
 
             var data = new
             {
                 Count = recordCount,
                 Sort = Entities.Booking.DefaultSort,
                 List = list.Select(e => e.Json()),
-                Title = "Bookings"
+                Title = title
             };
 
             return Success(data);

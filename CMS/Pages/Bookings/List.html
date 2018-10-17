@@ -16,24 +16,32 @@
 
         <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
-                <icon>
-                    <i class="material-icons">local_shipping</i>
-                </icon>
-                <row>
-                    <strong>{{item.Listing.Title}}</strong>
+                <calendar>
+                    <small>{{item.StartDate | date : 'MMM'}}</small>
+                    <big>{{item.StartDate | date : 'dd'}}</big>
+                </calendar>
+                <row class="booking">
+                    <div>
+                        <strong>{{item.User.FirstName}} {{item.User.LastName}}</strong><br />
+                        <small>{{item.Listing.Category.Title}} &gt; {{item.Listing.Title}}</small>
+                    </div>
+                    <div>
+                        {{item.Price | currency}}<br />
+                        <small>{{item.AgriShareCommission | currency}}</small>
+                    </div>
+                    <div>
+                        <em class="status outline">{{item.Status}}</em>
+                    </div>
                 </row>
                 <action>
                     <gl-popup-menu gl-position="top right">
                         <gl-menu-item gl-icon="visibility" ng-click="app.go('/bookings/detail/'+item.Id+'?'+app.returnUrlQs())">View</gl-menu-item>
-                        <gl-menu-item gl-icon="edit" ng-click="app.go('/bookings/edit/'+item.Id+'?'+app.returnUrlQs())">Edit</gl-menu-item>
-                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/bookings/delete?id=' + item.Id)">Delete</gl-menu-item>
+                        <gl-menu-item gl-icon="edit" ng-if="item.StatusId==0" ng-click="app.go('/bookings/edit/'+item.Id+'?'+app.returnUrlQs())">Edit</gl-menu-item>
+                        <gl-menu-item gl-icon="delete" ng-if="item.StatusId==0" ng-click="list.delete($index, app.apiUrl + '/bookings/delete?id=' + item.Id)">Delete</gl-menu-item>
                     </gl-popup-menu>
                 </action>
             </div>
         </gl-list>
-
     </ag-section>
-
     <ag-status-bar></ag-status-bar>
-
 </div>

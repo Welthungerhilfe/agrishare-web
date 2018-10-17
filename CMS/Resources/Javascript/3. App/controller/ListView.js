@@ -21,6 +21,7 @@ agrishareApp.controller('ListViewController', function ($attrs, $controller, $ht
     list.error = '';
     list.searching = false;
     list.query = '';
+    list.filter = $scope.filter;
 
     $scope.list = list;
 
@@ -47,6 +48,9 @@ agrishareApp.controller('ListViewController', function ($attrs, $controller, $ht
 
         if (list.query)
             url += '&Query=' + encodeURIComponent(list.query);
+
+        for (var item in list.filter)
+            url += '&' + item + '=' + encodeURIComponent(list.filter[item]);
 
         list.aborter = $q.defer();
         $http({
@@ -108,6 +112,26 @@ agrishareApp.controller('ListViewController', function ($attrs, $controller, $ht
             list.query = '';
             list.refresh();
         }
+    };
+
+    list.delete = function (index, url) {
+        var list = this;
+        var item = list.data[index];
+        Utils.confirm('Confirm Delete', 'Are you sure you want to delete <strong>' + item.Title + '</strong>? This action can not be undone.', function () {
+            list.data.splice(index, 1);
+            $http({
+                url: url,
+                headers: App.authorizationHeader()
+            }).then(function (response) {
+                var feedback = response.data.Feedback || item.Title + ' was deleted';
+                Utils.toast.success(feedback);
+                list.recordCount -= 1;
+                list.updateStatus();
+            }, function (response) {
+                var feedback = response.data.Message;
+                Utils.toast.error(feedback);
+            });
+        });
     };
 
     list.refresh();

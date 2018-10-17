@@ -13,7 +13,7 @@ agrishareApp.directive('glList', function ($timeout, $parse) {
         },
 
         template: '' +
-            '<div ng-show="!list.busy && controller.data.length==0" class="feedback"><i class="material-icons md-48">sentiment_dissatisfied</i><span>No results</span></div>' +
+            '<div ng-show="!list.busy && list.data.length==0" class="feedback"><i class="material-icons md-48">sentiment_dissatisfied</i><span>No results</span></div>' +
             '<div ng-show="list.data.length>0"><ng-transclude></ng-transclude></div>',
 
         link: function (scope, element, attrs) {

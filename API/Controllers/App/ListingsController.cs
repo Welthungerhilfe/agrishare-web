@@ -13,9 +13,9 @@ namespace Agrishare.API.Controllers.App
     {
         [Route("listings")]
         [AcceptVerbs("GET")]
-        public object List(int PageIndex = 0, int PageSize = 25)
+        public object List(int PageIndex = 0, int PageSize = 25, int CategoryId = 0)
         {
-            var list = Entities.Listing.List(UserId: CurrentUser.Id, PageIndex: PageIndex, PageSize: PageSize);
+            var list = Entities.Listing.List(UserId: CurrentUser.Id, PageIndex: PageIndex, PageSize: PageSize, CategoryId: CategoryId);
             return Success(new
             {
                 List = list.Select(e => e.Json())

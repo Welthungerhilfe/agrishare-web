@@ -17,17 +17,21 @@
 
         <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
-                <icon>
-                    <i class="material-icons">local_shipping</i>
-                </icon>
-                <row>
-                    <strong>{{item.Title}}</strong>
+                <photo style="background-image:url({{item.Photos[0].Thumb}})"></photo>
+                <row class="listing">
+                    <div>
+                        <strong>{{item.Title}}</strong><br />
+                        <small>{{item.Category.Title}} &bull; {{item.Brand}}</small>
+                    </div>
+                    <div>
+                        <em class="status outline">{{item.Status}}</em>
+                    </div>
                 </row>
                 <action>
                     <gl-popup-menu gl-position="top right">
                         <gl-menu-item gl-icon="visibility" ng-click="app.go('/listings/detail/'+item.Id+'?'+app.returnUrlQs())">View</gl-menu-item>
                         <gl-menu-item gl-icon="local_shipping" ng-click="app.go('/services/list/filter/listing/'+item.Id+'?'+app.returnUrlQs())">Services</gl-menu-item>
-                        <gl-menu-item gl-icon="star_rate" ng-click="app.go('/ratings/list/filter/listing/'+item.Id+'?'+app.returnUrlQs())">Ratings</gl-menu-item>
+                        <gl-menu-item gl-icon="star" ng-click="app.go('/ratings/list/filter/listing/'+item.Id+'?'+app.returnUrlQs())">Ratings</gl-menu-item>
                         <gl-menu-item gl-icon="edit" ng-click="app.go('/listings/edit/'+item.Id+'?'+app.returnUrlQs())">Edit</gl-menu-item>
                         <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/listings/delete?id=' + item.Id)">Delete</gl-menu-item>
                     </gl-popup-menu>

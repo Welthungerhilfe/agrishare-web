@@ -117,7 +117,7 @@ namespace Agrishare.API.Controllers.App
         {
             var user = Entities.User.Find(Telephone: Telephone);
 
-            if (user?.Id == 0)
+            if (user == null || user?.Id == 0)
                 return Error("Phone number or PIN not recognised.");
 
             if (user?.StatusId == Entities.UserStatus.Pending)
