@@ -40,6 +40,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="BookingId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" />
     <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Telephone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
     <Property Name="Ratio" Type="Decimal" Nullable="false" />
@@ -51,6 +52,7 @@
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Booking" Relationship="Self.bookingusers_ibfk_1" FromRole="BookingUsers" ToRole="Bookings" />
     <NavigationProperty Name="Transactions" Relationship="Self.transactions_ibfk_3" FromRole="BookingUsers" ToRole="Transactions" />
+    <NavigationProperty Name="User" Relationship="AgrishareModel.bookingusers_ibfk_2" FromRole="BookingUser" ToRole="User" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -439,6 +441,18 @@
       <End Role="Category" EntitySet="Categories" />
       <End Role="Service" EntitySet="Services" />
     </AssociationSet>
+    <AssociationSet Name="counters_ibfk_1" Association="AgrishareModel.counters_ibfk_1">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Counter" EntitySet="Counters" />
+    </AssociationSet>
+    <AssociationSet Name="counters_ibfk_2" Association="AgrishareModel.counters_ibfk_2">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Counter" EntitySet="Counters" />
+    </AssociationSet>
+    <AssociationSet Name="bookingusers_ibfk_2" Association="AgrishareModel.bookingusers_ibfk_2">
+      <End Role="User" EntitySet="Users" />
+      <End Role="BookingUser" EntitySet="BookingUsers" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Rating">
     <Key>
@@ -566,14 +580,14 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="ServiceId" Type="Int32" />
     <Property Name="Event" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="Category" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="Subcategory" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-    <Property Name="Date" Type="DateTime" Nullable="false" />
-    <Property Name="Hits" Type="Int32" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Service" Relationship="AgrishareModel.counters_ibfk_1" FromRole="Counter" ToRole="Category" />
+    <NavigationProperty Name="User" Relationship="AgrishareModel.counters_ibfk_2" FromRole="Counter" ToRole="User" />
   </EntityType>
   <EnumType Name="ListingStatus" UnderlyingType="Int16">
     <Member Name="None" Value="0" />
@@ -655,6 +669,7 @@
     <Member Name="Declined" Value="2" />
     <Member Name="InProgress" Value="3" />
     <Member Name="Complete" Value="4" />
+    <Member Name="None" Value="-1" />
   </EnumType>
   <EnumType Name="BookingUserStatus" UnderlyingType="Int16">
     <Member Name="Pending" Value="0" />
@@ -695,4 +710,46 @@
     <Member Name="Deleted" Value="12" />
     <Member Name="Pending" Value="13" />
   </EnumType>
+  <Association Name="counters_ibfk_1">
+    <End Type="AgrishareModel.Category" Role="Category" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="AgrishareModel.Counter" Role="Counter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Counter">
+        <PropertyRef Name="ServiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="counters_ibfk_2">
+    <End Type="AgrishareModel.User" Role="User" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="AgrishareModel.Counter" Role="Counter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Counter">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="bookingusers_ibfk_2">
+    <End Type="AgrishareModel.User" Role="User" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="AgrishareModel.BookingUser" Role="BookingUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BookingUser">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

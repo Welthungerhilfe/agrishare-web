@@ -34,6 +34,7 @@
     <EntitySetMapping Name="BookingUsers">
       <EntityTypeMapping TypeName="AgrishareModel.BookingUser">
         <MappingFragment StoreEntitySet="BookingUsers">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="BookingId" ColumnName="BookingId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -259,13 +260,11 @@
     <EntitySetMapping Name="Counters">
       <EntityTypeMapping TypeName="AgrishareModel.Counter">
         <MappingFragment StoreEntitySet="Counters">
-          <ScalarProperty Name="Subcategory" ColumnName="Subcategory" />
-          <ScalarProperty Name="Hits" ColumnName="Hits" />
+          <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Deleted" ColumnName="Deleted" />
           <ScalarProperty Name="LastModified" ColumnName="LastModified" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Category" ColumnName="Category" />
           <ScalarProperty Name="Event" ColumnName="Event" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

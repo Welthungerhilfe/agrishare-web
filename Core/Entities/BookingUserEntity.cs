@@ -82,12 +82,17 @@ namespace Agrishare.Core.Entities
             if (booking != null) BookingId = booking.Id;
             Booking = null;
 
+            var user = User;
+            if (user != null) UserId = user.Id;
+            User = null;
+
             if (Id == 0)
                 success = Add();
             else
                 success = Update();
 
             Booking = booking;
+            User = user;
 
             return success;
         }
@@ -127,6 +132,7 @@ namespace Agrishare.Core.Entities
             {
                 Id,
                 BookingId,
+                User = User?.Json(),
                 Name,
                 Telephone,
                 Ratio,

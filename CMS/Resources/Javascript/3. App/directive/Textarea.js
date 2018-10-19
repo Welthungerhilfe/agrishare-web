@@ -29,7 +29,7 @@ agrishareApp.directive('glTextarea', function ($timeout) {
                 '<div>' +
                 '<textarea placeholder="' + placeholder + '" ng-model="ngModel" ' + requiredAttr + ' name="' + name + '"></textarea>' +
                 '</div>' +
-                '</div>'
+                '</div>';
         },
 
         link: function (scope, element, attrs) {

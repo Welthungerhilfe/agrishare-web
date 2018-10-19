@@ -42,6 +42,46 @@ agrishareApp.factory('App', function ($location, Utils) {
 
         go: function (url) {
             location.hash = url;
+        },
+
+        slideshow: {
+
+            visibile: false,
+            title: 'Slideshow',
+            currentIndex: 0,
+            photos: [],
+
+            show: function (photos, index = 0) {
+                var slideshow = this;
+
+                if (photos.length)
+                    slideshow.photos = photos;
+                else
+                    slideshow.photos = [photos];
+
+                slideshow.currentIndex = index;
+                slideshow.visible = true;
+            },
+
+            hide: function () {
+                var slideshow = this;
+                slideshow.visible = false;
+            },
+
+            previous: function () {
+                var slideshow = this;
+                slideshow.currentIndex += 1;
+                if (slideshow.currentIndex >= slideshow.photos.length)
+                    slideshow.currentIndex = 0;
+            },
+
+            next: function () {
+                var slideshow = this;
+                slideshow.currentIndex -= 1;
+                if (slideshow.currentIndex < 0)
+                    slideshow.currentIndex = slideshow.photos.length - 1;
+            }
+
         }
         
     };

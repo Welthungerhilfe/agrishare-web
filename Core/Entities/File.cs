@@ -28,8 +28,8 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Filename,
-                Thumb = $"{Config.CDNURL}{ThumbName}",
-                Zoom = $"{Config.CDNURL}{ZoomName}"
+                Thumb = $"{Config.CDNURL}/{ThumbName}",
+                Zoom = $"{Config.CDNURL}/{ZoomName}"
             };
         }
 

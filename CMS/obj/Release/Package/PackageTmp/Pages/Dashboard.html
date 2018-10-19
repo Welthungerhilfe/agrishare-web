@@ -1,0 +1,40 @@
+﻿
+<div ng-controller="DashboardViewController" ag-title="Dashboard" ag-selected-url="#/dashboard" ag-api-route="/cms/dashboard/summary">
+
+    <ag-title-bar></ag-title-bar>
+
+    <ag-section ag-controller="dashboard">
+
+        <div class="dashboard-view">
+
+            <div class="overview">
+                <ul>
+                    <li><big>{{dashboard.data.activeListingCount}}</big><strong>Live<br/>Listings</strong><small>{{dashboard.data.totalListingCount}} Listings</small></li>
+                    <li><big>{{dashboard.data.activeUsers}}</big><strong>Active<br />Users</strong><small>{{dashboard.data.userCount}} Users</small></li>
+                    <li><big>{{dashboard.data.completeBookingCount}}</big><strong>Paid<br />Bookings</strong><small>{{dashboard.data.totalBookingCount}} Bookings</small></li>
+                </ul>
+                <ul>
+                    <li><big>{{dashboard.data.totalBookingAmount | currency}}</big><strong>Total<br/>Transactions</strong><small>&nbsp;</small></li>
+                    <li><big>{{dashboard.data.agrishareCommission | currency}}</big><strong>AgriShare<br/>Commission</strong><small>&nbsp;</small></li>
+                </ul>
+            </div>
+
+            <div class="activity">
+                <h2>Activity - last 30 days</h2>
+                <ul>
+                    <li><big>{{dashboard.data.searchCount.Male + dashboard.data.searchCount.Female}}</big><strong>Total<br />Searches</strong><small>{{dashboard.data.searchCount.Male}} Male &bull; {{dashboard.data.searchCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.matchCount.Male + dashboard.data.matchCount.Female}}</big><strong>Matched<br />Searches</strong><small>{{dashboard.data.matchCount.Male}} Male &bull; {{dashboard.data.matchCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.bookingCount.Male + dashboard.data.bookingCount.Female}}</big><strong>Bookings<br />Made</strong><small>{{dashboard.data.bookingCount.Male}} Male &bull; {{dashboard.data.bookingCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.confirmCount.Male + dashboard.data.confirmCount.Female}}</big><strong>Bookings<br />Confirmed</strong><small>{{dashboard.data.confirmCount.Male}} Male &bull; {{dashboard.data.confirmCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.paidCount.Male + dashboard.data.paidCount.Female}}</big><strong>Paid<br />Bookings</strong><small>{{dashboard.data.paidCount.Male}} Male &bull; {{dashboard.data.paidCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.completeCount.Male + dashboard.data.completeCount.Female}}</big><strong>Completed<br />Bookings</strong><small>{{dashboard.data.completeCount.Male}} Male &bull; {{dashboard.data.completeCount.Female}} Female</small></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </ag-section>
+
+    <ag-status-bar></ag-status-bar>
+
+</div>

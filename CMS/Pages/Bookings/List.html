@@ -36,7 +36,6 @@
                 <action>
                     <gl-popup-menu gl-position="top right">
                         <gl-menu-item gl-icon="visibility" ng-click="app.go('/bookings/detail/'+item.Id+'?'+app.returnUrlQs())">View</gl-menu-item>
-                        <gl-menu-item gl-icon="edit" ng-if="item.StatusId==0" ng-click="app.go('/bookings/edit/'+item.Id+'?'+app.returnUrlQs())">Edit</gl-menu-item>
                         <gl-menu-item gl-icon="delete" ng-if="item.StatusId==0" ng-click="list.delete($index, app.apiUrl + '/bookings/delete?id=' + item.Id)">Delete</gl-menu-item>
                     </gl-popup-menu>
                 </action>

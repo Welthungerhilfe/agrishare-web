@@ -47,7 +47,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Include(o => o.Services).Where(o => !o.Deleted);
+                var query = ctx.Listings.Include(o => o.Services).Include(o => o.User).Where(o => !o.Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
@@ -57,7 +57,7 @@ namespace Agrishare.Core.Entities
         }
 
         public static List<Listing> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", 
-            string Keywords = "", string StartsWith = "", int UserId = 0, int CategoryId = 0)
+            string Keywords = "", string StartsWith = "", int UserId = 0, int CategoryId = 0, ListingStatus Status = ListingStatus.None)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -74,12 +74,15 @@ namespace Agrishare.Core.Entities
 
                 if (CategoryId > 0)
                     query = query.Where(o => o.CategoryId == CategoryId);
+
+                if (Status != ListingStatus.None)
+                    query = query.Where(o => o.StatusId == Status);
 
                 return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
         }
 
-        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int CategoryId = 0)
+        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int CategoryId = 0, ListingStatus Status = ListingStatus.None)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -96,6 +99,9 @@ namespace Agrishare.Core.Entities
 
                 if (CategoryId > 0)
                     query = query.Where(o => o.CategoryId == CategoryId);
+
+                if (Status != ListingStatus.None)
+                    query = query.Where(o => o.StatusId == Status);
 
                 return query.Count();
             }
@@ -167,7 +173,7 @@ namespace Agrishare.Core.Entities
             return Update();
         }
 
-        public object Json()
+        public object Json(bool IncludeUser = false)
         {
             return new
             {
@@ -192,6 +198,7 @@ namespace Agrishare.Core.Entities
                 Services = Services?.Select(e => e.Json()),
                 StatusId,
                 Status,
+                User = IncludeUser ? User?.Json() : null,
                 DateCreated
             };
         }

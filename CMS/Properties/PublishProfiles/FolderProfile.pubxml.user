@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Users\brad\Desktop\AGRISHARE CMS</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Agrishare.CMS.dll">
+      <publishTime>10/19/2018 16:08:43</publishTime>
+    </File>
+    <File Include="bin/Agrishare.CMS.pdb">
+      <publishTime>10/19/2018 16:08:43</publishTime>
+    </File>
+    <File Include="bin/Agrishare.Core.dll">
+      <publishTime>10/19/2018 16:08:42</publishTime>
+    </File>
+    <File Include="bin/Agrishare.Core.dll.config">
+      <publishTime>09/20/2018 13:43:23</publishTime>
+    </File>
+    <File Include="bin/Agrishare.Core.pdb">
+      <publishTime>10/19/2018 16:08:42</publishTime>
+    </File>
+    <File Include="bin/AWSSDK.dll">
+      <publishTime>10/10/2016 15:00:00</publishTime>
+    </File>
+    <File Include="bin/AWSSDK.pdb">
+      <publishTime>10/10/2016 15:00:02</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>10/23/2017 13:15:18</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>10/23/2017 13:15:20</publishTime>
+    </File>
+    <File Include="bin/Mandrill.net.dll">
+      <publishTime>06/18/2018 13:33:08</publishTime>
+    </File>
+    <File Include="bin/MySql.Data.dll">
+      <publishTime>08/07/2018 02:21:58</publishTime>
+    </File>
+    <File Include="bin/MySql.Data.Entity.EF6.dll">
+      <publishTime>08/07/2018 02:22:26</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>03/24/2018 17:44:14</publishTime>
+    </File>
+    <File Include="bin/RestSharp.dll">
+      <publishTime>06/10/2018 15:28:24</publishTime>
+    </File>
+    <File Include="bin/StackExchange.Redis.StrongName.dll">
+      <publishTime>08/01/2017 12:20:24</publishTime>
+    </File>
+    <File Include="bin/System.Diagnostics.DiagnosticSource.dll">
+      <publishTime>04/19/2017 16:58:52</publishTime>
+    </File>
+    <File Include="bin/System.IO.Compression.dll">
+      <publishTime>11/05/2016 04:56:08</publishTime>
+    </File>
+    <File Include="bin/System.Linq.Dynamic.dll">
+      <publishTime>10/15/2016 20:49:24</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.dll">
+      <publishTime>11/05/2016 04:56:30</publishTime>
+    </File>
+    <File Include="Default.aspx">
+      <publishTime>10/19/2018 12:26:40</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>09/07/2018 07:53:24</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>08/30/2018 13:40:39</publishTime>
+    </File>
+    <File Include="Login.aspx">
+      <publishTime>10/14/2018 10:46:21</publishTime>
+    </File>
+    <File Include="Pages/Bookings/Detail.html">
+      <publishTime>10/19/2018 13:21:06</publishTime>
+    </File>
+    <File Include="Pages/Bookings/List.html">
+      <publishTime>10/19/2018 12:38:10</publishTime>
+    </File>
+    <File Include="Pages/Dashboard.html">
+      <publishTime>10/19/2018 16:02:26</publishTime>
+    </File>
+    <File Include="Pages/Listings/Detail.html">
+      <publishTime>10/19/2018 12:34:32</publishTime>
+    </File>
+    <File Include="Pages/Listings/List.html">
+      <publishTime>10/19/2018 12:38:04</publishTime>
+    </File>
+    <File Include="Pages/Log/Detail.html">
+      <publishTime>10/15/2018 09:54:25</publishTime>
+    </File>
+    <File Include="Pages/Log/List.html">
+      <publishTime>10/15/2018 09:28:28</publishTime>
+    </File>
+    <File Include="Pages/Login.html">
+      <publishTime>10/12/2018 15:21:52</publishTime>
+    </File>
+    <File Include="Pages/Ratings/List.html">
+      <publishTime>10/19/2018 13:14:59</publishTime>
+    </File>
+    <File Include="Pages/Settings/Edit.html">
+      <publishTime>10/15/2018 10:00:09</publishTime>
+    </File>
+    <File Include="Pages/Settings/List.html">
+      <publishTime>10/15/2018 10:03:09</publishTime>
+    </File>
+    <File Include="Pages/Templates/Detail.html">
+      <publishTime>10/15/2018 12:36:12</publishTime>
+    </File>
+    <File Include="Pages/Templates/Edit.html">
+      <publishTime>10/15/2018 12:29:33</publishTime>
+    </File>
+    <File Include="Pages/Templates/List.html">
+      <publishTime>10/15/2018 12:27:59</publishTime>
+    </File>
+    <File Include="Pages/Users/Detail.html">
+      <publishTime>10/15/2018 08:37:52</publishTime>
+    </File>
+    <File Include="Pages/Users/Edit.html">
+      <publishTime>10/14/2018 12:46:49</publishTime>
+    </File>
+    <File Include="Pages/Users/List.html">
+      <publishTime>10/16/2018 13:30:21</publishTime>
+    </File>
+    <File Include="Resources/Javascript/1. jQuery/jquery.2.1.0.min.js">
+      <publishTime>10/11/2018 13:51:54</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-1.5.8.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-animate-1.5.8.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-confirm.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-file-upload.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-map.min.js">
+      <publishTime>10/19/2018 12:21:42</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-sanitize-1.5.8.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-toast.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-tooltips.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-touch.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/2. Angular/angular-ui-router.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/app.js">
+      <publishTime>10/19/2018 12:22:58</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/controller/App.js">
+      <publishTime>10/14/2018 13:29:15</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/controller/DashboardView.js">
+      <publishTime>10/19/2018 15:18:58</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/controller/DetailView.js">
+      <publishTime>10/15/2018 09:45:44</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/controller/FormView.js">
+      <publishTime>10/14/2018 12:47:14</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/controller/ListView.js">
+      <publishTime>10/16/2018 13:58:20</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/controller/View.js">
+      <publishTime>10/13/2018 08:15:53</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Autocomplete.js">
+      <publishTime>10/14/2018 10:38:44</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Checkbox.js">
+      <publishTime>10/14/2018 10:39:00</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/CheckboxList.js">
+      <publishTime>10/14/2018 12:44:56</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Date.js">
+      <publishTime>10/14/2018 10:39:07</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/DropdownList.js">
+      <publishTime>10/14/2018 10:39:10</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Editor.js">
+      <publishTime>10/14/2018 10:39:14</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Flex.js">
+      <publishTime>10/14/2018 10:39:17</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/IconButton.js">
+      <publishTime>10/14/2018 10:39:33</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/IconLabel.js">
+      <publishTime>10/14/2018 10:39:37</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Link.js">
+      <publishTime>10/14/2018 10:39:40</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/List.js">
+      <publishTime>10/16/2018 13:33:39</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/ListPhoto.js">
+      <publishTime>10/14/2018 10:40:15</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/PopupMenu.js">
+      <publishTime>10/14/2018 10:49:44</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/RadioGroup.js">
+      <publishTime>10/14/2018 10:40:20</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Rating.js">
+      <publishTime>10/19/2018 13:15:28</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Section.js">
+      <publishTime>10/13/2018 08:16:25</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/SmartSearch.js">
+      <publishTime>10/14/2018 10:40:31</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/StatusBar.js">
+      <publishTime>10/13/2018 10:45:51</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Textarea.js">
+      <publishTime>10/19/2018 13:01:34</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Textbox.js">
+      <publishTime>10/14/2018 12:45:56</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Time.js">
+      <publishTime>10/14/2018 10:41:16</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/TitleBar.js">
+      <publishTime>10/16/2018 13:33:13</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/directive/Upload.js">
+      <publishTime>10/14/2018 10:41:19</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/factory/App.js">
+      <publishTime>10/19/2018 12:03:16</publishTime>
+    </File>
+    <File Include="Resources/Javascript/3. App/factory/Utils.js">
+      <publishTime>10/14/2018 11:55:59</publishTime>
+    </File>
+    <File Include="Resources/Javascript/moment.min.js">
+      <publishTime>10/09/2018 17:03:23</publishTime>
+    </File>
+    <File Include="Resources/Styles/.normalize.min.css">
+      <publishTime>10/09/2018 17:14:28</publishTime>
+    </File>
+    <File Include="Resources/Styles/angular-confirm.min.css">
+      <publishTime>10/14/2018 12:51:54</publishTime>
+    </File>
+    <File Include="Resources/Styles/angular-toast-alerts.css">
+      <publishTime>10/14/2018 12:52:04</publishTime>
+    </File>
+    <File Include="Resources/Styles/angular-toast-animations.min.css">
+      <publishTime>10/14/2018 12:52:04</publishTime>
+    </File>
+    <File Include="Resources/Styles/angular-toast.min.css">
+      <publishTime>10/14/2018 12:52:04</publishTime>
+    </File>
+    <File Include="Resources/Styles/base.scss">
+      <publishTime>10/14/2018 11:23:32</publishTime>
+    </File>
+    <File Include="Resources/Styles/custom-marker.scss">
+      <publishTime>10/19/2018 13:23:48</publishTime>
+    </File>
+    <File Include="Resources/Styles/dashboard.scss">
+      <publishTime>10/19/2018 16:04:18</publishTime>
+    </File>
+    <File Include="Resources/Styles/detail-view.scss">
+      <publishTime>10/19/2018 12:06:33</publishTime>
+    </File>
+    <File Include="Resources/Styles/footer.scss">
+      <publishTime>10/14/2018 12:10:28</publishTime>
+    </File>
+    <File Include="Resources/Styles/form-view.scss">
+      <publishTime>10/15/2018 09:14:37</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-autocomplete.scss">
+      <publishTime>10/14/2018 10:42:10</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-checkbox-list.scss">
+      <publishTime>10/14/2018 10:42:13</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-checkbox.scss">
+      <publishTime>10/14/2018 10:42:15</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-date.scss">
+      <publishTime>10/14/2018 10:43:22</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-dropdown-list.scss">
+      <publishTime>10/14/2018 10:42:19</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-editor.scss">
+      <publishTime>10/14/2018 10:42:21</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-icon-button.scss">
+      <publishTime>10/14/2018 11:34:09</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-icon-label.scss">
+      <publishTime>10/14/2018 10:43:44</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-lightbox.scss">
+      <publishTime>10/19/2018 12:05:02</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-list.scss">
+      <publishTime>10/16/2018 13:53:46</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-popup-menu.scss">
+      <publishTime>10/14/2018 11:34:41</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-radio-group.scss">
+      <publishTime>10/14/2018 10:42:41</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-rating.scss">
+      <publishTime>10/19/2018 13:15:53</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-time.scss">
+      <publishTime>10/14/2018 10:42:43</publishTime>
+    </File>
+    <File Include="Resources/Styles/gl-upload.scss">
+      <publishTime>10/14/2018 10:44:32</publishTime>
+    </File>
+    <File Include="Resources/Styles/global.scss">
+      <publishTime>10/13/2018 08:16:47</publishTime>
+    </File>
+    <File Include="Resources/Styles/header.scss">
+      <publishTime>10/14/2018 11:51:38</publishTime>
+    </File>
+    <File Include="Resources/Styles/login.scss">
+      <publishTime>10/12/2018 15:19:55</publishTime>
+    </File>
+    <File Include="Resources/Styles/main.scss">
+      <publishTime>10/15/2018 09:40:50</publishTime>
+    </File>
+    <File Include="Resources/Styles/nav.scss">
+      <publishTime>10/15/2018 09:46:38</publishTime>
+    </File>
+    <File Include="Resources/Styles/ngToast-alerts.css">
+      <publishTime>10/11/2018 14:50:22</publishTime>
+    </File>
+    <File Include="Resources/Styles/ngToast-animations.min.css">
+      <publishTime>10/11/2018 14:50:22</publishTime>
+    </File>
+    <File Include="Resources/Styles/ngToast.min.css">
+      <publishTime>10/11/2018 14:50:22</publishTime>
+    </File>
+    <File Include="Resources/Styles/status.scss">
+      <publishTime>10/16/2018 12:51:32</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>10/19/2018 16:08:43</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

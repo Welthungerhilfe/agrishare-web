@@ -41,7 +41,7 @@ namespace Agrishare.API.Controllers.CMS
         {
             var data = new
             {
-                Entity = Entities.Listing.Find(Id: Id).Json(),
+                Entity = Entities.Listing.Find(Id: Id).Json(IncludeUser: true),
                 Categories = Entities.Category.List().Select(e => e.Json()),
                 Conditions = EnumInfo.ToList<Entities.ListingCondition>(),
                 Statuses = EnumInfo.ToList<Entities.ListingStatus>()

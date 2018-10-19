@@ -61,6 +61,10 @@ namespace Agrishare.API.Controllers.App
                     Telephone = user.Telephone
                 };
 
+                var registeredUser = Entities.User.Find(Telephone: user.Telephone);
+                if (registeredUser.Id > 0)
+                    bookingUser.User = registeredUser;
+
                 bookingUser.Save();
                 booking.BookingUsers.Add(bookingUser);
             }
@@ -80,6 +84,8 @@ namespace Agrishare.API.Controllers.App
                 transaction.Save();
                 //transaction.RequestEcoCashPayment();
                 transactions.Add(transaction);
+
+                Entities.Counter.Hit(bookingUser.UserId ?? 0, Entities.Counters.InitiatePayment, booking.ServiceId);
             }
 
             // BS: temporary fake success

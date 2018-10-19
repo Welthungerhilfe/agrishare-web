@@ -38,6 +38,9 @@
         <EntityTypeShape EntityType="AgrishareModel.Device" Width="1.5" PointX="20" PointY="4" />
         <AssociationConnector Association="AgrishareModel.devices_ibfk_1" />
         <AssociationConnector Association="AgrishareModel.services_ibfk_21" />
+        <AssociationConnector Association="AgrishareModel.counters_ibfk_1" />
+        <AssociationConnector Association="AgrishareModel.counters_ibfk_2" />
+        <AssociationConnector Association="AgrishareModel.bookingusers_ibfk_2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

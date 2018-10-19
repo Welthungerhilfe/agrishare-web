@@ -1,0 +1,21 @@
+﻿@import "global";
+
+footer {
+    display: flex;
+    align-items: center;
+    padding: 30px 40px;
+    border-top: solid 1px #ddd;
+
+    @media all and (max-width: $mobile-breakpoint) {
+        padding: 20px;
+    }
+
+    > i {
+        margin-right: 20px;
+    }
+
+    > span {
+        flex: 1;
+        padding: 10px 0;
+    }
+}

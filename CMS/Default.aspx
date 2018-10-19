@@ -51,5 +51,22 @@
 
     </div>
 
+    <div class="gl-lightbox" ng-if="app.slideshow.visible">
+        <div class="titlebar">
+            <div>
+                Photo
+            </div>
+            <div>
+                <gl-icon-button gl-icon="keyboard_arrow_left" ng-click="app.slideshow.previous()" ng-if="app.slideshow.photos.length>1"></gl-icon-button>
+                <gl-icon-button gl-icon="keyboard_arrow_right" ng-click="app.slideshow.next()" ng-if="app.slideshow.photos.length>1"></gl-icon-button>
+                <gl-icon-button gl-icon="cancel" ng-click="app.slideshow.hide()"></gl-icon-button>
+            </div>
+        </div>
+        <div class="photo">
+            <span class="spinner"></span>
+            <div ng-repeat="photo in app.slideshow.photos" style="background-image:url({{photo.Zoom}})" ng-class="{'visible':$index==app.slideshow.currentIndex}"></div>                
+        </div>
+    </div>
+
 </body>
 </html>

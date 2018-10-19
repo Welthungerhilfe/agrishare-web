@@ -1,0 +1,103 @@
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode) */
+
+@import "global";
+
+.upload {
+    margin: 20px 0;
+
+    > .gl-icon-button {
+        margin-top: 5px;
+    }
+
+    label {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 5px;
+        color: #999;
+    }
+
+    div {
+        border: solid 1px #ddd;
+        border-radius: 3px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background: #eee;
+
+        &.dragover {
+            border-color: green;
+        }
+
+        > strong {
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #aaa;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+            transition: all .4s ease;
+            justify-content: center;
+
+            &:hover {
+                background: #ddd;
+            }
+
+            i {
+                margin-right: 10px;
+            }
+        }
+
+        > span {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background-color: green;
+            border-radius: 100px;
+        }
+
+        > ul {
+            margin: 0;
+            padding: 1px;
+            list-style: none;
+            flex: 1;
+            width: 100%;
+
+            li {
+                background: #fff;
+                display: flex;
+                align-items: center;
+                margin: 1px;
+                padding-right: 10px;
+
+                span {
+                    background-color: #ccc;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    width: 60px;
+                    height: 60px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                }
+
+                strong {
+                    flex: 1;
+                    padding: 0 20px;
+                }
+            }
+        }
+    }
+}
+

@@ -58,6 +58,8 @@ namespace Agrishare.API.Controllers.App
 
             if (booking.Save())
             {
+                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.Book, booking.ServiceId);
+
                 new Entities.Notification
                 {
                     Booking = booking,
@@ -94,6 +96,8 @@ namespace Agrishare.API.Controllers.App
                     TypeId = Entities.NotificationType.BookingConfirmed,
                     User = Entities.User.Find(Id: booking.UserId)
                 }.Save(Notify: true);
+
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.ConfirmBooking, booking.ServiceId);
 
                 return Success(new
                 {
@@ -164,6 +168,8 @@ namespace Agrishare.API.Controllers.App
                     TypeId = Entities.NotificationType.ServiceComplete,
                     User = Entities.User.Find(Id: booking.Listing.UserId)
                 }.Save(Notify: true);
+
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.CompleteBooking, booking.ServiceId);
 
                 return Success(new
                 {

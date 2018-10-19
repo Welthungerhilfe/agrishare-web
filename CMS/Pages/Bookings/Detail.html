@@ -20,6 +20,17 @@
                     </div>
                 </div>
 
+                <div class="box">
+
+                    <div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyCEHzltxutIsimd9nZsP6QC2LSHHFIE6PI">
+                        <ng-map center="{{detail.entity.Latitude}},{{detail.entity.Longitude}}" zoom="15">
+                            <custom-marker position="[{{detail.entity.Latitude}},{{detail.entity.Longitude}}]">Destination</custom-marker>
+                            <custom-marker position="[{{detail.entity.Listing.Latitude}},{{detail.entity.Listing.Longitude}}]">Source</custom-marker>
+                        </ng-map>
+                    </div>
+
+                </div>
+
             </div>
 
             <div class="box">

@@ -265,6 +265,9 @@ namespace Agrishare.Core.Entities
             if (previousStatusId != TransactionStatus.Paid && StatusId == TransactionStatus.Paid)
             {
                 //TODO update booking status -> in progress
+
+                Counter.Hit(BookingUser.UserId ?? 0, Counters.CompletePayment, Booking.ServiceId);
+
                 SendPaymentNotification();
             }
         }

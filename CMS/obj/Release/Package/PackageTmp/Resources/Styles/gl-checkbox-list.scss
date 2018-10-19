@@ -1,0 +1,56 @@
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode) */
+
+@import "global";
+
+.gl-checkbox-list {
+
+    > div {
+        display: block;
+        max-height: 140px;
+        overflow: auto;
+        padding: 8px;
+
+        > div {
+            display: flex;
+            align-items: center;
+            padding: 3px;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all .4s ease;
+            width: 100%;
+
+            &:hover {
+                background: #ddd;
+            }
+
+            > i {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    &.multi-column-2 > div > div {
+        width: 50%;
+    }
+
+    &.multi-column-3 > div > div {
+        width: 33.33%;
+    }
+
+    &.multi-column-2 > div,
+    &.multi-column-3 > div {
+        max-height: none;
+
+        > div {
+            float: left;
+
+            @media all and (max-width: $mobile-breakpoint) {
+                float: none;
+                width: 100%;
+            }
+        }
+    }
+}

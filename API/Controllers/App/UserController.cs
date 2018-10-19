@@ -62,6 +62,8 @@ namespace Agrishare.API.Controllers.App
             user.StatusId = Entities.UserStatus.Pending;
             if (user.Save())
             {
+                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.Register);
+
                 if (!user.SendVerificationCode())
                 {
                     user.Delete();
@@ -133,6 +135,8 @@ namespace Agrishare.API.Controllers.App
                     user.AuthToken = Guid.NewGuid().ToString();
                 user.Save();
 
+                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.Login);
+
                 return Success(new
                 {
                     Auth = new
@@ -171,6 +175,8 @@ namespace Agrishare.API.Controllers.App
                     user.AuthToken = Guid.NewGuid().ToString();
                 user.Save();
 
+                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.ResetPIN);
+
                 return Success(new
                 {
                     User = user.ProfileJson()
@@ -186,7 +192,10 @@ namespace Agrishare.API.Controllers.App
         {
             var user = Entities.User.Find(Telephone: Telephone);
             if (user?.Id > 0 && user.SendVerificationCode())
+            {
+                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.ForgotPIN);
                 return Success("Please check your messages");
+            }
 
             return Error("Unable to send verification code - please try again");
         }

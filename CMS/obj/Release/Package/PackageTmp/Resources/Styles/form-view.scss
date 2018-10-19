@@ -1,0 +1,245 @@
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode) */
+
+@import "global";
+
+form {
+    padding: 40px;
+    flex: 1;
+    display: block;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+
+    @media all and (max-width: $mobile-breakpoint) {
+        padding: 20px;
+    }
+
+    section:last-child {
+        background: #f3f3f3;
+    }
+
+    .flex {
+        margin: 20px 0;
+
+        @media all and (max-width: $mobile-breakpoint) {
+            display: block !important;
+            margin: 0;
+        }
+
+        > div {
+            margin: 0 10px;
+            flex: 1;
+
+            @media all and (max-width: $mobile-breakpoint) {
+                margin: 20px 0;
+            }
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .box {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 3px;
+        box-shadow: rgba(0, 0, 0, .1) 0 1px 2px;
+        margin-bottom: 10px;
+        overflow: hidden;
+
+        .header {
+            background-color: $pink;
+            display: flex;
+            color: white;
+            font-size: 1.4em;
+
+            @media all and (max-width: $mobile-breakpoint) {
+                flex-direction: column;
+            }
+
+            > div {
+                padding: 20px;
+            }
+
+            > div:first-child {
+                flex: 1;
+
+                @media all and (max-width: $mobile-breakpoint) {
+                    padding-bottom: 0;
+                }
+            }
+
+            > div:last-child {
+                @media all and (max-width: $mobile-breakpoint) {
+                    padding-top: 0;
+
+                    strong {
+                        font-weight: normal !important;
+                    }
+                }
+            }
+
+            strong.count {
+                background: white;
+                color: $pink;
+                border-radius: 100px;
+                padding: 3px 15px;
+            }
+        }
+
+        .photo {
+            height: 0;
+            padding-top: 40%;
+            background-size: cover;
+            background-position: center center;
+            background-color: #ccc;
+        }
+
+        .padded {
+            padding: 20px;
+        }
+
+        > h2 {
+            color: white;
+            background-color: #aaa;
+            padding: 20px;
+            border-bottom: solid 3px #eee;
+            margin: 0;
+            line-height: 1;
+            text-transform: uppercase;
+
+            &.accent {
+                background-color: $pink;
+            }
+        }
+
+        > h3 {
+            padding: 20px;
+            border-bottom: solid 3px #eee;
+            margin: 0;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .lowlight {
+            background-color: #eee;
+        }
+
+        .details {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            border-top: dashed 1px #eee;
+
+            li {
+                border-bottom: dashed 1px #eee;
+                padding: 10px 20px;
+                display: flex;
+
+                @media all and (max-width: $mobile-breakpoint) {
+                    flex-direction: column;
+                }
+
+                strong {
+                }
+
+                span {
+                    flex: 1;
+                    text-align: right;
+
+                    @media all and (max-width: $mobile-breakpoint) {
+                        text-align: left;
+                    }
+                }
+            }
+
+            &.multi-column-2 li,
+            &.multi-column-3 li {
+                float: left;
+            }
+
+            &.multi-column-2 li {
+                width: 50%;
+
+                @media all and (max-width: $mobile-breakpoint) {
+                    width: 100%;
+                }
+            }
+
+            &.multi-column-3 li {
+                width: 33.33%;
+
+                @media all and (max-width: $mobile-breakpoint) {
+                    width: 100%;
+                }
+            }
+        }
+    }    
+}
+
+.row {
+    margin: 20px 0;
+
+    label {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 5px;
+        color: #999;
+    }
+
+    input, textarea {
+        display: block;
+        margin: 0;
+        background: none;
+        border: 0;
+        width: 100%;
+        padding: 15px;
+        resize: none;
+
+        &.ng-touched.ng-invalid {
+            border-right: solid 5px red;
+            border-radius: 0 3px 3px 0;
+        }
+    }
+
+    > div {
+        display: flex;
+        align-items: center;
+        border-radius: 3px;
+        background: #fff;
+        box-shadow: rgba(0, 0, 0,.2) 0 1px 2px;
+
+        &.icon {
+
+            i {
+                padding: 0 5px 0 10px;
+            }
+
+            input {
+                box-shadow: none;
+                padding-left: 5px;
+            }
+        }
+
+        a {
+            padding: 0 10px 0 5px;
+        }
+    }
+
+    em.hint {
+        display: block;
+        font-size: 11px;
+        color: #999;
+        padding-top: 5px;
+    }
+}

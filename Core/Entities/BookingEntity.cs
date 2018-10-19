@@ -14,7 +14,7 @@ namespace Agrishare.Core.Entities
 {
     public partial class Booking : IEntity
     {
-        public static string DefaultSort = "DateCreated DESC";
+        public static string DefaultSort = "StartDate DESC";
         public string Title => Id.ToString() ?? "00000";
         public string For => $"{ForId}".ExplodeCamelCase();
         public string Status => $"{StatusId}".ExplodeCamelCase();
@@ -40,7 +40,8 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<Booking> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int ListingId = 0, int UserId = 0, int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null)
+        public static List<Booking> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int ListingId = 0, int UserId = 0, 
+            int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null, BookingStatus Status = BookingStatus.None)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -67,13 +68,16 @@ namespace Agrishare.Core.Entities
                     query = query.Where(o => o.StartDate <= endDate);
                 }
 
+                if (Status != BookingStatus.None)
+                    query = query.Where(e => e.StatusId == Status);
+
                 query = query.OrderBy(Sort.Coalesce(DefaultSort));
 
                 return query.Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
         }
 
-        public static int Count(int ListingId = 0, int UserId = 0, int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null)
+        public static int Count(int ListingId = 0, int UserId = 0, int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null, BookingStatus Status = BookingStatus.None)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -99,6 +103,9 @@ namespace Agrishare.Core.Entities
                     var endDate = EndDate.Value.StartOfDay();
                     query = query.Where(o => o.StartDate <= endDate);
                 }
+
+                if (Status != BookingStatus.None)
+                    query = query.Where(e => e.StatusId == Status);
 
                 return query.Count();
             }
@@ -231,6 +238,16 @@ namespace Agrishare.Core.Entities
                 Status,
                 DateCreated
             };
+        }
+
+        public static decimal TotalAmountPaid(DateTime StartDate, DateTime EndDate)
+        {
+            using (var ctx = new AgrishareEntities())
+            {
+                StartDate = StartDate.StartOfDay();
+                EndDate = EndDate.EndOfDay();
+                return ctx.Bookings.Where(o => !o.Deleted && o.StatusId == BookingStatus.Complete && o.StartDate <= EndDate && o.EndDate >= StartDate).Select(e => e.Price).DefaultIfEmpty(0).Sum();
+            }
         }
     }
 }
