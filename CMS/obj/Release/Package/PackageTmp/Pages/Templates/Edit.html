@@ -1,0 +1,27 @@
+﻿
+<div ng-controller="FormViewController" ag-title="Template" ag-selected-url="#/templates/list" ag-api-route="/cms/templates/">
+
+    <ag-title-bar></ag-title-bar>
+
+    <ag-section ag-controller="form">
+
+        <form>
+
+            <div flex>
+                <gl-textbox gl-label="Title" ng-model="form.entity.Title" gl-required="true"></gl-textbox>
+                <gl-dropdown-list gl-label="Type" ng-model="form.entity.TypeId" gl-required="true" gl-source="form.data.Types" gl-selection="Id"></gl-dropdown-list>
+            </div>
+            
+            <gl-textarea gl-label="HTML" ng-model="form.entity.HTML" gl-required="true"></gl-textarea>
+        
+        </form>
+
+    </ag-section>
+
+    <ag-status-bar>
+
+        <gl-icon-button ng-click="form.save()" class="accent" ng-disabled="EditForm.$invalid || form.busy" ng-if="form.entity">Save</gl-icon-button>
+
+    </ag-status-bar>
+
+</div>

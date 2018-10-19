@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK, Version=2.3.55.2, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.2.3.55.2\lib\net45\AWSSDK.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -190,7 +193,16 @@
     <Compile Include="Entities\Booking.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\BookingFor.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BookingStatus.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\BookingUser.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BookingUserStatus.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Category.cs">
@@ -203,6 +215,12 @@
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\CounterEntity.cs" />
+    <Compile Include="Entities\Device.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DistanceUnit.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Faq.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -216,6 +234,12 @@
     <Compile Include="Entities\Listing.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ListingCondition.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ListingStatus.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Log.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -225,9 +249,19 @@
     <Compile Include="Entities\Notification.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\NotificationPreferences.cs" />
-    <Compile Include="Entities\Language.cs" />
+    <Compile Include="Entities\NotificationGroup.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationStatus.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\NotificationType.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Page.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\QuantityUnit.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Rating.cs">
@@ -239,16 +273,33 @@
     <Compile Include="Entities\Template.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\TemplateType.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TimeUnit.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Transaction.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\TransactionEntity.cs" />
+    <Compile Include="Entities\RatingEntity.cs" />
+    <Compile Include="Entities\ListingSearchResult.cs" />
+    <Compile Include="Entities\DeviceEntity.cs" />
+    <Compile Include="Entities\BookingEntity.cs" />
+    <Compile Include="Entities\NotificationEntity.cs" />
+    <Compile Include="Entities\ServiceEntity.cs" />
+    <Compile Include="Entities\NotificationPreferences.cs" />
+    <Compile Include="Entities\Language.cs" />
     <Compile Include="Entities\TemplateEntity.cs" />
     <Compile Include="Entities\FaqEntity.cs" />
     <Compile Include="Entities\CategoryEntity.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\ConfigEntity.cs" />
     <Compile Include="Entities\LogEntity.cs" />
-    <Compile Include="Entities\TemplateType.cs">
-      <DependentUpon>Agrishare.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Transaction.cs">
+    <Compile Include="Entities\ListingEntity.cs" />
+    <Compile Include="Entities\BookingUserEntity.cs" />
+    <Compile Include="Entities\TransactionStatus.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\User.cs">
@@ -260,6 +311,7 @@
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
     <Compile Include="Extensions\DateTimeExtension.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Cache.cs" />
@@ -268,6 +320,9 @@
     <Compile Include="Encryption\HexEncoding.cs" />
     <Compile Include="Encryption\Rc4Encryption.cs" />
     <Compile Include="Utils\SMS.cs" />
+    <Compile Include="Utils\Location.cs" />
+    <Compile Include="Utils\SNS.cs" />
+    <Compile Include="Utils\SQL.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Entities\Agrishare.edmx">
@@ -297,6 +352,5 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

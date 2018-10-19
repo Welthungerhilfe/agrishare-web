@@ -15,12 +15,14 @@ namespace Agrishare.Core.Entities
     public partial class Counter
     {
         public int Id { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> ServiceId { get; set; }
         public string Event { get; set; }
-        public string Category { get; set; }
-        public System.DateTime Date { get; set; }
-        public int Hits { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }
+    
+        public virtual Category Service { get; set; }
+        public virtual User User { get; set; }
     }
 }

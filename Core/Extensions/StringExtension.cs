@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode) */
+
+using System;
 using System.Text.RegularExpressions;
 
 namespace Agrishare.Core
@@ -28,7 +33,7 @@ namespace Agrishare.Core
 
         public static string ExplodeCamelCase(this string str)
         {
-            return String.Join(" ", Regex.Split(str, @"(?<!^)(?=[A-Z][^A-Z])"));
+            return string.Join(" ", Regex.Split(str, @"(?<!^)(?=[A-Z][^A-Z])"));
         }
     }
 }

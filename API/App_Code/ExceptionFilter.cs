@@ -1,4 +1,10 @@
-﻿using Agrishare.Core.Entities;
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
+ */
+
+using Agrishare.Core.Entities;
 using System.Web.Http.Filters;
 
 namespace Agrishare.API
@@ -8,7 +14,8 @@ namespace Agrishare.API
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
             var exception = actionExecutedContext.Exception;
-            Log.Error(exception.Message, exception);
+            var path = actionExecutedContext.Request.RequestUri.LocalPath;
+            Log.Error(path, exception);
         }
     }
 }

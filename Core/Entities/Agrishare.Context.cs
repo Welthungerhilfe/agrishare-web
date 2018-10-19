@@ -18,6 +18,7 @@ namespace Agrishare.Core.Entities
         public AgrishareEntities()
             : base("name=AgrishareEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -40,5 +41,6 @@ namespace Agrishare.Core.Entities
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<Counter> Counters { get; set; }
+        public virtual DbSet<Device> Devices { get; set; }
     }
 }

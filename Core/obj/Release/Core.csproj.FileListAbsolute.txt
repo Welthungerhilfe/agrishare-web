@@ -65,3 +65,5 @@ C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Core.csproj.Cor
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Core.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Agrishare.Core.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Agrishare.Core.pdb
+C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\AWSSDK.dll
+C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\AWSSDK.pdb

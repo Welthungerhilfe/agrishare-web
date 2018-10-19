@@ -51,8 +51,8 @@ C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\roslyn\VBCSCompiler.exe
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Debug\Web.csprojAssemblyReference.cache
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Debug\Web.csproj.CoreCompileInputs.cache
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Debug\Web.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Debug\Agrishare.Web.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Debug\Agrishare.Web.pdb
+C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Debug\Web.csprojAssemblyReference.cache

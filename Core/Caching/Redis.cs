@@ -1,4 +1,9 @@
-﻿using Agrishare.Core.Entities;
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode) */
+
+using Agrishare.Core.Entities;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;

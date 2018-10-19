@@ -1,0 +1,90 @@
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode) */
+
+@import "global";
+
+$border-radius: 2px;
+
+.date-row {
+    cursor: pointer;
+
+    input {
+        outline: none;
+        cursor: pointer;
+    }
+}
+
+.date-dropdown {
+    position: absolute;
+    z-index: 8;
+    background: white;
+    box-shadow: rgba(0, 0, 0, .2) 0 2px 2px;
+    border-radius: 0 0 3px 3px;
+    overflow: hidden;
+
+    span {
+        display: flex;
+        align-items: center;
+        background: $pink;
+        color: white;
+        padding: 10px;
+        border-radius: 3px 3px 0 0;
+
+        strong {
+            margin-right: 10px;
+        }
+
+        span {
+            flex: 1;
+        }
+
+        input {
+            border: 0;
+            background: none;
+        }
+
+        a {
+            flex-grow: 0;
+            color: white;
+            border: solid 1px transparent;
+            border-radius: 100px;
+            text-align: center;
+
+            &:hover {
+                border-color: white;
+            }
+        }
+    }
+
+    ul {
+        margin: 0;
+        padding: 5px;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+            width: 14.285%;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+            border-radius: 100px;
+
+            &.other {
+                color: #ccc;
+            }
+
+            &.selected {
+                background: #ddd;
+            }
+
+            &:hover {
+                background: #555;
+                color: white;
+            }
+        }
+    }
+}

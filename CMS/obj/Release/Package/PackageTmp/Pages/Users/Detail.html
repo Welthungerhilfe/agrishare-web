@@ -1,0 +1,52 @@
+﻿
+<div ng-controller="DetailViewController" ag-title="User" ag-selected-url="#/users/list" ag-api-route="/cms/users/">
+
+    <ag-title-bar></ag-title-bar>
+
+    <ag-section ag-controller="detail">
+
+        <div class="detail-view">
+
+            <div class="box">
+
+                <div class="header">
+                    <div>
+                        <strong>{{detail.entity.FirstName}} {{detail.entity.LastName}}</strong><br />
+                        <gl-icon-label gl-icon="business" ng-if="detail.entity.Company">{{detail.entity.Company.Title}}</gl-icon-label>
+                    </div>
+                </div>
+
+                <ul class="details">
+                    <li ng-show="detail.entity.Gender">
+                        <strong>Gender</strong>
+                        <span>{{detail.entity.Gender}}</span>
+                    </li>
+                    <li ng-show="detail.entity.DateOfBirth">
+                        <strong>Date of Birth</strong>
+                        <span>{{detail.entity.DateOfBirth | date : 'd MMMM yyyy'}}</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="box">
+                <h2>Contact Details</h2>
+                <ul class="details">
+                    <li ng-show="detail.entity.Telephone">
+                        <strong>Telephone</strong>
+                        <span><gl-autolink gl-type="tel" ng-model="detail.entity.Telephone"></gl-autolink></span>
+                    </li>
+                    <li ng-show="detail.entity.EmailAddress">
+                        <strong>Email Address</strong>
+                        <span><gl-autolink gl-type="mail" ng-model="detail.entity.EmailAddress"></gl-autolink></span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+</ag-section>
+
+    <ag-status-bar></ag-status-bar>
+
+</div>

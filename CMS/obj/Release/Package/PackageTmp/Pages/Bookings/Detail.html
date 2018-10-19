@@ -1,0 +1,138 @@
+﻿
+<div ng-controller="DetailViewController" ag-title="Booking" ag-selected-url="#/bookings/list" ag-api-route="/cms/bookings/">
+
+    <ag-title-bar></ag-title-bar>
+
+    <ag-section ag-controller="detail">
+
+        <div class="detail-view">
+
+            <div class="box">
+
+                <div class="header">
+                    <div>
+                        <strong>#{{detail.entity.Id}}</strong><br />
+                        <em class="status outline">{{detail.entity.Status}}</em>
+                    </div>
+                    <div>
+                        <strong>{{detail.entity.Price | currency}}</strong><br />
+                        <small>{{detail.entity.AgriShareCommission | currency}}</small>
+                    </div>
+                </div>
+
+                <div class="box">
+
+                    <div map-lazy-load="https://maps.google.com/maps/api/js?key=AIzaSyCEHzltxutIsimd9nZsP6QC2LSHHFIE6PI">
+                        <ng-map center="{{detail.entity.Latitude}},{{detail.entity.Longitude}}" zoom="15">
+                            <custom-marker position="[{{detail.entity.Latitude}},{{detail.entity.Longitude}}]">Destination</custom-marker>
+                            <custom-marker position="[{{detail.entity.Listing.Latitude}},{{detail.entity.Listing.Longitude}}]">Source</custom-marker>
+                        </ng-map>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="box">
+
+                <h2>Booking Details</h2>
+                <ul class="details">
+                    <li>
+                        <strong>For</strong>
+                        <span>{{detail.entity.For}}</span>
+                    </li>
+                    <li>
+                        <strong>Quantity</strong>
+                        <span>{{detail.entity.Quantity}} {{detail.entity.Service.QuantityUnit}}</span>
+                    </li>
+                    <li>
+                        <strong>Distance</strong>
+                        <span>{{detail.entity.Distance}}  {{detail.entity.Service.DistanceUnit}}</span>
+                    </li>
+                    <li>
+                        <strong>Include Fuel</strong>
+                        <span>{{detail.entity.IncludeFuel ? 'Yes' : 'No'}}</span>
+                    </li>
+                    <li>
+                        <strong>Start Date</strong>
+                        <span>{{detail.entity.StartDate | date : 'd MMMM yyyy'}}</span>
+                    </li>
+                    <li>
+                        <strong>End Date</strong>
+                        <span>{{detail.entity.EndDate | date : 'd MMMM yyyy'}}</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="box">
+
+                <h2>Listing</h2>
+                <ul class="details">
+                    <li>
+                        <strong>Listing</strong>
+                        <span><a href="#/listings/detail/{{detail.entity.Listing.Id}}?{{app.returnUrlQs()}}">{{detail.entity.Listing.Title}}</a></span>
+                    </li>
+                    <li>
+                        <strong>Category</strong>
+                        <span>{{detail.entity.Listing.Category.Title}}</span>
+                    </li>
+                    <li>
+                        <strong>Service</strong>
+                        <span>{{detail.entity.Service.Category.Title}}</a></span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="box">
+
+                <h2>User</h2>
+                <ul class="details">
+                    <li>
+                        <strong>Name</strong>
+                        <span><a href="#/users/detail/{{detail.entity.User.Id}}?{{app.returnUrlQs()}}">{{detail.entity.User.Title}}</a></span>
+                    </li>
+                    <li>
+                        <strong>Telephone</strong>
+                        <span><a href="tel://{{detail.entity.User.Telephone}}">{{detail.entity.User.Telephone}}</a></span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="box">
+
+                <h2>Fee</h2>
+                <ul class="details">
+                    <li>
+                        <strong>Hire Cost</strong>
+                        <span>{{detail.entity.HireCost | currency}}</span>
+                    </li>
+                    <li>
+                        <strong>Fuel Cost</strong>
+                        <span>{{detail.entity.FuelCost | currency}}</span>
+                    </li>
+                    <li>
+                        <strong>Transport Cost</strong>
+                        <span>{{detail.entity.TransportCost | currency}}</span>
+                    </li>
+                    <li style="background-color: #fafafa">
+                        <strong>Total</strong>
+                        <span>{{detail.entity.Price | currency}}</span>
+                    </li>
+                    <li>
+                        <strong>AgriShare Commission</strong>
+                        <span>{{detail.entity.AgriShareCommission | currency}}</span>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+
+</ag-section>
+
+    <ag-status-bar></ag-status-bar>
+
+</div>

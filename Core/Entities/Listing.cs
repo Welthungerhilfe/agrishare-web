@@ -17,8 +17,6 @@ namespace Agrishare.Core.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Listing()
         {
-            this.Bookings = new HashSet<Booking>();
-            this.Ratings = new HashSet<Rating>();
             this.Services = new HashSet<Service>();
         }
     
@@ -35,21 +33,16 @@ namespace Agrishare.Core.Entities
         public string Brand { get; set; }
         public Nullable<int> HorsePower { get; set; }
         public Nullable<int> Year { get; set; }
-        public bool Mobile { get; set; }
-        public short ConditionId { get; set; }
+        public ListingCondition ConditionId { get; set; }
         public bool GroupServices { get; set; }
-        public string Photos { get; set; }
-        public short StatusId { get; set; }
+        public string PhotoPaths { get; set; }
+        public ListingStatus StatusId { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }
+        public bool AvailableWithoutFuel { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Booking> Bookings { get; set; }
-        public virtual Category Category { get; set; }
         public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rating> Ratings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Service> Services { get; set; }
     }

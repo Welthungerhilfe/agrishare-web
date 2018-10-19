@@ -137,13 +137,35 @@
     <Compile Include="App_Code\ExceptionFilter.cs" />
     <Compile Include="App_Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\FaqsController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Controllers\CMS\DashboardController.cs" />
+    <Compile Include="Controllers\CMS\RatingsController.cs" />
+    <Compile Include="Controllers\CMS\LogController.cs" />
+    <Compile Include="Controllers\CMS\SettingsController.cs" />
+    <Compile Include="Controllers\CMS\BookingsController.cs" />
+    <Compile Include="Controllers\CMS\ListingsController.cs" />
+    <Compile Include="Controllers\CMS\TemplatesController.cs" />
+    <Compile Include="Controllers\CMS\UsersController.cs" />
+    <Compile Include="Controllers\App\NotificationsController.cs" />
+    <Compile Include="Controllers\App\RatingsController.cs" />
+    <Compile Include="Controllers\App\BookingsController.cs" />
+    <Compile Include="Controllers\App\TransactionsController.cs" />
+    <Compile Include="Controllers\App\ServicesController.cs" />
+    <Compile Include="Controllers\App\SearchController.cs" />
+    <Compile Include="Controllers\App\ListingsController.cs" />
+    <Compile Include="Controllers\App\CountersController.cs" />
+    <Compile Include="Controllers\App\CategoriesController.cs" />
+    <Compile Include="Controllers\App\FaqsController.cs" />
+    <Compile Include="Controllers\App\UserController.cs" />
+    <Compile Include="Controllers\App\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\ListingModel.cs" />
+    <Compile Include="Models\RatingModel.cs" />
+    <Compile Include="Models\BookingModel.cs" />
+    <Compile Include="Models\TransactionModel.cs" />
+    <Compile Include="Models\EcoCashModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,17 +1,22 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web;
-using Newtonsoft.Json;
-using System.Text;
-using System.Web.Http.ModelBinding;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Entities = Agrishare.Core.Entities;
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
+ */
+
 using Agrishare.Core;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+using Entities = Agrishare.Core.Entities;
 
 namespace Agrishare.API
 {
@@ -39,13 +44,13 @@ namespace Agrishare.API
             }
         }
 
-        public object Error(string Message)
+        public object Error(string Message = "")
         {
-            if (LogAPI)
+            if (LogAPI && !HttpContext.Current.Request.Path.StartsWith("/cms/"))
             {
                 new Entities.Log
                 {
-                    Description = Log(Message),
+                    Description = Log(Message.Coalesce("An unknown error occurred")),
                     LevelId = Entities.LogLevel.Log,
                     Title = HttpContext.Current.Request.Path,
                     User = CurrentUser.Title
@@ -57,7 +62,7 @@ namespace Agrishare.API
 
         public object Error(ModelStateDictionary ModelState)
         {
-            if (LogAPI)
+            if (LogAPI && !HttpContext.Current.Request.Path.StartsWith("/cms/"))
             {
                 new Entities.Log
                 {
@@ -73,7 +78,7 @@ namespace Agrishare.API
 
         public object Success(object ResponseData = null)
         {
-            if (LogAPI)
+            if (LogAPI && !HttpContext.Current.Request.Path.StartsWith("/cms/"))
             {
                 new Entities.Log
                 {
@@ -88,7 +93,7 @@ namespace Agrishare.API
                 return Request.CreateResponse(HttpStatusCode.OK, new { Message = ResponseData });
 
             if (ResponseData == null)
-                return Request.CreateResponse(HttpStatusCode.OK, new { });
+                return Request.CreateResponse(HttpStatusCode.OK, new { Message = "OK" });
 
             return Request.CreateResponse(HttpStatusCode.OK, ResponseData);
         }
@@ -153,7 +158,10 @@ namespace Agrishare.API
             {
                 requestData.AppendLine("-FORM-");
                 foreach (var key in req.Form.AllKeys)
-                    requestData.AppendLine($"{key}: {req.Form[key]}");
+                    if (key.Equals("PIN", StringComparison.InvariantCultureIgnoreCase) || key.Contains("Password"))
+                        requestData.AppendLine($"{key}: ********");
+                    else
+                        requestData.AppendLine($"{key}: {req.Form[key]}");
                 requestData.AppendLine("");
             }
 
@@ -171,7 +179,10 @@ namespace Agrishare.API
             {
                 requestData.AppendLine("-QUERYSTRING-");
                 foreach (var key in req.QueryString.AllKeys)
-                    requestData.AppendLine($"{key}: {req.QueryString[key]}");
+                    if (key.Equals("PIN", StringComparison.InvariantCultureIgnoreCase) || key.Contains("Password"))
+                        requestData.AppendLine($"{key}: ********");
+                    else
+                        requestData.AppendLine($"{key}: {req.QueryString[key]}");
                 requestData.AppendLine("");
             }
 

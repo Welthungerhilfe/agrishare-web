@@ -80,7 +80,7 @@ namespace Agrishare.Core.Entities
                 catch { SortOrder = 1; }
 
                 ctx.Faqs.Attach(this);
-                ctx.Entry(this).State = EntityState.Modified;
+                ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
         }

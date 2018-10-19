@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Agrishare.Core.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,10 +12,26 @@ namespace Agrishare.Core.Entities
 {
     public partial class Category : IEntity
     {
+        public const int TractorsId = 1;
+        public const int LorriesId = 2;
+        public const int ProcessingId = 3;
+
         public static string DefaultSort = "Title";
+
+        private static string CacheKey(int Id)
+        {
+            return $"Category:{Id}";
+        }
 
         public static Category Find(int Id = 0)
         {
+            if (Id > 0)
+            {
+                var item = Cache.Instance.Get<Category>(CacheKey(Id));
+                if (item != null)
+                    return item;
+            }
+
             if (Id == 0)
                 return new Category
                 {
@@ -29,11 +46,16 @@ namespace Agrishare.Core.Entities
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
 
-                return query.FirstOrDefault();
+                var category = query.FirstOrDefault();
+
+                if (category != null)
+                    Cache.Instance.Add(CacheKey(Id), category);
+
+                return category;
             }
         }
 
-        public static List<Category> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", int ParentId = 0)
+        public static List<Category> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", int? ParentId = null)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -42,10 +64,11 @@ namespace Agrishare.Core.Entities
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
 
-                if (ParentId == 0)
-                    query = query.Where(e => e.ParentId == null);
-                else
-                    query = query.Where(e => e.ParentId == ParentId);
+                if (ParentId.HasValue)
+                    if (ParentId == 0)
+                        query = query.Where(e => e.ParentId == null);
+                    else
+                        query = query.Where(e => e.ParentId == ParentId);
 
                 return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
@@ -86,7 +109,7 @@ namespace Agrishare.Core.Entities
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Categories.Attach(this);
-                ctx.Entry(this).State = EntityState.Modified;
+                ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
         }
@@ -115,10 +138,7 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Id,
-                ParentId,
-                Title,
-                DateCreated,
-                LastModified
+                Title
             };
         }
     }

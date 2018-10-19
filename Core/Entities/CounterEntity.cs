@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Agrishare.Core.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Text.RegularExpressions;
@@ -9,100 +11,53 @@ using System.Web;
 
 namespace Agrishare.Core.Entities
 {
+    public enum Counters
+    {
+        None = 0,
+        Launch = 1,
+        Register = 2,
+        Login = 3,
+        ForgotPIN = 4,
+        ResetPIN = 5,
+        Search = 6,
+        Match = 7,
+        Book = 8,
+        ConfirmBooking = 9,
+        InitiatePayment = 10,
+        CompletePayment = 11,
+        CompleteBooking = 12
+    }
+
     public partial class Counter : IEntity
     {
         public static string DefaultSort = "Date";
-        public string Title => $"{Event}: {Category}";
+        public string Title => $"{Event}";
 
-        public static Counter Find(int Id = 0, string Event = "", string Category = "", DateTime? Date = null)
+        public static int Count(Counters Event = Counters.None, DateTime? StartDate = null, DateTime? EndDate = null, Gender Gender = Gender.None, int ServiceId = 0)
         {
-            if (Id == 0 && Event.IsEmpty() && Category.IsEmpty() && !Date.HasValue)
-                return new Counter
-                {
-                    DateCreated = DateTime.UtcNow,
-                    LastModified = DateTime.UtcNow
-                };
-
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Counters.Where(o => !o.Deleted);
+                var query = ctx.Counters.Include(o => o.User).Where(o => !o.Deleted);
 
-                if (Id > 0)
-                    query = query.Where(e => e.Id == Id);
-
-                if (!Event.IsEmpty())
-                    query = query.Where(o => o.Event.Equals(Event, StringComparison.InvariantCultureIgnoreCase));
-
-                if (!Category.IsEmpty())
-                    query = query.Where(o => o.Category.Equals(Category, StringComparison.InvariantCultureIgnoreCase));
-
-                if (Date.HasValue)
+                if (Event != Counters.None)
                 {
-                    var start = Date.Value.StartOfDay();
-                    var end = Date.Value.EndOfDay();
-                    query = query.Where(o => o.Date >= start && o.Date <= end);
+                    var eventString = $"{Event}".ExplodeCamelCase();
+                    query = query.Where(e => e.Event == eventString);
                 }
 
-                return query.FirstOrDefault();
-            }
-        }
-
-        public static List<Counter> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string Event = "", string Category = "", DateTime? StartDate = null, DateTime? EndDate = null)
-        {
-            using (var ctx = new AgrishareEntities())
-            {
-                var query = ctx.Counters.Where(o => !o.Deleted);
-
-                if (!Keywords.IsEmpty())
-                    query = query.Where(o => (o.Event + " " + o.Category).ToLower().Contains(Keywords.ToLower()));
-
-                if (!Event.IsEmpty())
-                    query = query.Where(o => o.Event.Equals(Event, StringComparison.InvariantCultureIgnoreCase));
-
-                if (!Category.IsEmpty())
-                    query = query.Where(o => o.Category.Equals(Category, StringComparison.InvariantCultureIgnoreCase));
+                if (Gender != Gender.None)
+                    query = query.Where(e => e.User.GenderId == Gender);
 
                 if (StartDate.HasValue)
                 {
                     var start = StartDate.Value.StartOfDay();
-                    query = query.Where(o => o.Date >= start);
+                    query = query.Where(o => o.DateCreated >= start);
                 }
 
                 if (EndDate.HasValue)
                 {
                     var end = StartDate.Value.EndOfDay();
-                    query = query.Where(o => o.Date <= end);
-                }
-
-                return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).ToList();
-            }
-        }
-
-        public static int Count(string Keywords = "", string Event = "", string Category = "", DateTime? StartDate = null, DateTime? EndDate = null)
-        {
-            using (var ctx = new AgrishareEntities())
-            {
-                var query = ctx.Counters.Where(o => !o.Deleted);
-
-                if (!Keywords.IsEmpty())
-                    query = query.Where(o => (o.Event + " " + o.Category).ToLower().Contains(Keywords.ToLower()));
-
-                if (!Event.IsEmpty())
-                    query = query.Where(o => o.Event.Equals(Event, StringComparison.InvariantCultureIgnoreCase));
-
-                if (!Category.IsEmpty())
-                    query = query.Where(o => o.Category.Equals(Category, StringComparison.InvariantCultureIgnoreCase));
-
-                if (StartDate.HasValue)
-                {
-                    var start = StartDate.Value.StartOfDay();
-                    query = query.Where(o => o.Date >= start);
-                }
-
-                if (EndDate.HasValue)
-                {
-                    var end = StartDate.Value.EndOfDay();
-                    query = query.Where(o => o.Date <= end);
+                    query = query.Where(o => o.DateCreated <= end);
                 }
 
                 return query.Count();
@@ -113,10 +68,21 @@ namespace Agrishare.Core.Entities
         {
             var success = false;
 
+            var user = User;
+            if (user != null) UserId = user.Id;
+            User = null;
+
+            var service = Service;
+            if (service != null) ServiceId = service.Id;
+            Service = null;
+
             if (Id == 0)
                 success = Add();
             else
                 success = Update();
+
+            User = user;
+            Service = service;
 
             return success;
         }
@@ -126,7 +92,7 @@ namespace Agrishare.Core.Entities
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Counters.Attach(this);
-                ctx.Entry(this).State = EntityState.Modified;
+                ctx.Entry(this).State = EntityState.Added;
                 return ctx.SaveChanges() > 0;
             }
         }
@@ -157,12 +123,40 @@ namespace Agrishare.Core.Entities
                 Id,
                 Title,
                 Event,
-                Category,
-                Date,
-                Hits,
+                Service = Service?.Json(),
+                User = User?.Json(),
                 DateCreated,
                 LastModified
             };
+        }
+
+        public static int ActiveUsers(DateTime StartDate, DateTime EndDate)
+        {
+            using (var ctx = new AgrishareEntities())
+            {
+                var sql = $"SELECT COUNT(DISTINCT(UserId)) FROM Counters WHERE DATE(DateCreated) >= DATE('{SQL.Safe(StartDate)}') AND DateCreated <= ('{SQL.Safe(StartDate)}')";
+                return ctx.Database.SqlQuery<int>(sql).DefaultIfEmpty(0).FirstOrDefault();
+            }
+        }
+
+        // TODO update this method to use caching so that we only write to the db once every minute instead of once every hit
+        // Using caching will limit the disk IO which will become an issue
+        public static bool Hit(int UserId, Counters Event, int ServiceId = 0)
+        {
+            return Hit(UserId, $"{Event}".ExplodeCamelCase(), ServiceId);
+        }
+        public static bool Hit(int UserId, string Event, int ServiceId = 0)
+        {
+            var textInfo = new CultureInfo("en-US", false).TextInfo;
+            Event = textInfo.ToTitleCase(Event.ToLower());
+
+            var hit = new Counter { Event = Event };
+            if (UserId > 0)
+                hit.UserId = UserId;
+            if (ServiceId > 0)
+                hit.ServiceId = ServiceId;
+
+            return hit.Save();
         }
     }
 }

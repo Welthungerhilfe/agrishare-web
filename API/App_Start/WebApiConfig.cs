@@ -1,8 +1,11 @@
-﻿using Agrishare.API;
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
+ */
+
+using Agrishare.API;
 using Agrishare.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -12,7 +15,7 @@ namespace API
     {
         public static void Register(HttpConfiguration config)
         {
-            var cors = new EnableCorsAttribute(Config.WebURL, "*", "*")
+            var cors = new EnableCorsAttribute($"{Config.WebURL}, {Config.CMSURL}", "*", "*")
             {
                 SupportsCredentials = true
             };
@@ -30,6 +33,8 @@ namespace API
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));
 
             config.Filters.Add(new ValidateViewModelAttribute());
+            config.Filters.Add(new ExceptionFilter());
+
         }
     }
 }
