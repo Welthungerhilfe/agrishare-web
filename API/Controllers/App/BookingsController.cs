@@ -58,7 +58,7 @@ namespace Agrishare.API.Controllers.App
 
             if (booking.Save())
             {
-                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.Book, booking.ServiceId);
+                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.Book, booking.Service.CategoryId);
 
                 new Entities.Notification
                 {
