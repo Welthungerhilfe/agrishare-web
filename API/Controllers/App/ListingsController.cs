@@ -133,9 +133,10 @@ namespace Agrishare.API.Controllers.App
             listing.Description = Model.Description;
             listing.GroupServices = Model.GroupServices;
             listing.HorsePower = Model.HorsePower;
-            listing.Location = Model.Location;
+            listing.Location = Model.Location;            
             listing.Title = Model.Title;
             listing.Year = Model.Year;
+
 
             listing.Services = new List<Entities.Service>();
             foreach (var service in Model.Services)

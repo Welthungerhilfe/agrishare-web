@@ -33,6 +33,7 @@
     <Property Name="DestinationLatitude" Type="Decimal" Nullable="false" />
     <Property Name="DestinationLongitude" Type="Decimal" Nullable="false" />
     <Property Name="Destination" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="AdditionalInformation" Type="String" MaxLength="4096" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="BookingUser">
     <Key>
@@ -144,6 +145,7 @@
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Booking" Relationship="Self.notifications_ibfk_2" FromRole="Notifications" ToRole="Bookings" />
     <NavigationProperty Name="User" Relationship="Self.notifications_ibfk_1" FromRole="Notifications" ToRole="Users" />
+    <Property Name="Message" Type="String" MaxLength="4096" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Page">
     <Key>
@@ -670,6 +672,8 @@
     <Member Name="InProgress" Value="3" />
     <Member Name="Complete" Value="4" />
     <Member Name="None" Value="-1" />
+    <Member Name="Cancelled" Value="5" />
+    <Member Name="Incomplete" Value="6" />
   </EnumType>
   <EnumType Name="BookingUserStatus" UnderlyingType="Int16">
     <Member Name="Pending" Value="0" />
@@ -684,10 +688,12 @@
     <Member Name="ServiceComplete" Value="4" />
     <Member Name="NewReview" Value="5" />
     <Member Name="PaymentReceived" Value="6" />
+    <Member Name="ServiceIncomplete" Value="7" />
   </EnumType>
   <EnumType Name="NotificationStatus" UnderlyingType="Int16">
-    <Member Name="Unread" Value="0" />
-    <Member Name="Read" Value="1" />
+    <Member Name="None" Value="0" />
+    <Member Name="Pending" Value="1" />
+    <Member Name="Complete" Value="2" />
   </EnumType>
   <EnumType Name="NotificationGroup" UnderlyingType="Int16">
     <Member Name="None" Value="0" />

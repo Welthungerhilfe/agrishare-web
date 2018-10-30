@@ -301,14 +301,14 @@ namespace Agrishare.API.Controllers.App
         [AcceptVerbs("GET")]
         public object Delete()
         {
-            var bookings = Entities.Booking.Count(UserId: CurrentUser.Id, StartDate: DateTime.Now);
+            var bookings = Entities.Booking.Count(UserId: CurrentUser.Id, StartDate: DateTime.Now, Upcoming: true);
             if (bookings > 0)
                 return Error("Can not delete account - you have upcoming bookings");
 
             var listings = Entities.Listing.List(UserId: CurrentUser.Id);
             foreach(var listing in listings)
             {
-                bookings = Entities.Booking.Count(ListingId: listing.Id, StartDate: DateTime.Now);
+                bookings = Entities.Booking.Count(ListingId: listing.Id, StartDate: DateTime.Now, Upcoming: true);
                 if (bookings > 0)
                     return Error("Can not delete account - you have upcoming bookings");
             }

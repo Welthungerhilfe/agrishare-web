@@ -23,6 +23,7 @@ namespace Agrishare.Core.Entities
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }
+        public string Message { get; set; }
     
         public virtual Booking Booking { get; set; }
         public virtual User User { get; set; }

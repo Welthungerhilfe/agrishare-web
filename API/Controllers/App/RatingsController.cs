@@ -49,6 +49,7 @@ namespace Agrishare.API.Controllers.App
                 new Entities.Notification
                 {
                     Booking = booking,
+                    GroupId = Entities.NotificationGroup.Offering,
                     TypeId = Entities.NotificationType.NewReview,
                     User = Entities.User.Find(Id: listing.UserId)
                 }.Save(Notify: true);

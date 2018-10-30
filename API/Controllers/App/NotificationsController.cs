@@ -28,21 +28,5 @@ namespace Agrishare.API.Controllers.App
                 List = list.Select(e => e.Json())
             });
         }
-
-        [Route("notifications/read")]
-        [AcceptVerbs("GET")]
-        public object MarkAsRead(int NotificationId)
-        {
-            var notification = Entities.Notification.Find(Id: NotificationId);
-            notification.StatusId = Entities.NotificationStatus.Read;
-
-            if (notification.Save())
-                return Success(new
-                {
-                    Notification = notification.Json()
-                });
-
-            return Error("An unknown error occurred");
-        }
     }
 }

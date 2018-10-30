@@ -13,7 +13,8 @@ namespace Agrishare.Core.Entities
     
     public enum NotificationStatus : short
     {
-        Unread = 0,
-        Read = 1
+        None = 0,
+        Pending = 1,
+        Complete = 2
     }
 }

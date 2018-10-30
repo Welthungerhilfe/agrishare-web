@@ -25,7 +25,9 @@ namespace Agrishare.Core.Entities
         ConfirmBooking = 9,
         InitiatePayment = 10,
         CompletePayment = 11,
-        CompleteBooking = 12
+        CompleteBooking = 12,
+        CancelBooking = 13,
+        IncompleteBooking = 14
     }
 
     public partial class Counter : IEntity
@@ -33,7 +35,7 @@ namespace Agrishare.Core.Entities
         public static string DefaultSort = "Date";
         public string Title => $"{Event}";
 
-        public static int Count(Counters Event = Counters.None, DateTime? StartDate = null, DateTime? EndDate = null, Gender Gender = Gender.None, int ServiceId = 0)
+        public static int Count(Counters Event = Counters.None, DateTime? StartDate = null, DateTime? EndDate = null, Gender Gender = Gender.None, int ServiceId = 0, bool UniqueUser = false)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -59,6 +61,9 @@ namespace Agrishare.Core.Entities
                     var end = StartDate.Value.EndOfDay();
                     query = query.Where(o => o.DateCreated <= end);
                 }
+
+                if (UniqueUser)
+                    return query.Select(e => e.UserId).Distinct().Count();
 
                 return query.Count();
             }
@@ -134,7 +139,7 @@ namespace Agrishare.Core.Entities
         {
             using (var ctx = new AgrishareEntities())
             {
-                var sql = $"SELECT COUNT(DISTINCT(UserId)) FROM Counters WHERE DATE(DateCreated) >= DATE('{SQL.Safe(StartDate)}') AND DateCreated <= ('{SQL.Safe(StartDate)}')";
+                var sql = $"SELECT COUNT(DISTINCT(UserId)) FROM Counters WHERE DATE(DateCreated) >= DATE('{SQL.Safe(StartDate)}') AND DATE(DateCreated) <= ('{SQL.Safe(EndDate)}')";
                 return ctx.Database.SqlQuery<int>(sql).DefaultIfEmpty(0).FirstOrDefault();
             }
         }

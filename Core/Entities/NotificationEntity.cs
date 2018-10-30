@@ -40,7 +40,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<Notification> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int UserId = 0, NotificationGroup GroupId = NotificationGroup.None)
+        public static List<Notification> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int UserId = 0, NotificationGroup GroupId = NotificationGroup.None, int BookingId = 0, NotificationType Type = NotificationType.None)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -51,6 +51,9 @@ namespace Agrishare.Core.Entities
 
                 if (GroupId != NotificationGroup.None)
                     query = query.Where(o => o.GroupId == GroupId);
+
+                if (BookingId > 0 && Type != NotificationType.None)
+                    query = query.Where(e => e.BookingId == BookingId && e.TypeId == Type);
 
                 query = query.OrderBy(Sort.Coalesce(DefaultSort));
 
@@ -86,20 +89,6 @@ namespace Agrishare.Core.Entities
             if (booking != null) BookingId = booking.Id;
             Booking = null;
 
-            switch (TypeId)
-            {
-                case NotificationType.BookingCancelled:
-                case NotificationType.BookingConfirmed:
-                case NotificationType.ServiceComplete:
-                    GroupId = NotificationGroup.Seeking;
-                    break;
-                case NotificationType.NewBooking:
-                case NotificationType.NewReview:
-                case NotificationType.PaymentReceived:
-                    GroupId = NotificationGroup.Offering;
-                    break;
-            }
-
             if (Id == 0)
                 success = Add();
             else
@@ -129,6 +118,8 @@ namespace Agrishare.Core.Entities
 
         private bool Add()
         {
+            StatusId = NotificationStatus.Pending;
+
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Notifications.Attach(this);
@@ -179,6 +170,7 @@ namespace Agrishare.Core.Entities
             var template = Template.Find(Title: Type);
             template.Replace("Service", Booking.Service.Category.Title);
             template.Replace("Supplier", Booking.Service.Listing.Title);
+            template.Replace("Message", Message);
             template.Replace("Start Date", Booking.StartDate.ToString("d MMMM yyyy"));
             template.Replace("End Date", Booking.EndDate.ToString("d MMMM yyyy"));
 
@@ -186,7 +178,7 @@ namespace Agrishare.Core.Entities
             switch (TypeId)
             {
                 case NotificationType.BookingCancelled:
-                    subject = $"Booking cancelled by supplier";
+                    subject = $"Booking cancelled";
                     break;
                 case NotificationType.BookingConfirmed:
                     subject = $"Booking confirmed by supplier";
@@ -202,6 +194,9 @@ namespace Agrishare.Core.Entities
                     break;
                 case NotificationType.ServiceComplete:
                     subject = $"Service complete";
+                    break;
+                case NotificationType.ServiceIncomplete:
+                    subject = $"Service not complete";
                     break;
             }
 
@@ -223,7 +218,7 @@ namespace Agrishare.Core.Entities
             switch (TypeId)
             {
                 case NotificationType.BookingCancelled:
-                    message = $"Booking {BookingId} cancelled by supplier";
+                    message = $"Booking {BookingId} cancelled";
                     break;
                 case NotificationType.BookingConfirmed:
                     message = $"Booking {BookingId} confirmed by supplier";
@@ -240,6 +235,9 @@ namespace Agrishare.Core.Entities
                 case NotificationType.ServiceComplete:
                     message = $"Booking {BookingId} completed";
                     break;
+                case NotificationType.ServiceIncomplete:
+                    message = $"Booking {BookingId} not completed - please check the app";
+                    break;
             }
 
             SMS.SendMessage(User.Telephone, message);
@@ -251,10 +249,10 @@ namespace Agrishare.Core.Entities
             switch (TypeId)
             {
                 case NotificationType.BookingCancelled:
-                    message = $"Booking #{Id} cancelled by supplier";
+                    message = $"Booking #{Id} cancelled";
                     break;
                 case NotificationType.BookingConfirmed:
-                    message = $"Booking #{Id}  confirmed by supplier";
+                    message = $"Booking #{Id} confirmed by supplier";
                     break;
                 case NotificationType.NewBooking:
                     message = $"New booking received (#{Id})";
@@ -267,6 +265,9 @@ namespace Agrishare.Core.Entities
                     break;
                 case NotificationType.ServiceComplete:
                     message = $"Service (#{Id}) complete";
+                    break;
+                case NotificationType.ServiceIncomplete:
+                    message = $"Service (#{Id}) not complete";
                     break;
             }
 

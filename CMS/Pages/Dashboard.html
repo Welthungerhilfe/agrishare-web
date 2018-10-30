@@ -9,18 +9,30 @@
 
             <div class="overview">
                 <ul>
-                    <li><big>{{dashboard.data.activeListingCount}}</big><strong>Live<br/>Listings</strong><small>{{dashboard.data.totalListingCount}} Listings</small></li>
+                    <li><big>{{dashboard.data.activeListingCount}}</big><strong>Live<br />Listings</strong><small>{{dashboard.data.totalListingCount}} Listings</small></li>
                     <li><big>{{dashboard.data.activeUsers}}</big><strong>Active<br />Users</strong><small>{{dashboard.data.userCount}} Users</small></li>
                     <li><big>{{dashboard.data.completeBookingCount}}</big><strong>Paid<br />Bookings</strong><small>{{dashboard.data.totalBookingCount}} Bookings</small></li>
                 </ul>
                 <ul>
-                    <li><big>{{dashboard.data.totalBookingAmount | currency}}</big><strong>Total<br/>Transactions</strong><small>&nbsp;</small></li>
-                    <li><big>{{dashboard.data.agrishareCommission | currency}}</big><strong>AgriShare<br/>Commission</strong><small>&nbsp;</small></li>
+                    <li><big>{{dashboard.data.totalBookingAmount | currency}}</big><strong>Total<br />Transactions</strong><small>&nbsp;</small></li>
+                    <li><big>{{dashboard.data.agrishareCommission | currency}}</big><strong>AgriShare<br />Commission</strong><small>&nbsp;</small></li>
                 </ul>
             </div>
 
             <div class="activity">
-                <h2>Activity - last 30 days</h2>
+                <h2>User Activity - last 30 days</h2>
+                <ul>
+                    <li><big>{{dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female}}</big><strong>Total<br />Searches</strong><small>{{dashboard.data.userSearchCount.Male}} Male &bull; {{dashboard.data.userSearchCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.userMatchCount.Male + dashboard.data.userMatchCount.Female}}</big><strong>Matched<br />Searches</strong><small>{{dashboard.data.userMatchCount.Male}} Male &bull; {{dashboard.data.userMatchCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.userBookingCount.Male + dashboard.data.userBookingCount.Female}}</big><strong>Bookings<br />Made</strong><small>{{dashboard.data.userBookingCount.Male}} Male &bull; {{dashboard.data.userBookingCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.userConfirmCount.Male + dashboard.data.userConfirmCount.Female}}</big><strong>Bookings<br />Confirmed</strong><small>{{dashboard.data.userConfirmCount.Male}} Male &bull; {{dashboard.data.userConfirmCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.userPaidCount.Male + dashboard.data.userPaidCount.Female}}</big><strong>Paid<br />Bookings</strong><small>{{dashboard.data.userPaidCount.Male}} Male &bull; {{dashboard.data.userPaidCount.Female}} Female</small></li>
+                    <li><big>{{dashboard.data.userCompleteCount.Male + dashboard.data.userCompleteCount.Female}}</big><strong>Completed<br />Bookings</strong><small>{{dashboard.data.userCompleteCount.Male}} Male &bull; {{dashboard.data.userCompleteCount.Female}} Female</small></li>
+                </ul>
+            </div>
+
+            <div class="activity">
+                <h2>All Activity - last 30 days</h2>
                 <ul>
                     <li><big>{{dashboard.data.searchCount.Male + dashboard.data.searchCount.Female}}</big><strong>Total<br />Searches</strong><small>{{dashboard.data.searchCount.Male}} Male &bull; {{dashboard.data.searchCount.Female}} Female</small></li>
                     <li><big>{{dashboard.data.matchCount.Male + dashboard.data.matchCount.Female}}</big><strong>Matched<br />Searches</strong><small>{{dashboard.data.matchCount.Male}} Male &bull; {{dashboard.data.matchCount.Female}} Female</small></li>

@@ -24,6 +24,7 @@
     <Property Name="HireCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="FuelCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="TransportCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+    <Property Name="AdditionalInformation" Type="varchar" MaxLength="4096" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -153,6 +154,7 @@
     <Property Name="TypeId" Type="smallint" Nullable="false" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />
     <Property Name="GroupId" Type="smallint" Nullable="false" />
+    <Property Name="Message" Type="varchar" MaxLength="4096" />
     <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Deleted" Type="bool" Nullable="false" />

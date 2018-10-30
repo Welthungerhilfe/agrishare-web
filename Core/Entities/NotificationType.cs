@@ -19,6 +19,7 @@ namespace Agrishare.Core.Entities
         BookingCancelled = 3,
         ServiceComplete = 4,
         NewReview = 5,
-        PaymentReceived = 6
+        PaymentReceived = 6,
+        ServiceIncomplete = 7
     }
 }

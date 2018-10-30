@@ -55,9 +55,19 @@ namespace Agrishare.Core.Entities
 
                 sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.ListingId = Listings.Id AND Bookings.StartDate < DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL CEIL((Services.TimePerQuantityUnit * {Size}) / 8) DAY) AND Bookings.EndDate > DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
 
-                sql.AppendLine($"(Services.PricePerQuantityUnit * {Size})");
-                if (IncludeFuel)
+                if (CategoryId == Category.LorriesId)
+                {
+                    var pickupToDropoff = SQL.Distance(Latitude, Longitude, DestinationLatitude, DestinationLongitude);
+                    sql.AppendLine($"(Services.PricePerQuantityUnit * {pickupToDropoff})");
+                }
+                else
+                {
+                    sql.AppendLine($"(Services.PricePerQuantityUnit * {Size})");
+                }
+                
+                if (CategoryId != Category.LorriesId && IncludeFuel)
                     sql.AppendLine($"+ (Services.FuelPerQuantityUnit * {Size} * Services.FuelPrice)");
+
                 if (CategoryId == Category.LorriesId)
                 {
                     var depotToPickup = SQL.Distance(Latitude, Longitude, "Listings");

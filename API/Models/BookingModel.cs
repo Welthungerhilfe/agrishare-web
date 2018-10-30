@@ -37,5 +37,7 @@ namespace Agrishare.API.Models
 
         [Required]
         public DateTime StartDate { get; set; }
+
+        public string AdditionalInformation { get; set; }
     }
 }

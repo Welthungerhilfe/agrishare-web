@@ -29,9 +29,15 @@ namespace Agrishare.API.Controllers.App
             if (!ModelState.IsValid)
                 return Error(ModelState);
 
+            var template = Entities.Template.Find(Title: "Contact");
+            template.Replace("Name", CurrentUser.FullName);
+            template.Replace("Message", Model.Message);
+            template.Replace("Email Address", CurrentUser.EmailAddress.Coalesce("-"));
+            template.Replace("Telephone", CurrentUser.Telephone);
+
             new Entities.Email
             {
-                Message = Model.Message,
+                Message = template.EmailHtml(),
                 RecipientEmail = Entities.Config.ApplicationEmailAddress,
                 SenderEmail = CurrentUser.EmailAddress.Coalesce($"{CurrentUser.Telephone}@hariplay.app"),
                 Subject = "Contact from AgriShare app"
