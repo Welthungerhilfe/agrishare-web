@@ -21,7 +21,8 @@ namespace Agrishare.API.Controllers.CMS
             if (UserId > 0)
             {
                 var user = Entities.User.Find(Id: UserId);
-                title = $"{user.FirstName} {user.LastName}";
+                if (user != null)
+                    title = $"{user.FirstName} {user.LastName}";
             }
 
             var data = new
@@ -64,6 +65,49 @@ namespace Agrishare.API.Controllers.CMS
                 });
 
             return Error();
+        }
+
+        /* Deleted */
+
+        [Route("listings/deleted/list")]
+        [AcceptVerbs("GET")]
+        public object ListDeleted(int PageIndex, int PageSize, string Query = "", int UserId = 0)
+        {
+            var recordCount = Entities.Listing.Count(Keywords: Query, UserId: UserId, Deleted: true);
+            var list = Entities.Listing.List(PageIndex: PageIndex, PageSize: PageSize, Keywords: Query, UserId: UserId, Deleted: true);
+            var title = "Deleted Listings";
+
+            if (UserId > 0)
+            {
+                var user = Entities.User.Find(Id: UserId);
+                if (user != null)
+                    title = $"{user.FirstName} {user.LastName}";
+            }
+
+            var data = new
+            {
+                Count = recordCount,
+                Sort = Entities.Listing.DefaultSort,
+                List = list.Select(e => e.Json()),
+                Title = title
+            };
+
+            return Success(data);
+        }
+
+        [Route("listings/deleted/find")]
+        [AcceptVerbs("GET")]
+        public object FindDeleted(int Id = 0)
+        {
+            var data = new
+            {
+                Entity = Entities.Listing.Find(Id: Id, Deleted: true).Json(IncludeUser: true),
+                Categories = Entities.Category.List().Select(e => e.Json()),
+                Conditions = EnumInfo.ToList<Entities.ListingCondition>(),
+                Statuses = EnumInfo.ToList<Entities.ListingStatus>()
+            };
+
+            return Success(data);
         }
     }
 }

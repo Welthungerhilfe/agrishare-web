@@ -70,7 +70,7 @@ namespace Agrishare.API.Controllers.App
 
             if (booking.Save())
             {
-                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.Book, booking.ServiceId);
+                Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.Book, booking.Service.CategoryId);
 
                 new Entities.Notification
                 {
@@ -126,7 +126,7 @@ namespace Agrishare.API.Controllers.App
                     User = Entities.User.Find(Id: booking.UserId)
                 }.Save(Notify: true);
 
-                Entities.Counter.Hit(booking.UserId, Entities.Counters.ConfirmBooking, booking.ServiceId);
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.ConfirmBooking, booking.Service.CategoryId);
 
                 return Success(new
                 {
@@ -207,7 +207,7 @@ namespace Agrishare.API.Controllers.App
                     User = Entities.User.Find(Id: booking.Listing.UserId)
                 }.Save(Notify: true);
 
-                Entities.Counter.Hit(booking.UserId, Entities.Counters.CompleteBooking, booking.ServiceId);
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.CompleteBooking, booking.Service.CategoryId);
 
                 return Success(new
                 {
@@ -255,7 +255,7 @@ namespace Agrishare.API.Controllers.App
                     User = Entities.User.Find(Id: booking.UserId)
                 }.Save(Notify: true);
 
-                Entities.Counter.Hit(booking.UserId, Entities.Counters.IncompleteBooking, booking.ServiceId);
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.IncompleteBooking, booking.Service.CategoryId);
 
                 return Success(new
                 {
@@ -397,6 +397,8 @@ namespace Agrishare.API.Controllers.App
             booking.StatusId = Entities.BookingStatus.Cancelled;
             if (booking.Save())
             {
+                // TODO refund users
+
                 var notifications = Entities.Notification.List(BookingId: booking.Id, Type: Entities.NotificationType.BookingCancelled);
                 foreach (var notification in notifications)
                 {

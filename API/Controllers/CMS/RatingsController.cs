@@ -21,7 +21,8 @@ namespace Agrishare.API.Controllers.CMS
             if (ListingId > 0)
             {
                 var listing = Entities.Listing.Find(Id: ListingId);
-                title = listing.Title;
+                if (listing != null)
+                    title = listing.Title;
             }
 
             var data = new

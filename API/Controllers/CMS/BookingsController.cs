@@ -21,7 +21,8 @@ namespace Agrishare.API.Controllers.CMS
             if (UserId > 0)
             {
                 var user = Entities.User.Find(Id: UserId);
-                title = $"{user.FirstName} {user.LastName}";
+                if (user != null)
+                    title = $"{user.FirstName} {user.LastName}";
             }
 
             var data = new

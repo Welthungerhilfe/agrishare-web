@@ -21,6 +21,12 @@ agrishareApp.factory('App', function ($location, Utils) {
             { title: "Bookings", icon: "account_balance_wallet", url: "#/bookings/list" },
             { title: "Users", icon: "person", url: "#/users/list" },
             {
+                title: "Deleted", icon: "delete_sweep", submenu: [
+                    { title: "Listings", url: "#/deleted/listings/list" },
+                    { title: "Users", url: "#/deleted/users/list" }
+                ]
+            },
+            {
                 title: "Admin", icon: "settings", submenu: [
                     { title: "Log", url: "#/log/list" },
                     { title: "Settings", url: "#/settings/list" },

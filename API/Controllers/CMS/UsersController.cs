@@ -73,5 +73,39 @@ namespace Agrishare.API.Controllers.CMS
 
             return Error();
         }
+
+        /* Deleted */
+
+        [Route("users/deleted/list")]
+        [AcceptVerbs("GET")]
+        public object DeletedList(int PageIndex = 0, int PageSize = 25, string Query = "")
+        {
+            var recordCount = Entities.User.Count(Keywords: Query, Deleted: true);
+            var list = Entities.User.List(PageIndex: PageIndex, PageSize: PageSize, Keywords: Query, Deleted: true);
+
+            var data = new
+            {
+                Count = recordCount,
+                Sort = Entities.User.DefaultSort,
+                List = list.Select(e => e.Json()),
+                Title = "Deleted Users"
+            };
+
+            return Success(data);
+        }
+
+        [Route("users/deleted/find")]
+        [AcceptVerbs("GET")]
+        public object FindDeleted(int Id = 0)
+        {
+            var data = new
+            {
+                Entity = Entities.User.Find(Id: Id, Deleted: true).AdminJson(),
+                Roles = EnumInfo.ToList<Entities.Role>(),
+                Genders = EnumInfo.ToList<Entities.Gender>()
+            };
+
+            return Success(data);
+        }
     }
 }

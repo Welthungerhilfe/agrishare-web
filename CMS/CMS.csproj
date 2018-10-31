@@ -84,6 +84,10 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Pages\Bookings\Detail.html" />
+    <Content Include="Pages\Deleted\Listings\Detail.html" />
+    <Content Include="Pages\Deleted\Listings\List.html" />
+    <Content Include="Pages\Deleted\Users\Detail.html" />
+    <Content Include="Pages\Deleted\Users\List.html" />
     <Content Include="Pages\Ratings\List.html" />
     <Content Include="Pages\Listings\Detail.html" />
     <Content Include="Pages\Login.html" />
@@ -102,6 +106,7 @@
     <Content Include="Pages\Listings\List.html" />
     <Content Include="Resources\Javascript\1. jQuery\jquery.2.1.0.min.js" />
     <Content Include="Resources\Javascript\2. Angular\angular-map.min.js" />
+    <Content Include="Resources\Javascript\2. Angular\angular-round-progress.min.js" />
     <Content Include="Resources\Javascript\3. App\controller\DashboardView.js" />
     <Content Include="Resources\Javascript\3. App\controller\FormView.js" />
     <Content Include="Resources\Javascript\3. App\controller\DetailView.js" />
