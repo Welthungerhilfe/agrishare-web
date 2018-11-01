@@ -48,6 +48,7 @@ namespace Agrishare.API.Controllers.App
                 var dropoffToDepot = Location.GetDistance(Convert.ToDouble(booking.DestinationLatitude), Convert.ToDouble(booking.DestinationLongitude), Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude));
                 booking.Distance = ((decimal)depotToPickup / 1000) + ((decimal)pickupToDropoff / 1000) + ((decimal)dropoffToDepot / 1000);
                 booking.HireCost = (decimal)pickupToDropoff * booking.Service.PricePerQuantityUnit;
+                booking.Quantity = (decimal)pickupToDropoff;
             }
             else if (booking.Service.Mobile)
             {
@@ -86,7 +87,7 @@ namespace Agrishare.API.Controllers.App
                     GroupId = Entities.NotificationGroup.Seeking,
                     TypeId = Entities.NotificationType.NewBooking,
                     User = CurrentUser
-                }.Save(Notify: true);
+                }.Save(Notify: false);
 
                 return Success(new
                 {
@@ -422,7 +423,7 @@ namespace Agrishare.API.Controllers.App
                     User = Entities.User.Find(Id: booking.Listing.UserId)
                 }.Save(Notify: true);
 
-                Entities.Counter.Hit(booking.UserId, Entities.Counters.CancelBooking, booking.ServiceId);
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.CancelBooking, booking.Service.CategoryId);
 
                 return Success(new
                 {

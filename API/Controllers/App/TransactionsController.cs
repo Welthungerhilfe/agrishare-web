@@ -90,7 +90,7 @@ namespace Agrishare.API.Controllers.App
                 //transaction.RequestEcoCashPayment();
                 transactions.Add(transaction);
 
-                Entities.Counter.Hit(bookingUser.UserId ?? 0, Entities.Counters.InitiatePayment, booking.ServiceId);
+                Entities.Counter.Hit(bookingUser.UserId ?? 0, Entities.Counters.InitiatePayment, booking.Service.CategoryId);
             }
 
             // BS: temporary fake success
