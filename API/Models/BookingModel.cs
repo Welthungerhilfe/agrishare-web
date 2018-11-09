@@ -15,7 +15,6 @@ namespace Agrishare.API.Models
         [Required]
         public BookingFor ForId { get; set; }
 
-        [Required]
         public string Location { get; set; }
 
         [Required]

@@ -12,9 +12,32 @@ using System.Web;
 
 namespace Agrishare.Core.Entities
 {
+    public class LogDTO
+    {
+        public int Id { get; set; }
+        public string User { get; set; }
+        public string Title { get; set; }
+        public LogLevel LevelId { get; set; }
+        public DateTime DateCreated { get; set; }
+
+        public object Json()
+        {
+            return new
+            {
+                Id,
+                User,
+                Title,
+                LevelId,
+                Level = $"{LevelId}".ExplodeCamelCase(),
+                DateCreated,
+            };
+        }        
+
+    }
+
     public partial class Log : IEntity
     {
-        public static string DefaultSort = "DateCreated DESC";
+        public static string DefaultSort = "Id DESC";
         public string Level => $"{LevelId}".ExplodeCamelCase();
 
         public static Log Find(int Id = 0)
@@ -37,16 +60,23 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<Log> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "")
+        public static List<LogDTO> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "")
         {
             using (var ctx = new AgrishareEntities())
             {
                 var query = ctx.Logs.Where(o => !o.Deleted);
 
                 if (!Keywords.IsEmpty())
-                    query = query.Where(o => (o.Title + " " + o.Description + " " + o.User).ToLower().Contains(Keywords.ToLower()));
+                    query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()) || o.Description.ToLower().Contains(Keywords.ToLower()) || o.User.ToLower().Contains(Keywords.ToLower()));
 
-                return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).Select(e => new LogDTO
+                {
+                    Id = e.Id,
+                    User = e.User,
+                    Title = e.Title,
+                    LevelId = e.LevelId,
+                    DateCreated = e.DateCreated
+                }).ToList();
             }
         }
 

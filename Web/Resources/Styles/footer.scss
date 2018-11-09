@@ -1,0 +1,51 @@
+﻿@import "global";
+
+footer {
+    display: flex;
+    align-items: center;
+    max-width: $max-width;
+    margin: 0 auto 50px auto;
+    padding: 40px;
+    background: #1d1d1d;
+
+    @media all and (max-width: $mobile-breakpoint) {
+        text-align: center;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    p {
+        flex: 1;
+        margin: 0;
+        color: #ccc;
+
+        &:first-child {
+            a {
+                font-weight: bold;
+                color: white;
+            }
+        }
+
+        &:last-child {
+            text-align: right;
+            display: flex;
+            align-items: center;
+
+            @media all and (max-width: $mobile-breakpoint) {
+                margin-top: 10px;
+                flex-direction: column;
+            }
+
+            span {
+                flex: 1;
+                padding: 10px;
+            }
+
+            img {
+                display: block;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+}

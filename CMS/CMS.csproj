@@ -79,6 +79,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Email Template.html" />
     <Content Include="Login.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
