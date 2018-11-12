@@ -26,19 +26,24 @@ namespace Agrishare.Core.Entities
         public double Distance { get; set; }
         public bool Available { get; set; }
         public double Price { get; set; }
+        public double Size { get; set; }
+        public double TransportDistance { get; set; }
+        public double TransportCost { get; set; }
+        public double FuelCost { get; set; }
+        public double HireCost { get; set; }
         public List<File> Photos => PhotoPaths?.Split(',').Select(e => new File(e)).ToList();
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Days { get; set; }
+        public int Trips { get; set; }
 
         public static List<ListingSearchResult> List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, 
-            decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile, BookingFor For, decimal DestinationLatitude, decimal DestinationLongitude)
+            decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile, BookingFor For, decimal DestinationLatitude, 
+            decimal DestinationLongitude, decimal TotalVolume)
         {
             var sort = ListingSearchResultSort.Distance;
             try { sort = (ListingSearchResultSort)Enum.Parse(typeof(ListingSearchResultSort), Sort); }
             catch { }
-
-            var distance = SQL.Distance(Latitude, Longitude, "Listings");
 
             using (var ctx = new AgrishareEntities())
             {
@@ -53,51 +58,65 @@ namespace Agrishare.Core.Entities
                 sql.AppendLine("Listings.AverageRating AS AverageRating,");
                 sql.AppendLine("Listings.Photos AS PhotoPaths,");
 
-                sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.ListingId = Listings.Id AND Bookings.StartDate < DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL CEIL((Services.TimePerQuantityUnit * {Size}) / 8) DAY) AND Bookings.EndDate > DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
+                // distances
+                var distance = SQL.Distance(Latitude, Longitude, "Listings");
+                var depotToPickup = SQL.Distance(Latitude, Longitude, "Listings");
+                var pickupToDropoff = SQL.Distance(Latitude, Longitude, DestinationLatitude, DestinationLongitude);
+                var dropoffToDepot = SQL.Distance(DestinationLatitude, DestinationLongitude, "Listings");
+                var trips = $"0";
+                if (CategoryId == Category.LorriesId)
+                    trips = $"(CEIL({TotalVolume} / Services.TotalVolume))";
 
+                var transportDistance = $"0";
+                if (CategoryId == Category.LorriesId)
+                    transportDistance = $"({depotToPickup} + {dropoffToDepot} + ({pickupToDropoff} * ({trips} - 1)))";
+                else if (Mobile)
+                    transportDistance = $"{distance} * 2";
+
+                // size
+                string sizeField = "";
                 if (CategoryId == Category.LorriesId)
                 {
-                    var pickupToDropoff = SQL.Distance(Latitude, Longitude, DestinationLatitude, DestinationLongitude);
-                    sql.AppendLine($"(Services.PricePerQuantityUnit * {pickupToDropoff})");
+                    sizeField = $"({pickupToDropoff} * {trips})";
+                    sql.AppendLine($"{sizeField} AS Size,");
                 }
                 else
                 {
-                    sql.AppendLine($"(Services.PricePerQuantityUnit * {Size})");
+                    sizeField = $"({Size})";
+                    sql.AppendLine($"{sizeField} AS Size,");
                 }
-                
+
+                // time
+                var days = $"CEIL((Services.TimePerQuantityUnit * {sizeField}) / 8)";
+                if (CategoryId == Category.LorriesId)
+                {
+                    var totalDistance = $"(({depotToPickup} + {dropoffToDepot} + ({pickupToDropoff} * (({trips} * 2) - 1))) / 100)";
+                    days = $"CEIL((Services.TimePerQuantityUnit * {totalDistance}) / 8)";
+                }
+
+                // availability
+                sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.ListingId = Listings.Id AND Bookings.StartDate < DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL {days} DAY) AND Bookings.EndDate > DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
+
+                // costs
+                var hireCost = $"(Services.PricePerQuantityUnit * {Size})";
+                if (CategoryId == Category.LorriesId)
+                    hireCost = $"(Services.PricePerQuantityUnit * {pickupToDropoff} * {trips})";
+                var fuelCost = $"0";
                 if (CategoryId != Category.LorriesId && IncludeFuel)
-                    sql.AppendLine($"+ (Services.FuelPerQuantityUnit * {Size} * Services.FuelPrice)");
+                    fuelCost = $"(Services.FuelPerQuantityUnit * {Size} * Services.FuelPrice)";
+                var transportCost = $"({transportDistance} * Services.PricePerDistanceUnit)";
 
-                if (CategoryId == Category.LorriesId)
-                {
-                    var depotToPickup = SQL.Distance(Latitude, Longitude, "Listings");
-                    var pickupToDropoff = SQL.Distance(Latitude, Longitude, DestinationLatitude, DestinationLongitude);
-                    var dropoffToDepot = SQL.Distance(DestinationLatitude, DestinationLongitude, "Listings");
-                    sql.AppendLine($"+ (({depotToPickup} + {pickupToDropoff} + {dropoffToDepot}) * Services.PricePerDistanceUnit)");
-                }
-                else
-                    sql.AppendLine($"+ (Services.PricePerDistanceUnit * {distance} * 2)");
-
-                sql.AppendLine("AS Price,");
-
-
-                if (CategoryId == Category.TractorsId || CategoryId == Category.ProcessingId)
-                {
-                    sql.AppendLine($"{distance} AS Distance,");
-                    sql.AppendLine($"CEIL((Services.TimePerQuantityUnit * {Size}) / 8) AS Days,");
-                }
-                else
-                {
-                    var depotToPickup = SQL.Distance(Latitude, Longitude, "Listings");
-                    var pickupToDropoff = SQL.Distance(Latitude, Longitude, DestinationLatitude, DestinationLongitude);
-                    var dropoffToDepot = SQL.Distance(DestinationLatitude, DestinationLongitude, "Listings");
-
-                    sql.AppendLine($"({depotToPickup} + {pickupToDropoff} + {dropoffToDepot}) AS Distance,");
-                    sql.AppendLine($"CEIL((Services.TimePerQuantityUnit * ({depotToPickup} + {pickupToDropoff} + {dropoffToDepot})) / 8) AS Days,");
-                }
+                sql.AppendLine($"{transportCost} AS TransportCost,");
+                sql.AppendLine($"{fuelCost} AS FuelCost,");
+                sql.AppendLine($"{hireCost} AS HireCost,");
+                sql.AppendLine($"{hireCost} + {fuelCost} + {transportCost} AS Price,");
+                sql.AppendLine($"{transportDistance} AS TransportDistance,");
+                sql.AppendLine($"{distance} AS Distance,");
+                sql.AppendLine($"{trips} AS Trips,");
+                sql.AppendLine($"{days} AS Days,");
 
                 sql.AppendLine($"DATE('{SQL.Safe(StartDate)}') AS StartDate,");
-                sql.AppendLine($"DATE_ADD('{SQL.Safe(StartDate)}', INTERVAL CEIL((Services.TimePerQuantityUnit * {Size}) / 8) DAY) AS EndDate");
+                sql.AppendLine($"DATE_ADD('{SQL.Safe(StartDate)}', INTERVAL {days} DAY) AS EndDate");
                 sql.AppendLine("FROM Listings");
                 sql.AppendLine("INNER JOIN Services ON Listings.Id = Services.ListingId");
                 sql.AppendLine("WHERE Listings.Deleted = 0 AND Services.Deleted = 0 AND Listings.StatusId = 1");
@@ -137,8 +156,14 @@ namespace Agrishare.Core.Entities
                 AverageRating,
                 Photos = Photos?.Select(e => e.JSON()),
                 Distance,
-                Available,
                 Price,
+                Size,
+                Trips,
+                TransportDistance,
+                TransportCost,
+                FuelCost,
+                HireCost,
+                Available,
                 StartDate,
                 EndDate,
                 Days

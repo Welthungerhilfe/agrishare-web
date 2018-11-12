@@ -30,6 +30,7 @@
           <Property Name="FuelCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="TransportCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="AdditionalInformation" Type="varchar" MaxLength="4096" />
+          <Property Name="TotalVolume" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -671,6 +672,7 @@
           <Property Name="DestinationLongitude" Type="Decimal" Nullable="false" />
           <Property Name="Destination" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="AdditionalInformation" Type="String" MaxLength="4096" FixedLength="false" Unicode="false" />
+          <Property Name="TotalVolume" Type="Decimal" Nullable="false" />
         </EntityType>
         <EntityType Name="BookingUser">
           <Key>
@@ -1404,6 +1406,7 @@
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="AgrishareModel.Booking">
               <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="TotalVolume" ColumnName="TotalVolume" />
                 <ScalarProperty Name="AdditionalInformation" ColumnName="AdditionalInformation" />
                 <ScalarProperty Name="Destination" ColumnName="Destination" />
                 <ScalarProperty Name="DestinationLongitude" ColumnName="DestinationLongitude" />

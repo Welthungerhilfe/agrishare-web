@@ -87,6 +87,9 @@ namespace Agrishare.API.Controllers.App
             if (listing.Services.Count == 0)
                 return Error("You must enable at least on service");
 
+            if (listing.CategoryId == Entities.Category.LorriesId && listing.Services.First().TotalVolume == 0)
+                return Error("Please enter a valid Total Volume");
+
             var photos = new List<string>();
             if (Model.Photos != null)
                 foreach (var photo in Model.Photos)

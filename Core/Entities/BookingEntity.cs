@@ -238,6 +238,7 @@ namespace Agrishare.Core.Entities
                 FuelCost,
                 TransportCost,
                 AdditionalInformation,
+                TotalVolume,
                 StatusId,
                 Status,
                 DateCreated

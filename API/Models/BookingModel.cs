@@ -38,5 +38,7 @@ namespace Agrishare.API.Models
         public DateTime StartDate { get; set; }
 
         public string AdditionalInformation { get; set; }
+
+        public decimal TotalVolume { get; set; }
     }
 }
