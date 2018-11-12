@@ -36,7 +36,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static Listing Find(int Id = 0)
+        public static Listing Find(int Id = 0, bool Deleted = false)
         {
             if (Id == 0)
                 return new Listing
@@ -47,7 +47,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Include(o => o.Services).Include(o => o.User).Where(o => !o.Deleted);
+                var query = ctx.Listings.Include(o => o.Services).Include(o => o.User).Where(o => o.Deleted == Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
@@ -57,11 +57,11 @@ namespace Agrishare.Core.Entities
         }
 
         public static List<Listing> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", 
-            string Keywords = "", string StartsWith = "", int UserId = 0, int CategoryId = 0, ListingStatus Status = ListingStatus.None)
+            string Keywords = "", string StartsWith = "", int UserId = 0, int CategoryId = 0, ListingStatus Status = ListingStatus.None, bool Deleted = false)
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Where(o => !o.Deleted);
+                var query = ctx.Listings.Where(o => o.Deleted == Deleted);
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
@@ -82,11 +82,11 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int CategoryId = 0, ListingStatus Status = ListingStatus.None)
+        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int CategoryId = 0, ListingStatus Status = ListingStatus.None, bool Deleted = false)
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Listings.Where(o => !o.Deleted);
+                var query = ctx.Listings.Where(o => o.Deleted == Deleted);
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
@@ -199,7 +199,8 @@ namespace Agrishare.Core.Entities
                 StatusId,
                 Status,
                 User = IncludeUser ? User?.Json() : null,
-                DateCreated
+                DateCreated,
+                LastModified
             };
         }
     }

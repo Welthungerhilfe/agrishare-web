@@ -42,7 +42,7 @@ namespace Agrishare.Core.Entities
             return $"User:{AuthToken}";
         }
 
-        public static User Find(int Id = 0, string EmailAddress = "", string Telephone = "", string AuthToken = "")
+        public static User Find(int Id = 0, string EmailAddress = "", string Telephone = "", string AuthToken = "", bool Deleted = false)
         {
             if (!AuthToken.IsEmpty())
             {
@@ -59,7 +59,7 @@ namespace Agrishare.Core.Entities
 
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Users.Where(o => !o.Deleted);
+                var query = ctx.Users.Where(o => o.Deleted == Deleted);
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
@@ -77,11 +77,11 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<User> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string StartsWith = "")
+        public static List<User> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string StartsWith = "", bool Deleted = false)
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Users.Where(o => !o.Deleted);
+                var query = ctx.Users.Where(o => o.Deleted == Deleted);
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => (o.FirstName + " " + o.LastName).ToLower().Contains(Keywords.ToLower()));
@@ -93,11 +93,11 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static int Count(string Keywords = "", string StartsWith = "")
+        public static int Count(string Keywords = "", string StartsWith = "", bool Deleted = false)
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Users.Where(o => !o.Deleted);
+                var query = ctx.Users.Where(o => o.Deleted == Deleted);
 
                 if (!Keywords.IsEmpty())
                     query = query.Where(o => (o.FirstName + " " + o.LastName).ToLower().Contains(Keywords.ToLower()));

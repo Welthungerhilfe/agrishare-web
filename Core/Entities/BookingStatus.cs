@@ -18,6 +18,8 @@ namespace Agrishare.Core.Entities
         Declined = 2,
         InProgress = 3,
         Complete = 4,
-        None = -1
+        None = -1,
+        Cancelled = 5,
+        Incomplete = 6
     }
 }

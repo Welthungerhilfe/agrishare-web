@@ -6,7 +6,7 @@
 
 var agrishareApp =
     angular
-        .module('agrishareApp', ['ui.router', '720kb.tooltips', 'ngToast', 'ngAnimate', 'ngFileUpload', 'cp.ngConfirm', 'ngMap'])
+        .module('agrishareApp', ['ui.router', '720kb.tooltips', 'ngToast', 'ngAnimate', 'ngFileUpload', 'cp.ngConfirm', 'ngMap', 'angular-svg-round-progressbar'])
         .config(function ($sceDelegateProvider, ngToastProvider, $stateProvider, $locationProvider, $urlRouterProvider) {
 
             $sceDelegateProvider.resourceUrlWhitelist([

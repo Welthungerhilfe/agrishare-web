@@ -18,7 +18,7 @@ namespace Agrishare.Core.Entities
         public string Title => Id.ToString() ?? "00000";
         public string For => $"{ForId}".ExplodeCamelCase();
         public string Status => $"{StatusId}".ExplodeCamelCase();
-        public decimal AgriShareCommission => Transaction.AgriShareCommission * Price;
+        public decimal AgriShareCommission => Transaction.AgriShareCommission * HireCost;
 
         public static Booking Find(int Id = 0)
         {
@@ -77,7 +77,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static int Count(int ListingId = 0, int UserId = 0, int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null, BookingStatus Status = BookingStatus.None)
+        public static int Count(int ListingId = 0, int UserId = 0, int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null, BookingStatus Status = BookingStatus.None, bool Upcoming = false)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -106,6 +106,9 @@ namespace Agrishare.Core.Entities
 
                 if (Status != BookingStatus.None)
                     query = query.Where(e => e.StatusId == Status);
+
+                if (Upcoming)
+                    query = query.Where(e => e.StatusId == BookingStatus.Approved || e.StatusId == BookingStatus.InProgress);
 
                 return query.Count();
             }
@@ -234,6 +237,7 @@ namespace Agrishare.Core.Entities
                 HireCost,
                 FuelCost,
                 TransportCost,
+                AdditionalInformation,
                 StatusId,
                 Status,
                 DateCreated

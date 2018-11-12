@@ -1,0 +1,9 @@
+﻿@import "global";
+
+main {
+    display: flex;
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 20px 40px;
+    background: white;
+}

@@ -61,6 +61,7 @@ CREATE TABLE `Bookings` (
   `HireCost` decimal(10,3) NOT NULL DEFAULT '0.000',
   `FuelCost` decimal(10,3) NOT NULL DEFAULT '0.000',
   `TransportCost` decimal(10,3) NOT NULL DEFAULT '0.000',
+  `AdditionalInformation` varchar(4096) DEFAULT NULL,
   `StatusId` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Enum: Pending, Approved, Declined, In Progress, Complete',
   `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -119,7 +120,7 @@ CREATE TABLE `Counters` (
   KEY `UserId` (`UserId`),
   CONSTRAINT `counters_ibfk_1` FOREIGN KEY (`ServiceId`) REFERENCES `Categories` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `counters_ibfk_2` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Devices` */
 
@@ -213,6 +214,7 @@ CREATE TABLE `Notifications` (
   `TypeId` smallint(6) NOT NULL DEFAULT '0',
   `StatusId` smallint(6) NOT NULL DEFAULT '0',
   `GroupId` smallint(6) NOT NULL DEFAULT '0',
+  `Message` varchar(4096) DEFAULT NULL,
   `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',

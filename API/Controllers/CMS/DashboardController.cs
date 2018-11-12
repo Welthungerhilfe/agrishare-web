@@ -28,7 +28,7 @@ namespace Agrishare.API.Controllers.CMS
                 activeListingCount = Entities.Listing.Count(Status: Entities.ListingStatus.Live),
                 totalListingCount = Entities.Listing.Count(),
                 userCount = Entities.User.Count(),
-                activeUsers = Entities.Counter.ActiveUsers(startDate, endDate),
+                activeUsers = Entities.Counter.Count(UniqueUser: true),
                 completeBookingCount = Entities.Booking.Count(Status: Entities.BookingStatus.Complete),
                 totalBookingCount = Entities.Booking.Count(),
                 totalBookingAmount,
@@ -62,6 +62,36 @@ namespace Agrishare.API.Controllers.CMS
                 {
                     Male = Entities.Counter.Count(Event: Entities.Counters.CompleteBooking, Gender: Entities.Gender.Male),
                     Female = Entities.Counter.Count(Event: Entities.Counters.CompleteBooking, Gender: Entities.Gender.Female)
+                },
+                userSearchCount = new
+                {
+                    Male = Entities.Counter.Count(Event: Entities.Counters.Search, Gender: Entities.Gender.Male, UniqueUser: true),
+                    Female = Entities.Counter.Count(Event: Entities.Counters.Search, Gender: Entities.Gender.Female, UniqueUser: true)
+                },
+                userMatchCount = new
+                {
+                    Male = Entities.Counter.Count(Event: Entities.Counters.Match, Gender: Entities.Gender.Male, UniqueUser: true),
+                    Female = Entities.Counter.Count(Event: Entities.Counters.Match, Gender: Entities.Gender.Female, UniqueUser: true)
+                },
+                userBookingCount = new
+                {
+                    Male = Entities.Counter.Count(Event: Entities.Counters.Book, Gender: Entities.Gender.Male, UniqueUser: true),
+                    Female = Entities.Counter.Count(Event: Entities.Counters.Book, Gender: Entities.Gender.Female, UniqueUser: true)
+                },
+                userConfirmCount = new
+                {
+                    Male = Entities.Counter.Count(Event: Entities.Counters.ConfirmBooking, Gender: Entities.Gender.Male, UniqueUser: true),
+                    Female = Entities.Counter.Count(Event: Entities.Counters.ConfirmBooking, Gender: Entities.Gender.Female, UniqueUser: true)
+                },
+                userPaidCount = new
+                {
+                    Male = Entities.Counter.Count(Event: Entities.Counters.CompletePayment, Gender: Entities.Gender.Male, UniqueUser: true),
+                    Female = Entities.Counter.Count(Event: Entities.Counters.CompletePayment, Gender: Entities.Gender.Female, UniqueUser: true)
+                },
+                userCompleteCount = new
+                {
+                    Male = Entities.Counter.Count(Event: Entities.Counters.CompleteBooking, Gender: Entities.Gender.Male, UniqueUser: true),
+                    Female = Entities.Counter.Count(Event: Entities.Counters.CompleteBooking, Gender: Entities.Gender.Female, UniqueUser: true)
                 }
             };
 

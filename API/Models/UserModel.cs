@@ -15,7 +15,6 @@ namespace Agrishare.API.Models
         [Required]
         public string Telephone { get; set; }
 
-        [Required]
         public string PIN { get; set; }
 
         public string EmailAddress { get; set; }

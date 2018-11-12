@@ -106,6 +106,7 @@
       <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.3.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -190,6 +191,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Agrishare.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\AgriShare.Views.cs" />
     <Compile Include="Entities\Booking.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -353,4 +355,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"%25windir%25\Microsoft.NET\Framework64\v4.0.30319\EdmGen.exe" /targetversion:4.5 /nologo /language:CSharp /mode:ViewGeneration "/inssdl:$(TargetDir)Entities/AgriShare.ssdl" "/incsdl:$(TargetDir)Entities/AgriShare.csdl" "/inmsl:$(TargetDir)Entities/AgriShare.msl" "/outviews:$(ProjectDir)Entities/AgriShare.Views.cs"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

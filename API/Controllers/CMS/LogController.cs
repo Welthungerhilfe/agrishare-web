@@ -21,7 +21,7 @@ namespace Agrishare.API.Controllers.CMS
             {
                 Count = recordCount,
                 Sort = Entities.Log.DefaultSort,
-                List = list.Select(e => e.ListJson()),
+                List = list.Select(e => e.Json()),
                 Title = "Log"
             };
 

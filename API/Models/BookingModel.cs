@@ -15,7 +15,6 @@ namespace Agrishare.API.Models
         [Required]
         public BookingFor ForId { get; set; }
 
-        [Required]
         public string Location { get; set; }
 
         [Required]
@@ -37,5 +36,7 @@ namespace Agrishare.API.Models
 
         [Required]
         public DateTime StartDate { get; set; }
+
+        public string AdditionalInformation { get; set; }
     }
 }

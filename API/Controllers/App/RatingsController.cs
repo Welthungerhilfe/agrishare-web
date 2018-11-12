@@ -46,9 +46,17 @@ namespace Agrishare.API.Controllers.App
                 listing.RatingCount += 1;
                 listing.Save();
 
+                var notifications = Entities.Notification.List(Type: Entities.NotificationType.ServiceComplete, UserId: booking.UserId);
+                foreach(var notification in notifications)
+                {
+                    notification.StatusId = Entities.NotificationStatus.Complete;
+                    notification.Save();
+                }
+
                 new Entities.Notification
                 {
                     Booking = booking,
+                    GroupId = Entities.NotificationGroup.Offering,
                     TypeId = Entities.NotificationType.NewReview,
                     User = Entities.User.Find(Id: listing.UserId)
                 }.Save(Notify: true);
