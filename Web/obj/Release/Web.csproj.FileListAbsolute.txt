@@ -1,3 +1,5 @@
+C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Web.csprojAssemblyReference.cache
+C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Web.csproj.CoreCompileInputs.cache
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\Agrishare.Web.dll.config
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\Agrishare.Web.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\Agrishare.Web.pdb
@@ -75,8 +77,6 @@ C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\StackExchange.Redis.Stro
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\AWSSDK.pdb
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\Newtonsoft.Json.xml
 C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\System.Diagnostics.DiagnosticSource.xml
-C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Web.csprojAssemblyReference.cache
-C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Web.csproj.CoreCompileInputs.cache
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Web.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Agrishare.Web.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Agrishare.Web.pdb

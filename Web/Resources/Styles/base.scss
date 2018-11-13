@@ -70,7 +70,7 @@ body {
     display: flex;
     flex-direction: column;
     font-size: 14px;
-    overflow: hidden;
+    overflow-y: scroll;
     line-height: 1.5;
     color: #333;
     background: #eee;

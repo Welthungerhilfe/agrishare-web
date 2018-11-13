@@ -30,7 +30,7 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/about/seeking">Seeking</a></li>
                     <li><a href="/about/offering">Offering</a></li>
-                    <li><a href="/about/how-it-works">About</a></li>
+                    <li><a href="/about">About</a></li>
                     <li><a href="/account/get-started" class="button">Get Started</a></li>
                 </ul>
             </nav>

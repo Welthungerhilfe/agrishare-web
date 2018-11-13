@@ -1,3 +1,5 @@
+C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Release\CMS.csprojAssemblyReference.cache
+C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Release\CMS.csproj.CoreCompileInputs.cache
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\Agrishare.CMS.dll.config
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\Agrishare.CMS.dll
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\Agrishare.CMS.pdb
@@ -25,8 +27,6 @@ C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\StackExchange.Redis.Stro
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\AWSSDK.pdb
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\Newtonsoft.Json.xml
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\System.Diagnostics.DiagnosticSource.xml
-C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Release\CMS.csprojAssemblyReference.cache
-C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Release\CMS.csproj.CoreCompileInputs.cache
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Release\CMS.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Release\Agrishare.CMS.dll
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Release\Agrishare.CMS.pdb

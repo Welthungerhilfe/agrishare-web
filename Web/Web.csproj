@@ -88,9 +88,25 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\About\Contact.aspx" />
+    <Content Include="Pages\About\FAQs.aspx" />
+    <Content Include="Pages\About\Seeking.aspx" />
+    <Content Include="Pages\About\Offering.aspx" />
+    <Content Include="Pages\Account\Listing\Edit.aspx" />
+    <Content Include="Pages\Account\Booking\Details.aspx" />
+    <Content Include="Pages\Account\Offering\Listings.aspx" />
+    <Content Include="Pages\Account\Offering\Bookings.aspx" />
+    <Content Include="Pages\Account\Offering.aspx" />
+    <Content Include="Pages\Account\Offering\Edit.aspx" />
+    <Content Include="Pages\Account\Profile\Edit.aspx" />
+    <Content Include="Pages\Account\Seeking.aspx" />
+    <Content Include="Pages\Account\Seeking\Bookings.aspx" />
+    <Content Include="Pages\Account\Seeking\Search.aspx" />
     <Content Include="Pages\Error404.html" />
     <Content Include="Pages\Error500.html" />
+    <Content Include="Pages\About.aspx" />
     <Content Include="Pages\Homepage.aspx" />
+    <Content Include="Pages\Account\GetStarted.aspx" />
     <Content Include="Resources\Images\C2-Logo.svg" />
     <Content Include="Resources\Images\Icon-Close.svg" />
     <Content Include="Resources\Images\Icon-Menu.svg" />
@@ -106,6 +122,90 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Pages\About\Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\About\Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\About\FAQs.aspx.cs">
+      <DependentUpon>FAQs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\About\FAQs.aspx.designer.cs">
+      <DependentUpon>FAQs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Listing\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Listing\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Booking\Details.aspx.cs">
+      <DependentUpon>Details.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Booking\Details.aspx.designer.cs">
+      <DependentUpon>Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Offering\Listings.aspx.cs">
+      <DependentUpon>Listings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Offering\Listings.aspx.designer.cs">
+      <DependentUpon>Listings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Offering\Bookings.aspx.cs">
+      <DependentUpon>Bookings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Offering\Bookings.aspx.designer.cs">
+      <DependentUpon>Bookings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Offering.aspx.cs">
+      <DependentUpon>Offering.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Offering.aspx.designer.cs">
+      <DependentUpon>Offering.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Offering\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Offering\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Profile\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Profile\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking.aspx.cs">
+      <DependentUpon>Seeking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking.aspx.designer.cs">
+      <DependentUpon>Seeking.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Bookings.aspx.cs">
+      <DependentUpon>Bookings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Bookings.aspx.designer.cs">
+      <DependentUpon>Bookings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Search.aspx.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Search.aspx.designer.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Default.Master.cs">
       <DependentUpon>Default.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -119,6 +219,13 @@
     </Compile>
     <Compile Include="Pages\Homepage.aspx.designer.cs">
       <DependentUpon>Homepage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\GetStarted.aspx.cs">
+      <DependentUpon>GetStarted.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\GetStarted.aspx.designer.cs">
+      <DependentUpon>GetStarted.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -34,7 +34,7 @@ namespace Agrishare.Web
             if (Context.Request.Path == "/")
                 Context.RewritePath("/Pages/Homepage.aspx", false);
             else if (Regex.IsMatch(Context.Request.Path, @"^/(about|account)"))
-                Context.RewritePath($"/Pages{Context.Request.Path}.aspx", false);
+                Context.RewritePath($"/Pages{Context.Request.Path.Replace("-", "")}.aspx", false);
         }
 
         private void BundleMinifyCompress(string Path)
@@ -49,8 +49,7 @@ namespace Agrishare.Web
             var extension = Regex.Replace(Path, @"^/(script|styles)-([\d]+).(js|css)$", "$3");
             var acceptEncoding = Context.Request.Headers["Accept-Encoding"];
             var useGzip = !acceptEncoding.IsEmpty() && acceptEncoding.ToLower().Contains("gzip");
-            var cacheKey = $"{key}{useGzip}{version}";
-            var compressedBytes = Context.Cache[cacheKey] as byte[];
+            var compressedBytes = Context.Cache[$"{key}{useGzip}{version}"] as byte[];
             var contentType = extension.Equals("js") ? "application/javascript" : "text/css";
 
             if (debugMode || compressedBytes == null)
@@ -80,7 +79,7 @@ namespace Agrishare.Web
                     useGzip = false;
                 }
 
-                Context.Cache.Add(cacheKey, compressedBytes, null, DateTime.UtcNow.AddDays(90), TimeSpan.Zero, CacheItemPriority.High, null);
+                Context.Cache.Add($"{key}{useGzip}{version}", compressedBytes, null, DateTime.UtcNow.AddDays(90), TimeSpan.Zero, CacheItemPriority.High, null);
             }
 
             Context.Response.ContentType = contentType;

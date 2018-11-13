@@ -1,6 +1,7 @@
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\Agrishare.Core.dll.config
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\Agrishare.Core.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\Agrishare.Core.pdb
+C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\AWSSDK.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\EntityFramework.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\EntityFramework.SqlServer.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\Google.Protobuf.dll
@@ -40,6 +41,7 @@ C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\System.Security
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\System.Security.Cryptography.Primitives.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\System.Security.Cryptography.X509Certificates.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\System.Xml.ReaderWriter.dll
+C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\AWSSDK.pdb
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\EntityFramework.xml
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\EntityFramework.SqlServer.xml
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\Google.Protobuf.xml
@@ -65,5 +67,3 @@ C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Core.csproj.Cor
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Core.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Agrishare.Core.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Agrishare.Core.pdb
-C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\AWSSDK.dll
-C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\AWSSDK.pdb

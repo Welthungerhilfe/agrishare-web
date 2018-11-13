@@ -1,3 +1,5 @@
+C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\API.csprojAssemblyReference.cache
+C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\API.csproj.CoreCompileInputs.cache
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\Agrishare.API.dll.config
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\Agrishare.API.dll
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\Agrishare.API.pdb
@@ -21,6 +23,7 @@ C:\Users\brad\Documents\Working Files\Agrishare\API\bin\System.Web.Http.WebHost.
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\WebActivatorEx.dll
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\StackExchange.Redis.StrongName.dll
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\RestSharp.dll
+C:\Users\brad\Documents\Working Files\Agrishare\API\bin\AWSSDK.dll
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\Mandrill.net.dll
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\System.Linq.Dynamic.dll
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\System.IO.Compression.dll
@@ -36,10 +39,7 @@ C:\Users\brad\Documents\Working Files\Agrishare\API\bin\System.Web.Http.Cors.xml
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\Newtonsoft.Json.xml
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\System.Web.Http.WebHost.xml
 C:\Users\brad\Documents\Working Files\Agrishare\API\bin\StackExchange.Redis.StrongName.xml
-C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\API.csprojAssemblyReference.cache
-C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\API.csproj.CoreCompileInputs.cache
+C:\Users\brad\Documents\Working Files\Agrishare\API\bin\AWSSDK.pdb
 C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\API.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\Agrishare.API.dll
 C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\Agrishare.API.pdb
-C:\Users\brad\Documents\Working Files\Agrishare\API\bin\AWSSDK.dll
-C:\Users\brad\Documents\Working Files\Agrishare\API\bin\AWSSDK.pdb
