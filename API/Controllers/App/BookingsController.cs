@@ -50,10 +50,11 @@ namespace Agrishare.API.Controllers.App
             var depotToPickup = (decimal)Location.GetDistance(Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude), Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude));
             var pickupToDropoff = (decimal)Location.GetDistance(Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude), Convert.ToDouble(booking.DestinationLatitude), Convert.ToDouble(booking.DestinationLongitude));
             var dropoffToDepot = (decimal)Location.GetDistance(Convert.ToDouble(booking.DestinationLatitude), Convert.ToDouble(booking.DestinationLongitude), Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude));
-            var trips = Math.Ceiling(booking.TotalVolume / booking.Service.TotalVolume);
+            var trips = 0M;
 
             if (booking.Service.CategoryId == Entities.Category.LorriesId)
             {
+                trips = Math.Ceiling(booking.TotalVolume / booking.Service.TotalVolume);
                 days = Math.Ceiling(booking.Service.TimePerQuantityUnit / 100 * booking.Quantity / 8) - 1;
 
                 booking.Quantity = pickupToDropoff * trips;

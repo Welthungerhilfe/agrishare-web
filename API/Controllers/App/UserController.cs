@@ -208,12 +208,17 @@ namespace Agrishare.API.Controllers.App
             if (!ModelState.IsValid)
                 return Error(ModelState);
 
+            var newTelephone = CurrentUser.Telephone != User.Telephone;
+
             CurrentUser.FirstName = User.FirstName;
             CurrentUser.LastName = User.LastName;
             CurrentUser.Telephone = User.Telephone;
             CurrentUser.EmailAddress = User.EmailAddress;
             CurrentUser.DateOfBirth = User.DateOfBirth;
             CurrentUser.GenderId = User.GenderId;
+
+            if (newTelephone)
+                CurrentUser.StatusId = Entities.UserStatus.Pending;
 
             if (!Regex.IsMatch(CurrentUser.Telephone, @"^07[\d]{8}"))
                 return Error($"{CurrentUser.Telephone} is not a valid cell number. The number should start with 07 and contain 10 digits.");
@@ -225,10 +230,16 @@ namespace Agrishare.API.Controllers.App
                 return Error($"{CurrentUser.EmailAddress} has already been registered");
 
             if (CurrentUser.Save())
+            { 
+                if (newTelephone)
+                    CurrentUser.SendVerificationCode();
+
                 return Success(new
                 {
-                    User = CurrentUser.ProfileJson()
+                    User = CurrentUser.ProfileJson(),
+                    Verify = newTelephone
                 });
+            }
 
             return Error("An unknown error occurred");
         }
