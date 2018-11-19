@@ -11,5 +11,17 @@ namespace Agrishare.Web.Pages.Account.Listing {
     
     
     public partial class Edit {
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new Agrishare.Web.Pages.Default Master {
+            get {
+                return ((Agrishare.Web.Pages.Default)(base.Master));
+            }
+        }
     }
 }

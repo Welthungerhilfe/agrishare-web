@@ -1,6 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Default.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="Agrishare.Web.Pages.About.Contact" %>
+﻿<%@ MasterType TypeName="Agrishare.Web.Pages.Default" %>
+<%@ Page Title="Contact Us" Language="C#" MasterPageFile="~/Pages/Default.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="Agrishare.Web.Pages.About.Contact" %>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ContentPlaceHolderID="Content" runat="server">
     
     <h1>Contact Us</h1>
 
@@ -30,7 +31,7 @@
     </div>
 
     <p>
-        <asp:Button runat="server" Text="Send" CssClass="button" />
+        <asp:Button runat="server" Text="Send" CssClass="button" OnClick="SendMessage" />
     </p>
 
     <h2>Faqs</h2>

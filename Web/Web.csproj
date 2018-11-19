@@ -92,19 +92,17 @@
     <Content Include="Pages\About\FAQs.aspx" />
     <Content Include="Pages\About\Seeking.aspx" />
     <Content Include="Pages\About\Offering.aspx" />
+    <Content Include="Pages\Account\Bookings.aspx" />
+    <Content Include="Pages\Account\Notifications.aspx" />
     <Content Include="Pages\Account\Listing\Edit.aspx" />
     <Content Include="Pages\Account\Booking\Details.aspx" />
-    <Content Include="Pages\Account\Offering\Listings.aspx" />
-    <Content Include="Pages\Account\Offering\Bookings.aspx" />
+    <Content Include="Pages\Account\Listings.aspx" />
+    <Content Include="Pages\Account\Profile.aspx" />
     <Content Include="Pages\Account\Offering.aspx" />
-    <Content Include="Pages\Account\Offering\Edit.aspx" />
-    <Content Include="Pages\Account\Profile\Edit.aspx" />
     <Content Include="Pages\Account\Seeking.aspx" />
-    <Content Include="Pages\Account\Seeking\Bookings.aspx" />
     <Content Include="Pages\Account\Seeking\Search.aspx" />
     <Content Include="Pages\Error404.html" />
     <Content Include="Pages\Error500.html" />
-    <Content Include="Pages\About.aspx" />
     <Content Include="Pages\Homepage.aspx" />
     <Content Include="Pages\Account\GetStarted.aspx" />
     <Content Include="Resources\Images\C2-Logo.svg" />
@@ -119,6 +117,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\AgrishareHttpModule.cs" />
+    <Compile Include="Code\PagedRepeater.cs" />
+    <Compile Include="Code\Pager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -136,6 +136,20 @@
     <Compile Include="Pages\About\FAQs.aspx.designer.cs">
       <DependentUpon>FAQs.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Account\Bookings.aspx.cs">
+      <DependentUpon>Bookings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Bookings.aspx.designer.cs">
+      <DependentUpon>Bookings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Notifications.aspx.cs">
+      <DependentUpon>Notifications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Notifications.aspx.designer.cs">
+      <DependentUpon>Notifications.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Account\Listing\Edit.aspx.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -150,19 +164,19 @@
     <Compile Include="Pages\Account\Booking\Details.aspx.designer.cs">
       <DependentUpon>Details.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Account\Offering\Listings.aspx.cs">
+    <Compile Include="Pages\Account\Listings.aspx.cs">
       <DependentUpon>Listings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Account\Offering\Listings.aspx.designer.cs">
+    <Compile Include="Pages\Account\Listings.aspx.designer.cs">
       <DependentUpon>Listings.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Account\Offering\Bookings.aspx.cs">
-      <DependentUpon>Bookings.aspx</DependentUpon>
+    <Compile Include="Pages\Account\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Account\Offering\Bookings.aspx.designer.cs">
-      <DependentUpon>Bookings.aspx</DependentUpon>
+    <Compile Include="Pages\Account\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Account\Offering.aspx.cs">
       <DependentUpon>Offering.aspx</DependentUpon>
@@ -171,33 +185,12 @@
     <Compile Include="Pages\Account\Offering.aspx.designer.cs">
       <DependentUpon>Offering.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Account\Offering\Edit.aspx.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\Account\Offering\Edit.aspx.designer.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Account\Profile\Edit.aspx.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\Account\Profile\Edit.aspx.designer.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Account\Seeking.aspx.cs">
       <DependentUpon>Seeking.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Pages\Account\Seeking.aspx.designer.cs">
       <DependentUpon>Seeking.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Account\Seeking\Bookings.aspx.cs">
-      <DependentUpon>Bookings.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\Account\Seeking\Bookings.aspx.designer.cs">
-      <DependentUpon>Bookings.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Account\Seeking\Search.aspx.cs">
       <DependentUpon>Search.aspx</DependentUpon>

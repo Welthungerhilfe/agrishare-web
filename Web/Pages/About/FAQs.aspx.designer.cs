@@ -11,5 +11,26 @@ namespace Agrishare.Web.Pages.About {
     
     
     public partial class FAQs {
+        
+        /// <summary>
+        /// List control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater List;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new Agrishare.Web.Pages.Default Master {
+            get {
+                return ((Agrishare.Web.Pages.Default)(base.Master));
+            }
+        }
     }
 }

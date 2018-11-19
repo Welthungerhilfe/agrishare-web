@@ -1,6 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Default.Master" AutoEventWireup="true" CodeBehind="Homepage.aspx.cs" Inherits="Agrishare.Web.Pages.Homepage" %>
+﻿<%@ MasterType TypeName="Agrishare.Web.Pages.Default" %>
+<%@ Page Title="Home" Language="C#" MasterPageFile="~/Pages/Default.Master" AutoEventWireup="true" CodeBehind="Homepage.aspx.cs" Inherits="Agrishare.Web.Pages.Homepage" %>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ContentPlaceHolderID="Content" runat="server">
     
     <div class="slideshow">
         <div>

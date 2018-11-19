@@ -309,8 +309,8 @@ namespace Agrishare.API.Controllers.App
         public object OfferingList(int PageIndex = 0, int PageSize = 25)
         {
             var startDate = DateTime.Today.StartOfDay().AddDays(-(DateTime.Today.Day - 1));
-            var monthlySpend = Entities.Booking.SeekingSummary(CurrentUser.Id, startDate);
-            var totalSpend = Entities.Booking.SeekingSummary(CurrentUser.Id);
+            var monthlySpend = Entities.Booking.OfferingSummary(CurrentUser.Id, startDate);
+            var totalSpend = Entities.Booking.OfferingSummary(CurrentUser.Id);
             
             var bookings = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, SupplierId: CurrentUser.Id);
 

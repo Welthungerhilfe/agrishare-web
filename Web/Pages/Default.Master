@@ -26,12 +26,19 @@
             </div>
             <nav ng-class="{ 'visible': menu.visible }">
                 <a ng-click="menu.visible=false"><img src="/Resources/Images/Icon-Close.svg" /></a>
-                <ul>
+                <ul runat="server" id="GuestMenu" visible="false">
                     <li><a href="/">Home</a></li>
                     <li><a href="/about/seeking">Seeking</a></li>
                     <li><a href="/about/offering">Offering</a></li>
-                    <li><a href="/about">About</a></li>
+                    <li><a href="/about/contact">Contact</a></li>
                     <li><a href="/account/get-started" class="button">Get Started</a></li>
+                </ul>
+                <ul runat="server" id="UserMenu" visible="false">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/account/seeking">Seeking</a></li>
+                    <li><a href="/account/offering">Offering</a></li>
+                    <li><a href="/about/contact">Contact</a></li>
+                    <li><a href="/account/profile" class="button"><asp:Literal runat="server" ID="UserName" /></a></li>
                 </ul>
             </nav>
             <div>
@@ -40,8 +47,10 @@
         </header>
 
         <main>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+            <asp:PlaceHolder runat="server" ID="FeedbackPrompt" Visible="false">
+                <p class="feedback"><asp:Literal runat="server" ID="FeedbackMessage" /></p>
+            </asp:PlaceHolder>
+            <asp:ContentPlaceHolder ID="Content" runat="server" />
         </main>
 
         <footer>

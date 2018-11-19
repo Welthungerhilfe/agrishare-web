@@ -1,23 +1,31 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Default.Master" AutoEventWireup="true" CodeBehind="FAQs.aspx.cs" Inherits="Agrishare.Web.Pages.About.FAQs" %>
+﻿<%@ MasterType TypeName="Agrishare.Web.Pages.Default" %>
+<%@ Page Title="FAQs" Language="C#" MasterPageFile="~/Pages/Default.Master" AutoEventWireup="true" CodeBehind="FAQs.aspx.cs" Inherits="Agrishare.Web.Pages.About.FAQs" %>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ContentPlaceHolderID="Content" runat="server">
     
-    <h1>Get Started</h1>
+    <h1>FAQs</h1>
 
-    <h2>Register Now</h2>
+    <p>Lorem ipsum dolores sit amet</p>
 
-    <p>Coming soon...</p>
+    <asp:Repeater runat="server" ID="List" OnItemDataBound="BindFaq">
+        <HeaderTemplate>
+            <div class="faq-list">
+        </HeaderTemplate>
+        <ItemTemplate>
+                <div>
+                    <p class="q"><asp:Literal runat="server" ID="Question" /></p>
+                    <p class="a"><asp:Literal runat="server" ID="Answer" /></p>
+                </div>
+        </ItemTemplate>
+        <FooterTemplate>
+            </div>
+        </FooterTemplate>
+    </asp:Repeater>
 
-    <h2>Existing Users</h2>
+    <h2>Get in touch</h2>
 
-    <p>Coming soon...</p>
+    <p>Lorem ipsum dolores sit amet.</p>
 
-    <h2>Forgot Password</h2>
-
-    <p>Coming soon...</p>
-
-    <h2>Reset Password</h2>
-
-    <p>Coming soon...</p>
+    <p><a href="/about/contact">Contact us</a></p>
 
 </asp:Content>

@@ -1,6 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Pages/Default.Master" AutoEventWireup="true" %>
+﻿<%@ MasterType TypeName="Agrishare.Web.Pages.Default" %>
+<%@ Page Title="Seeking Equipment" Language="C#" MasterPageFile="~/Pages/Default.Master" AutoEventWireup="true" %>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ContentPlaceHolderID="Content" runat="server">
     
     <h1>Seeking Equipment</h1>
 

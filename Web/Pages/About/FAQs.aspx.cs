@@ -11,7 +11,18 @@ namespace Agrishare.Web.Pages.About
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            List.DataSource = Core.Entities.Faq.List();
+            List.DataBind();
+        }
 
+        public void BindFaq(object s, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var faq = (Core.Entities.Faq)e.Item.DataItem;
+                ((Literal)e.Item.FindControl("Question")).Text = HttpUtility.HtmlEncode(faq.Question);
+                ((Literal)e.Item.FindControl("Answer")).Text = HttpUtility.HtmlEncode(faq.Answer);
+            }
         }
     }
 }

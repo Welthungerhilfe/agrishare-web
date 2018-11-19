@@ -37,6 +37,46 @@ namespace Agrishare.Core.Entities
         public int Days { get; set; }
         public int Trips { get; set; }
 
+        public static int Count(int CategoryId, int ServiceId, decimal Latitude,
+            decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile, BookingFor For, decimal DestinationLatitude,
+            decimal DestinationLongitude, decimal TotalVolume)
+        {
+            using (var ctx = new AgrishareEntities())
+            {
+                var sql = new StringBuilder();
+
+                sql.AppendLine("SELECT");
+                sql.AppendLine("COUNT(Id)");
+                sql.AppendLine("FROM Listings");
+                sql.AppendLine("INNER JOIN Services ON Listings.Id = Services.ListingId");
+                sql.AppendLine("WHERE Listings.Deleted = 0 AND Services.Deleted = 0 AND Listings.StatusId = 1");
+                sql.AppendLine($"AND Listings.CategoryId = {CategoryId}");
+                sql.AppendLine($"AND Services.Mobile = {SQL.Safe(Mobile)}");
+                sql.AppendLine($"AND Services.CategoryId = {ServiceId}");
+                sql.AppendLine($"AND {Size} >= MinimumQuantity");
+
+                var distance = SQL.Distance(Latitude, Longitude, "Listings");
+
+                if (Mobile)
+                    sql.AppendLine($"AND {distance} <= Services.MaximumDistance");
+
+                if (For == BookingFor.Group)
+                    sql.AppendLine($"AND Listings.GroupServices = 1");
+
+                if (!IncludeFuel)
+                    sql.AppendLine($"AND Listings.AvailableWithoutFuel = 1");
+
+                sql.AppendLine($"GROUP BY Services.Id");
+
+                #if DEBUG
+                Log.Debug("Count SQL", sql.ToString());
+                #endif
+
+                return ctx.Database.SqlQuery<int>(sql.ToString()).DefaultIfEmpty(0).FirstOrDefault();
+            }
+        }
+
+
         public static List<ListingSearchResult> List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, 
             decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile, BookingFor For, decimal DestinationLatitude, 
             decimal DestinationLongitude, decimal TotalVolume)
