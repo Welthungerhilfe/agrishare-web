@@ -59,7 +59,7 @@
 
     <div class="form-row">
         <asp:Label runat="server" AssociatedControlID="Mobile" Text="Mobile" />
-        <asp:CheckBox runat="server" ID="Equipment is mobile"  />
+        <asp:CheckBox runat="server" ID="Mobile" Text="Equipment is mobile"  />
     </div>
 
     <div class="form-row mobile-row">

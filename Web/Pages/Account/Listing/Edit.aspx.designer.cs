@@ -85,13 +85,13 @@ namespace Agrishare.Web.Pages.Account.Listing {
         protected global::System.Web.UI.WebControls.CheckBox GroupHire;
         
         /// <summary>
-        /// Equipment is mobile control.
+        /// Mobile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox Equipment is mobile;
+        protected global::System.Web.UI.WebControls.CheckBox Mobile;
         
         /// <summary>
         /// DistanceCharge control.
