@@ -1,6 +1,5 @@
 ﻿using Agrishare.Core;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,14 +7,18 @@ using System.Web.UI.WebControls;
 
 namespace Agrishare.Web.Pages.Account.Seeking
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Notifications.DataSource = Core.Entities.Notification.List(PageSize: 10, UserId: Master.CurrentUser.Id, GroupId: Core.Entities.NotificationGroup.Seeking);
+            var notificationsData = Core.Entities.Notification.List(PageSize: 10, UserId: Master.CurrentUser.Id, GroupId: Core.Entities.NotificationGroup.Seeking);
+            Notifications.RecordCount = notificationsData.Count;
+            Notifications.DataSource = notificationsData;
             Notifications.DataBind();
 
-            Bookings.DataSource = Core.Entities.Booking.List(PageSize: 10, UserId: Master.CurrentUser.Id);
+            var bookingData = Core.Entities.Booking.List(PageSize: 10, UserId: Master.CurrentUser.Id);
+            Bookings.RecordCount = bookingData.Count;
+            Bookings.DataSource = bookingData;
             Bookings.DataBind();
 
             var startDate = DateTime.Today.StartOfDay().AddDays(-(DateTime.Today.Day - 1));
@@ -72,7 +75,7 @@ namespace Agrishare.Web.Pages.Account.Seeking
             {
                 var booking = (Core.Entities.Booking)e.Item.DataItem;
                 ((HyperLink)e.Item.FindControl("Link")).NavigateUrl = $"/account/booking/details?id={booking.Id}";
-                ((Image)e.Item.FindControl("Photo")).ImageUrl = booking.Listing.Photos.Count > 0 ? $"{Core.Entities.Config.CDNURL}{booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
+                ((Image)e.Item.FindControl("Photo")).ImageUrl = (booking.Listing.Photos?.Count ?? 0) > 0 ? $"{Core.Entities.Config.CDNURL}{booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
                 ((Literal)e.Item.FindControl("Date")).Text = booking.StartDate.ToString("d MMMM yyyy");
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(booking.Listing.Title);
                 ((Literal)e.Item.FindControl("Price")).Text = "$" + booking.Price.ToString("N2");

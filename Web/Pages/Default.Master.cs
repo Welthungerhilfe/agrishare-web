@@ -82,6 +82,7 @@ namespace Agrishare.Web.Pages
             {
                 FeedbackPrompt.Visible = true;
                 FeedbackMessage.Text = Feedback;
+                Feedback = string.Empty;
             }
 
             if (RequiresAuthentication && !CurrentUser.Roles.Contains(Role.User))

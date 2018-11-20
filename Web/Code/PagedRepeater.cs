@@ -26,10 +26,6 @@ namespace Agrishare.Web.Controls
             {
                 return Pager.CurrentPageIndex;
             }
-            set
-            {
-                Pager.CurrentPageIndex = value;
-            }
         }
 
         /// <summary>
@@ -76,18 +72,7 @@ namespace Agrishare.Web.Controls
         /// <summary>
         /// Message to display if the list is empty
         /// </summary>
-        public string EmptyMessage
-        {
-            get
-            {
-                return emptyMessage;
-            }
-            set
-            {
-                emptyMessage = value;
-            }
-        }
-        private string emptyMessage = "The list is empty!";
+        public string EmptyMessage { get; set; } = "The list is empty!";
 
         /// <summary>
         /// On pre-render

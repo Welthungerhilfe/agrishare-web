@@ -67,6 +67,23 @@ namespace Agrishare.API.Controllers.CMS
             return Error();
         }
 
+        [Route("listings/delete")]
+        [AcceptVerbs("GET")]
+        public object Delete(int Id)
+        {
+            var listing = Entities.Listing.Find(Id: Id);
+            if (listing?.Id == 0 || listing?.UserId != CurrentUser.Id)
+                return Error("Listing not found");
+
+            if (listing.Delete())
+                return Success(new
+                {
+                    listing.Id
+                });
+
+            return Error("An unknown error occurred");
+        }
+
         /* Deleted */
 
         [Route("listings/deleted/list")]

@@ -40,6 +40,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -127,10 +128,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\Authorize.cs" />
-    <Compile Include="App_Code\BaseApiController.cs" />
-    <Compile Include="App_Code\ExceptionFilter.cs" />
-    <Compile Include="App_Code\ValidateViewModelAttribute.cs" />
+    <Compile Include="Code\Authorize.cs" />
+    <Compile Include="Code\BaseApiController.cs" />
+    <Compile Include="Code\ExceptionFilter.cs" />
+    <Compile Include="Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CMS\DashboardController.cs" />
     <Compile Include="Controllers\CMS\RatingsController.cs" />

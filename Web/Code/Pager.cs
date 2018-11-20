@@ -13,63 +13,24 @@ namespace Agrishare.Web.Controls
 {
     public class Pager : WebControl
     {
-        public string Path => HttpContext.Current.Request.Path;
+        public string Path => HttpContext.Current.Request.RawUrl;
 
         public int CurrentPageIndex
         {
             get
             {
-                if (currentPageIndex == -1)
-                {
-                    try { currentPageIndex = int.Parse(HttpContext.Current.Request.QueryString["pg"]); }
-                    catch { currentPageIndex = 0; }
-                }
-                return currentPageIndex < 0 ? 0 : currentPageIndex > PageCount - 1 ? PageCount - 1 : currentPageIndex;
-            }
-            set
-            {
-                currentPageIndex = value;
+                var index = 0;
+                try { index = int.Parse(HttpContext.Current.Request.QueryString["pg"]); }
+                catch { index = 0; }
+                return Math.Min(PageCount - 1, Math.Max(1, index));
             }
         }
-        private int currentPageIndex = -1;
 
-        public int PageSize
-        {
-            get
-            {
-                if (pageSize == -1)
-                {
-                    try { pageSize = int.Parse(HttpContext.Current.Request.QueryString["sz"]); }
-                    catch { pageSize = 50; }
-                }
-                return Math.Max(pageSize, 1);
-            }
-            set
-            {
-                pageSize = Math.Max(0, value);
-            }
-        }
-        private int pageSize = 0;
+        public int PageSize { get; set; } = 25;
 
-        public int RecordCount
-        {
-            get { return recordCount; }
-            set
-            {
-                if (value >= 0) recordCount = value;
-                pageCount = int.Parse((Math.Ceiling(double.Parse(recordCount.ToString()) / double.Parse(PageSize.ToString()))).ToString());
-            }
-        }
-        private int recordCount = 0;
+        public int RecordCount { get; set; } = 0;
 
-        public int PageCount
-        {
-            get
-            {
-                return pageCount < 1 ? 1 : pageCount;
-            }
-        }
-        private int pageCount = 0;
+        public int PageCount => Math.Max(1, int.Parse((Math.Ceiling(double.Parse(RecordCount.ToString()) / double.Parse(PageSize.ToString()))).ToString()));
 
         protected override void Render(HtmlTextWriter writer)
         {

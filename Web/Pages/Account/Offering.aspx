@@ -8,16 +8,16 @@
     <h2>My Equipment</h2>
 
     <ul>
-        <li><a href="/account/seeking/search?cid=1">Tractors</a></li>
-        <li><a href="/account/seeking/search?cid=2">Lorries</a></li>
-        <li><a href="/account/seeking/search?cid=3">Processing</a></li>
+        <li><a href="/account/listings?cid=1">Tractors</a></li>
+        <li><a href="/account/listings?cid=2">Lorries</a></li>
+        <li><a href="/account/listings?cid=3">Processing</a></li>
     </ul>
 
     <p>
-        <a href="/account/offering/edit.aspx" class="button">Add listing</a>
+        <a href="/account/listing/edit" class="button">Add listing</a>
     </p>
 
-    <h2>Recent Notifications <a href="/account/notifications/list/offering">View All</a></h2>
+    <h2>Recent Notifications <a href="/account/notifications/offering">View All</a></h2>
 
     <web:PagedRepeater runat="server" ID="Notifications" OnItemDataBound="BindNotification">
         <HeaderTemplate>
@@ -40,7 +40,7 @@
         </FooterTemplate>
     </web:PagedRepeater>
 
-    <h2>My Bookings <a href="/account/bookings/list/offering">View All</a></h2>
+    <h2>My Bookings <a href="/account/bookings/offering">View All</a></h2>
 
     <asp:Panel runat="server" ID="Summary" CssClass="summary">
         <div>

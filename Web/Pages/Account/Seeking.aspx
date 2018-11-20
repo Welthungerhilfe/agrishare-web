@@ -13,7 +13,7 @@
         <li><a href="/account/seeking/search?cid=3">Processing</a></li>
     </ul>
 
-    <h2>Recent Notifications <a href="/account/notifications/list/seeking">View All</a></h2>
+    <h2>Recent Notifications <a href="/account/notifications/seeking">View All</a></h2>
 
     <web:PagedRepeater runat="server" ID="Notifications" OnItemDataBound="BindNotification">
         <HeaderTemplate>
@@ -36,7 +36,7 @@
         </FooterTemplate>
     </web:PagedRepeater>
 
-    <h2>My Bookings <a href="/account/bookings/list/seeking">View All</a></h2>
+    <h2>My Bookings <a href="/account/bookings/seeking">View All</a></h2>
 
     <asp:Panel runat="server" ID="Summary" CssClass="summary">
         <div>

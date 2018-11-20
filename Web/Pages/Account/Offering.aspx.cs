@@ -12,10 +12,14 @@ namespace Agrishare.Web.Pages.Account.Offering
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Notifications.DataSource = Core.Entities.Notification.List(PageSize: 10, UserId: Master.CurrentUser.Id, GroupId: Core.Entities.NotificationGroup.Offering);
+            var notificationsData = Core.Entities.Notification.List(PageSize: 10, UserId: Master.CurrentUser.Id, GroupId: Core.Entities.NotificationGroup.Offering);
+            Notifications.RecordCount = notificationsData.Count;
+            Notifications.DataSource = notificationsData;
             Notifications.DataBind();
 
-            Bookings.DataSource = Core.Entities.Booking.List(PageSize: 10, SupplierId: Master.CurrentUser.Id);
+            var bookingData = Core.Entities.Booking.List(PageSize: 10, SupplierId: Master.CurrentUser.Id);
+            Bookings.RecordCount = bookingData.Count;
+            Bookings.DataSource = bookingData;
             Bookings.DataBind();
 
             var startDate = DateTime.Today.StartOfDay().AddDays(-(DateTime.Today.Day - 1));
@@ -53,7 +57,7 @@ namespace Agrishare.Web.Pages.Account.Offering
                 }
 
                 ((HyperLink)e.Item.FindControl("Link")).NavigateUrl = "";
-                ((Image)e.Item.FindControl("Photo")).ImageUrl = notification.Booking.Listing.Photos.Count > 0 ? $"{Core.Entities.Config.CDNURL}{notification.Booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
+                ((Image)e.Item.FindControl("Photo")).ImageUrl = (notification.Booking.Listing.Photos?.Count ?? 0) > 0 ? $"{Core.Entities.Config.CDNURL}{notification.Booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
                 ((Literal)e.Item.FindControl("Date")).Text = notification.Booking.StartDate.ToString("d MMMM yyyy");
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(notification.Booking.Listing.Title);
                 ((Literal)e.Item.FindControl("Message")).Text = HttpUtility.HtmlEncode(notification.Message);
@@ -70,7 +74,7 @@ namespace Agrishare.Web.Pages.Account.Offering
             {
                 var booking = (Core.Entities.Booking)e.Item.DataItem;
                 ((HyperLink)e.Item.FindControl("Link")).NavigateUrl = $"/account/booking/details?id={booking.Id}";
-                ((Image)e.Item.FindControl("Photo")).ImageUrl = booking.Listing.Photos.Count > 0 ? $"{Core.Entities.Config.CDNURL}{booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
+                ((Image)e.Item.FindControl("Photo")).ImageUrl = (booking.Listing.Photos?.Count ?? 0) > 0 ? $"{Core.Entities.Config.CDNURL}{booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
                 ((Literal)e.Item.FindControl("Date")).Text = booking.StartDate.ToString("d MMMM yyyy");
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(booking.Listing.Title);
                 ((Literal)e.Item.FindControl("Price")).Text = "$" + booking.Price.ToString("N2");

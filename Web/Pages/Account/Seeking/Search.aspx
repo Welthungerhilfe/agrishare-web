@@ -24,8 +24,8 @@
 
         <div id="StepLorryDetails">
             <p>Enter the details of the load to be transported</p>
-            <asp:TextBox runat="server" ID="LoadWeight" />
-            <asp:TextBox runat="server" ID="LoadDescription" TextMode="MultiLine" />
+            <asp:TextBox runat="server" ID="LoadWeight" placeholder="Weight (tonnes)" />
+            <asp:TextBox runat="server" ID="LoadDescription" TextMode="MultiLine" placeholder="Description" />
         </div>
 
         <div id="StepProcessingDetails">
@@ -74,7 +74,9 @@
             </asp:CheckBoxList>
         </div>
 
-        <asp:Button runat="server" OnClick="FindListings" Text="Next" ID="SearchButton" />
+        <p>
+            <asp:Button runat="server" OnClick="FindListings" Text="Next" ID="SearchButton" />
+        </p>
 
     </asp:PlaceHolder>
 

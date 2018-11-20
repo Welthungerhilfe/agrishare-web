@@ -18,26 +18,32 @@ namespace Agrishare.Web.Pages.Account
 
             if (!Page.IsPostBack)
             {
-                Gender.Items.Add(new ListItem { Text = $"{Core.Entities.Gender.Male}", Value = Core.Entities.Gender.Male.ToString() });
-                Gender.Items.Add(new ListItem { Text = $"{Core.Entities.Gender.Female}", Value = Core.Entities.Gender.Female.ToString() });
+                Gender.Items.Add(new ListItem { Text = $"{Core.Entities.Gender.Male}", Value = ((int)Core.Entities.Gender.Male).ToString() });
+                Gender.Items.Add(new ListItem { Text = $"{Core.Entities.Gender.Female}", Value = ((int)Core.Entities.Gender.Female).ToString() });
             }
 
             switch (Request.QueryString["view"])
             {
                 case "edit":
                     EditProfileForm.Visible = true;
-                    FirstName.Text = Master.CurrentUser.FirstName;
-                    LastName.Text = Master.CurrentUser.LastName;
-                    EmailAddress.Text = Master.CurrentUser.EmailAddress;
-                    Telephone.Text = Master.CurrentUser.Telephone;
-                    Gender.SelectedValue = ((int)Master.CurrentUser.GenderId).ToString();
-                    DateOfBirth.Text = Master.CurrentUser.DateOfBirth?.ToString("yyyy-MM-dd") ?? "";
+                    if (!Page.IsPostBack)
+                    {
+                        FirstName.Text = Master.CurrentUser.FirstName;
+                        LastName.Text = Master.CurrentUser.LastName;
+                        EmailAddress.Text = Master.CurrentUser.EmailAddress;
+                        Telephone.Text = Master.CurrentUser.Telephone;
+                        Gender.SelectedValue = ((int)Master.CurrentUser.GenderId).ToString();
+                        DateOfBirth.Text = Master.CurrentUser.DateOfBirth?.ToString("yyyy-MM-dd") ?? "";
+                    }
                     break;
                 case "notifications":
                     NotificationPreferencesForm.Visible = true;
-                    SMS.Checked = (Master.CurrentUser.NotificationPreferences & (int)Core.Entities.NotificationPreferences.SMS) > 0;
-                    PushNotifications.Checked = (Master.CurrentUser.NotificationPreferences & (int)Core.Entities.NotificationPreferences.PushNotifications) > 0;
-                    Email.Checked = (Master.CurrentUser.NotificationPreferences & (int)Core.Entities.NotificationPreferences.Email) > 0;
+                    if (!Page.IsPostBack)
+                    {
+                        SMS.Checked = (Master.CurrentUser.NotificationPreferences & (int)Core.Entities.NotificationPreferences.SMS) > 0;
+                        PushNotifications.Checked = (Master.CurrentUser.NotificationPreferences & (int)Core.Entities.NotificationPreferences.PushNotifications) > 0;
+                        Email.Checked = (Master.CurrentUser.NotificationPreferences & (int)Core.Entities.NotificationPreferences.Email) > 0;
+                    }
                     break;
                 case "resetpin":
                     ResetForm.Visible = true;

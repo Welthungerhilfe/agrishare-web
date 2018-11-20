@@ -135,7 +135,7 @@ namespace Agrishare.Core.Entities
                 }
 
                 // availability
-                sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.ListingId = Listings.Id AND Bookings.StartDate < DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL {days} DAY) AND Bookings.EndDate > DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
+                sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.Deleted = 0 AND Bookings.StatusId IN (1, 3, 6) AND Bookings.ListingId = Listings.Id AND Bookings.StartDate < DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL {days} DAY) AND Bookings.EndDate > DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
 
                 // costs
                 var hireCost = $"(Services.PricePerQuantityUnit * {Size})";

@@ -94,8 +94,28 @@ namespace Agrishare.API.Controllers.App
             }
 
             // BS: temporary fake success
+            /*******************************/
+
             booking.StatusId = Entities.BookingStatus.InProgress;
             booking.Save();
+
+            new Entities.Notification
+            {
+                Booking = booking,
+                GroupId = Entities.NotificationGroup.Offering,
+                TypeId = Entities.NotificationType.PaymentReceived,
+                User = Entities.User.Find(Id: booking.Listing.UserId)
+            }.Save(Notify: true);
+
+            new Entities.Notification
+            {
+                Booking = booking,
+                GroupId = Entities.NotificationGroup.Seeking,
+                TypeId = Entities.NotificationType.PaymentReceived,
+                User = CurrentUser
+            }.Save(Notify: false);
+
+            /*******************************/
 
             return Success(new
             {

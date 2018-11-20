@@ -30,7 +30,7 @@
                     <gl-popup-menu gl-position="top right">
                         <gl-menu-item gl-icon="visibility" ng-click="app.go('/listings/detail/'+item.Id+'?'+app.returnUrlQs())">View</gl-menu-item>
                         <gl-menu-item gl-icon="star" ng-click="app.go('/ratings/list/filter/listingid/'+item.Id+'?'+app.returnUrlQs())">Ratings</gl-menu-item>
-                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/listings/delete?id=' + item.Id)">Delete</gl-menu-item>
+                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/cms/listings/delete?id=' + item.Id)">Delete</gl-menu-item>
                     </gl-popup-menu>
                 </action>
             </div>

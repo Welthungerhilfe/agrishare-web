@@ -39,10 +39,10 @@ namespace Agrishare.Web
                 var filter = Regex.Replace(Context.Request.Path, @"^/account/profile/", "");
                 Context.RewritePath($"/Pages/account/profile.aspx?view={filter}", false);
             }
-            else if (Regex.IsMatch(Context.Request.Path, @"^/account/(bookings|notifications)/list/(seeking|offering)$"))
+            else if (Regex.IsMatch(Context.Request.Path, @"^/account/(bookings|notifications)/(seeking|offering)$"))
             {
                 var path = Regex.Replace(Context.Request.Path, @"/(seeking|offering)$", "");
-                var filter = Regex.Replace(Context.Request.Path, @"/account/(bookings|notifications)/list/(seeking|offering)", "$2");
+                var filter = Regex.Replace(Context.Request.Path, @"/account/(bookings|notifications)/(seeking|offering)", "$2");
                 Context.RewritePath($"/Pages{path}.aspx?view={filter}", false);
             }
             else if (Regex.IsMatch(Context.Request.Path, @"^/(about|account)"))

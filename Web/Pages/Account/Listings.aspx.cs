@@ -28,7 +28,7 @@ namespace Agrishare.Web.Pages.Account
                 var listing = (Core.Entities.Listing)e.Item.DataItem;
 
                 ((HyperLink)e.Item.FindControl("Link")).NavigateUrl = $"/account/listing/edit?id={listing.Id}";
-                ((Image)e.Item.FindControl("Photo")).ImageUrl = listing.Photos.Count > 0 ? $"{Core.Entities.Config.CDNURL}{listing.Photos.FirstOrDefault().ThumbName}" : "";
+                ((Image)e.Item.FindControl("Photo")).ImageUrl = (listing.Photos?.Count ?? 0) > 0 ? $"{Core.Entities.Config.CDNURL}{listing.Photos.FirstOrDefault().ThumbName}" : "";
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(listing.Title);
                 ((Literal)e.Item.FindControl("Description")).Text = HttpUtility.HtmlEncode(listing.Description);
             }

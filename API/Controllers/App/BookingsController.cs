@@ -18,6 +18,10 @@ namespace Agrishare.API.Controllers.App
             if (!ModelState.IsValid)
                 return Error(ModelState);
 
+            var service = Entities.Service.Find(Id: Model.ServiceId);
+            if (service == null)
+                return Error("Invalid service selected");
+
             var booking = new Entities.Booking
             {
                 DestinationLatitude = Model.DestinationLatitude,
@@ -29,56 +33,20 @@ namespace Agrishare.API.Controllers.App
                 Location = Model.Location,
                 Longitude = Model.Longitude,
                 Quantity = Model.Quantity,
-                Service = Entities.Service.Find(Id: Model.ServiceId),
+                Service = service,
+                Listing = service.Listing,
                 StartDate = Model.StartDate,
+                EndDate = Model.EndDate,
                 StatusId = Entities.BookingStatus.Pending,
                 User = CurrentUser,
                 AdditionalInformation = Model.AdditionalInformation,
-                TotalVolume = Model.TotalVolume
-            };
-
-            if (booking.Service == null)
-                return Error("Invalid service selected");
-
-            booking.Listing = booking.Service.Listing;
-
-            var days = Math.Ceiling(booking.Service.TimePerQuantityUnit * booking.Quantity / 8) - 1;
-            
-            var distance = (decimal)Location.GetDistance(Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude), Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude));
-            booking.Distance = distance / 1000;
-
-            var depotToPickup = (decimal)Location.GetDistance(Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude), Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude));
-            var pickupToDropoff = (decimal)Location.GetDistance(Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude), Convert.ToDouble(booking.DestinationLatitude), Convert.ToDouble(booking.DestinationLongitude));
-            var dropoffToDepot = (decimal)Location.GetDistance(Convert.ToDouble(booking.DestinationLatitude), Convert.ToDouble(booking.DestinationLongitude), Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude));
-            var trips = 0M;
-
-            if (booking.Service.CategoryId == Entities.Category.LorriesId)
-            {
-                trips = Math.Ceiling(booking.TotalVolume / booking.Service.TotalVolume);
-                days = Math.Ceiling(booking.Service.TimePerQuantityUnit / 100 * booking.Quantity / 8) - 1;
-
-                booking.Quantity = pickupToDropoff * trips;
-                booking.HireCost = booking.Quantity * booking.Service.PricePerQuantityUnit;
-                booking.FuelCost = 0;
-                booking.TransportCost = (depotToPickup + (pickupToDropoff * (trips - 1)) + dropoffToDepot) * booking.Service.PricePerDistanceUnit;
-
-            }
-            else if (booking.Service.Mobile)
-            {                
-                booking.HireCost = booking.Quantity * booking.Service.PricePerQuantityUnit;
-                booking.FuelCost = booking.Quantity * booking.Service.FuelPerQuantityUnit * booking.Service.FuelPrice;
-                booking.TransportCost = depotToPickup * 2 * booking.Service.PricePerDistanceUnit;
-            }
-            else
-            {
-                booking.Distance = 0;
-                booking.HireCost = booking.Quantity * booking.Service.PricePerQuantityUnit;
-                booking.FuelCost = 0;
-                booking.TransportCost = 0;
-            }
-
-            booking.EndDate = booking.StartDate.AddDays((double)days);
-            booking.Price = booking.HireCost + booking.FuelCost + booking.TransportCost;
+                TotalVolume = Model.TotalVolume,
+                HireCost = Model.HireCost,
+                FuelCost = Model.FuelCost,
+                TransportCost = Model.TransportCost,
+                Price = Model.HireCost + Model.FuelCost + Model.TransportCost,
+                Distance = Model.Distance
+            };       
 
             if (booking.Save())
             {
