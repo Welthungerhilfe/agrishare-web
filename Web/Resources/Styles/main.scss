@@ -7,4 +7,19 @@ main {
     margin: 0 auto;
     padding: 20px 40px;
     background: white;
+
+
+    .button {
+        display: inline-block;
+        cursor: pointer;
+        border: 0;
+        padding: 10px 20px;
+        text-align: center;
+        color: white;
+        background-color: $pink;
+        font-weight: bold;
+        font-size: 12px;
+        border-radius: 3px;
+    }
+
 }

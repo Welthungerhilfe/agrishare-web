@@ -63,7 +63,9 @@ namespace Agrishare.Core.Entities
                 if (For == BookingFor.Group)
                     sql.AppendLine($"AND Listings.GroupServices = 1");
 
-                if (!IncludeFuel)
+                if (IncludeFuel)
+                    sql.AppendLine($"AND Listings.AvailableWithFuel = 1");
+                else
                     sql.AppendLine($"AND Listings.AvailableWithoutFuel = 1");
 
                 sql.AppendLine($"GROUP BY Services.Id");
@@ -133,6 +135,10 @@ namespace Agrishare.Core.Entities
                     var totalDistance = $"(({depotToPickup} + {dropoffToDepot} + ({pickupToDropoff} * (({trips} * 2) - 1))) / 100)";
                     days = $"CEIL((Services.TimePerQuantityUnit * {totalDistance}) / 8)";
                 }
+                else if (CategoryId == Category.ProcessingId)
+                {
+                    days = $"CEIL(({sizeField} / Services.TimePerQuantityUnit) / 8)";
+                }
 
                 // availability
                 sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.Deleted = 0 AND Bookings.StatusId IN (1, 3, 6) AND Bookings.ListingId = Listings.Id AND Bookings.StartDate < DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL {days} DAY) AND Bookings.EndDate > DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
@@ -146,10 +152,10 @@ namespace Agrishare.Core.Entities
                     fuelCost = $"(Services.FuelPerQuantityUnit * {Size} * Services.FuelPrice)";
                 var transportCost = $"({transportDistance} * Services.PricePerDistanceUnit)";
 
-                sql.AppendLine($"{transportCost} AS TransportCost,");
-                sql.AppendLine($"{fuelCost} AS FuelCost,");
-                sql.AppendLine($"{hireCost} AS HireCost,");
-                sql.AppendLine($"{hireCost} + {fuelCost} + {transportCost} AS Price,");
+                sql.AppendLine($"ROUND({transportCost}) AS TransportCost,");
+                sql.AppendLine($"ROUND({fuelCost}) AS FuelCost,");
+                sql.AppendLine($"ROUND({hireCost}) AS HireCost,");
+                sql.AppendLine($"ROUND({hireCost}) + ROUND({fuelCost}) + ROUND({transportCost}) AS Price,");
                 sql.AppendLine($"{transportDistance} AS TransportDistance,");
                 sql.AppendLine($"{distance} AS Distance,");
                 sql.AppendLine($"{trips} AS Trips,");
@@ -171,7 +177,9 @@ namespace Agrishare.Core.Entities
                 if (For == BookingFor.Group)
                     sql.AppendLine($"AND Listings.GroupServices = 1");
 
-                if (!IncludeFuel)
+                if (IncludeFuel)
+                    sql.AppendLine($"AND Listings.AvailableWithFuel = 1");
+                else
                     sql.AppendLine($"AND Listings.AvailableWithoutFuel = 1");
 
                 sql.AppendLine($"GROUP BY Services.Id ORDER BY {sort} LIMIT {PageIndex * PageSize}, {PageSize}");

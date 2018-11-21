@@ -50,6 +50,7 @@ namespace Agrishare.API.Controllers.App
             var listing = new Entities.Listing
             {
                 AvailableWithoutFuel = Model.AvailableWithoutFuel,
+                AvailableWithFuel = Model.AvailableWithFuel,
                 Brand = Model.Brand,
                 CategoryId = Model.CategoryId,
                 ConditionId = Model.ConditionId,
@@ -90,6 +91,9 @@ namespace Agrishare.API.Controllers.App
             if (listing.CategoryId == Entities.Category.LorriesId && listing.Services.First().TotalVolume == 0)
                 return Error("Please enter a valid Total Volume");
 
+            if (listing.CategoryId == Entities.Category.LorriesId || listing.CategoryId == Entities.Category.ProcessingId)
+                listing.AvailableWithFuel = listing.AvailableWithoutFuel = true;
+
             var photos = new List<string>();
             if (Model.Photos != null)
                 foreach (var photo in Model.Photos)
@@ -127,6 +131,7 @@ namespace Agrishare.API.Controllers.App
                 return Error("Listing not found");
 
             listing.AvailableWithoutFuel = Model.AvailableWithoutFuel;
+            listing.AvailableWithFuel = Model.AvailableWithFuel;
             listing.Brand = Model.Brand;
             listing.Category = null;
             listing.CategoryId = Model.CategoryId;

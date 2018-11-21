@@ -130,6 +130,7 @@
           <Property Name="GroupServices" Type="bool" Nullable="false" />
           <Property Name="Photos" Type="text" />
           <Property Name="AvailableWithoutFuel" Type="bool" Nullable="false" />
+          <Property Name="AvailableWithFuel" Type="bool" Nullable="false" />
           <Property Name="AverageRating" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="RatingCount" Type="int" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
@@ -274,20 +275,6 @@
           <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Deleted" Type="bool" Nullable="false" />
         </EntityType>
-        <Association Name="bookings_ibfk_1">
-          <End Role="Users" Type="Self.Users" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Bookings">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="bookings_ibfk_2">
           <End Role="Listings" Type="Self.Listings" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -557,10 +544,6 @@
           <EntitySet Name="Templates" EntityType="Self.Templates" Schema="agrishare" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="agrishare" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="agrishare" store:Type="Tables" />
-          <AssociationSet Name="bookings_ibfk_1" Association="Self.bookings_ibfk_1">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Bookings" EntitySet="Bookings" />
-          </AssociationSet>
           <AssociationSet Name="bookings_ibfk_2" Association="Self.bookings_ibfk_2">
             <End Role="Listings" EntitySet="Listings" />
             <End Role="Bookings" EntitySet="Bookings" />
@@ -745,6 +728,8 @@
           <Property Name="Brand" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="HorsePower" Type="Int32" />
           <Property Name="Year" Type="Int32" />
+          <Property Name="AvailableWithoutFuel" Type="Boolean" Nullable="false" />
+          <Property Name="AvailableWithFuel" Type="Boolean" Nullable="false" />
           <Property Name="ConditionId" Type="AgrishareModel.ListingCondition" Nullable="false" />
           <Property Name="GroupServices" Type="Boolean" Nullable="false" />
           <Property Name="PhotoPaths" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
@@ -754,7 +739,6 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.listings_ibfk_1" FromRole="Listings" ToRole="Users" />
           <NavigationProperty Name="Services" Relationship="AgrishareModel.services_ibfk_1" FromRole="Listing" ToRole="Service" />
-          <Property Name="AvailableWithoutFuel" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -1493,6 +1477,7 @@
           <EntitySetMapping Name="Listings">
             <EntityTypeMapping TypeName="AgrishareModel.Listing">
               <MappingFragment StoreEntitySet="Listings">
+                <ScalarProperty Name="AvailableWithFuel" ColumnName="AvailableWithFuel" />
                 <ScalarProperty Name="AvailableWithoutFuel" ColumnName="AvailableWithoutFuel" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />

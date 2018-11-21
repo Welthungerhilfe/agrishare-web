@@ -192,6 +192,7 @@ namespace Agrishare.Core.Entities
                 Condition,
                 GroupServices,
                 AvailableWithoutFuel,
+                AvailableWithFuel,
                 Photos = Photos?.Select(e => e.JSON()),
                 AverageRating,
                 RatingCount,

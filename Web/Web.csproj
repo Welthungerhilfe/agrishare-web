@@ -93,8 +93,10 @@
     <Content Include="Pages\About\Seeking.aspx" />
     <Content Include="Pages\About\Offering.aspx" />
     <Content Include="Pages\Account\Bookings.aspx" />
+    <Content Include="Pages\Account\Listing\Processing.aspx" />
+    <Content Include="Pages\Account\Listing\Lorry.aspx" />
     <Content Include="Pages\Account\Notifications.aspx" />
-    <Content Include="Pages\Account\Listing\Edit.aspx" />
+    <Content Include="Pages\Account\Listing\Tractor.aspx" />
     <Content Include="Pages\Account\Booking\Details.aspx" />
     <Content Include="Pages\Account\Listings.aspx" />
     <Content Include="Pages\Account\Profile.aspx" />
@@ -118,6 +120,7 @@
   <ItemGroup>
     <Compile Include="Code\AgrishareHttpModule.cs" />
     <Compile Include="Code\PagedRepeater.cs" />
+    <Compile Include="Code\Map.cs" />
     <Compile Include="Code\Pager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -143,6 +146,20 @@
     <Compile Include="Pages\Account\Bookings.aspx.designer.cs">
       <DependentUpon>Bookings.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Account\Listing\Processing.aspx.cs">
+      <DependentUpon>Processing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Listing\Processing.aspx.designer.cs">
+      <DependentUpon>Processing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Listing\Lorry.aspx.cs">
+      <DependentUpon>Lorry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Listing\Lorry.aspx.designer.cs">
+      <DependentUpon>Lorry.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Account\Notifications.aspx.cs">
       <DependentUpon>Notifications.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -150,12 +167,12 @@
     <Compile Include="Pages\Account\Notifications.aspx.designer.cs">
       <DependentUpon>Notifications.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Account\Listing\Edit.aspx.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
+    <Compile Include="Pages\Account\Listing\Tractor.aspx.cs">
+      <DependentUpon>Tractor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Account\Listing\Edit.aspx.designer.cs">
-      <DependentUpon>Edit.aspx</DependentUpon>
+    <Compile Include="Pages\Account\Listing\Tractor.aspx.designer.cs">
+      <DependentUpon>Tractor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Account\Booking\Details.aspx.cs">
       <DependentUpon>Details.aspx</DependentUpon>
@@ -230,6 +247,7 @@
     <Content Include="Resources\Styles\footer.scss" />
     <Content Include="Resources\Styles\header.scss" />
     <Content Include="Resources\Styles\main.scss" />
+    <Content Include="Resources\Styles\forms.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

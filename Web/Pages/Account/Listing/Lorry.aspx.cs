@@ -7,9 +7,14 @@ using System.Web.UI.WebControls;
 
 namespace Agrishare.Web.Pages.Account.Listing
 {
-    public partial class Edit : System.Web.UI.Page
+    public partial class Lorry : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        public void Save(object s, EventArgs e)
         {
 
         }

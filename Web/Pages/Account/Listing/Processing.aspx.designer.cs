@@ -10,25 +10,25 @@
 namespace Agrishare.Web.Pages.Account.Listing {
     
     
-    public partial class Edit {
+    public partial class Processing {
         
         /// <summary>
-        /// Category control.
+        /// Service control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Category;
+        protected global::System.Web.UI.WebControls.DropDownList Service;
         
         /// <summary>
-        /// Title control.
+        /// EquipmentTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Title;
+        protected global::System.Web.UI.WebControls.TextBox EquipmentTitle;
         
         /// <summary>
         /// Description control.
@@ -49,15 +49,6 @@ namespace Agrishare.Web.Pages.Account.Listing {
         protected global::System.Web.UI.WebControls.TextBox Brand;
         
         /// <summary>
-        /// Horsepower control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Horsepower;
-        
-        /// <summary>
         /// Year control.
         /// </summary>
         /// <remarks>
@@ -67,15 +58,6 @@ namespace Agrishare.Web.Pages.Account.Listing {
         protected global::System.Web.UI.WebControls.TextBox Year;
         
         /// <summary>
-        /// AvailableWithoutFuel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox AvailableWithoutFuel;
-        
-        /// <summary>
         /// GroupHire control.
         /// </summary>
         /// <remarks>
@@ -83,6 +65,42 @@ namespace Agrishare.Web.Pages.Account.Listing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox GroupHire;
+        
+        /// <summary>
+        /// TimePerQuantityUnit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TimePerQuantityUnit;
+        
+        /// <summary>
+        /// PricePerQuantityUnit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox PricePerQuantityUnit;
+        
+        /// <summary>
+        /// MinimumQuantity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox MinimumQuantity;
+        
+        /// <summary>
+        /// Location control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Agrishare.Web.Controls.Map Location;
         
         /// <summary>
         /// Mobile control.
@@ -110,96 +128,6 @@ namespace Agrishare.Web.Pages.Account.Listing {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox MaximumDistance;
-        
-        /// <summary>
-        /// TractorServices control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel TractorServices;
-        
-        /// <summary>
-        /// TimePerQuantityUnit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TimePerQuantityUnit;
-        
-        /// <summary>
-        /// PricePerQuantityUnit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PricePerQuantityUnit;
-        
-        /// <summary>
-        /// FuelCost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FuelCost;
-        
-        /// <summary>
-        /// MinimumSize control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox MinimumSize;
-        
-        /// <summary>
-        /// ProcessingServices control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel ProcessingServices;
-        
-        /// <summary>
-        /// BagsPerHour control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox BagsPerHour;
-        
-        /// <summary>
-        /// TextBox2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
-        
-        /// <summary>
-        /// TextBox3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
-        
-        /// <summary>
-        /// MinimumBags control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox MinimumBags;
         
         /// <summary>
         /// Master property.

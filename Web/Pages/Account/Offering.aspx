@@ -13,9 +13,11 @@
         <li><a href="/account/listings?cid=3">Processing</a></li>
     </ul>
 
-    <p>
-        <a href="/account/listing/edit" class="button">Add listing</a>
-    </p>
+    <ul>
+        <li><a href="/account/listing/tractor" class="button">Add tractor</a></li>
+        <li><a href="/account/listing/lorry" class="button">Add lorry</a></li>
+        <li><a href="/account/listing/processing" class="button">Add processor</a></li>
+    </ul>
 
     <h2>Recent Notifications <a href="/account/notifications/offering">View All</a></h2>
 

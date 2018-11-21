@@ -43,6 +43,7 @@ namespace Agrishare.API.Models
         public List<ListingServiceModel> Services { get; set; }
 
         public bool AvailableWithoutFuel { get; set; }
+        public bool AvailableWithFuel { get; set; }
     }
 
     public class ListingServiceModel

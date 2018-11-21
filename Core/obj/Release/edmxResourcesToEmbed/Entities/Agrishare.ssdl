@@ -125,6 +125,7 @@
     <Property Name="GroupServices" Type="bool" Nullable="false" />
     <Property Name="Photos" Type="text" />
     <Property Name="AvailableWithoutFuel" Type="bool" Nullable="false" />
+    <Property Name="AvailableWithFuel" Type="bool" Nullable="false" />
     <Property Name="AverageRating" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="RatingCount" Type="int" Nullable="false" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />
@@ -269,20 +270,6 @@
     <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Deleted" Type="bool" Nullable="false" />
   </EntityType>
-  <Association Name="bookings_ibfk_1">
-    <End Role="Users" Type="Self.Users" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Bookings">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="bookings_ibfk_2">
     <End Role="Listings" Type="Self.Listings" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -552,10 +539,6 @@
     <EntitySet Name="Templates" EntityType="Self.Templates" Schema="agrishare" store:Type="Tables" />
     <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="agrishare" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="agrishare" store:Type="Tables" />
-    <AssociationSet Name="bookings_ibfk_1" Association="Self.bookings_ibfk_1">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="Bookings" EntitySet="Bookings" />
-    </AssociationSet>
     <AssociationSet Name="bookings_ibfk_2" Association="Self.bookings_ibfk_2">
       <End Role="Listings" EntitySet="Listings" />
       <End Role="Bookings" EntitySet="Bookings" />
