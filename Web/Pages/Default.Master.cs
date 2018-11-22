@@ -15,23 +15,13 @@ namespace Agrishare.Web.Pages
         {
             get
             {
-                if (currentUser == null || currentUser.Id == 0)
+                if ((currentUser == null || currentUser.Id == 0) && Request.Cookies[User.AuthCookieName] != null)
                 {
-                    try
-                    {
-                        var authToken = Request.Cookies[User.AuthCookieName].Value;
-                        if (!authToken.IsEmpty())
-                        {
-                            currentUser = User.Find(AuthToken: authToken);
-                            return currentUser;
-                        }
-                    }
-                    catch { }
-
-                    return new User();
+                    var authToken = Request.Cookies[User.AuthCookieName].Value;
+                    if (!authToken.IsEmpty())
+                        currentUser = User.Find(AuthToken: authToken);
                 }
-
-                return currentUser;
+                return currentUser ?? new User();
             }
             set
             {
@@ -97,11 +87,11 @@ namespace Agrishare.Web.Pages
             base.OnPreRender(e);
         }
 
-        public void DropCookie()
+        public void DropCookie(string AuthToken)
         {
             var cookie = new HttpCookie(User.AuthCookieName)
             {
-                Value = CurrentUser.AuthToken,
+                Value = AuthToken,
                 Expires = DateTime.Now.AddDays(30),
                 Path = "/"
             };

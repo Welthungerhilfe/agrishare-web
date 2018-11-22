@@ -91,6 +91,7 @@
     <EntitySetMapping Name="Listings">
       <EntityTypeMapping TypeName="AgrishareModel.Listing">
         <MappingFragment StoreEntitySet="Listings">
+          <ScalarProperty Name="AvailableWithFuel" ColumnName="AvailableWithFuel" />
           <ScalarProperty Name="AvailableWithoutFuel" ColumnName="AvailableWithoutFuel" />
           <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="Latitude" ColumnName="Latitude" />

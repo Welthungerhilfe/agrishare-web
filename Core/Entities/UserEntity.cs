@@ -28,7 +28,7 @@ namespace Agrishare.Core.Entities
             {
                 if (roles == null)
                     roles = RoleList?.Split(',').Where(e => !e.Trim().IsEmpty()).Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true)).ToList();
-                return roles;
+                return roles ?? new List<Role>();
             }
             set
             {

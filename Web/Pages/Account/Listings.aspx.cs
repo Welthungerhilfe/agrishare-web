@@ -13,6 +13,8 @@ namespace Agrishare.Web.Pages.Account
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.RequiresAuthentication = true;
+
             try { Category = Core.Entities.Category.Find(Id: int.Parse(Request.QueryString["cid"])); }
             catch { Category = null; }
 

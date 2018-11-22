@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -160,7 +162,7 @@ namespace Agrishare.Core.Entities
         #region Utils
 
         private static string _cdnAbsolutePath { get; set; }
-        private static string CDNAbsolutePath
+        public static string CDNAbsolutePath
         {
             get
             {
@@ -227,7 +229,7 @@ namespace Agrishare.Core.Entities
             var gb = mb / 1024;
             return $"{Math.Round(gb, 2)}GB";
         }
-
+        
         #endregion
     }
 }

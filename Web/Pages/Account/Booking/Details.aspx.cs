@@ -13,6 +13,8 @@ namespace Agrishare.Web.Pages.Account.Booking
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.RequiresAuthentication = true;
+
             try { SelectedBooking = Core.Entities.Booking.Find(Id: Convert.ToInt32(Request.QueryString["id"])); }
             catch { SelectedBooking = null; }
 

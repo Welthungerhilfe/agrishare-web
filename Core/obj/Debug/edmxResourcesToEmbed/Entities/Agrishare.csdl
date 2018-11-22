@@ -107,6 +107,8 @@
     <Property Name="Brand" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="HorsePower" Type="Int32" />
     <Property Name="Year" Type="Int32" />
+    <Property Name="AvailableWithoutFuel" Type="Boolean" Nullable="false" />
+    <Property Name="AvailableWithFuel" Type="Boolean" Nullable="false" />
     <Property Name="ConditionId" Type="AgrishareModel.ListingCondition" Nullable="false" />
     <Property Name="GroupServices" Type="Boolean" Nullable="false" />
     <Property Name="PhotoPaths" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
@@ -116,7 +118,6 @@
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Self.listings_ibfk_1" FromRole="Listings" ToRole="Users" />
     <NavigationProperty Name="Services" Relationship="AgrishareModel.services_ibfk_1" FromRole="Listing" ToRole="Service" />
-    <Property Name="AvailableWithoutFuel" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Log">
     <Key>

@@ -46,7 +46,7 @@ namespace Agrishare.Web.Pages.Account
                     StatusId = Core.Entities.UserStatus.Verified
                 };
                 user.Save();
-                Master.DropCookie();
+                Master.DropCookie(user.AuthToken);
                 Master.Feedback = "Your account has been created and you are now logged in.";
                 Response.Redirect(Request.QueryString["r"] ?? DashboardUrl);
             }
@@ -69,7 +69,7 @@ namespace Agrishare.Web.Pages.Account
                         user.FailedLoginAttempts = 0;
                         user.AuthToken = Guid.NewGuid().ToString();
                         user.Save();
-                        Master.DropCookie();
+                        Master.DropCookie(user.AuthToken);
                         Response.Redirect(Request.QueryString["r"] ?? DashboardUrl);
                     }
                     else
@@ -110,7 +110,7 @@ namespace Agrishare.Web.Pages.Account
                     user.AuthToken = Guid.NewGuid().ToString();
                     user.VerificationCode = string.Empty;
                     user.Save();
-                    Master.DropCookie();
+                    Master.DropCookie(user.AuthToken);
                     Response.Redirect(Request.QueryString["r"] ?? DashboardUrl);
                 }
                 else

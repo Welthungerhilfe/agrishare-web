@@ -11,6 +11,8 @@ namespace Agrishare.Web.Pages.Account.Listing
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.RequiresAuthentication = true;
+
             if (!Page.IsPostBack)
             {
                 Services.DataSource = Core.Entities.Category.List(ParentId: Core.Entities.Category.TractorsId);

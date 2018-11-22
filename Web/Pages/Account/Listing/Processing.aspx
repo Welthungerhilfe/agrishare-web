@@ -96,8 +96,7 @@
             </div>
 
             <h2>Photos</h2>
-
-            <p>//TODO photo upload</p>
+            <web:PhotoUpload runat="server" Id="Photos" />
 
         </div>
 

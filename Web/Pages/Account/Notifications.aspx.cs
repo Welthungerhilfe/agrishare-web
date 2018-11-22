@@ -14,6 +14,8 @@ namespace Agrishare.Web.Pages.Account
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.RequiresAuthentication = true;
+
             List.RecordCount = Core.Entities.Notification.Count(UserId: Master.CurrentUser.Id, GroupId: Group);
             List.DataSource = Core.Entities.Notification.List(PageIndex: List.CurrentPageIndex, PageSize: List.PageSize, UserId: Master.CurrentUser.Id, GroupId: Group);
             List.DataBind();

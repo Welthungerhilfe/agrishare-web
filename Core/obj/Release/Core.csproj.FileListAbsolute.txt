@@ -62,7 +62,6 @@ C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\System.Collecti
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\System.Diagnostics.DiagnosticSource.xml
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\System.Interactive.Async.xml
 C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
-C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Core.csprojAssemblyReference.cache
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Core.csproj.CoreCompileInputs.cache
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Core.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Release\Agrishare.Core.dll

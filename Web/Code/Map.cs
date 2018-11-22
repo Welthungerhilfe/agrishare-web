@@ -33,7 +33,7 @@ namespace Agrishare.Web.Controls
             }
         }
 
-        public decimal longitude = 31.053028M;
+        private decimal longitude = 31.053028M;
         public decimal Longitude
         {
             get

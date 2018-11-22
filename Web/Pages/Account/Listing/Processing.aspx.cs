@@ -11,6 +11,8 @@ namespace Agrishare.Web.Pages.Account.Listing
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.RequiresAuthentication = true;
+
             if (!Page.IsPostBack)
             {
                 Service.Items.Add(new ListItem { Text = "Select...", Value = "" });

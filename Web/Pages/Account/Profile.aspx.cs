@@ -12,6 +12,8 @@ namespace Agrishare.Web.Pages.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.RequiresAuthentication = true;
+
             DisplayName.Text = HttpUtility.HtmlEncode(Master.CurrentUser.FirstName + " " + Master.CurrentUser.LastName);
             DisplayTelephone.Text = HttpUtility.HtmlEncode(Master.CurrentUser.Telephone);
             DisplayEmailAddress.Text = HttpUtility.HtmlEncode(Master.CurrentUser.EmailAddress);
@@ -134,7 +136,7 @@ namespace Agrishare.Web.Pages.Account
         {
             Master.CurrentUser.AuthToken = string.Empty;
             Master.CurrentUser.Save();
-            Master.DropCookie();
+            Master.DropCookie(string.Empty);
             Response.Redirect("/");
         }
 
@@ -167,7 +169,7 @@ namespace Agrishare.Web.Pages.Account
 
             Master.CurrentUser.AuthToken = string.Empty;
             Master.CurrentUser.Delete();
-            Master.DropCookie();
+            Master.DropCookie(string.Empty);
             Response.Redirect("/");
         }
     }

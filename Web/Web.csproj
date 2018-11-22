@@ -57,6 +57,9 @@
     <Reference Include="MySql.Data.Entity.EF6, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.Entity.6.10.8\lib\net452\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Drawing.Design" />
@@ -102,7 +105,10 @@
     <Content Include="Pages\Account\Profile.aspx" />
     <Content Include="Pages\Account\Offering.aspx" />
     <Content Include="Pages\Account\Seeking.aspx" />
-    <Content Include="Pages\Account\Seeking\Search.aspx" />
+    <Content Include="Pages\Account\Seeking\Processing.aspx" />
+    <Content Include="Pages\Account\Seeking\Tractor.aspx" />
+    <Content Include="Pages\Account\Seeking\Lorry.aspx" />
+    <Content Include="Pages\Account\Seeking\Results.aspx" />
     <Content Include="Pages\Error404.html" />
     <Content Include="Pages\Error500.html" />
     <Content Include="Pages\Homepage.aspx" />
@@ -110,15 +116,19 @@
     <Content Include="Resources\Images\C2-Logo.svg" />
     <Content Include="Resources\Images\Icon-Close.svg" />
     <Content Include="Resources\Images\Icon-Menu.svg" />
+    <Content Include="Resources\Images\Uploadify-Cancel.png" />
     <Content Include="Resources\Images\WHH-Logo.svg" />
     <Content Include="Resources\Javascript\1. jQuery\jquery.2.1.0.min.js" />
+    <Content Include="Resources\Javascript\1. jQuery\jquery.uploadifive.min.js" />
     <Content Include="Resources\Javascript\2. Angular\angular-1.5.8.min.js" />
     <Content Include="Resources\Javascript\3. App\app.js" />
     <Content Include="Resources\Javascript\moment.min.js" />
+    <Content Include="Resources\Styles\jquery.uploadifive.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\AgrishareHttpModule.cs" />
+    <Compile Include="Code\PhotoUpload.cs" />
     <Compile Include="Code\PagedRepeater.cs" />
     <Compile Include="Code\Map.cs" />
     <Compile Include="Code\Pager.cs" />
@@ -209,12 +219,33 @@
     <Compile Include="Pages\Account\Seeking.aspx.designer.cs">
       <DependentUpon>Seeking.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Account\Seeking\Search.aspx.cs">
-      <DependentUpon>Search.aspx</DependentUpon>
+    <Compile Include="Pages\Account\Seeking\Processing.aspx.cs">
+      <DependentUpon>Processing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Account\Seeking\Search.aspx.designer.cs">
-      <DependentUpon>Search.aspx</DependentUpon>
+    <Compile Include="Pages\Account\Seeking\Processing.aspx.designer.cs">
+      <DependentUpon>Processing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Tractor.aspx.cs">
+      <DependentUpon>Tractor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Tractor.aspx.designer.cs">
+      <DependentUpon>Tractor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Lorry.aspx.cs">
+      <DependentUpon>Lorry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Lorry.aspx.designer.cs">
+      <DependentUpon>Lorry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Results.aspx.cs">
+      <DependentUpon>Results.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Seeking\Results.aspx.designer.cs">
+      <DependentUpon>Results.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Default.Master.cs">
       <DependentUpon>Default.Master</DependentUpon>

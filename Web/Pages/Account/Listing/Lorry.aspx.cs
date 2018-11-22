@@ -11,7 +11,7 @@ namespace Agrishare.Web.Pages.Account.Listing
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Master.RequiresAuthentication = true;
         }
 
         public void Save(object s, EventArgs e)

@@ -13,13 +13,13 @@
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="FirstName" Text="First Name *" />
-                <asp:TextBox runat="server" ID="FirstName" />
+                <asp:TextBox runat="server" ID="FirstName" MaxLength="64" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="FirstName" Text="First name is required" Display="Dynamic" ValidationGroup="Register" />
             </div>
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="LastName" Text="Last Name *" />
-                <asp:TextBox runat="server" ID="LastName" />
+                <asp:TextBox runat="server" ID="LastName" MaxLength="64" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="LastName" Text="Last name is required" Display="Dynamic" ValidationGroup="Register" />
             </div>
 
@@ -27,7 +27,7 @@
 
         <div class="form-row">
             <asp:Label runat="server" AssociatedControlID="EmailAddress" Text="Email Address *" />
-            <asp:TextBox runat="server" ID="EmailAddress" />
+            <asp:TextBox runat="server" ID="EmailAddress" MaxLength="1024" />
             <asp:RequiredFieldValidator runat="server" ControlToValidate="EmailAddress" Text="Email address is required" Display="Dynamic" ValidationGroup="Register" />
         </div>
 
@@ -35,13 +35,13 @@
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="Telephone" Text="Telephone *" />
-                <asp:TextBox runat="server" ID="Telephone" />
+                <asp:TextBox runat="server" ID="Telephone" MaxLength="16" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Telephone" Text="Telephone is required" Display="Dynamic" ValidationGroup="Register" />
             </div>
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="PIN" Text="PIN *" />
-                <asp:TextBox runat="server" ID="PIN" />
+                <asp:TextBox runat="server" ID="PIN" MaxLength="4" TextMode="Password" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="PIN" Text="PIN is required" Display="Dynamic" ValidationGroup="Register" />
             </div>
 
@@ -77,13 +77,13 @@
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="LoginTelephone" Text="Telephone *" />
-                <asp:TextBox runat="server" ID="LoginTelephone" />
+                <asp:TextBox runat="server" ID="LoginTelephone" MaxLength="10" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="LoginTelephone" Text="Telephone is required" Display="Dynamic" ValidationGroup="Login" />
             </div>
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="LoginPIN" Text="PIN *" />
-                <asp:TextBox runat="server" ID="LoginPIN" />
+                <asp:TextBox runat="server" ID="LoginPIN" MaxLength="4" TextMode="Password" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="LoginPIN" Text="PIN is required" Display="Dynamic" ValidationGroup="Login" />
             </div>
 
@@ -105,7 +105,7 @@
 
         <div class="form-row">
             <asp:Label runat="server" AssociatedControlID="ForgotTelephone" Text="Telephone *" />
-            <asp:TextBox runat="server" ID="ForgotTelephone" />
+            <asp:TextBox runat="server" ID="ForgotTelephone" MaxLength="10" />
             <asp:RequiredFieldValidator runat="server" ControlToValidate="ForgotTelephone" Text="Telephone is required" Display="Dynamic" ValidationGroup="Forgot" />
         </div>
 
@@ -121,19 +121,19 @@
 
         <div class="form-row">
             <asp:Label runat="server" AssociatedControlID="ResetTelephone" Text="Telephone *" />
-            <asp:TextBox runat="server" ID="ResetTelephone" />
+            <asp:TextBox runat="server" ID="ResetTelephone" MaxLength="10" />
             <asp:RequiredFieldValidator runat="server" ControlToValidate="ResetTelephone" Text="Telephone is required" Display="Dynamic" ValidationGroup="Reset" />
         </div>
 
         <div class="form-row">
             <asp:Label runat="server" AssociatedControlID="ResetCode" Text="Verification Code *" />
-            <asp:TextBox runat="server" ID="ResetCode" />
+            <asp:TextBox runat="server" ID="ResetCode" MaxLength="4" />
             <asp:RequiredFieldValidator runat="server" ControlToValidate="ResetCode" Text="Verification code is required" Display="Dynamic" ValidationGroup="Reset" />
         </div>
 
         <div class="form-row">
             <asp:Label runat="server" AssociatedControlID="ResetPIN" Text="New PIN *" />
-            <asp:TextBox runat="server" ID="ResetPIN" />
+            <asp:TextBox runat="server" ID="ResetPIN" MaxLength="4" TextMode="Password" />
             <asp:RequiredFieldValidator runat="server" ControlToValidate="ResetPIN" Text="New PIN is required" Display="Dynamic" ValidationGroup="Reset" />
         </div>
 

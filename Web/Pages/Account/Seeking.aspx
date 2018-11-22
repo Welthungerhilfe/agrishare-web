@@ -8,9 +8,9 @@
     <h2>Find Equipment</h2>
     
     <ul>
-        <li><a href="/account/seeking/search?cid=1">Tractors</a></li>
-        <li><a href="/account/seeking/search?cid=2">Lorries</a></li>
-        <li><a href="/account/seeking/search?cid=3">Processing</a></li>
+        <li><a href="/account/seeking/tractor">Tractors</a></li>
+        <li><a href="/account/seeking/lorry">Lorries</a></li>
+        <li><a href="/account/seeking/processing">Processing</a></li>
     </ul>
 
     <h2>Recent Notifications <a href="/account/notifications/seeking">View All</a></h2>

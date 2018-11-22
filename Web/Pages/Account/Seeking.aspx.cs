@@ -11,6 +11,8 @@ namespace Agrishare.Web.Pages.Account.Seeking
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.RequiresAuthentication = true;
+
             var notificationsData = Core.Entities.Notification.List(PageSize: 10, UserId: Master.CurrentUser.Id, GroupId: Core.Entities.NotificationGroup.Seeking);
             Notifications.RecordCount = notificationsData.Count;
             Notifications.DataSource = notificationsData;

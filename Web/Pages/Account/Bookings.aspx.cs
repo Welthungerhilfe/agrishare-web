@@ -14,6 +14,8 @@ namespace Agrishare.Web.Pages.Account
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            Master.RequiresAuthentication = true;
+
             if (Group == Core.Entities.NotificationGroup.Offering)
             {
                 List.RecordCount = Core.Entities.Booking.Count(SupplierId: Master.CurrentUser.Id);
