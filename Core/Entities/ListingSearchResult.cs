@@ -119,7 +119,7 @@ namespace Agrishare.Core.Entities
                 string sizeField = "";
                 if (CategoryId == Category.LorriesId)
                 {
-                    sizeField = $"({pickupToDropoff} * {trips})";
+                    sizeField = $"({trips})";
                     sql.AppendLine($"{sizeField} AS Size,");
                 }
                 else
@@ -146,7 +146,7 @@ namespace Agrishare.Core.Entities
                 // costs
                 var hireCost = $"(Services.PricePerQuantityUnit * {Size})";
                 if (CategoryId == Category.LorriesId)
-                    hireCost = $"(Services.PricePerQuantityUnit * {pickupToDropoff} * {trips})";
+                    hireCost = $"(Services.PricePerQuantityUnit * {trips})";
                 var fuelCost = $"0";
                 if (CategoryId != Category.LorriesId && IncludeFuel)
                     fuelCost = $"(Services.FuelPerQuantityUnit * {Size} * Services.FuelPrice)";

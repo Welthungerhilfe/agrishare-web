@@ -197,6 +197,10 @@ namespace Agrishare.API.Controllers.App
             if (listing?.Id == 0 || listing?.UserId != CurrentUser.Id)
                 return Error("Listing not found");
 
+            var bookings = Entities.Booking.Count(ListingId: listing.Id, StartDate: DateTime.Now, Upcoming: true);
+            if (bookings > 0)
+                return Error("Can not delete listing - you have upcoming bookings");
+
             if (listing.Delete())
                 return Success(new
                 {
@@ -221,7 +225,7 @@ namespace Agrishare.API.Controllers.App
             var date = StartDate;
             while (date <= EndDate)
             {
-                var available = bookings.Where(o => o.StartDate <= date.StartOfDay() && o.EndDate >= date.EndOfDay()).Count() == 0;
+                var available = bookings.Where(o => (o.StatusId == Entities.BookingStatus.Approved || o.StatusId == Entities.BookingStatus.InProgress || o.StatusId == Entities.BookingStatus.Pending) && o.StartDate <= date.StartOfDay() && o.EndDate >= date.EndOfDay()).Count() == 0;
 
                 list.Add(new
                 {

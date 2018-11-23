@@ -369,7 +369,7 @@ namespace Agrishare.API.Controllers.App
                 return Error("You can not cancel a completed booking");
 
             if (booking.StatusId == Entities.BookingStatus.InProgress)
-                return Error("You can not cancel a booking in progress");
+                return Error("You can not cancel a paid booking that is not complete");
 
             if (DateTime.Now.AddDays(7) >= booking.StartDate)
                 return Error("You can not cancel a booking within 7 days of the start date");
