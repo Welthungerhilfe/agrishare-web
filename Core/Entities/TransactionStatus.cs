@@ -21,11 +21,12 @@ namespace Agrishare.Core.Entities
         Failed = 5,
         Initiated = 6,
         Processing = 7,
-        Refund = 8,
+        Refunded = 8,
         Refused = 9,
         Denied = 10,
         PendingSubscriberValidation = 11,
         Deleted = 12,
-        Pending = 13
+        Pending = 13,
+        Error = 99
     }
 }

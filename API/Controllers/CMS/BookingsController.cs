@@ -42,7 +42,8 @@ namespace Agrishare.API.Controllers.CMS
         {
             var data = new
             {
-                Entity = Entities.Booking.Find(Id: Id).Json()
+                Entity = Entities.Booking.Find(Id: Id).Json(),
+                Transactions = Entities.Transaction.List(BookingId: Id).Select(e => e.Json())
             };
 
             return Success(data);
@@ -63,5 +64,27 @@ namespace Agrishare.API.Controllers.CMS
 
             return Error();
         }
+
+        [Route("bookings/transactions/poll")]
+        [AcceptVerbs("GET")]
+        public object PollEcoCash(int BookingId)
+        {
+            var booking = Entities.Booking.Find(Id: BookingId);
+            if (booking == null || booking.UserId != CurrentUser.Id)
+                return Error("Transaction not found");
+
+            var transactions = Entities.Transaction.List(BookingId: booking.Id);
+            foreach (var transaction in transactions)
+                transaction.RequestEcoCashStatus();
+
+            var data = new
+            {
+                Entity = booking.Json(),
+                Transactions = Entities.Transaction.List(BookingId: booking.Id).Select(e => e.Json())
+            };
+
+            return Success(data);
+        }
+
     }
 }

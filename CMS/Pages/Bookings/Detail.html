@@ -133,6 +133,19 @@
 
             </div>
 
+            <div class="box">
+
+                <h2>Transactions</h2>
+                <ul class="transactions">
+                    <li ng-repeat="item in detail.data.Transactions">
+                        <strong>{{item.BookingUser.Name}}</strong>
+                        <span>{{item.Amount | currency}}</span>
+                        <em class="status" ng-click="detail.async('/cms/bookings/transactions/poll?BookingId='+detail.entity.Id)">{{item.Status}}</em>
+                    </li>
+                </ul>
+
+            </div>
+
         </div>
 
 </ag-section>

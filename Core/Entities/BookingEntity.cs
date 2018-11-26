@@ -237,6 +237,7 @@ namespace Agrishare.Core.Entities
                 HireCost,
                 FuelCost,
                 TransportCost,
+                TransportDistance,
                 AdditionalInformation,
                 TotalVolume,
                 StatusId,

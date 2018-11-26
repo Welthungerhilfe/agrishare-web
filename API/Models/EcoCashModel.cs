@@ -6,7 +6,7 @@ namespace Agrishare.API.Models
 {
     public class EcoCashModel
     {
-        public int ClientCorrelator { get; set; }
+        public string ClientCorrelator { get; set; }
 
         public string TransactionOperationStatus { get; set; }
     }

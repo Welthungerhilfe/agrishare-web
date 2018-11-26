@@ -279,4 +279,28 @@
             background: none;
         }
     }
+
+    .transactions {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: flex;
+            padding: 10px 20px;
+            border-bottom: dotted 1px #ccc;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            strong {
+                flex: 1;
+            }
+
+            em {
+                margin-left: 20px;
+            }
+        }
+    }
 }

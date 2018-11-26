@@ -47,6 +47,7 @@ namespace Agrishare.Core.Entities
         public string Destination { get; set; }
         public string AdditionalInformation { get; set; }
         public decimal TotalVolume { get; set; }
+        public decimal TransportDistance { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

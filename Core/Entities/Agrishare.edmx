@@ -29,6 +29,7 @@
           <Property Name="HireCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="FuelCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="TransportCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="TransportDistance" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="AdditionalInformation" Type="varchar" MaxLength="4096" />
           <Property Name="TotalVolume" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
@@ -239,6 +240,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientCorrelator" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="BookingId" Type="int" Nullable="false" />
           <Property Name="BookingUserId" Type="int" Nullable="false" />
           <Property Name="Reference" Type="varchar" MaxLength="256" />
@@ -656,6 +658,7 @@
           <Property Name="Destination" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="AdditionalInformation" Type="String" MaxLength="4096" FixedLength="false" Unicode="false" />
           <Property Name="TotalVolume" Type="Decimal" Nullable="false" />
+          <Property Name="TransportDistance" Type="Decimal" Nullable="false" />
         </EntityType>
         <EntityType Name="BookingUser">
           <Key>
@@ -818,6 +821,7 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Booking" Relationship="Self.transactions_ibfk_2" FromRole="Transactions" ToRole="Bookings" />
           <NavigationProperty Name="BookingUser" Relationship="Self.transactions_ibfk_3" FromRole="Transactions" ToRole="BookingUsers" />
+          <Property Name="ClientCorrelator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1332,12 +1336,13 @@
           <Member Name="Failed" Value="5" />
           <Member Name="Initiated" Value="6" />
           <Member Name="Processing" Value="7" />
-          <Member Name="Refund" Value="8" />
+          <Member Name="Refunded" Value="8" />
           <Member Name="Refused" Value="9" />
           <Member Name="Denied" Value="10" />
           <Member Name="PendingSubscriberValidation" Value="11" />
           <Member Name="Deleted" Value="12" />
           <Member Name="Pending" Value="13" />
+          <Member Name="Error" Value="99" />
         </EnumType>
         <Association Name="counters_ibfk_1">
           <End Type="AgrishareModel.Category" Role="Category" Multiplicity="0..1">
@@ -1390,6 +1395,7 @@
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="AgrishareModel.Booking">
               <MappingFragment StoreEntitySet="Bookings">
+                <ScalarProperty Name="TransportDistance" ColumnName="TransportDistance" />
                 <ScalarProperty Name="TotalVolume" ColumnName="TotalVolume" />
                 <ScalarProperty Name="AdditionalInformation" ColumnName="AdditionalInformation" />
                 <ScalarProperty Name="Destination" ColumnName="Destination" />
@@ -1569,6 +1575,7 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="AgrishareModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="ClientCorrelator" ColumnName="ClientCorrelator" />
                 <ScalarProperty Name="Log" ColumnName="Log" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BookingId" ColumnName="BookingId" />

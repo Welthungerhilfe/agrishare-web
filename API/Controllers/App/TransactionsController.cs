@@ -13,7 +13,7 @@ namespace Agrishare.API.Controllers.App
         public object EcoCashNotification(EcoCashModel Model)
         {
             if (Model.TransactionOperationStatus == "COMPLETED")
-                Entities.Transaction.Find(Id: Model.ClientCorrelator).RequestEcoCashStatus();
+                Entities.Transaction.Find(ClientCorrelator: Model.ClientCorrelator).RequestEcoCashStatus();
 
             return Success(Model);
         }
@@ -87,7 +87,7 @@ namespace Agrishare.API.Controllers.App
                 };
 
                 transaction.Save();
-                //transaction.RequestEcoCashPayment();
+                transaction.RequestEcoCashPayment();
                 transactions.Add(transaction);
 
                 Entities.Counter.Hit(bookingUser.UserId ?? 0, Entities.Counters.InitiatePayment, booking.Service.CategoryId);
@@ -96,24 +96,24 @@ namespace Agrishare.API.Controllers.App
             // BS: temporary fake success
             /*******************************/
 
-            booking.StatusId = Entities.BookingStatus.InProgress;
-            booking.Save();
+            //booking.StatusId = Entities.BookingStatus.InProgress;
+            //booking.Save();
 
-            new Entities.Notification
-            {
-                Booking = booking,
-                GroupId = Entities.NotificationGroup.Offering,
-                TypeId = Entities.NotificationType.PaymentReceived,
-                User = Entities.User.Find(Id: booking.Listing.UserId)
-            }.Save(Notify: true);
+            //new Entities.Notification
+            //{
+            //    Booking = booking,
+            //    GroupId = Entities.NotificationGroup.Offering,
+            //    TypeId = Entities.NotificationType.PaymentReceived,
+            //    User = Entities.User.Find(Id: booking.Listing.UserId)
+            //}.Save(Notify: true);
 
-            new Entities.Notification
-            {
-                Booking = booking,
-                GroupId = Entities.NotificationGroup.Seeking,
-                TypeId = Entities.NotificationType.PaymentReceived,
-                User = CurrentUser
-            }.Save(Notify: false);
+            //new Entities.Notification
+            //{
+            //    Booking = booking,
+            //    GroupId = Entities.NotificationGroup.Seeking,
+            //    TypeId = Entities.NotificationType.PaymentReceived,
+            //    User = CurrentUser
+            //}.Save(Notify: false);
 
             /*******************************/
 

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Bookings">
       <EntityTypeMapping TypeName="AgrishareModel.Booking">
         <MappingFragment StoreEntitySet="Bookings">
+          <ScalarProperty Name="TransportDistance" ColumnName="TransportDistance" />
           <ScalarProperty Name="TotalVolume" ColumnName="TotalVolume" />
           <ScalarProperty Name="AdditionalInformation" ColumnName="AdditionalInformation" />
           <ScalarProperty Name="Destination" ColumnName="Destination" />
@@ -183,6 +184,7 @@
     <EntitySetMapping Name="Transactions">
       <EntityTypeMapping TypeName="AgrishareModel.Transaction">
         <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="ClientCorrelator" ColumnName="ClientCorrelator" />
           <ScalarProperty Name="Log" ColumnName="Log" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="BookingId" ColumnName="BookingId" />

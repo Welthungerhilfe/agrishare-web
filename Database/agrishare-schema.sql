@@ -61,7 +61,9 @@ CREATE TABLE `Bookings` (
   `HireCost` decimal(10,3) NOT NULL DEFAULT '0.000',
   `FuelCost` decimal(10,3) NOT NULL DEFAULT '0.000',
   `TransportCost` decimal(10,3) NOT NULL DEFAULT '0.000',
+  `TransportDistance` decimal(10,3) NOT NULL DEFAULT '0.000',
   `AdditionalInformation` varchar(4096) DEFAULT NULL,
+  `TotalVolume` decimal(10,3) NOT NULL DEFAULT '0.000',
   `StatusId` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Enum: Pending, Approved, Declined, In Progress, Complete',
   `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -70,7 +72,6 @@ CREATE TABLE `Bookings` (
   KEY `UserId` (`UserId`),
   KEY `ListingId` (`ListingId`),
   KEY `bookings_ibfk_3` (`ServiceId`),
-  CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Users` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`ListingId`) REFERENCES `Listings` (`Id`) ON DELETE CASCADE,
   CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`ServiceId`) REFERENCES `Services` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5014 DEFAULT CHARSET=utf8mb4;
@@ -101,7 +102,7 @@ CREATE TABLE `Config` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Counters` */
 
@@ -174,6 +175,7 @@ CREATE TABLE `Listings` (
   `GroupServices` tinyint(1) NOT NULL DEFAULT '0',
   `Photos` text,
   `AvailableWithoutFuel` tinyint(1) NOT NULL DEFAULT '0',
+  `AvailableWithFuel` tinyint(1) NOT NULL DEFAULT '0',
   `AverageRating` decimal(10,3) NOT NULL DEFAULT '0.000',
   `RatingCount` int(11) NOT NULL DEFAULT '0',
   `StatusId` smallint(6) NOT NULL DEFAULT '0',
@@ -201,7 +203,7 @@ CREATE TABLE `Log` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=574 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=671 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Notifications` */
 
@@ -313,7 +315,7 @@ CREATE TABLE `Templates` (
   `LastModified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `Deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 /*Table structure for table `Transactions` */
 
@@ -321,6 +323,7 @@ DROP TABLE IF EXISTS `Transactions`;
 
 CREATE TABLE `Transactions` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ClientCorrelator` varchar(64) NOT NULL,
   `BookingId` int(11) NOT NULL,
   `BookingUserId` int(11) NOT NULL,
   `Reference` varchar(256) DEFAULT NULL,

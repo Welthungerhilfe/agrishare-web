@@ -24,6 +24,7 @@
     <Property Name="HireCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="FuelCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="TransportCost" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+    <Property Name="TransportDistance" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="AdditionalInformation" Type="varchar" MaxLength="4096" />
     <Property Name="TotalVolume" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />
@@ -234,6 +235,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientCorrelator" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="BookingId" Type="int" Nullable="false" />
     <Property Name="BookingUserId" Type="int" Nullable="false" />
     <Property Name="Reference" Type="varchar" MaxLength="256" />

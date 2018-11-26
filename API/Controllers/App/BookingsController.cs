@@ -45,7 +45,8 @@ namespace Agrishare.API.Controllers.App
                 FuelCost = Model.FuelCost,
                 TransportCost = Model.TransportCost,
                 Price = Model.HireCost + Model.FuelCost + Model.TransportCost,
-                Distance = Model.Distance
+                Distance = Model.Distance,
+                TransportDistance = Model.TransportDistance
             };       
 
             if (booking.Save())

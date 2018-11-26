@@ -1,6 +1,7 @@
 ﻿using Agrishare.Core.Utils;
 using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -21,9 +22,9 @@ namespace Agrishare.Core.Entities
         public string Title => Id.ToString().PadLeft(8, '0');
         public string Status => $"{StatusId}".ExplodeCamelCase();
 
-        public static Transaction Find(int Id = 0)
+        public static Transaction Find(int Id = 0, string ClientCorrelator = "")
         {
-            if (Id == 0)
+            if (Id == 0 && ClientCorrelator.IsEmpty())
                 return new Transaction
                 {
                     DateCreated = DateTime.UtcNow,
@@ -36,6 +37,8 @@ namespace Agrishare.Core.Entities
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
+                if (!ClientCorrelator.IsEmpty())
+                    query = query.Where(e => e.ClientCorrelator == ClientCorrelator);
 
                 return query.FirstOrDefault();
             }
@@ -166,13 +169,14 @@ namespace Agrishare.Core.Entities
 
         public bool RequestEcoCashPayment()
         {
+            ClientCorrelator = Guid.NewGuid().ToString();
             Save();
 
             var resourceUri = $"{EcoCashUrl}transactions/amount";
             
             var json = JsonConvert.SerializeObject(new
             {
-                clientCorrelator = Id,
+                clientCorrelator = ClientCorrelator,
                 endUserId = BookingUser.Telephone,
                 merchantCode = EcoCashMerchantCode,
                 merchantPin = EcoCashMerchantPin,
@@ -190,7 +194,7 @@ namespace Agrishare.Core.Entities
                     {
                         onBeHalfOf = Config.ApplicationName,
                         purchaseCategoryCode = "Booking",
-                        channel = "Web"
+                        channel = "WEB"
                     }
                 },
                 referenceCode = Title,
@@ -200,11 +204,13 @@ namespace Agrishare.Core.Entities
             if (EcoCashLog)
                 Log += resourceUri + Environment.NewLine + json;
 
-            var client = new RestClient(resourceUri);
+            var client = new RestClient(resourceUri)
+            {
+                Authenticator = new HttpBasicAuthenticator(EcoCashUsername, EcoCashPassword)
+            };
+
             var request = new RestRequest(Method.POST);
             request.AddHeader("Cache-Control", "no-cache");
-            //TODO authorisation
-            request.AddHeader("Authorization", "Basic Q0VDTGlxdWlkOkwxcXUxZEBDM0Mh");
             request.AddHeader("Content-Type", "application/json");
             request.AddParameter("undefined", json, ParameterType.RequestBody);
             var response = client.Execute<dynamic>(request);
@@ -214,8 +220,164 @@ namespace Agrishare.Core.Entities
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
+                if (response.Data.messageId != null)
+                {
+                    StatusId = TransactionStatus.Error;
+                    Save();
+                    return false;
+                }
+                else
+                {
+                    Reference = response.Data.serverReferenceCode;
+                    StatusId = TransactionStatus.PendingSubscriberValidation;
+                    Save();
+                    return true;
+                }
+            }
+            else
+            {
+                StatusId = TransactionStatus.Failed;
+                Save();
+                return false;
+            }
+        }
+
+        public void RequestEcoCashStatus()
+        {
+            var previousStatusId = StatusId;
+
+            var resourceUri = $"{EcoCashUrl}{BookingUser.Telephone}/transactions/amount/{ClientCorrelator}";
+
+            var client = new RestClient(resourceUri)
+            {
+                Authenticator = new HttpBasicAuthenticator(EcoCashUsername, EcoCashPassword)
+            };
+
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Cache-Control", "no-cache");
+            request.AddHeader("Content-Type", "application/json");
+            var response = client.Execute<dynamic>(request);
+
+            if (EcoCashLog)
+                Log += Environment.NewLine + Environment.NewLine + JsonConvert.SerializeObject(response);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                if (response.Data.messageId != null)
+                {
+                    StatusId = TransactionStatus.Error;
+                    Save();
+                    return;
+                }
+
+                if (response.Data.transactionOperationStatus == "Charged" || response.Data.transactionOperationStatus == "COMPLETED")
+                    StatusId = TransactionStatus.Paid;
+                else if (response.Data.transactionOperationStatus == "PENDING SUBSCRIBER VALIDATION")
+                        StatusId = TransactionStatus.PendingSubscriberValidation;
+                else
+                    StatusId = (TransactionStatus)Enum.Parse(typeof(TransactionStatus), response.Data.transactionOperationStatus);
+
                 Reference = response.Data.serverReferenceCode;
-                StatusId = TransactionStatus.PendingSubscriberValidation;
+            }
+            else
+                StatusId = TransactionStatus.Failed;
+
+            Save();
+
+            if (previousStatusId != TransactionStatus.Paid && StatusId == TransactionStatus.Paid)
+            {
+                var booking = Booking.Find(BookingId);
+                booking.StatusId = BookingStatus.InProgress;
+                booking.Save();
+
+                new Notification
+                {
+                    Booking = booking,
+                    GroupId = NotificationGroup.Offering,
+                    TypeId = NotificationType.PaymentReceived,
+                    User = User.Find(Id: booking.Listing.UserId)
+                }.Save(Notify: true);
+
+                new Notification
+                {
+                    Booking = booking,
+                    GroupId = NotificationGroup.Seeking,
+                    TypeId = NotificationType.PaymentReceived,
+                    User = User.Find(Id: booking.UserId)
+                }.Save(Notify: false);
+
+                Counter.Hit(BookingUser.UserId ?? 0, Counters.CompletePayment, Booking.ServiceId);
+                SendPaymentNotification();
+            }
+        }
+
+        public bool RequestEcoCashRefund()
+        {
+            Id = 0;
+            StatusId = TransactionStatus.Pending;
+
+            var resourceUri = $"{EcoCashUrl}transactions/refund";
+
+            var json = JsonConvert.SerializeObject(new
+            {
+                clientCorrelator = ClientCorrelator,
+                endUserId = BookingUser.Telephone,
+                merchantCode = EcoCashMerchantCode,
+                merchantPin = EcoCashMerchantPin,
+                merchantNumber = EcoCashMerchantNumber,
+                notifyUrl = $"{Config.APIURL}transactions/ecocash/notify",
+                paymentAmount = new
+                {
+                    charginginformation = new
+                    {
+                        amount = Amount,
+                        currency = "USD",
+                        description = Booking?.Title ?? "Booking"
+                    },
+                    chargeMetaData = new
+                    {
+                        onBeHalfOf = Config.ApplicationName,
+                        purchaseCategoryCode = "Booking",
+                        channel = "WEB"
+                    }
+                },
+                referenceCode = Title,
+                transactionOperationStatus = "Refunded",
+                tranType = "REF"
+            });
+
+            if (EcoCashLog)
+                Log += resourceUri + Environment.NewLine + json;
+
+            var client = new RestClient(resourceUri)
+            {
+                Authenticator = new HttpBasicAuthenticator(EcoCashUsername, EcoCashPassword)
+            };
+
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Cache-Control", "no-cache");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddParameter("undefined", json, ParameterType.RequestBody);
+            var response = client.Execute<dynamic>(request);
+
+            if (EcoCashLog)
+                Log += Environment.NewLine + Environment.NewLine + JsonConvert.SerializeObject(response);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                if (response.Data.messageId != null)
+                {
+                    StatusId = TransactionStatus.Error;
+                    Save();
+                    return false;
+                }
+
+                if (response.Data.transactionOperationStatus == "Charged" || response.Data.transactionOperationStatus == "COMPLETED")
+                    StatusId = TransactionStatus.Paid;
+                else if (response.Data.transactionOperationStatus == "PENDING SUBSCRIBER VALIDATION")
+                    StatusId = TransactionStatus.PendingSubscriberValidation;
+                else
+                    StatusId = (TransactionStatus)Enum.Parse(typeof(TransactionStatus), response.Data.transactionOperationStatus);
                 Save();
 
                 return true;
@@ -227,104 +389,6 @@ namespace Agrishare.Core.Entities
 
                 return false;
             }
-        }
-
-        public void RequestEcoCashStatus()
-        {
-            var previousStatusId = StatusId;
-
-            var resourceUri = $"{EcoCashUrl}{BookingUser.Telephone}/transactions/amount/{Id}";
-
-            //if (!Config.ApplicationLive)
-            //    GlooEventHistory.Log("EcoCash Status (request)", resource_uri);
-
-            //bool success = false;
-            //string response = Utilities.JsonRequestBack("GET", resource_uri, String.Empty, out success);
-
-            //if (!Config.ApplicationLive)
-            //    GlooEventHistory.Log("EcoCash Status (response)", response);
-
-            //if (success)
-            //{
-            //    dynamic jsonObject = JsonConvert.DeserializeObject(response);
-
-            //    if (jsonObject.transactionOperationStatus == "Charged" || jsonObject.transactionOperationStatus == "COMPLETED")
-            //        Status = GlooTransactionStatus.Paid;
-            //    else if (jsonObject.transactionOperationStatus == "Processing")
-            //        Status = GlooTransactionStatus.Processing;
-            //    else if (jsonObject.transactionOperationStatus == "Refunded")
-            //        Status = GlooTransactionStatus.Refunded;
-            //    else if (jsonObject.transactionOperationStatus == "Denied")
-            //        Status = GlooTransactionStatus.Denied;
-            //    else if (jsonObject.transactionOperationStatus == "Refused")
-            //        Status = jsonObject.transactionOperationStatus.Refused;
-            //}
-
-            Save();
-
-            if (previousStatusId != TransactionStatus.Paid && StatusId == TransactionStatus.Paid)
-            {
-                //TODO update booking status -> in progress
-
-                Counter.Hit(BookingUser.UserId ?? 0, Counters.CompletePayment, Booking.ServiceId);
-
-                SendPaymentNotification();
-            }
-        }
-
-        public void RequestEcoCashRefund()
-        {
-            Id = 0;
-            StatusId = TransactionStatus.Pending;
-
-            var resourceUri = $"{EcoCashUrl}transactions/amount";
-
-            string JSON = JsonConvert.SerializeObject(new
-            {
-                clientCorrelator = Id,
-                endUserId = BookingUser.Telephone,
-                merchantCode = EcoCashMerchantCode,
-                merchantPin = EcoCashMerchantPin,
-                merchantNumber = EcoCashMerchantNumber,
-                notifyUrl = $"{Config.APIURL}transactions/ecocash/notify",
-                paymentAmount = new
-                {
-                    charginginformation = new
-                    {
-                        amount = Amount,
-                        currency = "USD",
-                        description = Booking?.Title ?? "Booking"
-                    },
-                    chargeMetaData = new
-                    {
-                        onBeHalfOf = Config.ApplicationName,
-                        purchaseCategoryCode = "Booking",
-                        channel = "Web"
-                    }
-                },
-                referenceCode = Title,
-                transactionOperationStatus = "Refunded"
-            });
-
-
-            //if (!Config.ApplicationLive)
-            //    GlooEventHistory.Log("EcoCash Refund (request)", resource_uri + Environment.NewLine + JSON);
-
-            //bool success = false;
-            //string response = Utilities.JsonRequestBack("POST", resource_uri, JSON, out success);
-            //Audit += Environment.NewLine + response;
-
-            //if (!Config.ApplicationLive)
-            //    GlooEventHistory.Log("EcoCash Refund (request)", response);
-
-            //if (success)
-            //{
-            //    dynamic jsonObject = JsonConvert.DeserializeObject(response);
-            //    if (jsonObject.transactionOperationStatus == "Refunded")
-            //        Status = GlooTransactionStatus.Refunded;
-            //}
-
-            Save();
         }
 
         #endregion

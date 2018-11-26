@@ -45,6 +45,7 @@ namespace Agrishare.API.Models
         public decimal HireCost { get; set; }
         public decimal FuelCost { get; set; }
         public decimal TransportCost { get; set; }
+        public decimal TransportDistance { get; set; }
         public decimal Distance { get; set; }
     }
 }
