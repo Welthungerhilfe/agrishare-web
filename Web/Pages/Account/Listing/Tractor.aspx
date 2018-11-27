@@ -59,36 +59,43 @@
             <asp:Repeater runat="server" ID="Services" OnItemDataBound="BindService">
                 <ItemTemplate>
 
-                    <h3 class="checkbox-row service-checkbox"><asp:CheckBox runat="server" ID="Title" /></h3>
+                    <div class="service">
 
-                    <div class="service-row">
+                        <asp:HiddenField runat="server" ID="CategoryId" />
+                        <asp:HiddenField runat="server" ID="ServiceId" />
 
-                        <div class="form-row">
-                            <asp:Label runat="server" AssociatedControlID="TimePerQuantityUnit" Text="Hours required per hectare *" />
-                            <div><asp:TextBox runat="server" ID="TimePerQuantityUnit" MaxLength="8" /><span>HRS</span></div>
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="TimePerQuantityUnit" Text="Hours required per hectare is required" Display="Dynamic" />
-                        <asp:RegularExpressionValidator runat="server" ControlToValidate="TimePerQuantityUnit" Text="Hours required per hectare is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
-                        </div>
+                        <h3 class="checkbox-row service-checkbox"><asp:CheckBox runat="server" ID="Title" /></h3>
 
-                        <div class="form-row">
-                            <asp:Label runat="server" AssociatedControlID="PricePerQuantityUnit" Text="Hire Cost *" />
-                            <div><asp:TextBox runat="server" ID="PricePerQuantityUnit" MaxLength="8" /><span>$/HA</span></div>
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="PricePerQuantityUnit" Text="Hire cost is required" Display="Dynamic" />
-                            <asp:RegularExpressionValidator runat="server" ControlToValidate="PricePerQuantityUnit" Text="Hire cost  is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
-                        </div>
+                        <div class="service-row">
 
-                        <div class="form-row">
-                            <asp:Label runat="server" AssociatedControlID="FuelPerQuantityUnit" Text="Fuel Cost *" />
-                            <div><asp:TextBox runat="server" ID="FuelPerQuantityUnit" MaxLength="8" /><span>$/HA</span></div>
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="FuelPerQuantityUnit" Text="Fuel cost is required" Display="Dynamic" />
-                            <asp:RegularExpressionValidator runat="server" ControlToValidate="FuelPerQuantityUnit" Text="Fuel cost is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
-                        </div>
+                            <div class="form-row">
+                                <asp:Label runat="server" AssociatedControlID="TimePerQuantityUnit" Text="Hours required per hectare *" />
+                                <div><asp:TextBox runat="server" ID="TimePerQuantityUnit" MaxLength="8" /><span>HRS</span></div>
+                                <asp:CustomValidator runat="server" ControlToValidate="TimePerQuantityUnit" ValidateEmptyText="true" ClientValidationFunction="validateServiceField" OnServerValidate="ValidateServiceField" Text="Hours required per hectare is required" Display="Dynamic" />
+                                <asp:RegularExpressionValidator runat="server" ControlToValidate="TimePerQuantityUnit" Text="Hours required per hectare is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
+                            </div>
 
-                        <div class="form-row">
-                            <asp:Label runat="server" AssociatedControlID="MinimumQuantity" Text="Minimum field size *" />
-                            <div><asp:TextBox runat="server" ID="MinimumQuantity" MaxLength="8" /><span>HA</span></div>
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="MinimumQuantity" Text="Minimum field size is required" Display="Dynamic" />
-                            <asp:RegularExpressionValidator runat="server" ControlToValidate="MinimumQuantity" Text="Minimum field size is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
+                            <div class="form-row">
+                                <asp:Label runat="server" AssociatedControlID="PricePerQuantityUnit" Text="Hire Cost *" />
+                                <div><asp:TextBox runat="server" ID="PricePerQuantityUnit" MaxLength="8" /><span>$/HA</span></div>
+                                <asp:CustomValidator runat="server" ControlToValidate="TimePerQuantityUnit" ValidateEmptyText="true" ClientValidationFunction="validateServiceField" OnServerValidate="ValidateServiceField" Text="Hire cost is required" Display="Dynamic" />
+                                <asp:RegularExpressionValidator runat="server" ControlToValidate="PricePerQuantityUnit" Text="Hire cost  is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
+                            </div>
+
+                            <div class="form-row">
+                                <asp:Label runat="server" AssociatedControlID="FuelPerQuantityUnit" Text="Fuel Cost *" />
+                                <div><asp:TextBox runat="server" ID="FuelPerQuantityUnit" MaxLength="8" /><span>$/HA</span></div>
+                                <asp:CustomValidator runat="server" ControlToValidate="TimePerQuantityUnit" ValidateEmptyText="true" ClientValidationFunction="validateServiceField" OnServerValidate="ValidateServiceField" Text="Fuel cost is required" Display="Dynamic" />
+                                <asp:RegularExpressionValidator runat="server" ControlToValidate="FuelPerQuantityUnit" Text="Fuel cost is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
+                            </div>
+
+                            <div class="form-row">
+                                <asp:Label runat="server" AssociatedControlID="MinimumQuantity" Text="Minimum field size *" />
+                                <div><asp:TextBox runat="server" ID="MinimumQuantity" MaxLength="8" /><span>HA</span></div>
+                                <asp:CustomValidator runat="server" ControlToValidate="TimePerQuantityUnit" ValidateEmptyText="true" ClientValidationFunction="validateServiceField" OnServerValidate="ValidateServiceField" Text="Minimum field size is required" Display="Dynamic" />
+                                <asp:RegularExpressionValidator runat="server" ControlToValidate="MinimumQuantity" Text="Minimum field size is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
+                            </div>
+
                         </div>
 
                     </div>
@@ -117,11 +124,11 @@
                 <asp:Label runat="server" AssociatedControlID="MaximumDistance" Text="Maximum distance *" />
                 <div><asp:TextBox runat="server" ID="MaximumDistance" MaxLength="8" /><span>KM</span></div>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="MaximumDistance" Text="Maximum distance is required" Display="Dynamic" />
-                        <asp:RegularExpressionValidator runat="server" ControlToValidate="MaximumDistance" Text="Maximum distance is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
+                <asp:RegularExpressionValidator runat="server" ControlToValidate="MaximumDistance" Text="Maximum distance is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
             </div>
 
             <h2>Photos</h2>
-            <web:PhotoUpload runat="server" Id="Photos" />
+            <web:PhotoUpload runat="server" Id="Gallery" />
 
         </div>
 
@@ -138,6 +145,12 @@
             else                
                 $(this).parent().next('div').hide();
         }).change();
+
+        function validateServiceField(sender, args) {
+            var checked = $(sender).closest('.service').find('input[type=checkbox]').is(':checked');
+            var empty = $(sender).closest('div').find('input').val() === '';
+            args.IsValid = !checked || (checked && !empty);
+        }
 
     </script>
 

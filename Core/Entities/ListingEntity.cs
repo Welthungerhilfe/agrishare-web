@@ -114,6 +114,11 @@ namespace Agrishare.Core.Entities
             var services = Services;
             Services = null;
 
+            var user = User;
+            if (user != null)
+                UserId = user.Id;
+            User = null;
+
             var category = Category;
             if (category != null)
                 CategoryId = category.Id;
@@ -125,6 +130,7 @@ namespace Agrishare.Core.Entities
                 success = Update();
 
             Category = category;
+            User = user;
 
             if (success)
             {

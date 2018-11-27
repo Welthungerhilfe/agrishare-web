@@ -112,13 +112,13 @@ namespace Agrishare.Web.Pages.Account.Listing {
         protected global::System.Web.UI.WebControls.CheckBox Mobile;
         
         /// <summary>
-        /// DistanceCharge control.
+        /// PricePerDistanceUnit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DistanceCharge;
+        protected global::System.Web.UI.WebControls.TextBox PricePerDistanceUnit;
         
         /// <summary>
         /// MaximumDistance control.
@@ -130,13 +130,13 @@ namespace Agrishare.Web.Pages.Account.Listing {
         protected global::System.Web.UI.WebControls.TextBox MaximumDistance;
         
         /// <summary>
-        /// Photos control.
+        /// Gallery control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Agrishare.Web.Controls.PhotoUpload Photos;
+        protected global::Agrishare.Web.Controls.PhotoUpload Gallery;
         
         /// <summary>
         /// Master property.

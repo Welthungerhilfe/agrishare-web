@@ -29,6 +29,7 @@ namespace Agrishare.Web.Pages.Account.Booking
             Gallery.DataBind();
             Description.Text = HttpUtility.HtmlEncode(SelectedBooking.Listing.Description);
             Brand.Text = HttpUtility.HtmlEncode(SelectedBooking.Listing.Brand);
+            HorsePower.Text = HttpUtility.HtmlEncode(SelectedBooking.Listing.HorsePower);
             Year.Text = HttpUtility.HtmlEncode(SelectedBooking.Listing.Year);
 
             if (SelectedBooking.StartDate.Date == SelectedBooking.EndDate.Date)
@@ -38,7 +39,27 @@ namespace Agrishare.Web.Pages.Account.Booking
             else
                 Dates.Text = SelectedBooking.StartDate.ToString("d MMMM yyyy") + " - " + SelectedBooking.EndDate.ToString("d MMMM yyyy");
 
-            //TODO finish detail screen
+            TransportDistance.Text = SelectedBooking.TransportDistance.ToString("N2") + "km";
+            TransportCost.Text = "$" + SelectedBooking.TransportCost.ToString("N2");
+            HireSize.Text = SelectedBooking.Quantity + SelectedBooking.Service.QuantityUnit;
+            HireCost.Text = "$" + SelectedBooking.HireCost.ToString("N2");
+            FuelSize.Text = SelectedBooking.TransportDistance.ToString("N2") + "km";
+            FuelCost.Text = "$" + SelectedBooking.FuelCost.ToString("N2");
+
+            CommissionRow.Visible = SelectedBooking.Listing.UserId == Master.CurrentUser.Id;
+            Commission.Text = "$" + SelectedBooking.AgriShareCommission.ToString("N2");
+
+            Total.Text = "$" + SelectedBooking.Price.ToString("N2");
+
+        }
+
+        public void BindPhoto(object s, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var photo = (Core.Entities.File)e.Item.DataItem;
+                ((HyperLink)e.Item.FindControl("Thumb")).Style.Add("background-image", $"url({Core.Entities.Config.CDNURL}{photo.ZoomName})");
+            }
         }
     }
 }

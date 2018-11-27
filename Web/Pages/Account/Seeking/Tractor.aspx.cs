@@ -19,6 +19,7 @@ namespace Agrishare.Web.Pages.Account.Seeking
                 For.Items.Add(new ListItem { Text = "A friend", Value = ((int)Core.Entities.BookingFor.Friend).ToString() });
                 For.Items.Add(new ListItem { Text = "A group", Value = ((int)Core.Entities.BookingFor.Group).ToString() });
 
+                Services.Items.Add(new ListItem { Text = "Select...", Value = "" });
                 var services = Core.Entities.Category.List(ParentId: Core.Entities.Category.TractorsId);
                 foreach (var service in services)
                     Services.Items.Add(new ListItem { Text = service.Title, Value = service.Id.ToString() });

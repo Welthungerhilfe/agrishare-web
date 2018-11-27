@@ -12,10 +12,7 @@ namespace Agrishare.Web.Pages.Account.Seeking
         protected void Page_Load(object sender, EventArgs e)
         {
             Master.RequiresAuthentication = true;
-        }
 
-        public void FindListings(object s, EventArgs e)
-        {
             var categoryId = Convert.ToInt32(Request.QueryString["cid"]);
             var serviceId = Convert.ToInt32(Request.QueryString["sid"]);
             var latitude = Convert.ToDecimal(Request.QueryString["lat"]);
@@ -35,6 +32,7 @@ namespace Agrishare.Web.Pages.Account.Seeking
 
             SearchResults.RecordCount = Core.Entities.ListingSearchResult.Count(categoryId, serviceId, latitude, longitude, startDate, size, includeFuel, mobile, bookingFor, destinationLatitude, destinationLongitude, totalVolume);
             SearchResults.DataSource = Core.Entities.ListingSearchResult.List(SearchResults.CurrentPageIndex, SearchResults.PageSize, "Distance", categoryId, serviceId, latitude, longitude, startDate, size, includeFuel, mobile, bookingFor, destinationLatitude, destinationLongitude, totalVolume);
+            SearchResults.DataBind();
 
             if (SearchResults.CurrentPageIndex == 0 && SearchResults.RecordCount > 0)
                 Core.Entities.Counter.Hit(Master.CurrentUser.Id, Core.Entities.Counters.Match, serviceId);
@@ -45,7 +43,7 @@ namespace Agrishare.Web.Pages.Account.Seeking
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var result = (Core.Entities.ListingSearchResult)e.Item.DataItem;
-                ((Image)e.Item.FindControl("Photo")).ImageUrl = result.Photos.Count > 0 ? $"{Core.Entities.Config.CDNURL}{result.Photos.FirstOrDefault().ThumbName}" : "";
+                ((Image)e.Item.FindControl("Photo")).ImageUrl = result.Photos?.Count > 0 ? $"{Core.Entities.Config.CDNURL}{result.Photos.FirstOrDefault().ThumbName}" : "";
                 ((Literal)e.Item.FindControl("Distance")).Text = $"{result.Distance}kms away";
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(result.Title);
                 ((Literal)e.Item.FindControl("Year")).Text = HttpUtility.HtmlEncode(result.Year);

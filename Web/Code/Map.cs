@@ -55,8 +55,8 @@ namespace Agrishare.Web.Controls
         {
             base.AddAttributesToRender(writer);
 
-            writer.WriteLine($@"<input type=""hidden"" id=""{ClientID}_Latitude"" value=""{Latitude}"" />");
-            writer.WriteLine($@"<input type=""hidden"" id=""{ClientID}_Longitude"" value=""{Longitude}"" />");
+            writer.WriteLine($@"<input type=""hidden"" id=""{ClientID}_Latitude"" name=""{ClientID}_Latitude"" value=""{Latitude}"" />");
+            writer.WriteLine($@"<input type=""hidden"" id=""{ClientID}_Longitude"" name=""{ClientID}_Longitude"" value=""{Longitude}"" />");
 
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "google-map");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);

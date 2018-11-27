@@ -46,7 +46,7 @@ namespace Agrishare.Core.Entities
                 var sql = new StringBuilder();
 
                 sql.AppendLine("SELECT");
-                sql.AppendLine("COUNT(Id)");
+                sql.AppendLine("COUNT(Listings.Id)");
                 sql.AppendLine("FROM Listings");
                 sql.AppendLine("INNER JOIN Services ON Listings.Id = Services.ListingId");
                 sql.AppendLine("WHERE Listings.Deleted = 0 AND Services.Deleted = 0 AND Listings.StatusId = 1");

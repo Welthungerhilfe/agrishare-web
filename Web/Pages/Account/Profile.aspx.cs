@@ -35,7 +35,7 @@ namespace Agrishare.Web.Pages.Account
                         EmailAddress.Text = Master.CurrentUser.EmailAddress;
                         Telephone.Text = Master.CurrentUser.Telephone;
                         Gender.SelectedValue = ((int)Master.CurrentUser.GenderId).ToString();
-                        DateOfBirth.Text = Master.CurrentUser.DateOfBirth?.ToString("yyyy-MM-dd") ?? "";
+                        DateOfBirth.SelectedDate = Master.CurrentUser.DateOfBirth;
                     }
                     break;
                 case "notifications":
@@ -77,7 +77,7 @@ namespace Agrishare.Web.Pages.Account
             Master.CurrentUser.EmailAddress = EmailAddress.Text;
             Master.CurrentUser.Telephone = Telephone.Text;
             Master.CurrentUser.GenderId = (Core.Entities.Gender)Enum.ToObject(typeof(Core.Entities.Gender), int.Parse(Gender.SelectedValue));
-            Master.CurrentUser.DateOfBirth = DateTime.Parse(DateOfBirth.Text);
+            Master.CurrentUser.DateOfBirth = DateOfBirth.SelectedDate;
 
             if (!Master.CurrentUser.UniqueTelephone())
                 Master.Feedback = "Telephone number has already been registered";

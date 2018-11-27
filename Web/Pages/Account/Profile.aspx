@@ -57,7 +57,7 @@
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="DateOfBirth" Text="Date of birth *" />
-                <asp:TextBox runat="server" ID="DateOfBirth" />
+                <web:Date runat="server" ID="DateOfBirth" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="DateOfBirth" Text="Date of birth is required" Display="Dynamic" ValidationGroup="Edit" />
             </div>
 

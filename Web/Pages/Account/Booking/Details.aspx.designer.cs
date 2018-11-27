@@ -130,6 +130,15 @@ namespace Agrishare.Web.Pages.Account.Booking {
         protected global::System.Web.UI.WebControls.Literal FuelCost;
         
         /// <summary>
+        /// CommissionRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl CommissionRow;
+        
+        /// <summary>
         /// Commission control.
         /// </summary>
         /// <remarks>

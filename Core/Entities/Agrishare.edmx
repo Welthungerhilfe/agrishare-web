@@ -247,6 +247,7 @@
           <Property Name="Amount" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
           <Property Name="Log" Type="text" />
+          <Property Name="Error" Type="varchar" MaxLength="1024" />
           <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Deleted" Type="bool" Nullable="false" />
@@ -810,18 +811,19 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientCorrelator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="BookingId" Type="Int32" Nullable="false" />
           <Property Name="BookingUserId" Type="Int32" Nullable="false" />
           <Property Name="Reference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Amount" Type="Decimal" Nullable="false" />
           <Property Name="StatusId" Type="AgrishareModel.TransactionStatus" Nullable="false" />
           <Property Name="Log" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="Error" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Booking" Relationship="Self.transactions_ibfk_2" FromRole="Transactions" ToRole="Bookings" />
           <NavigationProperty Name="BookingUser" Relationship="Self.transactions_ibfk_3" FromRole="Transactions" ToRole="BookingUsers" />
-          <Property Name="ClientCorrelator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1329,18 +1331,10 @@
         </EnumType>
         <EnumType Name="TransactionStatus" UnderlyingType="Int16">
           <Member Name="None" Value="0" />
-          <Member Name="Cancelled" Value="1" />
-          <Member Name="CreatedNotPaid" Value="2" />
-          <Member Name="AwaitingRedirect" Value="3" />
-          <Member Name="Paid" Value="4" />
+          <Member Name="Complete" Value="4" />
           <Member Name="Failed" Value="5" />
-          <Member Name="Initiated" Value="6" />
-          <Member Name="Processing" Value="7" />
           <Member Name="Refunded" Value="8" />
-          <Member Name="Refused" Value="9" />
-          <Member Name="Denied" Value="10" />
           <Member Name="PendingSubscriberValidation" Value="11" />
-          <Member Name="Deleted" Value="12" />
           <Member Name="Pending" Value="13" />
           <Member Name="Error" Value="99" />
         </EnumType>
@@ -1575,6 +1569,7 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="AgrishareModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Error" ColumnName="Error" />
                 <ScalarProperty Name="ClientCorrelator" ColumnName="ClientCorrelator" />
                 <ScalarProperty Name="Log" ColumnName="Log" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

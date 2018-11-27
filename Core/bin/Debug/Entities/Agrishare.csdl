@@ -187,12 +187,14 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientCorrelator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="BookingId" Type="Int32" Nullable="false" />
     <Property Name="BookingUserId" Type="Int32" Nullable="false" />
     <Property Name="Reference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Amount" Type="Decimal" Nullable="false" />
     <Property Name="StatusId" Type="AgrishareModel.TransactionStatus" Nullable="false" />
     <Property Name="Log" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+    <Property Name="Error" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
@@ -712,12 +714,13 @@
     <Member Name="Failed" Value="5" />
     <Member Name="Initiated" Value="6" />
     <Member Name="Processing" Value="7" />
-    <Member Name="Refund" Value="8" />
+    <Member Name="Refunded" Value="8" />
     <Member Name="Refused" Value="9" />
     <Member Name="Denied" Value="10" />
     <Member Name="PendingSubscriberValidation" Value="11" />
     <Member Name="Deleted" Value="12" />
     <Member Name="Pending" Value="13" />
+    <Member Name="Error" Value="99" />
   </EnumType>
   <Association Name="counters_ibfk_1">
     <End Type="AgrishareModel.Category" Role="Category" Multiplicity="0..1">

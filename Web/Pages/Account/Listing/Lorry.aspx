@@ -50,8 +50,9 @@
     
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="TotalVolume" Text="Total volume *" />
-                <div><asp:TextBox runat="server" ID="TotalVolume" MaxLength="8" TextMode="Number" /><span>TONNES</span></div>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="TotalVolume" Text="Hours required per hectare is required" Display="Dynamic" />
+                <div><asp:TextBox runat="server" ID="TotalVolume" MaxLength="8" /><span>TONNES</span></div>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="TotalVolume" Text="Total volume is required" Display="Dynamic" />
+                <asp:RegularExpressionValidator runat="server" ControlToValidate="TotalVolume" Text="Total volume is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
             </div>
 
             <div class="form-row">
@@ -63,16 +64,9 @@
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="PricePerQuantityUnit" Text="Hire Cost *" />
-                <div><asp:TextBox runat="server" ID="PricePerQuantityUnit" MaxLength="8" /><span>$/HA</span></div>
+                <div><asp:TextBox runat="server" ID="PricePerQuantityUnit" MaxLength="8" /><span>$/LOAD</span></div>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="PricePerQuantityUnit" Text="Hire cost is required" Display="Dynamic" />
                 <asp:RegularExpressionValidator runat="server" ControlToValidate="PricePerQuantityUnit" Text="Hire cost is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
-            </div>
-
-            <div class="form-row">
-                <asp:Label runat="server" AssociatedControlID="FuelCost" Text="Fuel Cost *" />
-                <div><asp:TextBox runat="server" ID="FuelCost" MaxLength="8" /><span>$/HA</span></div>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="FuelCost" Text="Fuel cost is required" Display="Dynamic" />
-                <asp:RegularExpressionValidator runat="server" ControlToValidate="FuelCost" Text="Fuel cost is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
             </div>
 
         </div>
@@ -95,12 +89,13 @@
 
             <div class="form-row mobile-row">
                 <asp:Label runat="server" AssociatedControlID="MaximumDistance" Text="Maximum distance *" />
-                <div><asp:TextBox runat="server" ID="MaximumDistance" MaxLength="8" TextMode="Number" /><span>KM</span></div>
+                <div><asp:TextBox runat="server" ID="MaximumDistance" MaxLength="8" /><span>KM</span></div>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="MaximumDistance" Text="Maximum distance is required" Display="Dynamic" />
+                <asp:RegularExpressionValidator runat="server" ControlToValidate="MaximumDistance" Text="Maximum distance is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
             </div>
 
             <h2>Photos</h2>
-            <web:PhotoUpload runat="server" Id="Photos" />
+            <web:PhotoUpload runat="server" ID="Gallery" />
 
         </div>
 

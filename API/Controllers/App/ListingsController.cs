@@ -145,7 +145,6 @@ namespace Agrishare.API.Controllers.App
             listing.Title = Model.Title;
             listing.Year = Model.Year;
 
-
             listing.Services = new List<Entities.Service>();
             foreach (var service in Model.Services)
                 listing.Services.Add(new Entities.Service

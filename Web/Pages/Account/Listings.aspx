@@ -3,7 +3,7 @@
 
 <asp:Content ContentPlaceHolderID="Content" runat="server">
     
-    <h1>Listings</h1>
+    <h1><asp:Literal runat="server" ID="ListTitle" /></h1>
 
     <web:PagedRepeater runat="server" ID="List" OnItemDataBound="BindListing">
         <HeaderTemplate>
@@ -24,5 +24,9 @@
             </div>
         </FooterTemplate>
     </web:PagedRepeater>
+
+    <p>
+        <asp:HyperLink runat="server" ID="AddButton" CssClass="button" />
+    </p>
 
 </asp:Content>

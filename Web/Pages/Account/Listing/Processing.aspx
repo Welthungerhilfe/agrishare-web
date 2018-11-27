@@ -83,20 +83,21 @@
             </div>
 
             <div class="form-row mobile-row">
-                <asp:Label runat="server" AssociatedControlID="DistanceCharge" Text="Distance charge *" />
-                <div><asp:TextBox runat="server" ID="DistanceCharge" MaxLength="8" /><span>$/KM</span></div>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="DistanceCharge" Text="Distance charge is required" Display="Dynamic" />
-                <asp:RegularExpressionValidator runat="server" ControlToValidate="DistanceCharge" Text="Distance charge is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
+                <asp:Label runat="server" AssociatedControlID="PricePerDistanceUnit" Text="Distance charge *" />
+                <div><asp:TextBox runat="server" ID="PricePerDistanceUnit" MaxLength="8" /><span>$/KM</span></div>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="PricePerDistanceUnit" Text="Distance charge is required" Display="Dynamic" />
+                <asp:RegularExpressionValidator runat="server" ControlToValidate="PricePerDistanceUnit" Text="Distance charge is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
             </div>
 
             <div class="form-row mobile-row">
                 <asp:Label runat="server" AssociatedControlID="MaximumDistance" Text="Maximum distance *" />
-                <div><asp:TextBox runat="server" ID="MaximumDistance" MaxLength="8" TextMode="Number" /><span>KM</span></div>
+                <div><asp:TextBox runat="server" ID="MaximumDistance" MaxLength="8" /><span>KM</span></div>
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="MaximumDistance" Text="Maximum distance is required" Display="Dynamic" />
+                <asp:RegularExpressionValidator runat="server" ControlToValidate="MaximumDistance" Text="Maximum distance is invalid" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
             </div>
 
             <h2>Photos</h2>
-            <web:PhotoUpload runat="server" Id="Photos" />
+            <web:PhotoUpload runat="server" Id="Gallery" />
 
         </div>
 

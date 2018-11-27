@@ -242,6 +242,7 @@
     <Property Name="Amount" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />
     <Property Name="Log" Type="text" />
+    <Property Name="Error" Type="varchar" MaxLength="1024" />
     <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Deleted" Type="bool" Nullable="false" />

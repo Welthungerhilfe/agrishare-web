@@ -12,13 +12,18 @@
 
     <div id="StepLorryDetails">
         <p>Enter the details of the load to be transported</p>
-        <asp:TextBox runat="server" ID="LoadWeight" placeholder="Weight (tonnes)" />
-        <asp:TextBox runat="server" ID="LoadDescription" TextMode="MultiLine" placeholder="Description" />
+        <asp:TextBox runat="server" ID="LoadWeight" placeholder="Weight (tonnes)" /><br />        
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="LoadWeight" Text="This is a required field" Display="Dynamic" />
+        <asp:RegularExpressionValidator runat="server" ControlToValidate="LoadWeight" Text="Please enter a valid weight as a number" ValidationExpression="^[\d]+(.[\d]+)?$" Display="Dynamic" />
+        <asp:TextBox runat="server" ID="LoadDescription" TextMode="MultiLine" placeholder="Description" />        
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="LoadDescription" Text="This is a required field" Display="Dynamic" />
     </div>
 
     <div id="StepDate">
         <p>When do you require the service to be performed?</p>
-        <asp:TextBox runat="server" ID="StartDate" />
+        <web:Date runat="server" ID="StartDate" />
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="StartDate" Text="This is a required field" Display="Dynamic" />
+        <asp:RegularExpressionValidator runat="server" ControlToValidate="StartDate" Text="Please enter a valid date in the format dd/MM/yyyy" ValidationExpression="^[\d]{2}/[\d]{2}/[\d]{4}?$" Display="Dynamic" />
     </div>
 
     <div id="StepLorryPickUp">

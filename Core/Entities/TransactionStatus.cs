@@ -14,18 +14,10 @@ namespace Agrishare.Core.Entities
     public enum TransactionStatus : short
     {
         None = 0,
-        Cancelled = 1,
-        CreatedNotPaid = 2,
-        AwaitingRedirect = 3,
-        Paid = 4,
+        Complete = 4,
         Failed = 5,
-        Initiated = 6,
-        Processing = 7,
         Refunded = 8,
-        Refused = 9,
-        Denied = 10,
         PendingSubscriberValidation = 11,
-        Deleted = 12,
         Pending = 13,
         Error = 99
     }

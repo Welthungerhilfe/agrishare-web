@@ -19,7 +19,7 @@ namespace Agrishare.Core.Entities
         public static decimal AgriShareCommission => Convert.ToDecimal(Config.Find(Key: "AgriShare Commission").Value);
 
         public static string DefaultSort = "DateCreated DESC";
-        public string Title => Id.ToString().PadLeft(8, '0');
+        public string Title => "AGR-" + Id.ToString().PadLeft(8, '0');
         public string Status => $"{StatusId}".ExplodeCamelCase();
 
         public static Transaction Find(int Id = 0, string ClientCorrelator = "")
@@ -110,6 +110,8 @@ namespace Agrishare.Core.Entities
 
         private bool Add()
         {
+            ClientCorrelator = Guid.NewGuid().ToString();
+
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Transactions.Attach(this);
@@ -148,6 +150,7 @@ namespace Agrishare.Core.Entities
                 Amount,
                 StatusId,
                 Status,
+                Error,
                 DateCreated
             };
         }
@@ -159,6 +162,17 @@ namespace Agrishare.Core.Entities
 
         #region EcoCash
 
+        private static string SanitiseMobileNumber(string MobileNumber)
+        {
+            if (MobileNumber.StartsWith("0"))
+                return Regex.Replace(Regex.Replace(MobileNumber, "^0", "263"), " ", "");
+
+            if (!MobileNumber.StartsWith("263"))
+                return "263" + Regex.Replace(MobileNumber, " ", "");
+
+            return MobileNumber;
+        }
+
         private static string EcoCashUrl => Config.Find(Key: "EcoCash URL").Value;
         private static string EcoCashMerchantCode => Config.Find(Key: "EcoCash Merchant Code").Value;
         private static string EcoCashMerchantPin => Config.Find(Key: "EcoCash Merchant Pin").Value;
@@ -169,7 +183,6 @@ namespace Agrishare.Core.Entities
 
         public bool RequestEcoCashPayment()
         {
-            ClientCorrelator = Guid.NewGuid().ToString();
             Save();
 
             var resourceUri = $"{EcoCashUrl}transactions/amount";
@@ -177,7 +190,7 @@ namespace Agrishare.Core.Entities
             var json = JsonConvert.SerializeObject(new
             {
                 clientCorrelator = ClientCorrelator,
-                endUserId = BookingUser.Telephone,
+                endUserId = SanitiseMobileNumber(BookingUser.Telephone),
                 merchantCode = EcoCashMerchantCode,
                 merchantPin = EcoCashMerchantPin,
                 merchantNumber = EcoCashMerchantNumber,
@@ -186,9 +199,9 @@ namespace Agrishare.Core.Entities
                 {
                     charginginformation = new
                     {
-                        amount = Amount,
+                        amount = Amount.ToString("0.##"),
                         currency = "USD",
-                        description = Booking?.Title ?? "Booking"
+                        description = Booking?.Listing?.Title ?? "AgriShare Booking"
                     },
                     chargeMetaData = new
                     {
@@ -220,23 +233,29 @@ namespace Agrishare.Core.Entities
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                if (response.Data.messageId != null)
+                try
+                {
+                    Error = response.Data["text"];
+                }
+                catch { }
+
+                try
+                {
+                    Reference = response.Data["serverReferenceCode"];
+                    StatusId = TransactionStatus.PendingSubscriberValidation;
+                    Save();
+                    return true;
+                }
+                catch
                 {
                     StatusId = TransactionStatus.Error;
                     Save();
                     return false;
                 }
-                else
-                {
-                    Reference = response.Data.serverReferenceCode;
-                    StatusId = TransactionStatus.PendingSubscriberValidation;
-                    Save();
-                    return true;
-                }
             }
             else
             {
-                StatusId = TransactionStatus.Failed;
+                StatusId = TransactionStatus.Error;
                 Save();
                 return false;
             }
@@ -246,7 +265,7 @@ namespace Agrishare.Core.Entities
         {
             var previousStatusId = StatusId;
 
-            var resourceUri = $"{EcoCashUrl}{BookingUser.Telephone}/transactions/amount/{ClientCorrelator}";
+            var resourceUri = $"{EcoCashUrl}{SanitiseMobileNumber(BookingUser.Telephone)}/transactions/amount/{ClientCorrelator}";
 
             var client = new RestClient(resourceUri)
             {
@@ -258,56 +277,79 @@ namespace Agrishare.Core.Entities
             request.AddHeader("Content-Type", "application/json");
             var response = client.Execute<dynamic>(request);
 
-            if (EcoCashLog)
-                Log += Environment.NewLine + Environment.NewLine + JsonConvert.SerializeObject(response);
+            //if (EcoCashLog)
+            //    Log += Environment.NewLine + Environment.NewLine + JsonConvert.SerializeObject(response);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                if (response.Data.messageId != null)
+                try
+                {
+                    Error = response.Data["text"];
+                }
+                catch { }
+
+                try
+                {
+                    var status = response.Data["transactionOperationStatus"];
+                    if (status == "Charged" || status == "COMPLETED")
+                        StatusId = TransactionStatus.Complete;
+                    else if (status == "PENDING SUBSCRIBER VALIDATION")
+                        StatusId = TransactionStatus.PendingSubscriberValidation;
+                    else
+                        StatusId = TransactionStatus.Failed;
+
+                    Reference = response.Data["serverReferenceCode"];
+                }
+                catch
                 {
                     StatusId = TransactionStatus.Error;
                     Save();
                     return;
                 }
-
-                if (response.Data.transactionOperationStatus == "Charged" || response.Data.transactionOperationStatus == "COMPLETED")
-                    StatusId = TransactionStatus.Paid;
-                else if (response.Data.transactionOperationStatus == "PENDING SUBSCRIBER VALIDATION")
-                        StatusId = TransactionStatus.PendingSubscriberValidation;
-                else
-                    StatusId = (TransactionStatus)Enum.Parse(typeof(TransactionStatus), response.Data.transactionOperationStatus);
-
-                Reference = response.Data.serverReferenceCode;
             }
             else
-                StatusId = TransactionStatus.Failed;
+                StatusId = TransactionStatus.Error;
 
             Save();
 
-            if (previousStatusId != TransactionStatus.Paid && StatusId == TransactionStatus.Paid)
+            if (previousStatusId != TransactionStatus.Complete && StatusId == TransactionStatus.Complete)
             {
-                var booking = Booking.Find(BookingId);
-                booking.StatusId = BookingStatus.InProgress;
-                booking.Save();
+                BookingUser.StatusId = BookingUserStatus.Paid;
+                BookingUser.Save();
 
-                new Notification
-                {
-                    Booking = booking,
-                    GroupId = NotificationGroup.Offering,
-                    TypeId = NotificationType.PaymentReceived,
-                    User = User.Find(Id: booking.Listing.UserId)
-                }.Save(Notify: true);
+                var bookingUsers = BookingUser.List(BookingId: BookingId);
+                if (bookingUsers.Count(e => e.StatusId != BookingUserStatus.Paid) == 0)
+                { 
+                    var booking = Booking.Find(BookingId);
+                    booking.StatusId = BookingStatus.InProgress;
+                    booking.Save();
 
-                new Notification
-                {
-                    Booking = booking,
-                    GroupId = NotificationGroup.Seeking,
-                    TypeId = NotificationType.PaymentReceived,
-                    User = User.Find(Id: booking.UserId)
-                }.Save(Notify: false);
+                    var notifications = Notification.List(BookingId: booking.Id, Type: NotificationType.BookingConfirmed);
+                    foreach (var notification in notifications)
+                    {
+                        notification.StatusId = NotificationStatus.Complete;
+                        notification.Save();
+                    }
 
-                Counter.Hit(BookingUser.UserId ?? 0, Counters.CompletePayment, Booking.ServiceId);
-                SendPaymentNotification();
+                    new Notification
+                    {
+                        Booking = booking,
+                        GroupId = NotificationGroup.Offering,
+                        TypeId = NotificationType.PaymentReceived,
+                        User = User.Find(Id: booking.Listing.UserId)
+                    }.Save(Notify: true);
+
+                    new Notification
+                    {
+                        Booking = booking,
+                        GroupId = NotificationGroup.Seeking,
+                        TypeId = NotificationType.PaymentReceived,
+                        User = User.Find(Id: booking.UserId)
+                    }.Save(Notify: false);
+
+                    Counter.Hit(BookingUser.UserId ?? 0, Counters.CompletePayment, booking.Service.CategoryId);
+                    SendPaymentNotification();
+                }
             }
         }
 
@@ -321,7 +363,7 @@ namespace Agrishare.Core.Entities
             var json = JsonConvert.SerializeObject(new
             {
                 clientCorrelator = ClientCorrelator,
-                endUserId = BookingUser.Telephone,
+                endUserId = SanitiseMobileNumber(BookingUser.Telephone),
                 merchantCode = EcoCashMerchantCode,
                 merchantPin = EcoCashMerchantPin,
                 merchantNumber = EcoCashMerchantNumber,
@@ -332,7 +374,7 @@ namespace Agrishare.Core.Entities
                     {
                         amount = Amount,
                         currency = "USD",
-                        description = Booking?.Title ?? "Booking"
+                        description = Booking?.Listing?.Title ?? "AgriShare Booking"
                     },
                     chargeMetaData = new
                     {
@@ -365,28 +407,37 @@ namespace Agrishare.Core.Entities
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                if (response.Data.messageId != null)
+                try
+                {
+                    Error = response.Data["text"];
+                }
+                catch { }
+
+                try
+                {
+                    var status = response.Data["transactionOperationStatus"];
+
+                    if (status == "Charged" || status == "COMPLETED")
+                        StatusId = TransactionStatus.Complete;
+                    else if (status == "PENDING SUBSCRIBER VALIDATION")
+                        StatusId = TransactionStatus.PendingSubscriberValidation;
+                    else
+                        StatusId = TransactionStatus.Failed;
+                    Save();
+
+                    return true;
+                }
+                catch
                 {
                     StatusId = TransactionStatus.Error;
                     Save();
                     return false;
                 }
-
-                if (response.Data.transactionOperationStatus == "Charged" || response.Data.transactionOperationStatus == "COMPLETED")
-                    StatusId = TransactionStatus.Paid;
-                else if (response.Data.transactionOperationStatus == "PENDING SUBSCRIBER VALIDATION")
-                    StatusId = TransactionStatus.PendingSubscriberValidation;
-                else
-                    StatusId = (TransactionStatus)Enum.Parse(typeof(TransactionStatus), response.Data.transactionOperationStatus);
-                Save();
-
-                return true;
             }
             else
             {
-                StatusId = TransactionStatus.Failed;
+                StatusId = TransactionStatus.Error;
                 Save();
-
                 return false;
             }
         }

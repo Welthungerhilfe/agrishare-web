@@ -49,7 +49,7 @@
                 <span><asp:Literal runat="server" ID="FuelSize" /></span>
                 <span><asp:Literal runat="server" ID="FuelCost" /></span>
             </li>
-            <li>
+            <li runat="server" id="CommissionRow">
                 <strong>Extras</strong>
                 <span>AgriShare Commission</span>
                 <span><asp:Literal runat="server" ID="Commission" /></span>

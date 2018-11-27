@@ -118,16 +118,19 @@
     <Content Include="Resources\Images\Icon-Menu.svg" />
     <Content Include="Resources\Images\Uploadify-Cancel.png" />
     <Content Include="Resources\Images\WHH-Logo.svg" />
+    <Content Include="Resources\Javascript\1. jQuery\jquery.datepicker.min.js" />
     <Content Include="Resources\Javascript\1. jQuery\jquery.2.1.0.min.js" />
     <Content Include="Resources\Javascript\1. jQuery\jquery.uploadifive.min.js" />
     <Content Include="Resources\Javascript\2. Angular\angular-1.5.8.min.js" />
     <Content Include="Resources\Javascript\3. App\app.js" />
     <Content Include="Resources\Javascript\moment.min.js" />
+    <Content Include="Resources\Styles\jquery.datepicker.min.css" />
     <Content Include="Resources\Styles\jquery.uploadifive.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\AgrishareHttpModule.cs" />
+    <Compile Include="Code\Date.cs" />
     <Compile Include="Code\PhotoUpload.cs" />
     <Compile Include="Code\PagedRepeater.cs" />
     <Compile Include="Code\Map.cs" />

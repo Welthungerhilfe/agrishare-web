@@ -20,11 +20,11 @@ namespace Agrishare.Web.Controls
         {
             get
             {
-                if (Page.Request.Form[$"{ClientID}-files"] != null)
+                if (Page.Request.Form[$"{ClientID}-upload-files"] != null)
                 {
                     try
                     {
-                        _photos = JsonConvert.DeserializeObject<List<Core.Entities.File>>(Page.Request.Form[$"{ClientID}-files"]);
+                        _photos = JsonConvert.DeserializeObject<List<Core.Entities.File>>(Page.Request.Form[$"{ClientID}-upload-files"]);
                     }
                     catch { }
                 }
@@ -69,7 +69,7 @@ namespace Agrishare.Web.Controls
                     }});
                 }});
             </script>
-            <input type=""hidden"" id=""{ClientID}-upload-files"" />
+            <input type=""hidden"" id=""{ClientID}-upload-files"" name=""{ClientID}-upload-files"" value=""{HttpUtility.HtmlEncode(JsonConvert.SerializeObject(Photos))}"" />
             <div id=""{ClientID}-upload-preview"" class=""uploadifive-preview""></div>
             <input id=""{ClientID}-file-upload"" type=""file"" name=""file_upload"" />   
             <div id=""{ClientID}-upload-queue""></div>");
