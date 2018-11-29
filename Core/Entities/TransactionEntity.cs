@@ -291,10 +291,12 @@ namespace Agrishare.Core.Entities
                 try
                 {
                     var status = response.Data["transactionOperationStatus"];
-                    if (status == "Charged" || status == "COMPLETED")
-                        StatusId = TransactionStatus.Complete;
+                    if (status == "COMPLETED")
+                        StatusId = TransactionStatus.Completed;
                     else if (status == "PENDING SUBSCRIBER VALIDATION")
                         StatusId = TransactionStatus.PendingSubscriberValidation;
+                    else if (status == "TRANSACTION TIMEDOUT")
+                        StatusId = TransactionStatus.TransactionTimedout;
                     else
                         StatusId = TransactionStatus.Failed;
 
@@ -312,7 +314,7 @@ namespace Agrishare.Core.Entities
 
             Save();
 
-            if (previousStatusId != TransactionStatus.Complete && StatusId == TransactionStatus.Complete)
+            if (previousStatusId != TransactionStatus.Completed && StatusId == TransactionStatus.Completed)
             {
                 BookingUser.StatusId = BookingUserStatus.Paid;
                 BookingUser.Save();
@@ -417,10 +419,12 @@ namespace Agrishare.Core.Entities
                 {
                     var status = response.Data["transactionOperationStatus"];
 
-                    if (status == "Charged" || status == "COMPLETED")
-                        StatusId = TransactionStatus.Complete;
+                    if (status == "COMPLETED")
+                        StatusId = TransactionStatus.Completed;
                     else if (status == "PENDING SUBSCRIBER VALIDATION")
                         StatusId = TransactionStatus.PendingSubscriberValidation;
+                    else if (status == "TRANSACTION TIMEDOUT")
+                        StatusId = TransactionStatus.TransactionTimedout;
                     else
                         StatusId = TransactionStatus.Failed;
                     Save();

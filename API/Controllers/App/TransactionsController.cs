@@ -36,8 +36,11 @@ namespace Agrishare.API.Controllers.App
             if (bookingUsers.Count(e => e.StatusId != Entities.BookingUserStatus.Paid) == 0)
                 return Success("Payment complete");
 
-            if (transactions.Count(e => e.StatusId == Entities.TransactionStatus.Complete || e.StatusId == Entities.TransactionStatus.PendingSubscriberValidation) == transactions.Count())
-                return Success("Keep polling");
+            if (transactions.Count(e => e.StatusId == Entities.TransactionStatus.Completed || e.StatusId == Entities.TransactionStatus.PendingSubscriberValidation) == transactions.Count())
+                return Success(new
+                {
+                    Transactions = transactions.Select(e => e.Json())
+                });
 
             return Error("Please try again");
         }

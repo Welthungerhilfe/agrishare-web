@@ -81,7 +81,7 @@ namespace Agrishare.Core.Entities
 
         public static List<ListingSearchResult> List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, 
             decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile, BookingFor For, decimal DestinationLatitude, 
-            decimal DestinationLongitude, decimal TotalVolume)
+            decimal DestinationLongitude, decimal TotalVolume, int ListingId = 0)
         {
             var sort = ListingSearchResultSort.Distance;
             try { sort = (ListingSearchResultSort)Enum.Parse(typeof(ListingSearchResultSort), Sort); }
@@ -141,7 +141,7 @@ namespace Agrishare.Core.Entities
                 }
 
                 // availability
-                sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.Deleted = 0 AND Bookings.StatusId IN (1, 3, 6) AND Bookings.ListingId = Listings.Id AND Bookings.StartDate < DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL {days} DAY) AND Bookings.EndDate > DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
+                sql.AppendLine($"IF((SELECT COUNT(Id) FROM Bookings WHERE Bookings.Deleted = 0 AND Bookings.StatusId IN (0, 1, 3, 6) AND Bookings.ListingId = Listings.Id AND Bookings.StartDate <= DATE_ADD(DATE('{SQL.Safe(StartDate)}'), INTERVAL {days} DAY) AND Bookings.EndDate >= DATE('{SQL.Safe(StartDate)}')) = 0, 1, 0) AS Available,");
 
                 // costs
                 var hireCost = $"(Services.PricePerQuantityUnit * {Size})";
@@ -162,7 +162,7 @@ namespace Agrishare.Core.Entities
                 sql.AppendLine($"{days} AS Days,");
 
                 sql.AppendLine($"DATE('{SQL.Safe(StartDate)}') AS StartDate,");
-                sql.AppendLine($"DATE_ADD('{SQL.Safe(StartDate)}', INTERVAL {days} DAY) AS EndDate");
+                sql.AppendLine($"DATE_ADD('{SQL.Safe(StartDate)}', INTERVAL ({days} - 1) DAY) AS EndDate");
                 sql.AppendLine("FROM Listings");
                 sql.AppendLine("INNER JOIN Services ON Listings.Id = Services.ListingId");
                 sql.AppendLine("WHERE Listings.Deleted = 0 AND Services.Deleted = 0 AND Listings.StatusId = 1");
@@ -181,6 +181,9 @@ namespace Agrishare.Core.Entities
                     sql.AppendLine($"AND Listings.AvailableWithFuel = 1");
                 else
                     sql.AppendLine($"AND Listings.AvailableWithoutFuel = 1");
+
+                if (ListingId > 0)
+                    sql.AppendLine($"AND Listings.Id = {ListingId}");
 
                 sql.AppendLine($"GROUP BY Services.Id ORDER BY {sort} LIMIT {PageIndex * PageSize}, {PageSize}");
 
@@ -203,6 +206,27 @@ namespace Agrishare.Core.Entities
                 Condition,
                 AverageRating,
                 Photos = Photos?.Select(e => e.JSON()),
+                Distance,
+                Price,
+                Size,
+                Trips,
+                TransportDistance,
+                TransportCost,
+                FuelCost,
+                HireCost,
+                Available,
+                StartDate,
+                EndDate,
+                Days
+            };
+        }
+
+        public object BookingJson()
+        {
+            return new
+            {
+                ServiceId,
+                ListingId,
                 Distance,
                 Price,
                 Size,

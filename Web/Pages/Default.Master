@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
 </head>
-<body ng-controller="AppController">
+<body id="Body" runat="server" ng-controller="AppController">
     <form id="form1" runat="server">
 
         <header>

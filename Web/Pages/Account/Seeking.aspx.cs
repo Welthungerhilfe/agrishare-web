@@ -39,11 +39,14 @@ namespace Agrishare.Web.Pages.Account.Seeking
                 {
                     case Core.Entities.NotificationType.BookingCancelled:
                         actionText = "View";
-                        actionLink = $"/account/bookings/details?id={notification.BookingId}";
+                        actionLink = $"/account/booking/details?id={notification.BookingId}";
                         break;
                     case Core.Entities.NotificationType.BookingConfirmed:
-                        actionText = "Pay Now";
-                        actionLink = $"/account/bookings/details?id={notification.BookingId}#payment";
+                        if (notification.StatusId == Core.Entities.NotificationStatus.Pending)
+                        {
+                            actionText = "Pay Now";
+                            actionLink = $"/account/booking/details?id={notification.BookingId}#payment";
+                        }
                         break;
                     case Core.Entities.NotificationType.NewBooking:
                         break;
@@ -53,14 +56,14 @@ namespace Agrishare.Web.Pages.Account.Seeking
                         break;
                     case Core.Entities.NotificationType.ServiceComplete:
                         actionText = "View";
-                        actionLink = $"/account/bookings/details?id={notification.BookingId}#rating";
+                        actionLink = $"/account/booking/details?id={notification.BookingId}#rating";
                         break;
                     case Core.Entities.NotificationType.ServiceIncomplete:
                         break;
                 }
 
                 ((HyperLink)e.Item.FindControl("Link")).NavigateUrl = "";
-                ((Image)e.Item.FindControl("Photo")).ImageUrl = notification.Booking.Listing.Photos.Count > 0 ? $"{Core.Entities.Config.CDNURL}{notification.Booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
+                ((Image)e.Item.FindControl("Photo")).ImageUrl = notification.Booking.Listing.Photos?.Count > 0 ? $"{Core.Entities.Config.CDNURL}{notification.Booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
                 ((Literal)e.Item.FindControl("Date")).Text = notification.Booking.StartDate.ToString("d MMMM yyyy");
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(notification.Booking.Listing.Title);
                 ((Literal)e.Item.FindControl("Message")).Text = HttpUtility.HtmlEncode(notification.Message);

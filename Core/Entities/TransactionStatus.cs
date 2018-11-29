@@ -14,11 +14,12 @@ namespace Agrishare.Core.Entities
     public enum TransactionStatus : short
     {
         None = 0,
-        Complete = 4,
+        Completed = 4,
         Failed = 5,
         Refunded = 8,
         PendingSubscriberValidation = 11,
         Pending = 13,
-        Error = 99
+        Error = 99,
+        TransactionTimedout = 9
     }
 }

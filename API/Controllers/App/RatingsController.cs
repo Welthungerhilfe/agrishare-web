@@ -33,6 +33,7 @@ namespace Agrishare.API.Controllers.App
 
             var rating = new Entities.Rating
             {
+                BookingId = Model.BookingId,
                 Comments = Model.Comments,
                 ListingId = booking.ListingId,
                 Stars = Model.Rating,

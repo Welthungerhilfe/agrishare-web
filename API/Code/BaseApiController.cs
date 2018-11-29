@@ -78,7 +78,7 @@ namespace Agrishare.API
 
         public object Success(object ResponseData = null)
         {
-            if (LogAPI && !HttpContext.Current.Request.Path.StartsWith("/cms/"))
+            if (LogAPI && !HttpContext.Current.Request.Path.StartsWith("/cms/") && !HttpContext.Current.Request.Path.StartsWith("/transactions/ecocash/poll"))
             {
                 new Entities.Log
                 {

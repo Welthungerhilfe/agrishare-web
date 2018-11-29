@@ -46,6 +46,7 @@
           <ConnectorPoint PointX="5.8626971836921351" PointY="15.380432632388732" />
           <ConnectorPoint PointX="5.8626971836921351" PointY="12.77830078125" />
         </AssociationConnector>
+        <AssociationConnector Association="AgrishareModel.ratings_ibfk_3" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

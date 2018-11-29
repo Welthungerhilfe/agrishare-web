@@ -189,6 +189,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ListingId" Type="int" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="BookingId" Type="int" Nullable="false" />
     <Property Name="Comments" Type="varchar" MaxLength="1024" />
     <Property Name="Rating" Type="decimal" Precision="10" Scale="1" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -469,6 +470,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ratings_ibfk_3">
+    <End Role="Bookings" Type="Self.Bookings" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bookings">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Ratings">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="services_ibfk_1">
     <End Role="Listings" Type="Self.Listings" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -596,6 +611,10 @@
     </AssociationSet>
     <AssociationSet Name="ratings_ibfk_2" Association="Self.ratings_ibfk_2">
       <End Role="Users" EntitySet="Users" />
+      <End Role="Ratings" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="ratings_ibfk_3" Association="Self.ratings_ibfk_3">
+      <End Role="Bookings" EntitySet="Bookings" />
       <End Role="Ratings" EntitySet="Ratings" />
     </AssociationSet>
     <AssociationSet Name="services_ibfk_1" Association="Self.services_ibfk_1">

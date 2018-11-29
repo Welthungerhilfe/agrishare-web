@@ -17,9 +17,9 @@ namespace Agrishare.Core.Entities
         public static string DefaultSort = "DateCreated DESC";
         public string Title => User?.Title ?? "User";
 
-        public static Rating Find(int Id = 0)
+        public static Rating Find(int Id = 0, int BookingId = 0)
         {
-            if (Id == 0)
+            if (Id == 0 && BookingId == 0)
                 return new Rating
                 {
                     DateCreated = DateTime.UtcNow,
@@ -32,6 +32,9 @@ namespace Agrishare.Core.Entities
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
+
+                if (BookingId > 0)
+                    query = query.Where(e => e.BookingId == BookingId);
 
                 return query.FirstOrDefault();
             }
@@ -142,6 +145,7 @@ namespace Agrishare.Core.Entities
             {
                 Id,
                 ListingId,
+                BookingId,
                 User = User?.Json(),
                 Title,
                 Comments,

@@ -174,6 +174,10 @@ namespace Agrishare.Core.Entities
             template.Replace("Start Date", Booking.StartDate.ToString("d MMMM yyyy"));
             template.Replace("End Date", Booking.EndDate.ToString("d MMMM yyyy"));
 
+            template.Replace("Payment Amount", Template.FormatCurrency(Booking.Price));
+            template.Replace("Payment Fees", Template.FormatCurrency(Booking.AgriShareCommission));
+            template.Replace("Payment Total", Template.FormatCurrency(Booking.Price - Booking.AgriShareCommission));
+
             var subject = "Notification";
             switch (TypeId)
             {
@@ -230,7 +234,7 @@ namespace Agrishare.Core.Entities
                     message = $"New review received for booking {BookingId}";
                     break;
                 case NotificationType.PaymentReceived:
-                    message = $"Payment received: {Title}";
+                    message = $"Payment received: {BookingId}";
                     break;
                 case NotificationType.ServiceComplete:
                     message = $"Booking {BookingId} completed";

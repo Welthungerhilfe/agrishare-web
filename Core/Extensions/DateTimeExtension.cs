@@ -27,19 +27,19 @@ namespace Agrishare.Core
                 return "Just now";
 
             if (timespan.TotalMinutes < 60)
-                return $"{timespan.TotalMinutes} mins ago";
+                return $"{Math.Round(timespan.TotalMinutes)} mins ago";
 
             if (timespan.TotalHours == 1)
                 return "1 hour ago";
 
             if (timespan.TotalHours < 24)
-                return $"{timespan.TotalMinutes} hours ago";
+                return $"{Math.Round(timespan.TotalMinutes)} hours ago";
 
             if (timespan.TotalDays == 1)
                 return "1 day ago";
 
             if (timespan.TotalDays < 7)
-                return $"{timespan.TotalDays} days ago";
+                return $"{Math.Round(timespan.TotalDays)} days ago";
 
             return date.ToString("dd/MM");
         }

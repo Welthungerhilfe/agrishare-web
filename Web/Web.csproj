@@ -96,6 +96,7 @@
     <Content Include="Pages\About\Seeking.aspx" />
     <Content Include="Pages\About\Offering.aspx" />
     <Content Include="Pages\Account\Bookings.aspx" />
+    <Content Include="Pages\Account\Listing\Reviews.aspx" />
     <Content Include="Pages\Account\Listing\Processing.aspx" />
     <Content Include="Pages\Account\Listing\Lorry.aspx" />
     <Content Include="Pages\Account\Notifications.aspx" />
@@ -158,6 +159,13 @@
     </Compile>
     <Compile Include="Pages\Account\Bookings.aspx.designer.cs">
       <DependentUpon>Bookings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\Listing\Reviews.aspx.cs">
+      <DependentUpon>Reviews.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Account\Listing\Reviews.aspx.designer.cs">
+      <DependentUpon>Reviews.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Account\Listing\Processing.aspx.cs">
       <DependentUpon>Processing.aspx</DependentUpon>

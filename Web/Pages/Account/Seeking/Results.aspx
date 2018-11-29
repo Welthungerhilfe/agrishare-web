@@ -10,7 +10,7 @@
             <div class="results-list">
         </HeaderTemplate>
         <ItemTemplate>
-                <asp:LinkButton runat="server" ID="Link">
+                <asp:HyperLink runat="server" ID="Link">
                     <span>
                         <asp:Image runat="server" ID="Photo" />
                     </span>
@@ -21,7 +21,7 @@
                         <b><asp:Literal runat="server" ID="Price" /></b>
                         <em><asp:Literal runat="server" ID="Status" /></em>
                     </span>
-                </asp:LinkButton>
+                </asp:HyperLink>
         </ItemTemplate>
         <FooterTemplate>
             </div>

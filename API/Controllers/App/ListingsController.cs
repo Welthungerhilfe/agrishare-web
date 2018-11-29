@@ -211,7 +211,7 @@ namespace Agrishare.API.Controllers.App
 
         [Route("listings/availability")]
         [AcceptVerbs("GET")]
-        public object Availability(int ListingId, DateTime StartDate, DateTime EndDate)
+        public object Availability(int ListingId, DateTime StartDate, DateTime EndDate, int Days = 1)
         {
             var listing = Entities.Listing.Find(Id: ListingId);
             if (listing == null || listing.Id == 0)
@@ -224,7 +224,13 @@ namespace Agrishare.API.Controllers.App
             var date = StartDate;
             while (date <= EndDate)
             {
-                var available = bookings.Where(o => (o.StatusId == Entities.BookingStatus.Approved || o.StatusId == Entities.BookingStatus.InProgress || o.StatusId == Entities.BookingStatus.Pending) && o.StartDate <= date.StartOfDay() && o.EndDate >= date.EndOfDay()).Count() == 0;
+                var start = date.StartOfDay();
+                var end = date.AddDays(Days - 1).EndOfDay();
+
+                var available = bookings.Where(o => 
+                    (o.StatusId == Entities.BookingStatus.Approved || o.StatusId == Entities.BookingStatus.InProgress || o.StatusId == Entities.BookingStatus.Pending || o.StatusId == Entities.BookingStatus.Incomplete) && 
+                    o.StartDate <= end && 
+                    o.EndDate >= start).Count() == 0;
 
                 list.Add(new
                 {

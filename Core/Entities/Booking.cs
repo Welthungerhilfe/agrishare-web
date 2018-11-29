@@ -19,6 +19,7 @@ namespace Agrishare.Core.Entities
         {
             this.BookingUsers = new HashSet<BookingUser>();
             this.Transactions = new HashSet<Transaction>();
+            this.Ratings = new HashSet<Rating>();
         }
     
         public int Id { get; set; }
@@ -56,5 +57,7 @@ namespace Agrishare.Core.Entities
         public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual Listing Listing { get; set; }
         public virtual Service Service { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }

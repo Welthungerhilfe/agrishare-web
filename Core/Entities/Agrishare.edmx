@@ -194,6 +194,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ListingId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="BookingId" Type="int" Nullable="false" />
           <Property Name="Comments" Type="varchar" MaxLength="1024" />
           <Property Name="Rating" Type="decimal" Precision="10" Scale="1" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -474,6 +475,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ratings_ibfk_3">
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="BookingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="services_ibfk_1">
           <End Role="Listings" Type="Self.Listings" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -603,6 +618,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Ratings" EntitySet="Ratings" />
           </AssociationSet>
+          <AssociationSet Name="ratings_ibfk_3" Association="Self.ratings_ibfk_3">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
           <AssociationSet Name="services_ibfk_1" Association="Self.services_ibfk_1">
             <End Role="Listings" EntitySet="Listings" />
             <End Role="Services" EntitySet="Services" />
@@ -660,6 +679,7 @@
           <Property Name="AdditionalInformation" Type="String" MaxLength="4096" FixedLength="false" Unicode="false" />
           <Property Name="TotalVolume" Type="Decimal" Nullable="false" />
           <Property Name="TransportDistance" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="Ratings" Relationship="AgrishareModel.ratings_ibfk_3" FromRole="Booking" ToRole="Rating" />
         </EntityType>
         <EntityType Name="BookingUser">
           <Key>
@@ -1084,6 +1104,10 @@
             <End Role="User" EntitySet="Users" />
             <End Role="BookingUser" EntitySet="BookingUsers" />
           </AssociationSet>
+          <AssociationSet Name="ratings_ibfk_3" Association="AgrishareModel.ratings_ibfk_3">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Rating">
           <Key>
@@ -1099,6 +1123,8 @@
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Listing" Relationship="AgrishareModel.ratings_ibfk_1" FromRole="Rating" ToRole="Listing" />
           <NavigationProperty Name="User" Relationship="AgrishareModel.ratings_ibfk_2" FromRole="Rating" ToRole="User" />
+          <Property Name="BookingId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Booking" Relationship="AgrishareModel.ratings_ibfk_3" FromRole="Rating" ToRole="Booking" />
         </EntityType>
         <EntityType Name="Service">
           <Key>
@@ -1331,12 +1357,13 @@
         </EnumType>
         <EnumType Name="TransactionStatus" UnderlyingType="Int16">
           <Member Name="None" Value="0" />
-          <Member Name="Complete" Value="4" />
+          <Member Name="Completed" Value="4" />
           <Member Name="Failed" Value="5" />
           <Member Name="Refunded" Value="8" />
           <Member Name="PendingSubscriberValidation" Value="11" />
           <Member Name="Pending" Value="13" />
           <Member Name="Error" Value="99" />
+          <Member Name="TransactionTimedout" Value="9" />
         </EnumType>
         <Association Name="counters_ibfk_1">
           <End Type="AgrishareModel.Category" Role="Category" Multiplicity="0..1">
@@ -1377,6 +1404,20 @@
             </Principal>
             <Dependent Role="BookingUser">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ratings_ibfk_3">
+          <End Type="AgrishareModel.Booking" Role="Booking" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AgrishareModel.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="BookingId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1614,6 +1655,7 @@
           <EntitySetMapping Name="Ratings">
             <EntityTypeMapping TypeName="AgrishareModel.Rating">
               <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
                 <ScalarProperty Name="Deleted" ColumnName="Deleted" />
                 <ScalarProperty Name="LastModified" ColumnName="LastModified" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

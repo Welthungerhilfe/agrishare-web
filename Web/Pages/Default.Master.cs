@@ -64,6 +64,8 @@ namespace Agrishare.Web.Pages
             var version = Config.Find(Key: "Resource Version")?.Value ?? "1";
             Page.Header.Controls.Add(new Literal { Text = $@"<link rel=""stylesheet"" href=""/styles-{version}.css"" />" });
             Page.Header.Controls.Add(new Literal { Text = $@"<script type=""text/javascript"" src=""/script-{version}.js""></script>" });
+
+            Body.Attributes.Add("ng-api-url", Config.APIURL);
         }
 
         protected override void OnPreRender(EventArgs e)

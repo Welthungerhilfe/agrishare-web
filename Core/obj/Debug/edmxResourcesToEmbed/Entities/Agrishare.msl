@@ -229,6 +229,7 @@
     <EntitySetMapping Name="Ratings">
       <EntityTypeMapping TypeName="AgrishareModel.Rating">
         <MappingFragment StoreEntitySet="Ratings">
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
           <ScalarProperty Name="Deleted" ColumnName="Deleted" />
           <ScalarProperty Name="LastModified" ColumnName="LastModified" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

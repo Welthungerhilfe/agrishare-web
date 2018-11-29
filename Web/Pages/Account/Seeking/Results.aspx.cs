@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -44,11 +46,19 @@ namespace Agrishare.Web.Pages.Account.Seeking
             {
                 var result = (Core.Entities.ListingSearchResult)e.Item.DataItem;
                 ((Image)e.Item.FindControl("Photo")).ImageUrl = result.Photos?.Count > 0 ? $"{Core.Entities.Config.CDNURL}{result.Photos.FirstOrDefault().ThumbName}" : "";
-                ((Literal)e.Item.FindControl("Distance")).Text = $"{result.Distance}kms away";
+                ((Literal)e.Item.FindControl("Distance")).Text = $"{Math.Round(result.Distance)}kms away";
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(result.Title);
                 ((Literal)e.Item.FindControl("Year")).Text = HttpUtility.HtmlEncode(result.Year);
                 ((Literal)e.Item.FindControl("Price")).Text = "$" + result.Price.ToString("N2");
                 ((Literal)e.Item.FindControl("Status")).Text = result.Available ? "Available" : "Not available";
+
+                var qs = new NameValueCollection(Request.QueryString)
+                {
+                    { "lid", result.ListingId.ToString() }
+                };
+                var str = string.Join("&", qs.AllKeys.ToList().Select(k => $"{k}={HttpUtility.UrlEncode(qs[k])}"));
+                ((HyperLink)e.Item.FindControl("Link")).NavigateUrl = $"/account/booking/details?{str}";
+
             }
         }
     }
