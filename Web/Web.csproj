@@ -114,9 +114,20 @@
     <Content Include="Pages\Error500.html" />
     <Content Include="Pages\Homepage.aspx" />
     <Content Include="Pages\Account\GetStarted.aspx" />
+    <Content Include="Resources\Images\App-Background.png" />
     <Content Include="Resources\Images\C2-Logo.svg" />
+    <Content Include="Resources\Images\Google-Play.png" />
+    <Content Include="Resources\Images\Home-Combine.jpg" />
+    <Content Include="Resources\Images\Home-Curve.png" />
     <Content Include="Resources\Images\Icon-Close.svg" />
     <Content Include="Resources\Images\Icon-Menu.svg" />
+    <Content Include="Resources\Images\Lorry.svg" />
+    <Content Include="Resources\Images\Phinneas.jpg" />
+    <Content Include="Resources\Images\Processing.svg" />
+    <Content Include="Resources\Images\Screenshot.png" />
+    <Content Include="Resources\Images\Tout-Offering.svg" />
+    <Content Include="Resources\Images\Tout-Seeking.svg" />
+    <Content Include="Resources\Images\Tractor.svg" />
     <Content Include="Resources\Images\Uploadify-Cancel.png" />
     <Content Include="Resources\Images\WHH-Logo.svg" />
     <Content Include="Resources\Javascript\1. jQuery\jquery.datepicker.min.js" />
@@ -290,6 +301,8 @@
     <Content Include="Resources\Styles\header.scss" />
     <Content Include="Resources\Styles\main.scss" />
     <Content Include="Resources\Styles\forms.scss" />
+    <Content Include="Resources\Styles\homepage.scss" />
+    <Content Include="Resources\Styles\account.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

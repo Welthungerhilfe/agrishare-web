@@ -7,11 +7,15 @@ footer {
     margin: 0 auto 50px auto;
     padding: 40px;
     background: #1d1d1d;
+    position: relative;
+    z-index: 3;
+
 
     @media all and (max-width: $mobile-breakpoint) {
         text-align: center;
         flex-direction: column;
         padding: 20px;
+        margin: 0;
     }
 
     p {

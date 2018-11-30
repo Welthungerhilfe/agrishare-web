@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace Agrishare.Web.Pages
@@ -44,6 +45,10 @@ namespace Agrishare.Web.Pages
 
         public bool RequiresAuthentication { get; set; }
 
+        public string SelectedUrl { get; set; }
+
+        public HtmlGenericControl Body;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             var analyticsId = Config.Find(Key: "Google Analytics Tracking ID").Value;
@@ -80,13 +85,38 @@ namespace Agrishare.Web.Pages
             if (RequiresAuthentication && !CurrentUser.Roles.Contains(Role.User))
                 Response.Redirect("/account/get-started?r=" + HttpUtility.UrlEncode(Request.Path));
 
-            GuestMenu.Visible = !CurrentUser.Roles.Contains(Role.User);
-            UserMenu.Visible = CurrentUser.Roles.Contains(Role.User);
-            UserName.Text = HttpUtility.HtmlEncode(CurrentUser.FirstName);
+            List<MenuItem> menu = new List<MenuItem>();
+            if (CurrentUser.Roles.Contains(Role.User))
+            {
+                menu.Add(new MenuItem { Title = "Home", Url = "/" });
+                menu.Add(new MenuItem { Title = "Seeking", Url = "/account/seeking" });
+                menu.Add(new MenuItem { Title = "Offering", Url = "/account/offering" });
+                menu.Add(new MenuItem { Title = "Contact", Url = "/about/contact" });
+                menu.Add(new MenuItem { Title = CurrentUser.FirstName, Url = "/account/profile", CssClass = "button" });
+            }
+            else
+            {
+                menu.Add(new MenuItem { Title = "Home", Url = "/" });
+                menu.Add(new MenuItem { Title = "Seeking", Url = "/about/seeking" });
+                menu.Add(new MenuItem { Title = "Offering", Url = "/about/offering" });
+                menu.Add(new MenuItem { Title = "Contact", Url = "/about/contact" });
+                menu.Add(new MenuItem { Title = "Get Started", Url = "/account/profile", CssClass = "button" });
+            }
+
+            foreach (var item in menu)
+                Menu.InnerHtml += $@"<li><a href=""{item.Url}"" class=""{MenuItemClass(item)}"">{item.Title}</a></li>";
 
             Page.Title = $"{Page.Title} - {Config.ApplicationName}";
 
             base.OnPreRender(e);
+        }
+
+        private string MenuItemClass(MenuItem Item)
+        {
+            if (Item.Url.Equals(SelectedUrl) || Request.RawUrl.StartsWith(Item.Url))
+                return $"active {Item.CssClass}";
+            return Item.CssClass;
+
         }
 
         public void DropCookie(string AuthToken)
@@ -99,5 +129,12 @@ namespace Agrishare.Web.Pages
             };
             HttpContext.Current.Response.Cookies.Add(cookie);
         }
+    }
+
+    class MenuItem
+    {
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public string CssClass { get; set; }
     }
 }

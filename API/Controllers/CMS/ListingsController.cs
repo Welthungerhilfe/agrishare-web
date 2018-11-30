@@ -72,7 +72,7 @@ namespace Agrishare.API.Controllers.CMS
         public object Delete(int Id)
         {
             var listing = Entities.Listing.Find(Id: Id);
-            if (listing?.Id == 0 || listing?.UserId != CurrentUser.Id)
+            if (listing?.Id == 0)
                 return Error("Listing not found");
 
             if (listing.Delete())

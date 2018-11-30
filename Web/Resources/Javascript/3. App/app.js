@@ -24,6 +24,21 @@ var agrishareApp = angular
         };
     })
 
+    .controller('SlideshowController', function ($scope, $timeout) {
+
+        $scope.index = -1;
+
+        var loop = function () {
+            if ($scope.index === 2)
+                $scope.index = 0;
+            else
+                $scope.index += 1;            
+            $timeout(loop, 5000);
+        };
+        loop();
+
+    })
+
     .controller('PollController', function ($attrs, $http, $scope) {
 
         $scope.transactions = [];

@@ -13,15 +13,6 @@ namespace Agrishare.Web.Pages {
     public partial class Default {
         
         /// <summary>
-        /// Body control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Body;
-        
-        /// <summary>
         /// form1 control.
         /// </summary>
         /// <remarks>
@@ -31,31 +22,13 @@ namespace Agrishare.Web.Pages {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// GuestMenu control.
+        /// Menu control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl GuestMenu;
-        
-        /// <summary>
-        /// UserMenu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl UserMenu;
-        
-        /// <summary>
-        /// UserName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal UserName;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Menu;
         
         /// <summary>
         /// FeedbackPrompt control.

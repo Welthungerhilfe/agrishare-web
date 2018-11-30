@@ -85,33 +85,6 @@ namespace Agrishare.Web.Pages.Account {
         protected global::System.Web.UI.WebControls.TextBox DateOfBirth;
         
         /// <summary>
-        /// LoginForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder LoginForm;
-        
-        /// <summary>
-        /// LoginTelephone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LoginTelephone;
-        
-        /// <summary>
-        /// LoginPIN control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LoginPIN;
-        
-        /// <summary>
         /// ForgotForm control.
         /// </summary>
         /// <remarks>
@@ -164,6 +137,33 @@ namespace Agrishare.Web.Pages.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ResetPIN;
+        
+        /// <summary>
+        /// LoginForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder LoginForm;
+        
+        /// <summary>
+        /// LoginTelephone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LoginTelephone;
+        
+        /// <summary>
+        /// LoginPIN control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LoginPIN;
         
         /// <summary>
         /// Master property.

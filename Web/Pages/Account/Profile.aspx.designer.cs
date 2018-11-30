@@ -13,6 +13,15 @@ namespace Agrishare.Web.Pages.Account {
     public partial class Profile {
         
         /// <summary>
+        /// Introduction control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder Introduction;
+        
+        /// <summary>
         /// DisplayName control.
         /// </summary>
         /// <remarks>

@@ -13,6 +13,7 @@ namespace Agrishare.Web.Pages.Account
         protected void Page_Load(object sender, EventArgs e)
         {
             Master.RequiresAuthentication = true;
+            Master.Body.Attributes["class"] += " account ";
 
             DisplayName.Text = HttpUtility.HtmlEncode(Master.CurrentUser.FirstName + " " + Master.CurrentUser.LastName);
             DisplayTelephone.Text = HttpUtility.HtmlEncode(Master.CurrentUser.Telephone);
@@ -65,6 +66,10 @@ namespace Agrishare.Web.Pages.Account
                             DeleteWarning.Visible = true;
                     }
                     DeletePrompt.Visible = !DeleteWarning.Visible;
+                    break;
+
+                default:
+                    Introduction.Visible = true;
                     break;
             }
 
