@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace Agrishare.Web.Pages.Account.Seeking
@@ -14,6 +15,8 @@ namespace Agrishare.Web.Pages.Account.Seeking
         protected void Page_Load(object sender, EventArgs e)
         {
             Master.RequiresAuthentication = true;
+            Master.Body.Attributes["class"] += " account ";
+            Master.SelectedUrl = "/account/seeking";
 
             var categoryId = Convert.ToInt32(Request.QueryString["cid"]);
             var serviceId = Convert.ToInt32(Request.QueryString["sid"]);
@@ -45,7 +48,10 @@ namespace Agrishare.Web.Pages.Account.Seeking
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var result = (Core.Entities.ListingSearchResult)e.Item.DataItem;
-                ((Image)e.Item.FindControl("Photo")).ImageUrl = result.Photos?.Count > 0 ? $"{Core.Entities.Config.CDNURL}{result.Photos.FirstOrDefault().ThumbName}" : "";
+
+                if ((result.Photos?.Count ?? 0) > 0)
+                    ((HtmlContainerControl)e.Item.FindControl("Photo")).Style.Add("background-image", $"url({Core.Entities.Config.CDNURL}{result.Photos.FirstOrDefault().ThumbName})");
+
                 ((Literal)e.Item.FindControl("Distance")).Text = $"{Math.Round(result.Distance)}kms away";
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(result.Title);
                 ((Literal)e.Item.FindControl("Year")).Text = HttpUtility.HtmlEncode(result.Year);

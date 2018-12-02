@@ -19,7 +19,7 @@ namespace Agrishare.Web.Pages.Account.Seeking {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList For;
+        protected global::System.Web.UI.WebControls.RadioButtonList For;
         
         /// <summary>
         /// LoadWeight control.

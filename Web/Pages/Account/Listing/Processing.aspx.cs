@@ -12,6 +12,7 @@ namespace Agrishare.Web.Pages.Account.Listing
         protected void Page_Load(object sender, EventArgs e)
         {
             Master.RequiresAuthentication = true;
+            Master.Body.Attributes["class"] += " account ";
 
             if (!Page.IsPostBack)
             {

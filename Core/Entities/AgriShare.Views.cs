@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets3F5821C1B9D71AB0B99AA25BD6716F7093CA6FA02F4518058CCCB25A0AA99E0F))]
+[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets2BCCC82083450F49FA3E8CE0030867C3CC2AE3C83E9B92368B7F45F6192C0F94))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -17,18 +17,18 @@ namespace Edm_EntityMappingGeneratedViews
     /// <Summary>
     /// The type contains views for EntitySets and AssociationSets that were generated at design time.
     /// </Summary>
-    public sealed class ViewsForBaseEntitySets3F5821C1B9D71AB0B99AA25BD6716F7093CA6FA02F4518058CCCB25A0AA99E0F : System.Data.Mapping.EntityViewContainer
+    public sealed class ViewsForBaseEntitySets2BCCC82083450F49FA3E8CE0030867C3CC2AE3C83E9B92368B7F45F6192C0F94 : System.Data.Mapping.EntityViewContainer
     {
         
         /// <Summary>
         /// The constructor stores the views for the extents and also the hash values generated based on the metadata and mapping closure and views.
         /// </Summary>
-        public ViewsForBaseEntitySets3F5821C1B9D71AB0B99AA25BD6716F7093CA6FA02F4518058CCCB25A0AA99E0F()
+        public ViewsForBaseEntitySets2BCCC82083450F49FA3E8CE0030867C3CC2AE3C83E9B92368B7F45F6192C0F94()
         {
             this.EdmEntityContainerName = "AgrishareEntities";
             this.StoreEntityContainerName = "AgrishareModelStoreContainer";
-            this.HashOverMappingClosure = "1766d79eda2b630c20f9167d242866cf23825a4fd6ab86017b673177d150b08b";
-            this.HashOverAllExtentViews = "6fb4ddd07d5325483371cf767effcbd3b5126b682589caf176228a1da1b4042d";
+            this.HashOverMappingClosure = "494ea370b8e3e4312fe3cdc2f11b416b62a2c14db1f55b3852a18b45a1d234fc";
+            this.HashOverAllExtentViews = "fe7af760fb08fe9ae34bcc9b09aceacd055fd58228c869bb7657837387620af6";
             this.ViewCount = 32;
         }
         
@@ -374,12 +374,13 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareModelStoreContainer.Ratings", @"
     SELECT VALUE -- Constructing Ratings
-        [AgrishareModel.Store.Ratings](T1.Ratings_Id, T1.Ratings_ListingId, T1.Ratings_UserId, T1.Ratings_Comments, T1.Ratings_Rating, T1.Ratings_DateCreated, T1.Ratings_LastModified, T1.Ratings_Deleted)
+        [AgrishareModel.Store.Ratings](T1.Ratings_Id, T1.Ratings_ListingId, T1.Ratings_UserId, T1.Ratings_BookingId, T1.Ratings_Comments, T1.Ratings_Rating, T1.Ratings_DateCreated, T1.Ratings_LastModified, T1.Ratings_Deleted)
     FROM (
         SELECT 
             T.Id AS Ratings_Id, 
             T.ListingId AS Ratings_ListingId, 
             T.UserId AS Ratings_UserId, 
+            T.BookingId AS Ratings_BookingId, 
             T.Comments AS Ratings_Comments, 
             T.Stars AS Ratings_Rating, 
             T.DateCreated AS Ratings_DateCreated, 
@@ -669,7 +670,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareEntities.Ratings", @"
     SELECT VALUE -- Constructing Ratings
-        [AgrishareModel.Rating](T1.Rating_Id, T1.Rating_ListingId, T1.Rating_UserId, T1.Rating_Comments, T1.Rating_Stars, T1.Rating_DateCreated, T1.Rating_LastModified, T1.Rating_Deleted)
+        [AgrishareModel.Rating](T1.Rating_Id, T1.Rating_ListingId, T1.Rating_UserId, T1.Rating_Comments, T1.Rating_Stars, T1.Rating_DateCreated, T1.Rating_LastModified, T1.Rating_Deleted, T1.Rating_BookingId)
     FROM (
         SELECT 
             T.Id AS Rating_Id, 
@@ -680,6 +681,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.DateCreated AS Rating_DateCreated, 
             T.LastModified AS Rating_LastModified, 
             T.Deleted AS Rating_Deleted, 
+            T.BookingId AS Rating_BookingId, 
             True AS _from0
         FROM AgrishareModelStoreContainer.Ratings AS T
     ) AS T1");

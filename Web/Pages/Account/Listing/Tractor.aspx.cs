@@ -14,6 +14,7 @@ namespace Agrishare.Web.Pages.Account.Listing
         protected void Page_Load(object sender, EventArgs e)
         {
             Master.RequiresAuthentication = true;
+            Master.Body.Attributes["class"] += " account ";
 
             var id = Convert.ToInt32(Request.QueryString["id"]);
             SelectedListing = Core.Entities.Listing.Find(Id: id);

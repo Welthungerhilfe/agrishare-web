@@ -1,0 +1,23 @@
+﻿
+<div ng-controller="FormViewController" ag-title="FAQ" ag-selected-url="#/faqs/list" ag-api-route="/cms/faqs/">
+
+    <ag-title-bar></ag-title-bar>
+
+    <ag-section ag-controller="form">
+
+        <form>
+
+            <gl-textarea gl-label="Question" ng-model="form.entity.Question" gl-required="true"></gl-textarea>
+            <gl-textarea gl-label="Answer" ng-model="form.entity.Answer" gl-required="true"></gl-textarea>
+
+        </form>
+
+    </ag-section>
+
+    <ag-status-bar>
+
+        <gl-icon-button ng-click="form.save()" class="accent" ng-disabled="EditForm.$invalid || form.busy" ng-if="form.entity">Save</gl-icon-button>
+
+    </ag-status-bar>
+
+</div>

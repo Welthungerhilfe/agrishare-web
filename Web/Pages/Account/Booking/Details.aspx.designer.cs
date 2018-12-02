@@ -31,51 +31,6 @@ namespace Agrishare.Web.Pages.Account.Booking {
         protected global::System.Web.UI.WebControls.HyperLink Reviews;
         
         /// <summary>
-        /// Gallery control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Gallery;
-        
-        /// <summary>
-        /// Description control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Description;
-        
-        /// <summary>
-        /// Brand control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Brand;
-        
-        /// <summary>
-        /// HorsePower control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal HorsePower;
-        
-        /// <summary>
-        /// Year control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Year;
-        
-        /// <summary>
         /// Dates control.
         /// </summary>
         /// <remarks>
@@ -94,15 +49,6 @@ namespace Agrishare.Web.Pages.Account.Booking {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Unavaiable;
         
         /// <summary>
-        /// Days control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Days;
-        
-        /// <summary>
         /// Availability control.
         /// </summary>
         /// <remarks>
@@ -110,6 +56,15 @@ namespace Agrishare.Web.Pages.Account.Booking {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink Availability;
+        
+        /// <summary>
+        /// Days control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Days;
         
         /// <summary>
         /// TransportDistance control.
@@ -452,6 +407,51 @@ namespace Agrishare.Web.Pages.Account.Booking {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ReviewDate;
+        
+        /// <summary>
+        /// Gallery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater Gallery;
+        
+        /// <summary>
+        /// Description control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Description;
+        
+        /// <summary>
+        /// Brand control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Brand;
+        
+        /// <summary>
+        /// HorsePower control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal HorsePower;
+        
+        /// <summary>
+        /// Year control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal Year;
         
         /// <summary>
         /// Master property.

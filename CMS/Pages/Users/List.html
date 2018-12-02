@@ -30,7 +30,7 @@
                         <gl-menu-item gl-icon="local_shipping" ng-click="app.go('/listings/list/filter/userid/'+item.Id+'?'+app.returnUrlQs())">Listings</gl-menu-item>
                         <gl-menu-item gl-icon="account_balance_wallet" ng-click="app.go('/bookings/list/filter/userid/'+item.Id+'?'+app.returnUrlQs())">Bookings</gl-menu-item>
                         <gl-menu-item gl-icon="edit" ng-click="app.go('/users/edit/'+item.Id+'?'+app.returnUrlQs())">Edit</gl-menu-item>
-                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/users/delete?id=' + item.Id)">Delete</gl-menu-item>
+                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/cms/users/delete?id=' + item.Id)">Delete</gl-menu-item>
                     </gl-popup-menu>
                 </action>
             </div>

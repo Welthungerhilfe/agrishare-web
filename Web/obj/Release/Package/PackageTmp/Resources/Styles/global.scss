@@ -1,0 +1,21 @@
+﻿/* Title: Gloo Framework
+ * Author: Bradley Searle (C2 Digital)
+ * Source: www.c2.co.zw
+ * License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/legalcode)
+ */
+
+$max-width: 1000px;
+$mobile-breakpoint: 640px;
+
+$green: #339933;
+$pink: #cc3d78;
+
+$mobile-breakpoint: 640px;
+
+@mixin prefix($property, $value, $prefixes: ()) {
+    @each $prefix in $prefixes {
+        #{'-' + $prefix + '-' + $property}: $value;
+    }
+
+    #{$property}: $value;
+}

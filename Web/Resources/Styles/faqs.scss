@@ -1,0 +1,17 @@
+﻿@import "global";
+
+.faq-list {
+    > div {
+        margin: 0 0 30px 0;
+
+        .q {
+            color: $green;
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        .a {
+
+        }
+    }
+}

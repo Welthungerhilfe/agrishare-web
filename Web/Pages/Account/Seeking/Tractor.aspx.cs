@@ -12,6 +12,8 @@ namespace Agrishare.Web.Pages.Account.Seeking
         protected void Page_Load(object sender, EventArgs e)
         {
             Master.RequiresAuthentication = true;
+            Master.Body.Attributes["class"] += " account ";
+            Master.SelectedUrl = "/account/seeking";
 
             if (!Page.IsPostBack)
             {

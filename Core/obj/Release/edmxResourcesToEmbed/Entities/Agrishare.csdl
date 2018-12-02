@@ -35,6 +35,8 @@
     <Property Name="Destination" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="AdditionalInformation" Type="String" MaxLength="4096" FixedLength="false" Unicode="false" />
     <Property Name="TotalVolume" Type="Decimal" Nullable="false" />
+    <Property Name="TransportDistance" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="Ratings" Relationship="AgrishareModel.ratings_ibfk_3" FromRole="Booking" ToRole="Rating" />
   </EntityType>
   <EntityType Name="BookingUser">
     <Key>
@@ -186,12 +188,14 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientCorrelator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="BookingId" Type="Int32" Nullable="false" />
     <Property Name="BookingUserId" Type="Int32" Nullable="false" />
     <Property Name="Reference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Amount" Type="Decimal" Nullable="false" />
     <Property Name="StatusId" Type="AgrishareModel.TransactionStatus" Nullable="false" />
     <Property Name="Log" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+    <Property Name="Error" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
@@ -457,6 +461,10 @@
       <End Role="User" EntitySet="Users" />
       <End Role="BookingUser" EntitySet="BookingUsers" />
     </AssociationSet>
+    <AssociationSet Name="ratings_ibfk_3" Association="AgrishareModel.ratings_ibfk_3">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Rating" EntitySet="Ratings" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Rating">
     <Key>
@@ -472,6 +480,8 @@
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Listing" Relationship="AgrishareModel.ratings_ibfk_1" FromRole="Rating" ToRole="Listing" />
     <NavigationProperty Name="User" Relationship="AgrishareModel.ratings_ibfk_2" FromRole="Rating" ToRole="User" />
+    <Property Name="BookingId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="AgrishareModel.ratings_ibfk_3" FromRole="Rating" ToRole="Booking" />
   </EntityType>
   <EntityType Name="Service">
     <Key>
@@ -704,19 +714,13 @@
   </EnumType>
   <EnumType Name="TransactionStatus" UnderlyingType="Int16">
     <Member Name="None" Value="0" />
-    <Member Name="Cancelled" Value="1" />
-    <Member Name="CreatedNotPaid" Value="2" />
-    <Member Name="AwaitingRedirect" Value="3" />
-    <Member Name="Paid" Value="4" />
+    <Member Name="Completed" Value="4" />
     <Member Name="Failed" Value="5" />
-    <Member Name="Initiated" Value="6" />
-    <Member Name="Processing" Value="7" />
-    <Member Name="Refund" Value="8" />
-    <Member Name="Refused" Value="9" />
-    <Member Name="Denied" Value="10" />
+    <Member Name="Refunded" Value="8" />
     <Member Name="PendingSubscriberValidation" Value="11" />
-    <Member Name="Deleted" Value="12" />
     <Member Name="Pending" Value="13" />
+    <Member Name="Error" Value="99" />
+    <Member Name="TransactionTimedout" Value="9" />
   </EnumType>
   <Association Name="counters_ibfk_1">
     <End Type="AgrishareModel.Category" Role="Category" Multiplicity="0..1">
@@ -757,6 +761,20 @@
       </Principal>
       <Dependent Role="BookingUser">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ratings_ibfk_3">
+    <End Type="AgrishareModel.Booking" Role="Booking" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="AgrishareModel.Rating" Role="Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="BookingId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

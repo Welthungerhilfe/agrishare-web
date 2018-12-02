@@ -1,5 +1,6 @@
 ﻿using Agrishare.API;
 using Agrishare.Core;
+using System;
 using System.Linq;
 using System.Web.Http;
 using Entities = Agrishare.Core.Entities;
@@ -72,6 +73,38 @@ namespace Agrishare.API.Controllers.CMS
                 });
 
             return Error();
+        }
+
+        [Route("users/delete")]
+        [AcceptVerbs("GET")]
+        public object Delete(int Id)
+        {
+            var user = Entities.User.Find(Id: Id);
+
+            var bookings = Entities.Booking.Count(UserId: user.Id, StartDate: DateTime.Now, Upcoming: true);
+            if (bookings > 0)
+                return Error("Can not delete account - user has upcoming bookings");
+
+            var listings = Entities.Listing.List(UserId: user.Id);
+            foreach (var listing in listings)
+            {
+                bookings = Entities.Booking.Count(ListingId: listing.Id, StartDate: DateTime.Now, Upcoming: true);
+                if (bookings > 0)
+                    return Error("Can not delete account - user has upcoming bookings");
+            }
+            foreach (var listing in listings)
+                listing.Delete();
+
+            var devices = Entities.Device.List(UserId: user.Id);
+            foreach (var device in devices)
+                device.Delete();
+
+            user.Delete();
+
+            return Success(new
+            {
+                Entity = user.AdminJson()
+            });
         }
 
         /* Deleted */

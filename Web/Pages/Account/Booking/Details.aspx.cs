@@ -17,6 +17,7 @@ namespace Agrishare.Web.Pages.Account.Booking
         protected void Page_Load(object sender, EventArgs e)
         {
             Master.RequiresAuthentication = true;
+            Master.Body.Attributes["class"] += " account ";
 
             if (Request.QueryString["id"] != null)
                 SetupBooking();
@@ -35,12 +36,16 @@ namespace Agrishare.Web.Pages.Account.Booking
                 Response.Redirect("/account/seeking");
             }
 
+            Master.SelectedUrl = SelectedBooking.UserId == Master.CurrentUser.Id ? "/account/seeking" : "/account/offering";
+
             ShowDetails();
 
         }
 
         private void SetupRequest()
         {
+            Master.SelectedUrl = "/account/seeking";
+
             var listingId = Convert.ToInt32(Request.QueryString["lid"]);
             var categoryId = Convert.ToInt32(Request.QueryString["cid"]);
             var serviceId = Convert.ToInt32(Request.QueryString["sid"]);
@@ -115,6 +120,7 @@ namespace Agrishare.Web.Pages.Account.Booking
 
             Gallery.DataSource = SelectedBooking.Listing.Photos;
             Gallery.DataBind();
+
             Description.Text = HttpUtility.HtmlEncode(SelectedBooking.Listing.Description);
             Brand.Text = HttpUtility.HtmlEncode(SelectedBooking.Listing.Brand);
             HorsePower.Text = HttpUtility.HtmlEncode(SelectedBooking.Listing.HorsePower);
@@ -228,7 +234,7 @@ namespace Agrishare.Web.Pages.Account.Booking
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var photo = (Core.Entities.File)e.Item.DataItem;
-                ((HyperLink)e.Item.FindControl("Thumb")).Style.Add("background-image", $"url({Core.Entities.Config.CDNURL}{photo.ZoomName})");
+                ((Image)e.Item.FindControl("Thumb")).ImageUrl = $"{Core.Entities.Config.CDNURL}{photo.ZoomName}";
             }
         }
 

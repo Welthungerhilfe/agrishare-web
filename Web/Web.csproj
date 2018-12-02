@@ -303,6 +303,8 @@
     <Content Include="Resources\Styles\forms.scss" />
     <Content Include="Resources\Styles\homepage.scss" />
     <Content Include="Resources\Styles\account.scss" />
+    <Content Include="Resources\Styles\faqs.scss" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

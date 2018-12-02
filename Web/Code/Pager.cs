@@ -22,7 +22,7 @@ namespace Agrishare.Web.Controls
                 var index = 0;
                 try { index = int.Parse(HttpContext.Current.Request.QueryString["pg"]); }
                 catch { index = 0; }
-                return Math.Min(PageCount - 1, Math.Max(1, index));
+                return index;// Math.Min(PageCount - 1, Math.Max(1, index));
             }
         }
 
