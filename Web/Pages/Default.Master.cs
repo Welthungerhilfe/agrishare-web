@@ -97,8 +97,8 @@ namespace Agrishare.Web.Pages
             else
             {
                 menu.Add(new MenuItem { Title = "Home", Url = "/" });
-                menu.Add(new MenuItem { Title = "Seeking", Url = "/about/seeking" });
-                menu.Add(new MenuItem { Title = "Offering", Url = "/about/offering" });
+                //menu.Add(new MenuItem { Title = "Seeking", Url = "/about/seeking" });
+                //menu.Add(new MenuItem { Title = "Offering", Url = "/about/offering" });
                 menu.Add(new MenuItem { Title = "Contact", Url = "/about/contact" });
                 menu.Add(new MenuItem { Title = "Get Started", Url = "/account/profile", CssClass = "button" });
             }

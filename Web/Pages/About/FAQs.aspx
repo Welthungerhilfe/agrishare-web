@@ -5,7 +5,7 @@
     
     <h1>FAQs</h1>
 
-    <p>Lorem ipsum dolores sit amet</p>
+    <p>Do you have questions about AgriShare? Read through our Frequently Asked Questions.</p>
 
     <div class="cols">
 
@@ -32,7 +32,7 @@
 
             <h3>Get in touch</h3>
 
-            <p>Lorem ipsum dolores sit amet.</p>
+            <p>We'd love to hear from you. Fill out this simple form and we'll get in touch with you.</p>
 
             <p><a href="/about/contact" class="button">Contact us</a></p>
 
