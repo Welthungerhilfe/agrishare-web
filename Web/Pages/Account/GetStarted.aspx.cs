@@ -58,7 +58,7 @@ namespace Agrishare.Web.Pages.Account
             if (Page.IsValid)
             {
                 var user = Core.Entities.User.Find(Telephone: LoginTelephone.Text);
-                if (user.Id > 0)
+                if (user != null && user.Id > 0)
                 {
                     if (user.FailedLoginAttempts > maxFailedLoginAttempts)
                     {
@@ -91,7 +91,7 @@ namespace Agrishare.Web.Pages.Account
             if (Page.IsValid)
             {
                 var user = Core.Entities.User.Find(Telephone: ForgotTelephone.Text);
-                if (user.Id > 0)
+                if (user != null && user.Id > 0)
                     user.SendVerificationCode();
                 ResetForm.Visible = true;
                 ForgotForm.Visible = false;
@@ -103,7 +103,7 @@ namespace Agrishare.Web.Pages.Account
             if (Page.IsValid)
             {
                 var user = Core.Entities.User.Find(Telephone: ResetTelephone.Text);
-                if(user.Id > 0 && !user.VerificationCode.IsEmpty() && user.VerificationCode == ResetCode.Text)
+                if(user != null && user.Id > 0 && !user.VerificationCode.IsEmpty() && user.VerificationCode == ResetCode.Text)
                 {
                     user.ClearPassword = ResetPIN.Text;
                     user.FailedLoginAttempts = 0;

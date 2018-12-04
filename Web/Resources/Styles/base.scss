@@ -85,6 +85,13 @@ body {
     }
 }
 
+p.feedback {
+    background: $pink;
+    padding: 10px;
+    border-radius: 3px;
+    color: white;
+}
+
 #app {
     display: flex;
     height: 100%;
