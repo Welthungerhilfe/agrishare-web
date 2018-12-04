@@ -63,7 +63,7 @@ namespace Agrishare.Web.Pages.Account
                 var listing = (Core.Entities.Listing)e.Item.DataItem;
                 ((HyperLink)e.Item.FindControl("Link")).NavigateUrl = $"/account/listing/{Type}?id={listing.Id}";
                 if ((listing.Photos?.Count ?? 0) > 0)
-                    ((HtmlContainerControl)e.Item.FindControl("Photo")).Style.Add("background-image", $"url({Core.Entities.Config.CDNURL}{listing.Photos.FirstOrDefault().ThumbName})");
+                    ((HtmlContainerControl)e.Item.FindControl("Photo")).Style.Add("background-image", $"url({Core.Entities.Config.CDNURL}/{listing.Photos.FirstOrDefault().ThumbName})");
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(listing.Title);
                 ((Literal)e.Item.FindControl("Description")).Text = HttpUtility.HtmlEncode(listing.Description);
             }

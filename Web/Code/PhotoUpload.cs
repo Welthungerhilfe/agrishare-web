@@ -54,14 +54,14 @@ namespace Agrishare.Web.Controls
                             var str = $('#{ClientID}-upload-files').val();
                             var files = str !== '' ? JSON.parse(str) : [];
                             for (var i = 0; i < files.length; i++)
-                                $('#{ClientID}-upload-preview').append('<div><div style=""background-image:url({Core.Entities.Config.CDNURL}' + files[i].ThumbName + ')""></div></div>');
+                                $('#{ClientID}-upload-preview').append('<div><div style=""background-image:url({Core.Entities.Config.CDNURL}/' + files[i].ThumbName + ')""></div></div>');
                         }},
                         'onUploadComplete': function (file, data) {{
                             var str = $('#{ClientID}-upload-files').val();
                             var files = str !== '' ? JSON.parse(str) : [];
                             data = JSON.parse(data);
                             for (var i = 0; i < data.length; i++) {{
-                                $('#{ClientID}-upload-preview').append('<div><div style=""background-image:url({Core.Entities.Config.CDNURL}' + data[i].ThumbName + ')""></div></div>');
+                                $('#{ClientID}-upload-preview').append('<div><div style=""background-image:url({Core.Entities.Config.CDNURL}/' + data[i].ThumbName + ')""></div></div>');
                                 files.push(data[i]);
                             }}
                             $('#{ClientID}-upload-files').val(JSON.stringify(files));

@@ -267,6 +267,7 @@
     <Property Name="VerificationCodeExpiry" Type="datetime" Precision="0" />
     <Property Name="NotificationPreferences" Type="smallint" Nullable="false" />
     <Property Name="InterestId" Type="smallint" Nullable="false" />
+    <Property Name="LanguageId" Type="smallint" Nullable="false" />
     <Property Name="SignalRConnectionId" Type="varchar" MaxLength="256" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />
     <Property Name="RoleList" Type="varchar" MaxLength="1024" />

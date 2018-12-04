@@ -47,7 +47,8 @@ namespace Agrishare.API.Controllers.CMS
             {
                 Entity = Entities.User.Find(Id: Id).AdminJson(),
                 Roles = EnumInfo.ToList<Entities.Role>(),
-                Genders = EnumInfo.ToList<Entities.Gender>()
+                Genders = EnumInfo.ToList<Entities.Gender>(),
+                Languages = EnumInfo.ToList<Entities.Language>()
             };
 
             return Success(data);

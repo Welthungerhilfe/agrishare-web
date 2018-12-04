@@ -272,6 +272,7 @@
           <Property Name="VerificationCodeExpiry" Type="datetime" Precision="0" />
           <Property Name="NotificationPreferences" Type="smallint" Nullable="false" />
           <Property Name="InterestId" Type="smallint" Nullable="false" />
+          <Property Name="LanguageId" Type="smallint" Nullable="false" />
           <Property Name="SignalRConnectionId" Type="varchar" MaxLength="256" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
           <Property Name="RoleList" Type="varchar" MaxLength="1024" />
@@ -870,6 +871,7 @@
           <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="LanguageId" Type="AgrishareModel.Language" Nullable="false" />
         </EntityType>
         <Association Name="bookings_ibfk_1">
           <End Role="Users" Type="Self.User" Multiplicity="1">
@@ -1421,6 +1423,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="Language" UnderlyingType="Int16">
+          <Member Name="English" Value="1" />
+          <Member Name="Shona" Value="2" />
+          <Member Name="Ndebele" Value="3" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1628,6 +1635,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="AgrishareModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
                 <ScalarProperty Name="InterestId" ColumnName="InterestId" />
                 <ScalarProperty Name="NotificationPreferences" ColumnName="NotificationPreferences" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />

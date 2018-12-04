@@ -41,7 +41,7 @@ namespace Agrishare.Core.Entities
         }
 
         public static List<Booking> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int ListingId = 0, int UserId = 0, 
-            int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null, BookingStatus Status = BookingStatus.None)
+            int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null, BookingStatus Status = BookingStatus.None, bool Upcoming = false)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -70,6 +70,9 @@ namespace Agrishare.Core.Entities
 
                 if (Status != BookingStatus.None)
                     query = query.Where(e => e.StatusId == Status);
+
+                if (Upcoming)
+                    query = query.Where(e => e.StatusId == BookingStatus.Approved || e.StatusId == BookingStatus.InProgress);
 
                 query = query.OrderBy(Sort.Coalesce(DefaultSort));
 

@@ -227,6 +227,7 @@
     <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <Property Name="LanguageId" Type="AgrishareModel.Language" Nullable="false" />
   </EntityType>
   <Association Name="bookings_ibfk_1">
     <End Role="Users" Type="Self.User" Multiplicity="1">
@@ -778,4 +779,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EnumType Name="Language" UnderlyingType="Int16">
+    <Member Name="English" Value="1" />
+    <Member Name="Shona" Value="2" />
+    <Member Name="Ndebele" Value="3" />
+  </EnumType>
 </Schema>

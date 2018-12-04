@@ -20,6 +20,7 @@ namespace Agrishare.Core.Entities
         public string Interest => $"{InterestId}".ExplodeCamelCase();
         public string Gender => $"{GenderId}".ExplodeCamelCase();
         public string Status => $"{StatusId}".ExplodeCamelCase();
+        public string Language => $"{LanguageId}".ExplodeCamelCase();
 
         private List<Role> roles { get; set; }
         public List<Role> Roles
@@ -167,10 +168,11 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Id,
+                Title,
                 FirstName,
                 LastName,
                 Telephone,
-                Title
+                Language
             };
         }
 
@@ -199,7 +201,9 @@ namespace Agrishare.Core.Entities
                     Email = (NotificationPreferences & (int)Agrishare.Core.Entities.NotificationPreferences.Email) > 0
                 },
                 InterestId,
-                Interest
+                Interest,
+                LanguageId,
+                Language
             };
         }
 
@@ -224,6 +228,8 @@ namespace Agrishare.Core.Entities
                 Interest,
                 StatusId,
                 Status,
+                LanguageId,
+                Language,
                 Roles,
                 DateCreated,
                 LastModified

@@ -1,5 +1,6 @@
 ﻿using Agrishare.API;
 using Agrishare.Core;
+using System;
 using System.Linq;
 using System.Web.Http;
 using Entities = Agrishare.Core.Entities;
@@ -76,10 +77,47 @@ namespace Agrishare.API.Controllers.CMS
                 return Error("Listing not found");
 
             if (listing.Delete())
+            {
+                var bookings = Entities.Booking.List(ListingId: listing.Id, StartDate: DateTime.Now, Upcoming: true);
+                foreach (var booking in bookings)
+                {
+                    booking.StatusId = Entities.BookingStatus.Cancelled;
+                    if (booking.Save())
+                    {
+                        // TODO refund users
+
+                        var notifications = Entities.Notification.List(BookingId: booking.Id, Type: Entities.NotificationType.BookingCancelled);
+                        foreach (var notification in notifications)
+                        {
+                            notification.StatusId = Entities.NotificationStatus.Complete;
+                            notification.Save();
+                        }
+
+                        new Entities.Notification
+                        {
+                            Booking = booking,
+                            GroupId = Entities.NotificationGroup.Seeking,
+                            TypeId = Entities.NotificationType.BookingCancelled,
+                            User = Entities.User.Find(Id: booking.UserId)
+                        }.Save(Notify: true);
+
+                        new Entities.Notification
+                        {
+                            Booking = booking,
+                            GroupId = Entities.NotificationGroup.Offering,
+                            TypeId = Entities.NotificationType.BookingCancelled,
+                            User = Entities.User.Find(Id: booking.Listing.UserId)
+                        }.Save(Notify: true);
+
+                        Entities.Counter.Hit(booking.UserId, Entities.Counters.CancelBooking, booking.Service.CategoryId);
+                    }
+                }
+
                 return Success(new
                 {
                     listing.Id
                 });
+            }
 
             return Error("An unknown error occurred");
         }

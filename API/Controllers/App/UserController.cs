@@ -1,5 +1,6 @@
 ﻿using Agrishare.API.Models;
 using Agrishare.Core;
+using Agrishare.Core.Entities;
 using System;
 using System.Text.RegularExpressions;
 using System.Web.Http;
@@ -45,7 +46,8 @@ namespace Agrishare.API.Controllers.App
                 EmailAddress = User.EmailAddress,
                 DateOfBirth = User.DateOfBirth,
                 GenderId = User.GenderId,
-                ClearPassword = User.PIN
+                ClearPassword = User.PIN,
+                LanguageId = User.LanguageId ?? Entities.Language.English
             };
 
             if (!Regex.IsMatch(user.Telephone, @"^07[\d]{8}"))
@@ -216,6 +218,7 @@ namespace Agrishare.API.Controllers.App
             CurrentUser.EmailAddress = User.EmailAddress;
             CurrentUser.DateOfBirth = User.DateOfBirth;
             CurrentUser.GenderId = User.GenderId;
+            CurrentUser.LanguageId = User.LanguageId ?? Entities.Language.English;
 
             if (newTelephone)
                 CurrentUser.StatusId = Entities.UserStatus.Pending;
@@ -257,6 +260,21 @@ namespace Agrishare.API.Controllers.App
             if (Email)
                 CurrentUser.NotificationPreferences += (int)Entities.NotificationPreferences.Email;
 
+            if (CurrentUser.Save())
+                return Success(new
+                {
+                    User = CurrentUser.ProfileJson()
+                });
+
+            return Error("Could not update preferences");
+        }
+               
+        [@Authorize(Roles = "User")]
+        [Route("profile/preferences/language/update")]
+        [AcceptVerbs("GET")]
+        public object UpdateLanguagePreference(Language LanguageId)
+        {
+            CurrentUser.LanguageId = LanguageId;
             if (CurrentUser.Save())
                 return Success(new
                 {

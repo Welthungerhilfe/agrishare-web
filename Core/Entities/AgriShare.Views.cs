@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets2BCCC82083450F49FA3E8CE0030867C3CC2AE3C83E9B92368B7F45F6192C0F94))]
+[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets4CB2553B41774B4AB25AD29957C46DC54B8FE4CA840E1302F0271946CE4B4221))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -17,18 +17,18 @@ namespace Edm_EntityMappingGeneratedViews
     /// <Summary>
     /// The type contains views for EntitySets and AssociationSets that were generated at design time.
     /// </Summary>
-    public sealed class ViewsForBaseEntitySets2BCCC82083450F49FA3E8CE0030867C3CC2AE3C83E9B92368B7F45F6192C0F94 : System.Data.Mapping.EntityViewContainer
+    public sealed class ViewsForBaseEntitySets4CB2553B41774B4AB25AD29957C46DC54B8FE4CA840E1302F0271946CE4B4221 : System.Data.Mapping.EntityViewContainer
     {
         
         /// <Summary>
         /// The constructor stores the views for the extents and also the hash values generated based on the metadata and mapping closure and views.
         /// </Summary>
-        public ViewsForBaseEntitySets2BCCC82083450F49FA3E8CE0030867C3CC2AE3C83E9B92368B7F45F6192C0F94()
+        public ViewsForBaseEntitySets4CB2553B41774B4AB25AD29957C46DC54B8FE4CA840E1302F0271946CE4B4221()
         {
             this.EdmEntityContainerName = "AgrishareEntities";
             this.StoreEntityContainerName = "AgrishareModelStoreContainer";
-            this.HashOverMappingClosure = "494ea370b8e3e4312fe3cdc2f11b416b62a2c14db1f55b3852a18b45a1d234fc";
-            this.HashOverAllExtentViews = "fe7af760fb08fe9ae34bcc9b09aceacd055fd58228c869bb7657837387620af6";
+            this.HashOverMappingClosure = "00a12ce7938a68e96ff6ca7ed6795763f54527bf6a26e85aa279e682b90e9de2";
+            this.HashOverAllExtentViews = "cd2e56ddff2912c7395b2d80daf9c53fcd7968a891f62e926e3f554074bb4cab";
             this.ViewCount = 32;
         }
         
@@ -347,24 +347,25 @@ namespace Edm_EntityMappingGeneratedViews
                     "s_Telephone, T1.Users_GenderId, T1.Users_DateOfBirth, T1.Users_Password, T1.User" +
                     "s_Salt, T1.Users_AuthToken, T1.Users_FailedLoginAttempts, T1.Users_VerificationC" +
                     "ode, T1.Users_VerificationCodeExpiry, T1.Users_NotificationPreferences, T1.Users" +
-                    "_InterestId, T1.Users_SignalRConnectionId, T1.Users_StatusId, T1.Users_RoleList," +
-                    " T1.Users_DateCreated, T1.Users_LastModified, T1.Users_Deleted)\r\n    FROM (\r\n   " +
-                    "     SELECT \r\n            T.Id AS Users_Id, \r\n            T.FirstName AS Users_F" +
-                    "irstName, \r\n            T.LastName AS Users_LastName, \r\n            T.EmailAddre" +
-                    "ss AS Users_EmailAddress, \r\n            T.Telephone AS Users_Telephone, \r\n      " +
-                    "      CAST(T.GenderId AS [Edm.Int16]) AS Users_GenderId, \r\n            T.DateOfB" +
-                    "irth AS Users_DateOfBirth, \r\n            T.Password AS Users_Password, \r\n       " +
-                    "     T.Salt AS Users_Salt, \r\n            T.AuthToken AS Users_AuthToken, \r\n     " +
-                    "       T.FailedLoginAttempts AS Users_FailedLoginAttempts, \r\n            T.Verif" +
-                    "icationCode AS Users_VerificationCode, \r\n            T.VerificationCodeExpiry AS" +
-                    " Users_VerificationCodeExpiry, \r\n            T.NotificationPreferences AS Users_" +
-                    "NotificationPreferences, \r\n            CAST(T.InterestId AS [Edm.Int16]) AS User" +
-                    "s_InterestId, \r\n            T.SignalRConnectionId AS Users_SignalRConnectionId, " +
-                    "\r\n            CAST(T.StatusId AS [Edm.Int16]) AS Users_StatusId, \r\n            T" +
-                    ".RoleList AS Users_RoleList, \r\n            T.DateCreated AS Users_DateCreated, \r" +
-                    "\n            T.LastModified AS Users_LastModified, \r\n            T.Deleted AS Us" +
-                    "ers_Deleted, \r\n            True AS _from0\r\n        FROM AgrishareEntities.Users " +
-                    "AS T\r\n    ) AS T1");
+                    "_InterestId, T1.Users_LanguageId, T1.Users_SignalRConnectionId, T1.Users_StatusI" +
+                    "d, T1.Users_RoleList, T1.Users_DateCreated, T1.Users_LastModified, T1.Users_Dele" +
+                    "ted)\r\n    FROM (\r\n        SELECT \r\n            T.Id AS Users_Id, \r\n            T" +
+                    ".FirstName AS Users_FirstName, \r\n            T.LastName AS Users_LastName, \r\n   " +
+                    "         T.EmailAddress AS Users_EmailAddress, \r\n            T.Telephone AS User" +
+                    "s_Telephone, \r\n            CAST(T.GenderId AS [Edm.Int16]) AS Users_GenderId, \r\n" +
+                    "            T.DateOfBirth AS Users_DateOfBirth, \r\n            T.Password AS User" +
+                    "s_Password, \r\n            T.Salt AS Users_Salt, \r\n            T.AuthToken AS Use" +
+                    "rs_AuthToken, \r\n            T.FailedLoginAttempts AS Users_FailedLoginAttempts, " +
+                    "\r\n            T.VerificationCode AS Users_VerificationCode, \r\n            T.Veri" +
+                    "ficationCodeExpiry AS Users_VerificationCodeExpiry, \r\n            T.Notification" +
+                    "Preferences AS Users_NotificationPreferences, \r\n            CAST(T.InterestId AS" +
+                    " [Edm.Int16]) AS Users_InterestId, \r\n            CAST(T.LanguageId AS [Edm.Int16" +
+                    "]) AS Users_LanguageId, \r\n            T.SignalRConnectionId AS Users_SignalRConn" +
+                    "ectionId, \r\n            CAST(T.StatusId AS [Edm.Int16]) AS Users_StatusId, \r\n   " +
+                    "         T.RoleList AS Users_RoleList, \r\n            T.DateCreated AS Users_Date" +
+                    "Created, \r\n            T.LastModified AS Users_LastModified, \r\n            T.Del" +
+                    "eted AS Users_Deleted, \r\n            True AS _from0\r\n        FROM AgrishareEntit" +
+                    "ies.Users AS T\r\n    ) AS T1");
         }
         
         /// <Summary>
@@ -644,23 +645,24 @@ namespace Edm_EntityMappingGeneratedViews
                     "_InterestId, T1.User_RoleList, T1.User_Password, T1.User_Salt, T1.User_AuthToken" +
                     ", T1.User_FailedLoginAttempts, T1.User_VerificationCode, T1.User_VerificationCod" +
                     "eExpiry, T1.User_SignalRConnectionId, T1.User_StatusId, T1.User_DateCreated, T1." +
-                    "User_LastModified, T1.User_Deleted)\r\n    FROM (\r\n        SELECT \r\n            T." +
-                    "Id AS User_Id, \r\n            T.FirstName AS User_FirstName, \r\n            T.Last" +
-                    "Name AS User_LastName, \r\n            T.EmailAddress AS User_EmailAddress, \r\n    " +
-                    "        T.Telephone AS User_Telephone, \r\n            CAST(T.GenderId AS [Agrisha" +
-                    "reModel.Gender]) AS User_GenderId, \r\n            T.DateOfBirth AS User_DateOfBir" +
-                    "th, \r\n            T.NotificationPreferences AS User_NotificationPreferences, \r\n " +
-                    "           CAST(T.InterestId AS [AgrishareModel.Interest]) AS User_InterestId, \r" +
-                    "\n            T.RoleList AS User_RoleList, \r\n            T.Password AS User_Passw" +
-                    "ord, \r\n            T.Salt AS User_Salt, \r\n            T.AuthToken AS User_AuthTo" +
-                    "ken, \r\n            T.FailedLoginAttempts AS User_FailedLoginAttempts, \r\n        " +
-                    "    T.VerificationCode AS User_VerificationCode, \r\n            T.VerificationCod" +
-                    "eExpiry AS User_VerificationCodeExpiry, \r\n            T.SignalRConnectionId AS U" +
-                    "ser_SignalRConnectionId, \r\n            CAST(T.StatusId AS [AgrishareModel.UserSt" +
-                    "atus]) AS User_StatusId, \r\n            T.DateCreated AS User_DateCreated, \r\n    " +
-                    "        T.LastModified AS User_LastModified, \r\n            T.Deleted AS User_Del" +
-                    "eted, \r\n            True AS _from0\r\n        FROM AgrishareModelStoreContainer.Us" +
-                    "ers AS T\r\n    ) AS T1");
+                    "User_LastModified, T1.User_Deleted, T1.User_LanguageId)\r\n    FROM (\r\n        SEL" +
+                    "ECT \r\n            T.Id AS User_Id, \r\n            T.FirstName AS User_FirstName, " +
+                    "\r\n            T.LastName AS User_LastName, \r\n            T.EmailAddress AS User_" +
+                    "EmailAddress, \r\n            T.Telephone AS User_Telephone, \r\n            CAST(T." +
+                    "GenderId AS [AgrishareModel.Gender]) AS User_GenderId, \r\n            T.DateOfBir" +
+                    "th AS User_DateOfBirth, \r\n            T.NotificationPreferences AS User_Notifica" +
+                    "tionPreferences, \r\n            CAST(T.InterestId AS [AgrishareModel.Interest]) A" +
+                    "S User_InterestId, \r\n            T.RoleList AS User_RoleList, \r\n            T.Pa" +
+                    "ssword AS User_Password, \r\n            T.Salt AS User_Salt, \r\n            T.Auth" +
+                    "Token AS User_AuthToken, \r\n            T.FailedLoginAttempts AS User_FailedLogin" +
+                    "Attempts, \r\n            T.VerificationCode AS User_VerificationCode, \r\n         " +
+                    "   T.VerificationCodeExpiry AS User_VerificationCodeExpiry, \r\n            T.Sign" +
+                    "alRConnectionId AS User_SignalRConnectionId, \r\n            CAST(T.StatusId AS [A" +
+                    "grishareModel.UserStatus]) AS User_StatusId, \r\n            T.DateCreated AS User" +
+                    "_DateCreated, \r\n            T.LastModified AS User_LastModified, \r\n            T" +
+                    ".Deleted AS User_Deleted, \r\n            CAST(T.LanguageId AS [AgrishareModel.Lan" +
+                    "guage]) AS User_LanguageId, \r\n            True AS _from0\r\n        FROM Agrishare" +
+                    "ModelStoreContainer.Users AS T\r\n    ) AS T1");
         }
         
         /// <Summary>

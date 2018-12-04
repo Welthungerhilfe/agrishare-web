@@ -234,7 +234,7 @@ namespace Agrishare.Web.Pages.Account.Booking
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 var photo = (Core.Entities.File)e.Item.DataItem;
-                ((Image)e.Item.FindControl("Thumb")).ImageUrl = $"{Core.Entities.Config.CDNURL}{photo.ZoomName}";
+                ((Image)e.Item.FindControl("Thumb")).ImageUrl = $"{Core.Entities.Config.CDNURL}/{photo.ZoomName}";
             }
         }
 

@@ -292,7 +292,9 @@
     <Compile Include="Entities\NotificationEntity.cs" />
     <Compile Include="Entities\ServiceEntity.cs" />
     <Compile Include="Entities\NotificationPreferences.cs" />
-    <Compile Include="Entities\Language.cs" />
+    <Compile Include="Entities\Language.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\TemplateEntity.cs" />
     <Compile Include="Entities\FaqEntity.cs" />
     <Compile Include="Entities\CategoryEntity.cs" />

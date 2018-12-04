@@ -50,7 +50,7 @@ namespace Agrishare.Web.Pages.Account.Seeking
                 var result = (Core.Entities.ListingSearchResult)e.Item.DataItem;
 
                 if ((result.Photos?.Count ?? 0) > 0)
-                    ((HtmlContainerControl)e.Item.FindControl("Photo")).Style.Add("background-image", $"url({Core.Entities.Config.CDNURL}{result.Photos.FirstOrDefault().ThumbName})");
+                    ((HtmlContainerControl)e.Item.FindControl("Photo")).Style.Add("background-image", $"url({Core.Entities.Config.CDNURL}/{result.Photos.FirstOrDefault().ThumbName})");
 
                 ((Literal)e.Item.FindControl("Distance")).Text = $"{Math.Round(result.Distance)}kms away";
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(result.Title);
