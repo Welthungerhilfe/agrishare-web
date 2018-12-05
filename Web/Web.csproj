@@ -92,9 +92,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Pages\About\Contact.aspx" />
+    <Content Include="Pages\About\Rules.aspx" />
+    <Content Include="Pages\Blog.aspx" />
     <Content Include="Pages\About\FAQs.aspx" />
-    <Content Include="Pages\About\Seeking.aspx" />
-    <Content Include="Pages\About\Offering.aspx" />
+    <Content Include="Pages\About\Privacy.aspx" />
+    <Content Include="Pages\About\Terms.aspx" />
     <Content Include="Pages\Account\Bookings.aspx" />
     <Content Include="Pages\Account\Listing\Reviews.aspx" />
     <Content Include="Pages\Account\Listing\Processing.aspx" />
@@ -112,6 +114,7 @@
     <Content Include="Pages\Account\Seeking\Results.aspx" />
     <Content Include="Pages\Error404.html" />
     <Content Include="Pages\Error500.html" />
+    <Content Include="Pages\About.aspx" />
     <Content Include="Pages\Homepage.aspx" />
     <Content Include="Pages\Account\GetStarted.aspx" />
     <Content Include="Resources\Images\App-Background.png" />
@@ -119,6 +122,7 @@
     <Content Include="Resources\Images\Google-Play.png" />
     <Content Include="Resources\Images\Home-Combine.jpg" />
     <Content Include="Resources\Images\Home-Curve.png" />
+    <Content Include="Resources\Images\Home-Tractor.jpg" />
     <Content Include="Resources\Images\Icon-Close.svg" />
     <Content Include="Resources\Images\Icon-Menu.svg" />
     <Content Include="Resources\Images\Lorry.svg" />
@@ -156,6 +160,13 @@
     </Compile>
     <Compile Include="Pages\About\Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Blog.aspx.cs">
+      <DependentUpon>Blog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Blog.aspx.designer.cs">
+      <DependentUpon>Blog.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\About\FAQs.aspx.cs">
       <DependentUpon>FAQs.aspx</DependentUpon>
@@ -305,6 +316,7 @@
     <Content Include="Resources\Styles\account.scss" />
     <Content Include="Resources\Styles\faqs.scss" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Resources\Styles\blogs.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

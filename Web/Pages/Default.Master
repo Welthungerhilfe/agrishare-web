@@ -41,12 +41,23 @@
         </main>
 
         <footer>
-            <p>
-                &copy; Copyright <%=DateTime.Now.Year %> <a href="https://www.welthungerhilfe.org/">Welthungerhilfe</a>. All rights reserved.
-            </p>
-            <p>
-                <span>Digital solution by</span> <a href="https://www.c2.co.zw/"><img src="/Resources/Images/C2-Logo.svg" title="C2 Digital" /></a>
-            </p>
+            <ul>
+                <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/about/faqs">FAQs</a></li>
+                <li><a href="/about/contact">Contact</a></li>
+                <li><a href="/about/terms">Terms &amp; Conditions</a></li>
+                <li><a href="/about/privacy">Privacy Policy</a></li>
+                <li><a href="/about/rules">App Rules</a></li>
+            </ul>
+            <div>
+                <p>                
+                    &copy; Copyright <%=DateTime.Now.Year %> <a href="https://www.welthungerhilfe.org/">Welthungerhilfe</a>. All rights reserved.
+                </p>
+                <p>
+                    <span>Digital solution by</span> <a href="https://www.c2.co.zw/"><img src="/Resources/Images/C2-Logo.svg" title="C2 Digital" /></a>
+                </p>
+            </div>
         </footer>
 
     </form>

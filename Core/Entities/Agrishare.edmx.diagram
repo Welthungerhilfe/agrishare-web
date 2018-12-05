@@ -47,6 +47,7 @@
           <ConnectorPoint PointX="5.8626971836921351" PointY="12.77830078125" />
         </AssociationConnector>
         <AssociationConnector Association="AgrishareModel.ratings_ibfk_3" />
+        <EntityTypeShape EntityType="AgrishareModel.Blog" Width="1.5" PointX="0.75" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

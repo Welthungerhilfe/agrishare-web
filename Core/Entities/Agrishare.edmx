@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AgrishareModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Blogs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="1024" />
+          <Property Name="Photo" Type="varchar" MaxLength="1024" />
+          <Property Name="Content" Type="text" />
+          <Property Name="DateCreated" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Deleted" Type="bool" Nullable="false" />
+        </EntityType>
         <EntityType Name="Bookings">
           <Key>
             <PropertyRef Name="Id" />
@@ -547,6 +559,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AgrishareModelStoreContainer">
+          <EntitySet Name="Blogs" EntityType="Self.Blogs" Schema="agrishare" store:Type="Tables" />
           <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="agrishare" store:Type="Tables" />
           <EntitySet Name="BookingUsers" EntityType="Self.BookingUsers" Schema="agrishare" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="agrishare" store:Type="Tables" />
@@ -1110,6 +1123,7 @@
             <End Role="Booking" EntitySet="Bookings" />
             <End Role="Rating" EntitySet="Ratings" />
           </AssociationSet>
+          <EntitySet Name="Blogs" EntityType="AgrishareModel.Blog" />
         </EntityContainer>
         <EntityType Name="Rating">
           <Key>
@@ -1428,6 +1442,18 @@
           <Member Name="Shona" Value="2" />
           <Member Name="Ndebele" Value="3" />
         </EnumType>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="PhotoPath" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1721,6 +1747,19 @@
                 <ScalarProperty Name="EndpointARN" ColumnName="EndpointARN" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blogs">
+            <EntityTypeMapping TypeName="AgrishareModel.Blog">
+              <MappingFragment StoreEntitySet="Blogs">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="PhotoPath" ColumnName="Photo" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

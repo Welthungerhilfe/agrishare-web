@@ -28,7 +28,7 @@ agrishareApp.directive('glEditor', function ($timeout, App) {
                 '<div>' +
                 '<textarea ng-model="ngModel" ' + requiredAttr + ' name="' + name + '"></textarea>' +
                 '</div>' +
-                '</div>'
+                '</div>';
         },
 
         link: function (scope, element, attrs) {

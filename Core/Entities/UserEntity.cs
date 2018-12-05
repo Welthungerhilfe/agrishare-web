@@ -276,7 +276,7 @@ namespace Agrishare.Core.Entities
                 VerificationCodeExpiry = DateTime.UtcNow.AddDays(1);
                 Save();
             }
-            var message = $"Your verification code is {VerificationCode}";
+            var message = string.Format(Translations.Translate("Verification Code", LanguageId), VerificationCode);
             return SMS.SendMessage(Telephone, message);
         }
 

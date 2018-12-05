@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Http;
 
@@ -13,14 +14,23 @@ namespace Agrishare.API.Controllers.App
         [AcceptVerbs("POST")]
         public object Post()
         {
-            var list = new List<string>();
-            foreach(HttpPostedFile file in HttpContext.Current.Request.Files)
+            var list = new List<Core.Entities.File>();
+            foreach (string key in HttpContext.Current.Request.Files.AllKeys)
+            {
+                var file = HttpContext.Current.Request.Files[key];
                 using (var ms = new MemoryStream())
                 {
                     file.InputStream.CopyTo(ms);
-                    list.Add(Core.Entities.File.Save(file.FileName, ms.ToArray()));
+                    var filename = Core.Entities.File.Save(file.FileName, ms.ToArray());
+
+                    var obj = new Core.Entities.File(filename);
+                    obj.Resize(200, 200, obj.ThumbName);
+                    obj.Resize(800, 800, obj.ZoomName);
+
+                    list.Add(obj);
                 }
-            return Success(list);
+            }
+            return Success(list.Select(o => o.JSON()));
         }
 
         [Route("upload/photo")]

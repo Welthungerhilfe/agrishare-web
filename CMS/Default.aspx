@@ -11,6 +11,7 @@
     <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+    <script>window.CKEDITOR_BASEPATH = '/assets/scripts/ckeditor/';</script>
 </head>
 <body ng-controller="AppController" id="Body" runat="server">
     

@@ -1,0 +1,41 @@
+﻿
+<div ng-controller="ListViewController" ag-title="Blogs" ag-selected-url="#/blogs/list" ag-api-route="/cms/blogs/">
+
+    <ag-title-bar>
+
+        <ag-title-bar-search ag-controller="list"></ag-title-bar-search>
+
+        <gl-popup-menu gl-position="top right" class="responsive">
+            <gl-menu-item gl-icon="add" ng-click="app.go('/blogs/edit?'+app.returnUrlQs())">Add</gl-menu-item>
+            <gl-menu-item gl-icon="search" ng-click="list.showSearch()">Search</gl-menu-item>
+            <gl-menu-item gl-icon="refresh" gl-label-optional="true" ng-click="list.refresh()">Refresh</gl-menu-item>
+        </gl-popup-menu>
+
+    </ag-title-bar>
+
+    <ag-section ag-controller="list">
+
+        <gl-list gl-controller="list" gl-infinite="list.next()">
+            <div ng-repeat="item in list.data">
+                <icon>
+                    <i class="material-icons">description</i>
+                </icon>
+                <row class="blog">
+                    <strong>{{item.Title}}</strong>
+                    <em>{{item.DateCreated | date : 'd MMMM yyyy'}}</em>
+                </row>
+                <action>
+                    <gl-popup-menu gl-position="top right">
+                        <gl-menu-item gl-icon="visibility" ng-click="app.go('/blogs/detail/'+item.Id+'?'+app.returnUrlQs())">View</gl-menu-item>
+                        <gl-menu-item gl-icon="edit" ng-click="app.go('/blogs/edit/'+item.Id+'?'+app.returnUrlQs())">Edit</gl-menu-item>
+                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/cms/blogs/delete?id=' + item.Id)">Delete</gl-menu-item>
+                    </gl-popup-menu>
+                </action>
+            </div>
+        </gl-list>
+
+    </ag-section>
+
+    <ag-status-bar></ag-status-bar>
+
+</div>

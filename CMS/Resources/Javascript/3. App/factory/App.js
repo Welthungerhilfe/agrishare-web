@@ -28,6 +28,7 @@ agrishareApp.factory('App', function ($location, Utils) {
             },
             {
                 title: "Admin", icon: "settings", submenu: [
+                    { title: "Blog", url: "#/blogs/list" },
                     { title: "FAQs", url: "#/faqs/list" },
                     { title: "Log", url: "#/log/list" },
                     { title: "Settings", url: "#/settings/list" },

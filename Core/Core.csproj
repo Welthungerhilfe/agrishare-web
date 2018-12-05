@@ -192,6 +192,9 @@
       <DependentUpon>Agrishare.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entities\AgriShare.Views.cs" />
+    <Compile Include="Entities\Blog.cs">
+      <DependentUpon>Agrishare.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Booking.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
@@ -306,9 +309,11 @@
     <Compile Include="Entities\TransactionStatus.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Translation.cs" />
     <Compile Include="Entities\User.cs">
       <DependentUpon>Agrishare.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\BlogEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\UserStatus.cs">

@@ -107,6 +107,15 @@ gl-list {
                     color: gray;
                 }
 
+                &.blog {
+                    display: flex;
+                    align-items: center;
+
+                    > strong {
+                        flex: 1;
+                    }
+                }
+
                 &.booking {
                     display: flex;
                     align-items: center;

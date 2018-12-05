@@ -1,0 +1,26 @@
+﻿
+<div ng-controller="FormViewController" ag-title="Blog" ag-selected-url="#/blogs/list" ag-api-route="/cms/blogs/">
+
+    <ag-title-bar></ag-title-bar>
+
+    <ag-section ag-controller="form">
+
+        <form>
+
+            <gl-textbox gl-label="Title" ng-model="form.entity.Title" gl-required="true"></gl-textbox>
+            <gl-editor gl-label="Content" ng-model="form.entity.Content" gl-required="true"></gl-editor>
+
+            <h2>Photo</h2>
+            <gl-upload gl-lable="Photo" ng-model="form.entity" gl-model-attribute="Photo" gl-required="true"></gl-upload>
+
+        </form>
+
+    </ag-section>
+
+    <ag-status-bar>
+
+        <gl-icon-button ng-click="form.save()" class="accent" ng-disabled="EditForm.$invalid || form.busy" ng-if="form.entity">Save</gl-icon-button>
+
+    </ag-status-bar>
+
+</div>

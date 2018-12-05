@@ -134,6 +134,7 @@
     <Compile Include="Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CMS\DashboardController.cs" />
+    <Compile Include="Controllers\CMS\BlogsController.cs" />
     <Compile Include="Controllers\CMS\RatingsController.cs" />
     <Compile Include="Controllers\CMS\LogController.cs" />
     <Compile Include="Controllers\CMS\SettingsController.cs" />

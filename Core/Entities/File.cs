@@ -30,6 +30,8 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Filename,
+                Name,
+                Extension,
                 Thumb = $"{Config.CDNURL}/{ThumbName}",
                 Zoom = $"{Config.CDNURL}/{ZoomName}"
             };

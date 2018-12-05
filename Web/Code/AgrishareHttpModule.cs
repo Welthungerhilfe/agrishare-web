@@ -32,7 +32,9 @@ namespace Agrishare.Web
                 BundleMinifyCompress(Context.Request.Path);
 
             if (Context.Request.Path == "/")
+            {
                 Context.RewritePath("/Pages/Homepage.aspx", false);
+            }
             else if (Regex.IsMatch(Context.Request.Path, @"^/account/profile/[a-z]+$"))
             {
                 var path = Regex.Replace(Context.Request.Path, @"/(seeking|offering)$", "");
@@ -45,8 +47,14 @@ namespace Agrishare.Web
                 var filter = Regex.Replace(Context.Request.Path, @"/account/(bookings|notifications)/(seeking|offering)", "$2");
                 Context.RewritePath($"/Pages{path}.aspx?view={filter}", false);
             }
+            else if (Regex.IsMatch(Context.Request.Path, @"^/blog"))
+            {
+                Context.RewritePath($"/Pages/Blog.aspx", false);
+            }
             else if (Regex.IsMatch(Context.Request.Path, @"^/(about|account)"))
+            {
                 Context.RewritePath($"/Pages{Context.Request.Path.Replace("-", "")}.aspx", false);
+            }
         }
 
         private void BundleMinifyCompress(string Path)

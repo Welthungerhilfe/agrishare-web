@@ -466,6 +466,7 @@
       <End Role="Booking" EntitySet="Bookings" />
       <End Role="Rating" EntitySet="Ratings" />
     </AssociationSet>
+    <EntitySet Name="Blogs" EntityType="AgrishareModel.Blog" />
   </EntityContainer>
   <EntityType Name="Rating">
     <Key>
@@ -784,4 +785,16 @@
     <Member Name="Shona" Value="2" />
     <Member Name="Ndebele" Value="3" />
   </EnumType>
+  <EntityType Name="Blog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+    <Property Name="PhotoPath" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+    <Property Name="Content" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+  </EntityType>
 </Schema>
