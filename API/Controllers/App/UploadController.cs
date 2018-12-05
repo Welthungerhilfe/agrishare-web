@@ -59,5 +59,51 @@ namespace Agrishare.API.Controllers.App
 
             return Success(list);
         }
+
+        [Route("ckeditor/upload/image")]
+        [AcceptVerbs("POST")]
+        public object CkEditorImageUpload()
+        {
+            var Files = HttpContext.Current.Request.Files;
+            if (Files.Count == 0)
+                return Success(new
+                {
+                    uploaded = false,
+                    error = new
+                    {
+                        message = "Image was not received"
+                    }
+                });
+
+
+            var upload = Files[0];
+            var extension = Path.GetExtension(upload.FileName);
+            if (extension.ToLower() == ".png" || extension.ToLower() == ".jpg" || extension.ToLower() == ".jpeg")
+            {
+                var fileName = Guid.NewGuid() + extension;
+                var path = Core.Entities.File.CDNAbsolutePath + fileName;
+                upload.SaveAs(path);
+
+                var file = new Core.Entities.File(fileName);
+                file.Resize(200, 200, file.ThumbName);
+                file.Resize(800, 800, file.ZoomName);
+
+                return Success(new
+                {
+                    uploaded = true,
+                    url = Core.Entities.Config.CDNURL + "/" + file.ZoomName
+                });
+            }                
+
+            return Success(new
+            {
+                uploaded = false,
+                error = new
+                {
+                    message = "Cosuld not save image on server"
+                }
+            });
+
+        }
     }
 }
