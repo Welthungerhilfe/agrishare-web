@@ -202,6 +202,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="AgrishareModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
           <ScalarProperty Name="InterestId" ColumnName="InterestId" />
           <ScalarProperty Name="NotificationPreferences" ColumnName="NotificationPreferences" />
           <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
@@ -229,6 +230,7 @@
     <EntitySetMapping Name="Ratings">
       <EntityTypeMapping TypeName="AgrishareModel.Rating">
         <MappingFragment StoreEntitySet="Ratings">
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
           <ScalarProperty Name="Deleted" ColumnName="Deleted" />
           <ScalarProperty Name="LastModified" ColumnName="LastModified" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -286,6 +288,19 @@
           <ScalarProperty Name="EndpointARN" ColumnName="EndpointARN" />
           <ScalarProperty Name="Token" ColumnName="Token" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Blogs">
+      <EntityTypeMapping TypeName="AgrishareModel.Blog">
+        <MappingFragment StoreEntitySet="Blogs">
+          <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+          <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="PhotoPath" ColumnName="Photo" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

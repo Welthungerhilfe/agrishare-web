@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Agrishare.Core.Utils
 {
-    class SMS
+    public class SMS
     {
         private static string _username { get; set; }
         private static string Username
@@ -33,6 +33,17 @@ namespace Agrishare.Core.Utils
             }
         }
 
+        private static string _live { get; set; }
+        private static bool Live
+        {
+            get
+            {
+                if (_live.IsEmpty())
+                    _live = Config.Find(Key: "SMS Live").Value;
+                return _live.Equals("True", StringComparison.InvariantCultureIgnoreCase);
+            }
+        }
+
         public static decimal GetBalance()
         {
             var client = new RestClient($"https://www.txt.co.zw/Remote/AccountBalance?Username={Username}");
@@ -44,6 +55,12 @@ namespace Agrishare.Core.Utils
 
         public static bool SendMessage(string Recipient, string Message)
         {
+            if (!Live)
+            {
+                Log.Debug("SMS.SendMessage", $"To: {Recipient} Message: {Message}");
+                return true;
+            }
+
             var client = new RestClient($"https://www.txt.co.zw/Remote/SendMessage?Username={Username}&Recipients={Recipient}&Body={Message}&sending_number={Sender}");
             var request = new RestRequest(Method.GET);
             request.AddHeader("Cache-Control", "no-cache");

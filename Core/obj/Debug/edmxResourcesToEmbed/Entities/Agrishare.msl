@@ -184,13 +184,14 @@
     <EntitySetMapping Name="Transactions">
       <EntityTypeMapping TypeName="AgrishareModel.Transaction">
         <MappingFragment StoreEntitySet="Transactions">
+          <ScalarProperty Name="EcoCashReference" ColumnName="EcoCashReference" />
+          <ScalarProperty Name="ServerReference" ColumnName="ServerReference" />
           <ScalarProperty Name="Error" ColumnName="Error" />
           <ScalarProperty Name="ClientCorrelator" ColumnName="ClientCorrelator" />
           <ScalarProperty Name="Log" ColumnName="Log" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="BookingId" ColumnName="BookingId" />
           <ScalarProperty Name="BookingUserId" ColumnName="BookingUserId" />
-          <ScalarProperty Name="Reference" ColumnName="Reference" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="StatusId" ColumnName="StatusId" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

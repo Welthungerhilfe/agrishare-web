@@ -39,14 +39,83 @@ namespace Agrishare.Core.Entities
 
         public static int Count(int CategoryId, int ServiceId, decimal Latitude,
             decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile, BookingFor For, decimal DestinationLatitude,
-            decimal DestinationLongitude, decimal TotalVolume)
+            decimal DestinationLongitude, decimal TotalVolume, int ListingId = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
                 var sql = new StringBuilder();
+                sql.AppendLine("SELECT Services.Id");
 
-                sql.AppendLine("SELECT");
-                sql.AppendLine("COUNT(Listings.Id)");
+                //sql.AppendLine("SELECT");
+                //sql.AppendLine("Services.Id AS ServiceId,");
+                //sql.AppendLine("Listings.Id AS ListingId,");
+                //sql.AppendLine("Listings.Title AS Title,");
+                //sql.AppendLine("Listings.Year AS YEAR,");
+                //sql.AppendLine("Listings.ConditionId AS ConditionId,");
+                //sql.AppendLine("Listings.AverageRating AS AverageRating,");
+                //sql.AppendLine("Listings.Photos AS PhotoPaths,");
+
+                // distances
+                var distance = SQL.Distance(Latitude, Longitude, "Listings");
+                var depotToPickup = SQL.Distance(Latitude, Longitude, "Listings");
+                var pickupToDropoff = SQL.Distance(Latitude, Longitude, DestinationLatitude, DestinationLongitude);
+                var dropoffToDepot = SQL.Distance(DestinationLatitude, DestinationLongitude, "Listings");
+                var trips = $"0";
+                if (CategoryId == Category.LorriesId)
+                    trips = $"(CEIL({TotalVolume} / Services.TotalVolume))";
+
+                var transportDistance = $"0";
+                if (CategoryId == Category.LorriesId)
+                    transportDistance = $"({depotToPickup} + {dropoffToDepot} + ({pickupToDropoff} * ({trips} - 1)))";
+                else if (Mobile)
+                    transportDistance = $"{distance} * 2";
+
+                // size
+                string sizeField = "";
+                if (CategoryId == Category.LorriesId)
+                {
+                    sizeField = $"({trips})";
+                    //sql.AppendLine($"{sizeField} AS Size,");
+                }
+                else
+                {
+                    sizeField = $"({Size})";
+                    //sql.AppendLine($"{sizeField} AS Size,");
+                }
+
+                // time
+                var days = $"CEIL((Services.TimePerQuantityUnit * {sizeField}) / 8)";
+                if (CategoryId == Category.LorriesId)
+                {
+                    var totalDistance = $"(({depotToPickup} + {dropoffToDepot} + ({pickupToDropoff} * (({trips} * 2) - 1))) / 100)";
+                    days = $"CEIL((Services.TimePerQuantityUnit * {totalDistance}) / 8)";
+                }
+                else if (CategoryId == Category.ProcessingId)
+                {
+                    days = $"CEIL(({sizeField} / Services.TimePerQuantityUnit) / 8)";
+                }
+
+                
+                // costs
+                var hireCost = $"(Services.PricePerQuantityUnit * {Size})";
+                if (CategoryId == Category.LorriesId)
+                    hireCost = $"(Services.PricePerQuantityUnit * {trips})";
+                var fuelCost = $"0";
+                if (CategoryId != Category.LorriesId && IncludeFuel)
+                    fuelCost = $"(Services.FuelPerQuantityUnit * {Size} * Services.FuelPrice)";
+                var transportCost = $"({transportDistance} * Services.PricePerDistanceUnit)";
+
+                //sql.AppendLine($"ROUND({transportCost}) AS TransportCost,");
+                //sql.AppendLine($"ROUND({fuelCost}) AS FuelCost,");
+                //sql.AppendLine($"ROUND({hireCost}) AS HireCost,");
+                //sql.AppendLine($"ROUND({hireCost}) + ROUND({fuelCost}) + ROUND({transportCost}) AS Price,");
+                //sql.AppendLine($"{transportDistance} AS TransportDistance,");
+                //sql.AppendLine($"{distance} AS Distance,");
+                //sql.AppendLine($"{trips} AS Trips,");
+                //sql.AppendLine($"{days} AS Days,");
+
+                //sql.AppendLine($"DATE('{SQL.Safe(StartDate)}') AS StartDate,");
+                //sql.AppendLine($"DATE_ADD('{SQL.Safe(StartDate)}', INTERVAL ({days} - 1) DAY) AS EndDate");
                 sql.AppendLine("FROM Listings");
                 sql.AppendLine("INNER JOIN Services ON Listings.Id = Services.ListingId");
                 sql.AppendLine("WHERE Listings.Deleted = 0 AND Services.Deleted = 0 AND Listings.StatusId = 1");
@@ -54,8 +123,6 @@ namespace Agrishare.Core.Entities
                 sql.AppendLine($"AND Services.Mobile = {SQL.Safe(Mobile)}");
                 sql.AppendLine($"AND Services.CategoryId = {ServiceId}");
                 sql.AppendLine($"AND {Size} >= MinimumQuantity");
-
-                var distance = SQL.Distance(Latitude, Longitude, "Listings");
 
                 if (Mobile)
                     sql.AppendLine($"AND {distance} <= Services.MaximumDistance");
@@ -68,11 +135,11 @@ namespace Agrishare.Core.Entities
                 else
                     sql.AppendLine($"AND Listings.AvailableWithoutFuel = 1");
 
-                sql.AppendLine($"GROUP BY Services.Id");
+                if (ListingId > 0)
+                    sql.AppendLine($"AND Listings.Id = {ListingId}");
 
-                #if DEBUG
-                Log.Debug("Count SQL", sql.ToString());
-                #endif
+                //sql.AppendLine($"GROUP BY Services.Id ORDER BY {sort} LIMIT {PageIndex * PageSize}, {PageSize}");
+                sql.AppendLine($"GROUP BY Services.Id");
 
                 return ctx.Database.SqlQuery<int>(sql.ToString()).DefaultIfEmpty(0).FirstOrDefault();
             }

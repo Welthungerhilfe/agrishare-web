@@ -256,7 +256,8 @@
           <Property Name="ClientCorrelator" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="BookingId" Type="int" Nullable="false" />
           <Property Name="BookingUserId" Type="int" Nullable="false" />
-          <Property Name="Reference" Type="varchar" MaxLength="256" />
+          <Property Name="ServerReference" Type="varchar" MaxLength="256" />
+          <Property Name="EcoCashReference" Type="varchar" MaxLength="256" />
           <Property Name="Amount" Type="decimal" Precision="10" Scale="3" Nullable="false" />
           <Property Name="StatusId" Type="smallint" Nullable="false" />
           <Property Name="Log" Type="text" />
@@ -848,7 +849,8 @@
           <Property Name="ClientCorrelator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="BookingId" Type="Int32" Nullable="false" />
           <Property Name="BookingUserId" Type="Int32" Nullable="false" />
-          <Property Name="Reference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="ServerReference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="EcoCashReference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="Amount" Type="Decimal" Nullable="false" />
           <Property Name="StatusId" Type="AgrishareModel.TransactionStatus" Nullable="false" />
           <Property Name="Log" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
@@ -1643,13 +1645,14 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="AgrishareModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="EcoCashReference" ColumnName="EcoCashReference" />
+                <ScalarProperty Name="ServerReference" ColumnName="ServerReference" />
                 <ScalarProperty Name="Error" ColumnName="Error" />
                 <ScalarProperty Name="ClientCorrelator" ColumnName="ClientCorrelator" />
                 <ScalarProperty Name="Log" ColumnName="Log" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BookingId" ColumnName="BookingId" />
                 <ScalarProperty Name="BookingUserId" ColumnName="BookingUserId" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />

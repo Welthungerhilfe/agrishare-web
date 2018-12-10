@@ -17,7 +17,7 @@
         <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
                 <photo style="background-image:url({{item.Photos[0].Thumb}})"></photo>
-                <row class="listing">
+                <row class="listing" ng-click="app.go('/deleted/listings/detail/'+item.Id+'?'+app.returnUrlQs())">
                     <div>
                         <strong>{{item.Title}}</strong><br />
                         <small>{{item.Category.Title}} &bull; {{item.Brand}}</small>

@@ -91,7 +91,7 @@
                     <strong>This booking has been declined.</strong>
                 </p>
 
-                <div runat="server" id="PaymentPanel" visible="false">
+                <div runat="server" id="PaymentPanel" visible="false" style="text-align: left">
 
                     <p><strong>Make payment</strong></p>
 
@@ -157,7 +157,7 @@
                     <ul class="transactions">
                         <li ng-repeat="item in transactions">
                             <strong>{{item.BookingUser.Name}}</strong>
-                            <em>{{item.Status}}</em>
+                            <em>&mdash; {{item.Status}}</em>
                         </li>
                     </ul>
 
@@ -171,20 +171,20 @@
 
                     <p><strong>Service is in progress.</strong></p>
 
-                    <ul ng-hide="service.rate || service.incomplete">
+                    <ul ng-hide="service.rate || service.incomplete" class="completed">
                         <li><a ng-click="service.rate=true">Has this service been completed? Please leave a review.</a></li>
                         <li><a ng-click="service.incomplete=true">Was there an issue and the service was not completed? Please contact us.</a></li>
                     </ul>            
 
-                    <div ng-show="service.rate">
+                    <div ng-show="service.rate" style="text-align: left">
                         <div>
                             <asp:TextBox runat="server" ID="RatingStars" CssClass="hidden" ng-model="rating.stars" ng-init="rating.stars=3" />
                             <ul class="rating">
-                                <li ng-click="rating.stars=1" ng-class="{'star':rating.stars<=1}"></li>
-                                <li ng-click="rating.stars=2" ng-class="{'star':rating.stars<=2}"></li>
-                                <li ng-click="rating.stars=3" ng-class="{'star':rating.stars<=3}"></li>
-                                <li ng-click="rating.stars=4" ng-class="{'star':rating.stars<=4}"></li>
-                                <li ng-click="rating.stars=5" ng-class="{'star':rating.stars<=5}"></li>
+                                <li ng-click="rating.stars=1" ng-class="{'star':rating.stars>=1}"></li>
+                                <li ng-click="rating.stars=2" ng-class="{'star':rating.stars>=2}"></li>
+                                <li ng-click="rating.stars=3" ng-class="{'star':rating.stars>=3}"></li>
+                                <li ng-click="rating.stars=4" ng-class="{'star':rating.stars>=4}"></li>
+                                <li ng-click="rating.stars=5" ng-class="{'star':rating.stars>=5}"></li>
                             </ul>
                         </div>
                         <div class="form-row">
@@ -196,7 +196,7 @@
                         </p>
                     </div>
 
-                    <div ng-show="service.incomplete">
+                    <div ng-show="service.incomplete" style="text-align: left">
                         <div class="form-row">
                             <asp:Label runat="server" AssociatedControlID="Complaint" Text="Comments" />
                             <asp:TextBox runat="server" ID="Complaint" TextMode="MultiLine" />
@@ -222,6 +222,10 @@
                         </div>
                     </div>
                 </div>
+        
+                <p runat="server" id="CancelledPanel" visible="false">
+                    <strong>Booking was cancelled</strong>
+                </p>
 
             </div>
 

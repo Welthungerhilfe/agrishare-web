@@ -152,6 +152,8 @@ namespace Agrishare.Core.Entities
 
         private bool Add()
         {
+            StatusId = ListingStatus.Live;
+
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Listings.Attach(this);

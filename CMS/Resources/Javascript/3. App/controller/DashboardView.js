@@ -15,13 +15,23 @@ agrishareApp.controller('DashboardViewController', function ($attrs, $controller
     dashboard.error = '';
     dashboard.loading = true;
 
-    dashboard.fetch = function (id) {
+    dashboard.activity = {
+        filter: {
+            type: 'User',
+            timespan: 7,
+            category: 0
+        }
+    };
+
+    dashboard.fetch = function () {
 
         App.status = "Loading...";
         dashboard.busy = true;
 
+        var url = dashboard.apiUrl + '?type=' + dashboard.activity.filter.type + '&timespan=' + dashboard.activity.filter.timespan + '&category=' + dashboard.activity.filter.category;
+
         $http({
-            url: dashboard.apiUrl,
+            url: url,
             headers: App.authorizationHeader()
         })
         .then(function (response) {

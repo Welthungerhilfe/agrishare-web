@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets4CB2553B41774B4AB25AD29957C46DC54B8FE4CA840E1302F0271946CE4B4221))]
+[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets6E777A398E47A7C44AFA6E1ADBF87DF0E342B4411B73D9ED078AB57F99D6001F))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -17,19 +17,19 @@ namespace Edm_EntityMappingGeneratedViews
     /// <Summary>
     /// The type contains views for EntitySets and AssociationSets that were generated at design time.
     /// </Summary>
-    public sealed class ViewsForBaseEntitySets4CB2553B41774B4AB25AD29957C46DC54B8FE4CA840E1302F0271946CE4B4221 : System.Data.Mapping.EntityViewContainer
+    public sealed class ViewsForBaseEntitySets6E777A398E47A7C44AFA6E1ADBF87DF0E342B4411B73D9ED078AB57F99D6001F : System.Data.Mapping.EntityViewContainer
     {
         
         /// <Summary>
         /// The constructor stores the views for the extents and also the hash values generated based on the metadata and mapping closure and views.
         /// </Summary>
-        public ViewsForBaseEntitySets4CB2553B41774B4AB25AD29957C46DC54B8FE4CA840E1302F0271946CE4B4221()
+        public ViewsForBaseEntitySets6E777A398E47A7C44AFA6E1ADBF87DF0E342B4411B73D9ED078AB57F99D6001F()
         {
             this.EdmEntityContainerName = "AgrishareEntities";
             this.StoreEntityContainerName = "AgrishareModelStoreContainer";
-            this.HashOverMappingClosure = "00a12ce7938a68e96ff6ca7ed6795763f54527bf6a26e85aa279e682b90e9de2";
-            this.HashOverAllExtentViews = "cd2e56ddff2912c7395b2d80daf9c53fcd7968a891f62e926e3f554074bb4cab";
-            this.ViewCount = 32;
+            this.HashOverMappingClosure = "4c8162160a0c519d8b986e8afb44979ca753897a42eabd0571eaab809b82ccb0";
+            this.HashOverAllExtentViews = "9a86a265f76daa66e03ee69bc440a55eeef53e56c9dea7bb49cf8d206210c8f2";
+            this.ViewCount = 34;
         }
         
         /// <Summary>
@@ -164,6 +164,14 @@ namespace Edm_EntityMappingGeneratedViews
             if ((index == 31))
             {
                 return GetView31();
+            }
+            if ((index == 32))
+            {
+                return GetView32();
+            }
+            if ((index == 33))
+            {
+                return GetView33();
             }
             throw new System.IndexOutOfRangeException();
         }
@@ -317,14 +325,15 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareModelStoreContainer.Transactions", @"
     SELECT VALUE -- Constructing Transactions
-        [AgrishareModel.Store.Transactions](T1.Transactions_Id, T1.Transactions_ClientCorrelator, T1.Transactions_BookingId, T1.Transactions_BookingUserId, T1.Transactions_Reference, T1.Transactions_Amount, T1.Transactions_StatusId, T1.Transactions_Log, T1.Transactions_Error, T1.Transactions_DateCreated, T1.Transactions_LastModified, T1.Transactions_Deleted)
+        [AgrishareModel.Store.Transactions](T1.Transactions_Id, T1.Transactions_ClientCorrelator, T1.Transactions_BookingId, T1.Transactions_BookingUserId, T1.Transactions_ServerReference, T1.Transactions_EcoCashReference, T1.Transactions_Amount, T1.Transactions_StatusId, T1.Transactions_Log, T1.Transactions_Error, T1.Transactions_DateCreated, T1.Transactions_LastModified, T1.Transactions_Deleted)
     FROM (
         SELECT 
             T.Id AS Transactions_Id, 
             T.ClientCorrelator AS Transactions_ClientCorrelator, 
             T.BookingId AS Transactions_BookingId, 
             T.BookingUserId AS Transactions_BookingUserId, 
-            T.Reference AS Transactions_Reference, 
+            T.ServerReference AS Transactions_ServerReference, 
+            T.EcoCashReference AS Transactions_EcoCashReference, 
             T.Amount AS Transactions_Amount, 
             CAST(T.StatusId AS [Edm.Int16]) AS Transactions_StatusId, 
             T.Log AS Transactions_Log, 
@@ -614,14 +623,15 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareEntities.Transactions", @"
     SELECT VALUE -- Constructing Transactions
-        [AgrishareModel.Transaction](T1.Transaction_Id, T1.Transaction_ClientCorrelator, T1.Transaction_BookingId, T1.Transaction_BookingUserId, T1.Transaction_Reference, T1.Transaction_Amount, T1.Transaction_StatusId, T1.Transaction_Log, T1.Transaction_Error, T1.Transaction_DateCreated, T1.Transaction_LastModified, T1.Transaction_Deleted)
+        [AgrishareModel.Transaction](T1.Transaction_Id, T1.Transaction_ClientCorrelator, T1.Transaction_BookingId, T1.Transaction_BookingUserId, T1.Transaction_ServerReference, T1.Transaction_EcoCashReference, T1.Transaction_Amount, T1.Transaction_StatusId, T1.Transaction_Log, T1.Transaction_Error, T1.Transaction_DateCreated, T1.Transaction_LastModified, T1.Transaction_Deleted)
     FROM (
         SELECT 
             T.Id AS Transaction_Id, 
             T.ClientCorrelator AS Transaction_ClientCorrelator, 
             T.BookingId AS Transaction_BookingId, 
             T.BookingUserId AS Transaction_BookingUserId, 
-            T.Reference AS Transaction_Reference, 
+            T.ServerReference AS Transaction_ServerReference, 
+            T.EcoCashReference AS Transaction_EcoCashReference, 
             T.Amount AS Transaction_Amount, 
             CAST(T.StatusId AS [AgrishareModel.TransactionStatus]) AS Transaction_StatusId, 
             T.Log AS Transaction_Log, 
@@ -995,6 +1005,50 @@ namespace Edm_EntityMappingGeneratedViews
             T.Deleted AS Template_Deleted, 
             True AS _from0
         FROM AgrishareModelStoreContainer.Templates AS T
+    ) AS T1");
+        }
+        
+        /// <Summary>
+        /// return view for AgrishareModelStoreContainer.Blogs
+        /// </Summary>
+        private System.Collections.Generic.KeyValuePair<string, string> GetView32()
+        {
+            return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareModelStoreContainer.Blogs", @"
+    SELECT VALUE -- Constructing Blogs
+        [AgrishareModel.Store.Blogs](T1.Blogs_Id, T1.Blogs_Title, T1.Blogs_Photo, T1.Blogs_Content, T1.Blogs_DateCreated, T1.Blogs_LastModified, T1.Blogs_Deleted)
+    FROM (
+        SELECT 
+            T.Id AS Blogs_Id, 
+            T.Title AS Blogs_Title, 
+            T.PhotoPath AS Blogs_Photo, 
+            T.Content AS Blogs_Content, 
+            T.DateCreated AS Blogs_DateCreated, 
+            T.LastModified AS Blogs_LastModified, 
+            T.Deleted AS Blogs_Deleted, 
+            True AS _from0
+        FROM AgrishareEntities.Blogs AS T
+    ) AS T1");
+        }
+        
+        /// <Summary>
+        /// return view for AgrishareEntities.Blogs
+        /// </Summary>
+        private System.Collections.Generic.KeyValuePair<string, string> GetView33()
+        {
+            return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareEntities.Blogs", @"
+    SELECT VALUE -- Constructing Blogs
+        [AgrishareModel.Blog](T1.Blog_Id, T1.Blog_Title, T1.Blog_PhotoPath, T1.Blog_Content, T1.Blog_DateCreated, T1.Blog_LastModified, T1.Blog_Deleted)
+    FROM (
+        SELECT 
+            T.Id AS Blog_Id, 
+            T.Title AS Blog_Title, 
+            T.Photo AS Blog_PhotoPath, 
+            T.Content AS Blog_Content, 
+            T.DateCreated AS Blog_DateCreated, 
+            T.LastModified AS Blog_LastModified, 
+            T.Deleted AS Blog_Deleted, 
+            True AS _from0
+        FROM AgrishareModelStoreContainer.Blogs AS T
     ) AS T1");
         }
     }

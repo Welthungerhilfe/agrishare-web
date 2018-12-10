@@ -1,5 +1,9 @@
 ﻿@import "global";
 
+input.hidden {
+    display: none;
+}
+
 .form-cols {
     display: flex;
     margin: 30px 0;

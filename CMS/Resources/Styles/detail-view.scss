@@ -287,6 +287,7 @@
 
         li {
             display: flex;
+            align-items: center;
             padding: 10px 20px;
             border-bottom: dotted 1px #ccc;
 
@@ -299,6 +300,15 @@
             }
 
             em {
+                margin-left: 20px;
+                cursor: pointer;
+            }
+
+            span {
+                text-align: right;
+            }
+
+            .gl-icon-button {
                 margin-left: 20px;
             }
         }

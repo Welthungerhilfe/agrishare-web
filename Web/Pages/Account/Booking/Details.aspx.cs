@@ -162,7 +162,7 @@ namespace Agrishare.Web.Pages.Account.Booking
             var isSeeker = SelectedBooking.UserId == Master.CurrentUser.Id;
             var isOfferer = SelectedBooking.Listing.UserId == Master.CurrentUser.Id;
             
-            RequestPanel.Visible = isSeeker && SelectedBooking.Id == 0;
+            RequestPanel.Visible = isSeeker && SelectedBooking.Id == 0 && Available;
             AwaitingConfirmPanel.Visible = isSeeker && SelectedBooking.StatusId == Core.Entities.BookingStatus.Pending;
             PendingPanel.Visible = isOfferer && SelectedBooking.StatusId == Core.Entities.BookingStatus.Pending;
             DeclinedPanel.Visible = SelectedBooking.StatusId == Core.Entities.BookingStatus.Declined;
@@ -172,6 +172,7 @@ namespace Agrishare.Web.Pages.Account.Booking
             InProgressPanel.Visible = isSeeker && SelectedBooking.StatusId == Core.Entities.BookingStatus.InProgress;
             IncompletePanel.Visible = isOfferer && SelectedBooking.StatusId == Core.Entities.BookingStatus.Incomplete;
             CompletePanel.Visible = SelectedBooking.StatusId == Core.Entities.BookingStatus.Complete;
+            CancelledPanel.Visible = SelectedBooking.StatusId == Core.Entities.BookingStatus.Cancelled;
 
             if (isSeeker && SelectedBooking.StatusId == Core.Entities.BookingStatus.Approved)
             {
@@ -215,6 +216,8 @@ namespace Agrishare.Web.Pages.Account.Booking
                     ReviewDate.Text = rating.DateCreated.ToString("d MMMM yyyy");
                 }
             }
+
+
         }
 
         public void BindReview(object s, RepeaterItemEventArgs e)

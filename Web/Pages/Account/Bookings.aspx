@@ -22,9 +22,7 @@
         </HeaderTemplate>
         <ItemTemplate>
                 <asp:HyperLink runat="server" ID="Link">
-                    <span>
-                        <asp:Image runat="server" ID="Photo" />
-                    </span>
+                    <span runat="server" ID="Photo" />
                     <span>
                         <small><asp:Literal runat="server" ID="Date" /></small>
                         <span><asp:Literal runat="server" ID="Title" /></span>

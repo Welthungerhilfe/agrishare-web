@@ -35,11 +35,11 @@ namespace Agrishare.Core.Entities
         public static string DefaultSort = "Date";
         public string Title => $"{Event}";
 
-        public static int Count(Counters Event = Counters.None, DateTime? StartDate = null, DateTime? EndDate = null, Gender Gender = Gender.None, int ServiceId = 0, bool UniqueUser = false)
+        public static int Count(Counters Event = Counters.None, DateTime? StartDate = null, DateTime? EndDate = null, Gender Gender = Gender.None, int ServiceId = 0, bool UniqueUser = false, int CategoryId = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
-                var query = ctx.Counters.Include(o => o.User).Where(o => !o.Deleted);
+                var query = ctx.Counters.Include(o => o.User).Include(o => o.Service).Where(o => !o.Deleted);
 
                 if (Event != Counters.None)
                 {
@@ -61,6 +61,9 @@ namespace Agrishare.Core.Entities
                     var end = StartDate.Value.EndOfDay();
                     query = query.Where(o => o.DateCreated <= end);
                 }
+
+                if (CategoryId > 0)
+                    query = query.Where(o => o.Service.ParentId == CategoryId);
 
                 if (UniqueUser)
                     return query.Select(e => e.UserId).Distinct().Count();

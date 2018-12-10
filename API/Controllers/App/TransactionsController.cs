@@ -30,7 +30,8 @@ namespace Agrishare.API.Controllers.App
 
             var transactions = Entities.Transaction.List(BookingId: booking.Id).Where(e => e.StatusId != Entities.TransactionStatus.Error);
             foreach (var transaction in transactions)
-                transaction.RequestEcoCashStatus();
+                if (transaction.StatusId != Entities.TransactionStatus.Completed && transaction.StatusId != Entities.TransactionStatus.Refunded)
+                    transaction.RequestEcoCashStatus();
 
             var bookingUsers = Entities.BookingUser.List(BookingId: BookingId);
             if (bookingUsers.Count(e => e.StatusId != Entities.BookingUserStatus.Paid) == 0)

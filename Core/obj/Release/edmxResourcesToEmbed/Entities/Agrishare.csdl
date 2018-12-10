@@ -191,7 +191,8 @@
     <Property Name="ClientCorrelator" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="BookingId" Type="Int32" Nullable="false" />
     <Property Name="BookingUserId" Type="Int32" Nullable="false" />
-    <Property Name="Reference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="ServerReference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="EcoCashReference" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="Amount" Type="Decimal" Nullable="false" />
     <Property Name="StatusId" Type="AgrishareModel.TransactionStatus" Nullable="false" />
     <Property Name="Log" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />

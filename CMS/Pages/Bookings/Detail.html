@@ -133,14 +133,23 @@
 
             </div>
 
-            <div class="box">
+            <div class="box" ng-if="detail.data.Transactions.length>0">
 
                 <h2>Transactions</h2>
-                <ul class="transactions">
+                <ul class="transactions" >
                     <li ng-repeat="item in detail.data.Transactions">
-                        <strong>{{item.BookingUser.Name}}</strong>
-                        <span>{{item.Amount | currency}}</span>
-                        <em class="status" ng-click="detail.async('/cms/bookings/transactions/poll?BookingId='+detail.entity.Id)">{{item.Status}}</em>
+                        <strong>
+                            {{item.Amount | currency}}<br/>
+                            <small>{{item.BookingUser.Name}} &bull; {{item.BookingUser.Telephone}}</small>
+                        </strong>
+                        <span>
+                            {{item.DateCreated | date : 'yyyy-MM-dd HH:mm'}}<br/>
+                            <small>Ref: {{item.EcoCashReference || 'N/A'}}</small>
+                        </span>                        
+                        <span>
+                            <em class="status" ng-click="detail.async('/cms/bookings/transactions/poll?BookingId='+detail.entity.Id)">{{item.Status}}</em>
+                        </span>
+                        <gl-icon-button gl-icon="delete_sweep" ng-click="detail.async('/cms/bookings/transactions/refund?Id='+item.Id)" ng-if="item.StatusId!=8 && item.Amount>0"></gl-icon-button>
                     </li>
                 </ul>
 

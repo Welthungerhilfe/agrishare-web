@@ -18,7 +18,8 @@ namespace Agrishare.Core.Entities
         public string ClientCorrelator { get; set; }
         public int BookingId { get; set; }
         public int BookingUserId { get; set; }
-        public string Reference { get; set; }
+        public string ServerReference { get; set; }
+        public string EcoCashReference { get; set; }
         public decimal Amount { get; set; }
         public TransactionStatus StatusId { get; set; }
         public string Log { get; set; }

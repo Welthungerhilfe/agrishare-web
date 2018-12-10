@@ -228,7 +228,7 @@ namespace Agrishare.Core.Entities
                     message = string.Format(Translations.Translate("Booking Confirmed", User.LanguageId), BookingId);
                     break;
                 case NotificationType.NewBooking:
-                    message = string.Format(Translations.Translate("Booking Received", User.LanguageId), BookingId);
+                    message = string.Format(Translations.Translate("New Booking", User.LanguageId), BookingId);
                     break;
                 case NotificationType.NewReview:
                     message = string.Format(Translations.Translate("New Review", User.LanguageId), BookingId);

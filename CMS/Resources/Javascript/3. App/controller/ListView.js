@@ -134,6 +134,20 @@ agrishareApp.controller('ListViewController', function ($attrs, $controller, $ht
         });
     };
 
+    list.async = function (index, url) {
+        var list = this;
+        $http({
+            url: url,
+            headers: App.authorizationHeader()
+        }).then(function (response) {
+            Utils.toast.success(response.data.Feedback);
+            list.data[index] = response.data.Entity;
+        }, function (response) {
+            var feedback = response.data.Message;
+            Utils.toast.error(feedback);
+        });
+    };
+
     list.refresh();
 
 });

@@ -378,7 +378,9 @@ namespace Agrishare.API.Controllers.App
             booking.StatusId = Entities.BookingStatus.Cancelled;
             if (booking.Save())
             {
-                // TODO refund users
+                var transactions = Entities.Transaction.List(BookingId: booking.Id);
+                foreach(var transaction in transactions)
+                    transaction.RequestEcoCashRefund();
 
                 var notifications = Entities.Notification.List(BookingId: booking.Id, Type: Entities.NotificationType.BookingCancelled);
                 foreach (var notification in notifications)
@@ -401,7 +403,7 @@ namespace Agrishare.API.Controllers.App
                     GroupId = Entities.NotificationGroup.Offering,
                     TypeId = Entities.NotificationType.BookingCancelled,
                     User = Entities.User.Find(Id: booking.Listing.UserId)
-                }.Save(Notify: true);
+                }.Save(Notify: false);
 
                 Entities.Counter.Hit(booking.UserId, Entities.Counters.CancelBooking, booking.Service.CategoryId);
 

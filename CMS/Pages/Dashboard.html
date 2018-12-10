@@ -1,122 +1,46 @@
 ﻿
 <div ng-controller="DashboardViewController" ag-title="Dashboard" ag-selected-url="#/dashboard" ag-api-route="/cms/dashboard/summary">
 
-    <ag-title-bar></ag-title-bar>
+    <ag-title-bar>
+        <gl-icon-button gl-icon="receipt" ng-click="app.redirect(app.apiUrl + '/cms/settlement/report')">Download Settlement Report</gl-icon-button>
+
+    </ag-title-bar>
 
     <ag-section ag-controller="dashboard">
 
         <div class="dashboard-view">
 
+            <div class="settlement">
+                <ul>
+                    <li><big>{{dashboard.data.totalBookingAmount | currency}}</big><strong>Total<br />Transactions</strong></li>
+                    <li><big>{{dashboard.data.agrishareCommission | currency}}</big><strong>AgriShare<br />Commission</strong></li>
+                    <li><big>{{dashboard.data.totalBookingAmount - dashboard.data.agrishareCommission | currency}}</big><strong>Paid<br />Out</strong></li>
+                </ul>
+            </div>
+
             <div class="overview">
                 <ul>
-                    <li><big>{{dashboard.data.activeListingCount}}</big><strong>Live<br />Listings</strong><small>{{dashboard.data.totalListingCount}} Listings</small></li>
-                    <li><big>{{dashboard.data.activeUsers}}</big><strong>Active<br />Users</strong><small>{{dashboard.data.userCount}} Users</small></li>
-                    <li><big>{{dashboard.data.completeBookingCount}}</big><strong>Paid<br />Bookings</strong><small>{{dashboard.data.totalBookingCount}} Bookings</small></li>
-                </ul>
-                <ul>
-                    <li><big>{{dashboard.data.totalBookingAmount | currency}}</big><strong>Total<br />Transactions</strong><small>&nbsp;</small></li>
-                    <li><big>{{dashboard.data.agrishareCommission | currency}}</big><strong>AgriShare<br />Commission</strong><small>&nbsp;</small></li>
+                    <li><big>{{dashboard.data.activeListingCount}}</big><strong>Live<br />Listings</strong></li>
+                    <li><big>{{dashboard.data.activeUsers}}</big><strong>Active<br />Users</strong></li>
+                    <li><big>{{dashboard.data.completeBookingCount}}</big><strong>Paid<br />Bookings</strong></li>
+                    <li><big>{{dashboard.data.smsBalance | currency}}</big><strong>SMS<br />Balance</strong></li>
                 </ul>
             </div>
 
             <div class="activity">
-                <h2>User Activity - last 30 days</h2>
-                <ul>
-                    <li>
-                        <div>
-                            <round-progress max="dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female"
-                                            current="dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female"
-                                            rounded="true"
-                                            clockwise="true"
-                                            responsive="true"
-                                            color="#cc3d78"
-                                            bgcolor="#ddd">
-                            </round-progress>
-                            <span>{{dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female}}</span>
-                        </div>
-                        <strong>Total<br />Searches</strong>
-                        <small>{{dashboard.data.userSearchCount.Male}} Male &bull; {{dashboard.data.userSearchCount.Female}} Female</small>
-                    </li>
-                    <li>
-                        <div>
-                            <round-progress max="dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female"
-                                            current="dashboard.data.userMatchCount.Male + dashboard.data.userMatchCount.Female"
-                                            rounded="true"
-                                            clockwise="true"
-                                            responsive="true"
-                                            color="#cc3d78"
-                                            bgcolor="#ddd">
-                            </round-progress>
-                            <span>{{dashboard.data.userMatchCount.Male + dashboard.data.userMatchCount.Female}}</span>
-                        </div>
-                        <strong>Matched<br />Searches</strong>
-                        <small>{{dashboard.data.userMatchCount.Male}} Male &bull; {{dashboard.data.userMatchCount.Female}} Female</small>
-                    </li>
-                    <li>
-                        <div>
-                            <round-progress max="dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female"
-                                            current="dashboard.data.userBookingCount.Male + dashboard.data.userBookingCount.Female"
-                                            rounded="true"
-                                            clockwise="true"
-                                            responsive="true"
-                                            color="#cc3d78"
-                                            bgcolor="#ddd">
-                            </round-progress>
-                            <span>{{dashboard.data.userBookingCount.Male + dashboard.data.userBookingCount.Female}}</span>
-                        </div>
-                        <strong>Bookings<br />Made</strong>
-                        <small>{{dashboard.data.userBookingCount.Male}} Male &bull; {{dashboard.data.userBookingCount.Female}} Female</small>
-                    </li>
-                    <li>
-                        <div>
-                            <round-progress max="dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female"
-                                            current="dashboard.data.userConfirmCount.Male + dashboard.data.userConfirmCount.Female"
-                                            rounded="true"
-                                            clockwise="true"
-                                            responsive="true"
-                                            color="#cc3d78"
-                                            bgcolor="#ddd">
-                            </round-progress>
-                            <span>{{dashboard.data.userConfirmCount.Male + dashboard.data.userConfirmCount.Female}}</span>
-                        </div>
-                        <strong>Bookings<br />Confirmed</strong>
-                        <small>{{dashboard.data.userConfirmCount.Male}} Male &bull; {{dashboard.data.userConfirmCount.Female}} Female</small>
-                    </li>
-                    <li>
-                        <div>
-                            <round-progress max="dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female"
-                                            current="dashboard.data.userPaidCount.Male + dashboard.data.userPaidCount.Female"
-                                            rounded="true"
-                                            clockwise="true"
-                                            responsive="true"
-                                            color="#cc3d78"
-                                            bgcolor="#ddd">
-                            </round-progress>
-                            <span>{{dashboard.data.userPaidCount.Male + dashboard.data.userPaidCount.Female}}</span>
-                        </div>
-                        <strong>Paid<br />Bookings</strong>
-                        <small>{{dashboard.data.userPaidCount.Male}} Male &bull; {{dashboard.data.userPaidCount.Female}} Female</small>
-                    </li>
-                    <li>
-                        <div>
-                            <round-progress max="dashboard.data.userSearchCount.Male + dashboard.data.userSearchCount.Female"
-                                            current="dashboard.data.userCompleteCount.Male + dashboard.data.userCompleteCount.Female"
-                                            rounded="true"
-                                            clockwise="true"
-                                            responsive="true"
-                                            color="#cc3d78"
-                                            bgcolor="#ddd">
-                            </round-progress>
-                            <span>{{dashboard.data.userCompleteCount.Male + dashboard.data.userCompleteCount.Female}}</span>
-                        </div>
-                        <strong>Completed<br />Bookings</strong>
-                        <small>{{dashboard.data.userCompleteCount.Male}} Male &bull; {{dashboard.data.userCompleteCount.Female}} Female</small>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="activity">
-                <h2>All Activity - last 30 days</h2>
+                <h2 class="filter">
+                    <a ng-click="dashboard.activity.filter.type='User';dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.type=='User'}">User</a>
+                    <a ng-click="dashboard.activity.filter.type='All';dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.type=='All'}">All</a>
+                    <span>&nbsp;</span>
+                    <a ng-click="dashboard.activity.filter.timespan=7;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.timespan==7}">7 days</a>
+                    <a ng-click="dashboard.activity.filter.timespan=30;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.timespan==30}">30 days</a>
+                    <a ng-click="dashboard.activity.filter.timespan=0;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.timespan==0}">Lifetime</a>
+                    <span>&nbsp;</span>
+                    <a ng-click="dashboard.activity.filter.category=0;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.category==0}">All</a>
+                    <a ng-click="dashboard.activity.filter.category=1;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.category==1}">Tractors</a>
+                    <a ng-click="dashboard.activity.filter.category=2;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.category==2}">Lorries</a>
+                    <a ng-click="dashboard.activity.filter.category=3;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.category==3}">Processing</a>
+                </h2>
                 <ul>
                     <li>
                         <div>

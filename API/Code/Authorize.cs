@@ -13,6 +13,7 @@ using System.Web.Http.Controllers;
 using System.Collections.Generic;
 using Agrishare.Core.Entities;
 using Agrishare.Core.Utils;
+using Agrishare.Core;
 
 namespace Agrishare.API
 {
@@ -29,15 +30,19 @@ namespace Agrishare.API
             if (allowedRoles.Count() == 0)
                 return true;
 
-            if (actionContext.Request.Headers.TryGetValues("Authorization", out var authorizationValues))
+            var token = string.Empty;
+
+            var cookie = actionContext.Request.Headers.GetCookies(User.AuthCookieName).FirstOrDefault();
+            if (cookie != null && !(cookie.Cookies.FirstOrDefault()?.Value.IsEmpty() ?? true))
+                token = Encryption.DecryptWithRC4(cookie.Cookies.First().Value, Config.EncryptionSalt);
+            else if (actionContext.Request.Headers.TryGetValues("Authorization", out var authorizationValues))
+                token = authorizationValues.First();
+
+            var user = User.Find(AuthToken: token);
+            if (user?.Roles.Intersect(allowedRoles).Count() > 0)
             {
-                var token = authorizationValues.First();
-                var user = User.Find(AuthToken: token);
-                if (user?.Roles.Intersect(allowedRoles).Count() > 0)
-                {
-                    actionContext.Request.Properties["CurrentUser"] = user;
-                    return true;
-                }
+                actionContext.Request.Properties["CurrentUser"] = user;
+                return true;
             }
 
             return false;

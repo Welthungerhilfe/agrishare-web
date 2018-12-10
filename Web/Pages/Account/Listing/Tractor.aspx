@@ -32,7 +32,7 @@
 
             <div class="form-row">
                 <asp:Label runat="server" AssociatedControlID="Horsepower" Text="Horsepower *" />
-                <asp:TextBox runat="server" ID="Horsepower" MaxLength="16" />
+                <asp:TextBox runat="server" ID="Horsepower" MaxLength="16" TextMode="Number" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Horsepower" Text="Horsepower is required" Display="Dynamic" />
             </div>
 

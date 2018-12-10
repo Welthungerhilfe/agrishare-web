@@ -24,7 +24,7 @@
             </div>
 
             <div id="StepTractorDetails" ng-show="search.step===3">
-                <p>Enter the size of the field</p>
+                <p>Enter the size of the field in hectares:</p>
                 <asp:TextBox runat="server" ID="FieldSize" TextMode="Number" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="FieldSize" Text="This is a required field" Display="Dynamic" ValidationGroup="Step3"/>
             </div>
@@ -37,7 +37,8 @@
             </div>
 
             <div id="StepLocation" ng-show="search.step===5">
-                <p>Where do you need the service to be performed?</p>
+                <p>Where do you need the service to be performed?<br />
+                    <small>Click and drag the map so the marker is at the required location.</small></p>
                 <web:Map runat="server" Id="Location" />
             </div>
 

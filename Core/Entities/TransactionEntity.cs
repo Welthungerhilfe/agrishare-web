@@ -146,7 +146,8 @@ namespace Agrishare.Core.Entities
                 Id,
                 BookingId,
                 BookingUser = BookingUser?.Json(),
-                Reference,
+                ServerReference,
+                EcoCashReference,
                 Amount,
                 StatusId,
                 Status,
@@ -229,7 +230,7 @@ namespace Agrishare.Core.Entities
             var response = client.Execute<dynamic>(request);
 
             if (EcoCashLog)
-                Log += Environment.NewLine + Environment.NewLine + JsonConvert.SerializeObject(response);
+                Log += Environment.NewLine + JsonConvert.SerializeObject(response);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -241,7 +242,7 @@ namespace Agrishare.Core.Entities
 
                 try
                 {
-                    Reference = response.Data["serverReferenceCode"];
+                    ServerReference = response.Data["serverReferenceCode"];
                     StatusId = TransactionStatus.PendingSubscriberValidation;
                     Save();
                     return true;
@@ -277,9 +278,6 @@ namespace Agrishare.Core.Entities
             request.AddHeader("Content-Type", "application/json");
             var response = client.Execute<dynamic>(request);
 
-            //if (EcoCashLog)
-            //    Log += Environment.NewLine + Environment.NewLine + JsonConvert.SerializeObject(response);
-
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 try
@@ -300,7 +298,15 @@ namespace Agrishare.Core.Entities
                     else
                         StatusId = TransactionStatus.Failed;
 
-                    Reference = response.Data["serverReferenceCode"];
+                    if (StatusId == TransactionStatus.Completed)
+                    {
+                        if (EcoCashLog)
+                            Log += Environment.NewLine + JsonConvert.SerializeObject(response);
+
+                        ServerReference = response.Data["serverReferenceCode"];
+                        EcoCashReference = response.Data["ecocashReference"];
+                    }
+                    
                 }
                 catch
                 {
@@ -357,8 +363,11 @@ namespace Agrishare.Core.Entities
 
         public bool RequestEcoCashRefund()
         {
+            var originalId = Id;
+
             Id = 0;
-            StatusId = TransactionStatus.Pending;
+            ClientCorrelator = Guid.NewGuid().ToString();
+            Log = string.Empty;
 
             var resourceUri = $"{EcoCashUrl}transactions/refund";
 
@@ -385,9 +394,11 @@ namespace Agrishare.Core.Entities
                         channel = "WEB"
                     }
                 },
+                originalEcocashReference = EcoCashReference,
                 referenceCode = Title,
                 transactionOperationStatus = "Refunded",
-                tranType = "REF"
+                tranType = "REF",
+                remark = Title
             });
 
             if (EcoCashLog)
@@ -427,6 +438,16 @@ namespace Agrishare.Core.Entities
                         StatusId = TransactionStatus.TransactionTimedout;
                     else
                         StatusId = TransactionStatus.Failed;
+
+                    if (StatusId == TransactionStatus.Completed)
+                    {
+                        Amount *= -1;
+
+                        var originalTransaction = Find(Id: originalId);
+                        originalTransaction.StatusId = TransactionStatus.Refunded;
+                        originalTransaction.Save();
+                    }
+
                     Save();
 
                     return true;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace Agrishare.Web.Pages.Account
@@ -15,6 +16,7 @@ namespace Agrishare.Web.Pages.Account
         protected void Page_Load(object sender, EventArgs e)
         {
             Master.RequiresAuthentication = true;
+            Master.Body.Attributes["class"] += " account ";
 
             if (Group == Core.Entities.NotificationGroup.Offering)
             {
@@ -29,8 +31,8 @@ namespace Agrishare.Web.Pages.Account
             List.DataBind();
 
             var startDate = DateTime.Today.StartOfDay().AddDays(-(DateTime.Today.Day - 1));
-            MonthSummary.Text = "$" + Core.Entities.Booking.OfferingSummary(Master.CurrentUser.Id, startDate);
-            AllTimeSummary.Text = "$" + Core.Entities.Booking.OfferingSummary(Master.CurrentUser.Id);
+            MonthSummary.Text = "$" + Core.Entities.Booking.OfferingSummary(Master.CurrentUser.Id, startDate).ToString("N2");
+            AllTimeSummary.Text = "$" + Core.Entities.Booking.OfferingSummary(Master.CurrentUser.Id).ToString("N2");
         }
 
         public void BindBooking(object s, RepeaterItemEventArgs e)
@@ -39,7 +41,8 @@ namespace Agrishare.Web.Pages.Account
             {
                 var booking = (Core.Entities.Booking)e.Item.DataItem;
                 ((HyperLink)e.Item.FindControl("Link")).NavigateUrl = $"/account/booking/details?id={booking.Id}";
-                ((Image)e.Item.FindControl("Photo")).ImageUrl = (booking.Listing.Photos?.Count ?? 0) > 0 ? $"{Core.Entities.Config.CDNURL}/{booking.Listing.Photos.FirstOrDefault().ThumbName}" : "";
+                if ((booking.Listing.Photos?.Count ?? 0) > 0)
+                    ((HtmlContainerControl)e.Item.FindControl("Photo")).Style.Add("background-image", $"url({Core.Entities.Config.CDNURL}/{booking.Listing.Photos.FirstOrDefault().ThumbName}");
                 ((Literal)e.Item.FindControl("Date")).Text = booking.StartDate.ToString("d MMMM yyyy");
                 ((Literal)e.Item.FindControl("Title")).Text = HttpUtility.HtmlEncode(booking.Listing.Title);
                 ((Literal)e.Item.FindControl("Price")).Text = "$" + booking.Price.ToString("N2");

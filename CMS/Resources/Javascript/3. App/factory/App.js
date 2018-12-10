@@ -48,6 +48,10 @@ agrishareApp.factory('App', function ($location, Utils) {
             return 'return=' + encodeURIComponent(location.hash);
         },
 
+        redirect: function (url) {
+            location.href = url;
+        },
+
         go: function (url) {
             location.hash = url;
         },

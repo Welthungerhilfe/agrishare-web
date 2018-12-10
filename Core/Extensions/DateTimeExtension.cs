@@ -33,7 +33,7 @@ namespace Agrishare.Core
                 return "1 hour ago";
 
             if (timespan.TotalHours < 24)
-                return $"{Math.Round(timespan.TotalMinutes)} hours ago";
+                return $"{Math.Round(timespan.TotalHours)} hours ago";
 
             if (Math.Round(timespan.TotalDays) == 1)
                 return "1 day ago";

@@ -251,7 +251,8 @@
     <Property Name="ClientCorrelator" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="BookingId" Type="int" Nullable="false" />
     <Property Name="BookingUserId" Type="int" Nullable="false" />
-    <Property Name="Reference" Type="varchar" MaxLength="256" />
+    <Property Name="ServerReference" Type="varchar" MaxLength="256" />
+    <Property Name="EcoCashReference" Type="varchar" MaxLength="256" />
     <Property Name="Amount" Type="decimal" Precision="10" Scale="3" Nullable="false" />
     <Property Name="StatusId" Type="smallint" Nullable="false" />
     <Property Name="Log" Type="text" />

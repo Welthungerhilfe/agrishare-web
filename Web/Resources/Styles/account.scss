@@ -89,7 +89,7 @@
         }
     }
 
-    .bookings-list, .listings-list, .results-list {
+    .bookings-list, .listings-list, .results-list, .notifications-list {
 
         > a {
             display: flex;
@@ -134,6 +134,10 @@
                     padding: 5px 10px;
                     border-radius: 100px;
                     color: #666;
+                }
+
+                .button {
+                    margin-top: 5px;
                 }
             }
         }
@@ -296,6 +300,75 @@
         text-align: center;
         border-radius: 3px;
         margin-top: 30px;
+
+        .form-row {
+
+            input, textarea {
+                background: white;
+            }
+        }
+
+        .transactions {
+            list-style: none;
+            padding: 0;
+            border-top: dashed 1px white;
+
+            li {
+                border-bottom: dashed 1px white;
+                padding: 10px 0;
+            }
+        }
+
+        .completed {
+            list-style: none;
+            padding: 0;
+
+            li {
+                a {
+                    border: solid 1px white;
+                    display: block;
+                    padding: 10px;
+                    margin: 10px 0;
+
+                    &:hover {
+                        background: white;
+                    }
+                }
+            }
+        }
+
+        .rating {
+            display: flex;
+            list-style: none;
+            padding: 0;
+
+            li {
+                flex: 1;
+                border: solid 1px white;
+                border-right: none;
+                text-align: center;
+                padding: 10px;
+                font-size: 20px;
+                cursor: pointer;
+
+                &:hover {
+                    background: white;
+                }
+
+                &:last-child {
+                    border-right: solid 1px white;
+                }
+
+                &::after {
+                    content: "\002606";
+                }
+
+                &.star::after {
+                    content: "\002605";
+                    color: $pink;
+                }
+            }
+        }
     }
 
     .booking {
@@ -330,6 +403,7 @@
 
                 &.total {
                     font-size: 24px;
+
                     strong {
                         float: left;
                         width: 50%;

@@ -81,7 +81,7 @@ namespace Agrishare.Web.Pages.Account.Listing
             if (listing.Id == 0)
             {
                 listing.User = Master.CurrentUser;
-                listing.CategoryId = Core.Entities.Category.LorriesId;                
+                listing.CategoryId = Core.Entities.Category.TractorsId;                
             }
 
             listing.Title = EquipmentTitle.Text;

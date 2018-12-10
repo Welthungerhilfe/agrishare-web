@@ -20,7 +20,7 @@
                 <icon>
                     <i class="material-icons">description</i>
                 </icon>
-                <row>
+                <row ng-click="app.go('/faqs/detail/'+item.Id+'?'+app.returnUrlQs())">
                     <strong>{{item.Title}}</strong>
                 </row>
                 <action>

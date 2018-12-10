@@ -11,13 +11,12 @@
         </HeaderTemplate>
         <ItemTemplate>
                 <asp:HyperLink runat="server" ID="Link">
+                    <span runat="server" ID="Photo" />
                     <span>
-                        <asp:Image runat="server" ID="Photo" />
-                    </span>
-                    <span>
-                        <small><asp:Literal runat="server" ID="Date" /> &bull;<asp:Literal runat="server" ID="Title" /></small>
-                        <span><asp:Literal runat="server" ID="Message" /> <em><asp:Literal runat="server" ID="TimeAgo" /></em></span>
-                        <asp:HyperLink runat="server" ID="Action" CssClass="button" />
+                        <strong><asp:Literal runat="server" ID="Title" /> <em><asp:Literal runat="server" ID="TimeAgo" /></em></strong>
+                        <span><asp:Literal runat="server" ID="Message" /></span>
+                        <small><asp:Literal runat="server" ID="Date" /> &bull; <asp:Literal runat="server" ID="Listing" /></small>
+                        <strong runat="server" ID="Action" class="button" />
                     </span>
                 </asp:HyperLink>
         </ItemTemplate>

@@ -20,7 +20,7 @@
                 <icon>
                     <i class="material-icons">description</i>
                 </icon>
-                <row class="blog">
+                <row class="blog" ng-click="app.go('/blogs/detail/'+item.Id+'?'+app.returnUrlQs())">
                     <strong>{{item.Title}}</strong>
                     <em>{{item.DateCreated | date : 'd MMMM yyyy'}}</em>
                 </row>
