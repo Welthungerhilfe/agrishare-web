@@ -33,6 +33,8 @@ namespace Agrishare.Core.Entities
                         return phrase.Shona;
                     case Language.Ndebele:
                         return phrase.Ndebele;
+                    default:
+                        return phrase.English;
                 }
 
             return string.Empty;

@@ -58,8 +58,11 @@ namespace Agrishare.CMS
                 CurrentUser.AuthToken = string.Empty;
                 CurrentUser.Save();
 
+                currentUser = null;
+
                 var cookie = HttpContext.Current.Request.Cookies[Core.Entities.User.AuthCookieName];
                 cookie.Value = string.Empty;
+                cookie.Domain = Config.DomainName;
                 HttpContext.Current.Response.Cookies.Add(cookie);
 
                 Response.Redirect("/login.aspx");
