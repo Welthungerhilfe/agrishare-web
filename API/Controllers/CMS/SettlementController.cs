@@ -19,17 +19,17 @@ namespace Agrishare.API.Controllers.CMS
         [AcceptVerbs("GET")]
         public HttpResponseMessage SettlementReport()
         {
-            var bookings = Entities.Booking.List(StartDate: DateTime.Now.AddDays(-7), EndDate: DateTime.Now, Status: Entities.BookingStatus.Complete);
+            var bookings = Entities.Booking.SettlementReport(StartDate: DateTime.Now.AddDays(-7), EndDate: DateTime.Now);
 
             var csv = new StringBuilder();
-            csv.AppendLine("Date,Booking,Supplier,Telephone,Amount");
+            csv.AppendLine("Date,Booking,Supplier,Telephone,Amount,EcoCash Reference");
             foreach (var booking in bookings)
             {
                 csv.Append(booking.StartDate.ToString("yyyy-MM-dd") + ",");
                 csv.Append(booking.Id.ToString() + ",");
-                csv.Append("\"" + booking.User.Title.Replace("\"", "\\\"") + "\",");
-                csv.Append(booking.User.Telephone + ",");
-                csv.Append((booking.Price - booking.AgriShareCommission).ToString());
+                csv.Append("\"" + booking.Listing.User.Title.Replace("\"", "\\\"") + "\",");
+                csv.Append(booking.Listing.User.Telephone + ",");
+                csv.Append((booking.Price - booking.AgriShareCommission).ToString() + ",");
                 csv.AppendLine();
             }
 

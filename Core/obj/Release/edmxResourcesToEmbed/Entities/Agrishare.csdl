@@ -21,10 +21,6 @@
     <Property Name="HireCost" Type="Decimal" Nullable="false" />
     <Property Name="FuelCost" Type="Decimal" Nullable="false" />
     <Property Name="TransportCost" Type="Decimal" Nullable="false" />
-    <Property Name="StatusId" Type="AgrishareModel.BookingStatus" Nullable="false" />
-    <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="User" Relationship="Self.bookings_ibfk_1" FromRole="Bookings" ToRole="Users" />
     <NavigationProperty Name="BookingUsers" Relationship="Self.bookingusers_ibfk_1" FromRole="Bookings" ToRole="BookingUsers" />
     <NavigationProperty Name="Transactions" Relationship="Self.transactions_ibfk_2" FromRole="Bookings" ToRole="Transactions" />
@@ -37,6 +33,12 @@
     <Property Name="TotalVolume" Type="Decimal" Nullable="false" />
     <Property Name="TransportDistance" Type="Decimal" Nullable="false" />
     <NavigationProperty Name="Ratings" Relationship="AgrishareModel.ratings_ibfk_3" FromRole="Booking" ToRole="Rating" />
+    <Property Name="StatusId" Type="AgrishareModel.BookingStatus" Nullable="false" />
+    <Property Name="PaidOut" Type="Boolean" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Journals" Relationship="AgrishareModel.journals_ibfk_2" FromRole="Booking" ToRole="Journal" />
   </EntityType>
   <EntityType Name="BookingUser">
     <Key>
@@ -229,6 +231,7 @@
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
     <Property Name="LanguageId" Type="AgrishareModel.Language" Nullable="false" />
+    <NavigationProperty Name="Journals" Relationship="AgrishareModel.journals_ibfk_1" FromRole="User" ToRole="Journal" />
   </EntityType>
   <Association Name="bookings_ibfk_1">
     <End Role="Users" Type="Self.User" Multiplicity="1">
@@ -468,6 +471,15 @@
       <End Role="Rating" EntitySet="Ratings" />
     </AssociationSet>
     <EntitySet Name="Blogs" EntityType="AgrishareModel.Blog" />
+    <EntitySet Name="Journals" EntityType="AgrishareModel.Journal" />
+    <AssociationSet Name="journals_ibfk_2" Association="AgrishareModel.journals_ibfk_2">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Journal" EntitySet="Journals" />
+    </AssociationSet>
+    <AssociationSet Name="journals_ibfk_1" Association="AgrishareModel.journals_ibfk_1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Journal" EntitySet="Journals" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Rating">
     <Key>
@@ -798,4 +810,57 @@
     <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Deleted" Type="Boolean" Nullable="false" />
   </EntityType>
+  <EntityType Name="Journal">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="BookingId" Type="Int32" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" />
+    <Property Name="Reconciled" Type="Boolean" Nullable="false" />
+    <Property Name="EcoCashReference" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+    <Property Name="TypeId" Type="AgrishareModel.JournalType" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="AgrishareModel.journals_ibfk_2" FromRole="Journal" ToRole="Booking" />
+    <NavigationProperty Name="User" Relationship="AgrishareModel.journals_ibfk_1" FromRole="Journal" ToRole="User" />
+  </EntityType>
+  <Association Name="journals_ibfk_2">
+    <End Type="AgrishareModel.Booking" Role="Booking" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="AgrishareModel.Journal" Role="Journal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Journal">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="journals_ibfk_1">
+    <End Type="AgrishareModel.User" Role="User" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="AgrishareModel.Journal" Role="Journal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Journal">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EnumType Name="JournalType" UnderlyingType="Int16">
+    <Member Name="None" Value="0" />
+    <Member Name="Payment" Value="1" />
+    <Member Name="Refund" Value="2" />
+    <Member Name="Settlement" Value="3" />
+    <Member Name="Fee" Value="4" />
+  </EnumType>
 </Schema>

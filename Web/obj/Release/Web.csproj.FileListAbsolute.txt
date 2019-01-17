@@ -80,3 +80,5 @@ C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Web.csprojAssemb
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Web.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Agrishare.Web.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Web\obj\Release\Agrishare.Web.pdb
+C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\EPPlus.dll
+C:\Users\brad\Documents\Working Files\Agrishare\Web\bin\EPPlus.xml

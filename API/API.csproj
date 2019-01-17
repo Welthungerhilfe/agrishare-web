@@ -133,6 +133,7 @@
     <Compile Include="Code\ExceptionFilter.cs" />
     <Compile Include="Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CMS\JournalsController.cs" />
     <Compile Include="Controllers\CMS\SettlementController.cs" />
     <Compile Include="Controllers\CMS\DashboardController.cs" />
     <Compile Include="Controllers\CMS\BlogsController.cs" />
@@ -160,6 +161,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\ReconcileModel.cs" />
     <Compile Include="Models\ListingModel.cs" />
     <Compile Include="Models\RatingModel.cs" />
     <Compile Include="Models\BookingModel.cs" />

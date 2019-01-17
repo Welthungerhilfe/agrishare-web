@@ -41,13 +41,23 @@
         <AssociationConnector Association="AgrishareModel.counters_ibfk_1" />
         <AssociationConnector Association="AgrishareModel.counters_ibfk_2" />
         <AssociationConnector Association="AgrishareModel.bookingusers_ibfk_2" ManuallyRouted="true" >
-          <ConnectorPoint PointX="18.750002000000002" PointY="9.057109375" />
-          <ConnectorPoint PointX="18.750002000000002" PointY="15.380432632388732" />
-          <ConnectorPoint PointX="5.8626971836921351" PointY="15.380432632388732" />
-          <ConnectorPoint PointX="5.8626971836921351" PointY="12.77830078125" />
+          <ConnectorPoint PointX="18.6250025" PointY="9.4417122395833335" />
+          <ConnectorPoint PointX="18.6250025" PointY="10.125" />
+          <ConnectorPoint PointX="17.864582458333334" PointY="10.125" />
+          <ConnectorPoint PointX="17.69791579166667" PointY="10.125" />
+          <ConnectorPoint PointX="17.583331333333334" PointY="10.125" />
+          <ConnectorPoint PointX="17.416664666666669" PointY="10.125" />
+          <ConnectorPoint PointX="9.75" PointY="10.125" />
+          <ConnectorPoint PointX="9.75" PointY="11.6147265625" />
+          <ConnectorPoint PointX="7.375" PointY="11.6147265625" />
+          <ConnectorPoint PointX="7.375" PointY="11.480334031250008" />
+          <ConnectorPoint PointX="7" PointY="11.480334031250008" />
         </AssociationConnector>
         <AssociationConnector Association="AgrishareModel.ratings_ibfk_3" />
         <EntityTypeShape EntityType="AgrishareModel.Blog" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="AgrishareModel.Journal" Width="1.875" PointX="0.75" PointY="11.75" />
+        <AssociationConnector Association="AgrishareModel.journals_ibfk_2" />
+        <AssociationConnector Association="AgrishareModel.journals_ibfk_1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

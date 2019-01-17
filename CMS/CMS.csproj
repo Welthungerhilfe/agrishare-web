@@ -84,6 +84,8 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\Journals\Reconcile.html" />
+    <Content Include="Pages\Journals\List.html" />
     <Content Include="Pages\Bookings\Detail.html" />
     <Content Include="Pages\Deleted\Listings\Detail.html" />
     <Content Include="Pages\Deleted\Listings\List.html" />

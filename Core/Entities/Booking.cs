@@ -20,6 +20,7 @@ namespace Agrishare.Core.Entities
             this.BookingUsers = new HashSet<BookingUser>();
             this.Transactions = new HashSet<Transaction>();
             this.Ratings = new HashSet<Rating>();
+            this.Journals = new HashSet<Journal>();
         }
     
         public int Id { get; set; }
@@ -39,16 +40,17 @@ namespace Agrishare.Core.Entities
         public decimal HireCost { get; set; }
         public decimal FuelCost { get; set; }
         public decimal TransportCost { get; set; }
-        public BookingStatus StatusId { get; set; }
-        public System.DateTime DateCreated { get; set; }
-        public System.DateTime LastModified { get; set; }
-        public bool Deleted { get; set; }
         public decimal DestinationLatitude { get; set; }
         public decimal DestinationLongitude { get; set; }
         public string Destination { get; set; }
         public string AdditionalInformation { get; set; }
         public decimal TotalVolume { get; set; }
         public decimal TransportDistance { get; set; }
+        public BookingStatus StatusId { get; set; }
+        public bool PaidOut { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public System.DateTime LastModified { get; set; }
+        public bool Deleted { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -59,5 +61,7 @@ namespace Agrishare.Core.Entities
         public virtual Service Service { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rating> Ratings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Journal> Journals { get; set; }
     }
 }

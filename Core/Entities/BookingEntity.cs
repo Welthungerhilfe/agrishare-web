@@ -153,6 +153,26 @@ namespace Agrishare.Core.Entities
 
         }
 
+        public static List<Booking> SettlementReport(DateTime StartDate, DateTime EndDate)
+        {
+            using (var ctx = new AgrishareEntities())
+            {
+                var query = ctx.Bookings.Include(o => o.Listing).Include(o => o.Listing.User).Where(o => !o.Deleted);
+
+                query = query.Where(o => o.StatusId == BookingStatus.Complete && !o.PaidOut);
+
+                var startDate = StartDate.StartOfDay();
+                query = query.Where(o => o.EndDate >= startDate);
+
+                var endDate = EndDate.StartOfDay();
+                query = query.Where(o => o.StartDate <= endDate);
+
+                query = query.OrderBy(o => o.DateCreated);
+
+                return query.ToList();
+            }
+        }
+
         public bool Save()
         {
             var success = false;

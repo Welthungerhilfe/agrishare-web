@@ -325,9 +325,20 @@ namespace Agrishare.Core.Entities
                 BookingUser.StatusId = BookingUserStatus.Paid;
                 BookingUser.Save();
 
+                new Journal
+                {
+                    Amount = Amount,
+                    BookingId = BookingId,
+                    EcoCashReference = EcoCashReference,
+                    Reconciled = false,
+                    Title = $"Payment received from {BookingUser.Name} {BookingUser.Telephone}",
+                    TypeId = JournalType.Payment,
+                    UserId = BookingUser.Id                    
+                }.Save();
+                                
                 var bookingUsers = BookingUser.List(BookingId: BookingId);
                 if (bookingUsers.Count(e => e.StatusId != BookingUserStatus.Paid) == 0)
-                { 
+                {
                     var booking = Booking.Find(BookingId);
                     booking.StatusId = BookingStatus.InProgress;
                     booking.Save();
@@ -446,6 +457,17 @@ namespace Agrishare.Core.Entities
                         var originalTransaction = Find(Id: originalId);
                         originalTransaction.StatusId = TransactionStatus.Refunded;
                         originalTransaction.Save();
+
+                        new Journal
+                        {
+                            Amount = Amount,
+                            BookingId = BookingId,
+                            EcoCashReference = EcoCashReference,
+                            Reconciled = false,
+                            Title = $"Payment refunded to {BookingUser.Name} {BookingUser.Telephone}",
+                            TypeId = JournalType.Refund,
+                            UserId = BookingUser.Id
+                        }.Save();
                     }
 
                     Save();

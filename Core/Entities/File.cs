@@ -107,6 +107,10 @@ namespace Agrishare.Core.Entities
                 bitmap.Save(MapPath(Destination), Codec, encoder);
                 success = true;
             }
+            catch
+            {
+                return false;
+            }
             finally
             {
                 if (stream != null) stream.Dispose();

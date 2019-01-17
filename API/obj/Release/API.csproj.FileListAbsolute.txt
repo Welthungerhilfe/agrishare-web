@@ -43,3 +43,5 @@ C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\API.csprojAssemb
 C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\API.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\Agrishare.API.dll
 C:\Users\brad\Documents\Working Files\Agrishare\API\obj\Release\Agrishare.API.pdb
+C:\Users\brad\Documents\Working Files\Agrishare\API\bin\EPPlus.dll
+C:\Users\brad\Documents\Working Files\Agrishare\API\bin\EPPlus.xml
