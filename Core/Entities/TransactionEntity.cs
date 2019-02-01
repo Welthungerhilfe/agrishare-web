@@ -333,7 +333,7 @@ namespace Agrishare.Core.Entities
                     Reconciled = false,
                     Title = $"Payment received from {BookingUser.Name} {BookingUser.Telephone}",
                     TypeId = JournalType.Payment,
-                    UserId = BookingUser.Id                    
+                    UserId = BookingUser.UserId ?? Booking.UserId
                 }.Save();
                                 
                 var bookingUsers = BookingUser.List(BookingId: BookingId);
