@@ -191,11 +191,12 @@ namespace Agrishare.Core.Entities
             var json = JsonConvert.SerializeObject(new
             {
                 clientCorrelator = ClientCorrelator,
+                notifyUrl = $"{Config.APIURL}/transactions/ecocash/notify",
+                referenceCode = Title,
+                tranType = "MER",
                 endUserId = SanitiseMobileNumber(BookingUser.Telephone),
-                merchantCode = EcoCashMerchantCode,
-                merchantPin = EcoCashMerchantPin,
-                merchantNumber = EcoCashMerchantNumber,
-                notifyUrl = $"{Config.APIURL}transactions/ecocash/notify",
+                remarks = Config.ApplicationName,
+                transactionOperationStatus = "Charged",
                 paymentAmount = new
                 {
                     charginginformation = new
@@ -206,13 +207,20 @@ namespace Agrishare.Core.Entities
                     },
                     chargeMetaData = new
                     {
-                        onBeHalfOf = Config.ApplicationName,
+                        channel = "WEB",
                         purchaseCategoryCode = "Booking",
-                        channel = "WEB"
+                        onBeHalfOf = Config.ApplicationName
                     }
                 },
-                referenceCode = Title,
-                transactionOperationStatus = "Charged"
+                merchantCode = EcoCashMerchantCode,
+                merchantPin = EcoCashMerchantPin,
+                merchantNumber = EcoCashMerchantNumber,
+                currencyCode = "USD",
+                countryCode = "ZW", 
+                terminalID = "001",
+                location = "api.agrishare.app",
+                superMerchantName = "WHH",
+                merchantName = Config.ApplicationName
             });
 
             if (EcoCashLog)
@@ -385,31 +393,37 @@ namespace Agrishare.Core.Entities
             var json = JsonConvert.SerializeObject(new
             {
                 clientCorrelator = ClientCorrelator,
+                notifyUrl = $"{Config.APIURL}/transactions/ecocash/notify",
+                referenceCode = Title,
+                tranType = "REF",
                 endUserId = SanitiseMobileNumber(BookingUser.Telephone),
-                merchantCode = EcoCashMerchantCode,
-                merchantPin = EcoCashMerchantPin,
-                merchantNumber = EcoCashMerchantNumber,
-                notifyUrl = $"{Config.APIURL}transactions/ecocash/notify",
+                remarks = Config.ApplicationName,
+                transactionOperationStatus = "Refunded",
+                originalEcocashReference = EcoCashReference,
                 paymentAmount = new
                 {
                     charginginformation = new
                     {
-                        amount = Amount,
+                        amount = Amount.ToString("0.##"),
                         currency = "USD",
                         description = Booking?.Listing?.Title ?? "AgriShare Booking"
                     },
                     chargeMetaData = new
                     {
-                        onBeHalfOf = Config.ApplicationName,
+                        channel = "WEB",
                         purchaseCategoryCode = "Booking",
-                        channel = "WEB"
+                        onBeHalfOf = Config.ApplicationName
                     }
                 },
-                originalEcocashReference = EcoCashReference,
-                referenceCode = Title,
-                transactionOperationStatus = "Refunded",
-                tranType = "REF",
-                remark = Title
+                merchantCode = EcoCashMerchantCode,
+                merchantPin = EcoCashMerchantPin,
+                merchantNumber = EcoCashMerchantNumber,
+                currencyCode = "USD",
+                countryCode = "ZW",
+                terminalID = "001",
+                location = "api.agrishare.app",
+                superMerchantName = "WHH",
+                merchantName = Config.ApplicationName
             });
 
             if (EcoCashLog)
