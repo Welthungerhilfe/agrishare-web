@@ -191,7 +191,8 @@ namespace Agrishare.Core.Entities
             var json = JsonConvert.SerializeObject(new
             {
                 clientCorrelator = ClientCorrelator,
-                notifyUrl = $"{Config.APIURL}/transactions/ecocash/notify",
+                //notifyUrl = $"{Config.APIURL}/transactions/ecocash/notify",
+                notifyUrl = $"http://197.211.236.157:9800/transactions/ecocash/notify",
                 referenceCode = Title,
                 tranType = "MER",
                 endUserId = SanitiseMobileNumber(BookingUser.Telephone),
