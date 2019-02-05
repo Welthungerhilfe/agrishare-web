@@ -147,7 +147,7 @@ namespace Agrishare.Core.Entities
 
 
         public static List<ListingSearchResult> List(int PageIndex, int PageSize, string Sort, int CategoryId, int ServiceId, decimal Latitude, 
-            decimal Longitude, DateTime StartDate, int Size, bool IncludeFuel, bool Mobile, BookingFor For, decimal DestinationLatitude, 
+            decimal Longitude, DateTime StartDate, decimal Size, bool IncludeFuel, bool Mobile, BookingFor For, decimal DestinationLatitude, 
             decimal DestinationLongitude, decimal TotalVolume, int ListingId = 0)
         {
             var sort = ListingSearchResultSort.Distance;
