@@ -87,7 +87,7 @@ namespace Agrishare.Core.Entities
                 var query = ctx.Logs.Where(o => !o.Deleted);
 
                 if (!Keywords.IsEmpty())
-                    query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()) && o.Description.ToLower().Contains(Keywords.ToLower()) && o.User.ToLower().Contains(Keywords.ToLower()));
+                    query = query.Where(o => o.Title.ToLower().Contains(Keywords.ToLower()));
 
                 return query.Count();
             }

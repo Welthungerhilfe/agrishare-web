@@ -63,6 +63,9 @@ namespace Agrishare.API.Controllers.App
             var bookingUsers = new List<Core.Entities.BookingUser>();
             foreach (var user in Model.Users)
             {
+                if (user == null)
+                    continue;
+
                 if (user.Quantity == 0)
                     user.Quantity = 1;
                 if (booking.Quantity == 0)
