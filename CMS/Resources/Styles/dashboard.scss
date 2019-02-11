@@ -8,6 +8,14 @@
         padding: 20px;
     }
 
+    h2 {
+        align-items: center;
+
+        .row {
+            margin: 0 !important;
+        }
+    }
+
     .overview, .settlement {
         display: flex;
 

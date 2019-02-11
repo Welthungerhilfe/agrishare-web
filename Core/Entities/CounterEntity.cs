@@ -27,7 +27,8 @@ namespace Agrishare.Core.Entities
         CompletePayment = 11,
         CompleteBooking = 12,
         CancelBooking = 13,
-        IncompleteBooking = 14
+        IncompleteBooking = 14,
+        DeclineBooking = 15
     }
 
     public partial class Counter : IEntity
@@ -58,7 +59,7 @@ namespace Agrishare.Core.Entities
 
                 if (EndDate.HasValue)
                 {
-                    var end = StartDate.Value.EndOfDay();
+                    var end = EndDate.Value.EndOfDay();
                     query = query.Where(o => o.DateCreated <= end);
                 }
 

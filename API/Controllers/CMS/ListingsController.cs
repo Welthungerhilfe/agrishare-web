@@ -18,7 +18,7 @@ namespace Agrishare.API.Controllers.CMS
             var recordCount = Entities.Listing.Count(Keywords: Query, UserId: UserId);
             var list = Entities.Listing.List(PageIndex: PageIndex, PageSize: PageSize, Keywords: Query, UserId: UserId);
             var title = "Listings";
-            
+
             if (UserId > 0)
             {
                 var user = Entities.User.Find(Id: UserId);
@@ -26,12 +26,35 @@ namespace Agrishare.API.Controllers.CMS
                     title = $"{user.FirstName} {user.LastName}";
             }
 
+            int total = 0, tractors = 0, lorries = 0, processors = 0, reviews = 0, onestar = 0;
+            decimal averageRating = 0M;
+            if (PageIndex == 0)
+            {
+                total = Entities.Listing.Count();
+                tractors = Entities.Listing.Count(CategoryId: Entities.Category.TractorsId);
+                lorries = Entities.Listing.Count(CategoryId: Entities.Category.LorriesId);
+                processors = Entities.Listing.Count(CategoryId: Entities.Category.ProcessingId);
+                reviews = Entities.Rating.Count();
+                onestar = Entities.Rating.Count(Stars: 1);
+                averageRating = Entities.Rating.AverageRating();
+            }
+
             var data = new
             {
                 Count = recordCount,
                 Sort = Entities.Listing.DefaultSort,
                 List = list.Select(e => e.Json()),
-                Title = title
+                Title = title,
+                Summary = new
+                {
+                    Total = total,
+                    Tractors = tractors,
+                    Lorries = lorries,
+                    Processors = processors,
+                    Reviews = reviews,
+                    AverageRating = averageRating,
+                    OneStar = onestar
+                }
             };
 
             return Success(data);

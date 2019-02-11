@@ -67,3 +67,5 @@ C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Core.csproj.CopyC
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Agrishare.Core.dll
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Agrishare.Core.pdb
 C:\Users\brad\Documents\Working Files\Agrishare\Core\obj\Debug\Core.csprojAssemblyReference.cache
+C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Debug\EPPlus.dll
+C:\Users\brad\Documents\Working Files\Agrishare\Core\bin\Debug\EPPlus.xml

@@ -25,12 +25,34 @@ namespace Agrishare.API.Controllers.CMS
                     title = $"{user.FirstName} {user.LastName}";
             }
 
+            int bookingsMade = 0, confirmedBookings = 0, paidBookings = 0, completedBookings = 0, declinedBookings = 0, cancelledBookings = 0, incompleteBookings = 0;
+            if (PageIndex == 0)
+            {
+                bookingsMade = Entities.Counter.Count(Event: Entities.Counters.Book);
+                confirmedBookings = Entities.Counter.Count(Event: Entities.Counters.ConfirmBooking);
+                paidBookings = Entities.Counter.Count(Event: Entities.Counters.CompletePayment);
+                completedBookings = Entities.Counter.Count(Event: Entities.Counters.CompleteBooking);
+                declinedBookings = Entities.Counter.Count(Event: Entities.Counters.DeclineBooking);
+                cancelledBookings = Entities.Counter.Count(Event: Entities.Counters.CancelBooking);
+                incompleteBookings = Entities.Counter.Count(Event: Entities.Counters.IncompleteBooking);
+            }
+
             var data = new
             {
                 Count = recordCount,
                 Sort = Entities.Booking.DefaultSort,
                 List = list.Select(e => e.Json()),
-                Title = title
+                Title = title,
+                Summary = new
+                {
+                    BookingsMade = bookingsMade,
+                    ConfirmedBookings = confirmedBookings,
+                    PaidBookings = paidBookings,
+                    CompletedBookings = completedBookings,
+                    DeclinedBookings = declinedBookings,
+                    CancelledBookings = cancelledBookings,
+                    IncompleteBookings = incompleteBookings
+                }
             };
 
             return Success(data);

@@ -63,7 +63,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int ListingId = 0)
+        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int ListingId = 0, int Stars = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -80,6 +80,9 @@ namespace Agrishare.Core.Entities
 
                 if (ListingId > 0)
                     query = query.Where(o => o.ListingId == ListingId);
+
+                if (Stars > 0)
+                    query = query.Where(o => o.Stars == Stars);
 
                 return query.Count();
             }
@@ -152,6 +155,12 @@ namespace Agrishare.Core.Entities
                 Stars,
                 DateCreated
             };
+        }
+
+        public static decimal AverageRating()
+        {
+            using (var ctx = new AgrishareEntities())
+                return ctx.Ratings.Where(o => !o.Deleted).Select(o => o.Stars).DefaultIfEmpty(0).Average();
         }
     }
 }

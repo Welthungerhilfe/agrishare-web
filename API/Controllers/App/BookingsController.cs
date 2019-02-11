@@ -152,6 +152,8 @@ namespace Agrishare.API.Controllers.App
                     User = Entities.User.Find(Id: booking.UserId)
                 }.Save(Notify: true);
 
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.DeclineBooking, booking.Service.CategoryId);
+
                 return Success(new
                 {
                     Booking = new

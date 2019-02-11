@@ -22,6 +22,7 @@ agrishareApp.controller('ListViewController', function ($attrs, $controller, $ht
     list.searching = false;
     list.query = '';
     list.filter = $scope.filter;
+    list.summary = {};
 
     $scope.list = list;
 
@@ -65,6 +66,9 @@ agrishareApp.controller('ListViewController', function ($attrs, $controller, $ht
             var json = response.data;
             App.title = json.Title;
             list.recordCount = parseInt(json.Count);
+
+            if (list.pageIndex === 0)
+                list.summary = json.Summary;
             
             var items = json.List;
             for (var i = 0; i < items.length; i++)

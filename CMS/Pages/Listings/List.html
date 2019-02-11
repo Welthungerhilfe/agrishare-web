@@ -11,15 +11,40 @@
         </gl-popup-menu>
 
     </ag-title-bar>
+          
+    <ag-section ag-ontroller="list">
 
-    <ag-section ag-controller="list">
+        <div class="summary-view" ng-show="!list.busy && list.data.length>0 && !list.filter">
+            <div>
+                <strong>{{list.summary.Total}}</strong>
+                <small>Listings</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Tractors}}</strong>
+                <small>Tractors</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Lorries}}</strong>
+                <small>Lorries</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Processors}}</strong>
+                <small>Processors</small>
+            </div>
+            <ul>
+                <li><strong>{{list.summary.Reviews}}</strong> Ratings</li>
+                <li><strong>{{list.summary.OneStar}}</strong> 1-Star Ratings</li>
+                <li>Average Rating: <strong>{{list.summary.AverageRating}}</strong></li>
+            </ul>
+        </div>
 
         <gl-list gl-controller="list" gl-infinite="list.next()">
+
             <div ng-repeat="item in list.data">
                 <photo style="background-image:url({{item.Photos[0].Thumb}})"></photo>
                 <row class="listing" ng-click="app.go('/listings/detail/'+item.Id+'?'+app.returnUrlQs())">
                     <div>
-                        <strong>{{item.Title}}</strong><br />
+                        <strong>{{item.Title}}</strong> &nbsp; <gl-rating gl-stars="item.AverageRating" ng-if="item.RatingCount>0" style="position:relative;top:2px"></gl-rating> <small style="position:relative;top:-2px" ng-if="item.RatingCount>0">({{item.RatingCount}})</small><br />
                         <small>{{item.Category.Title}} &bull; {{item.Brand}}</small>
                     </div>
                     <div>

@@ -26,7 +26,7 @@ agrishareApp.directive('glDate', function ($timeout) {
 
             return '' +
                 '<div class="row date-row">' +
-                '<label>' + label + '</label>' +
+                '<label ng-if="label">' + label + '</label>' +
                 '<div class="icon">' +
                 '<i class="material-icons">date_range</i>' +
                 '<input type="text" placeholder="' + placeholder + '" ng-model="displayDate" ' + requiredAttr + ' name="' + name + '" ng-disabled="disabledBool" />' +

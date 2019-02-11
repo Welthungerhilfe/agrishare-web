@@ -14,6 +14,30 @@
 
     <ag-section ag-controller="list">
 
+        <div class="summary-view" ng-show="!list.busy && list.data.length>0 && !list.filter">
+            <div>
+                <strong>{{list.summary.BookingsMade}}</strong>
+                <small>Bookings Made</small>
+            </div>
+            <div>
+                <strong>{{list.summary.ConfirmedBookings}}</strong>
+                <small>Confirmed Bookings</small>
+            </div>
+            <div>
+                <strong>{{list.summary.PaidBookings}}</strong>
+                <small>Paid Bookings</small>
+            </div>
+            <div>
+                <strong>{{list.summary.CompletedBookings}}</strong>
+                <small>Completed Bookings</small>
+            </div>
+            <ul>
+                <li><strong>{{list.summary.DeclinedBookings}}</strong> Declined Bookings</li>
+                <li><strong>{{list.summary.CancelledBookings}}</strong> Cancelled Bookings</li>
+                <li><strong>{{list.summary.IncompleteBookings}}</strong> Incomplete Bookings</li>
+            </ul>
+        </div>
+
         <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
                 <calendar>

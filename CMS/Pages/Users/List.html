@@ -15,13 +15,36 @@
 
     <ag-section ag-controller="list">
 
+        <div class="summary-view" ng-show="!list.busy && list.data.length>0 && !list.filter">
+            <div>
+                <strong>{{list.summary.Total}}</strong>
+                <small>Users</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Active}}</strong>
+                <small>Active Users</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Male}}</strong>
+                <small>Male</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Female}}</strong>
+                <small>Female</small>
+            </div>
+            <ul>
+                <li><strong>{{list.summary.Deleted}}</strong> Deleted Users</li>
+                <li><strong>{{list.summary.LockedOut}}</strong> Locked Out Users</li>
+            </ul>
+        </div>
+
         <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
                 <icon>
                     <i class="material-icons">person</i>
                 </icon>
                 <row ng-click="app.go('/users/detail/'+item.Id+'?'+app.returnUrlQs())">
-                    <strong>{{item.FirstName}} {{item.LastName}}</strong><br/>
+                    <strong>{{item.FirstName}} {{item.LastName}}</strong><br />
                     <small>{{item.Telephone}} &bull; {{item.Language}}</small>
                 </row>
                 <action>

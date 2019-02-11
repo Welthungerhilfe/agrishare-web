@@ -28,12 +28,32 @@ namespace Agrishare.API.Controllers.CMS
             var recordCount = Entities.User.Count(Keywords: Query);
             var list = Entities.User.List(PageIndex: PageIndex, PageSize: PageSize, Keywords: Query);
 
+            int total = 0, active = 0, male = 0, female = 0, deleted = 0, lockedout = 0;
+            if (PageIndex == 0)
+            {
+                total = Entities.User.Count();
+                male = Entities.User.Count(Gender: Entities.Gender.Male);
+                female = Entities.User.Count(Gender: Entities.Gender.Female);
+                deleted = Entities.User.Count(Deleted: true);
+                lockedout = Entities.User.Count(FailedLoginAttempts: 1);
+                active = Entities.Counter.Count(UniqueUser: true);
+            }
+
             var data = new
             {
                 Count = recordCount,
                 Sort = Entities.User.DefaultSort,
                 List = list.Select(e => e.Json()),
-                Title = "Users"
+                Title = "Users",
+                Summary = new
+                {
+                    Total = total,
+                    Active = active,
+                    Male =  male,
+                    Female = female,
+                    Deleted = deleted,
+                    LockedOut = lockedout
+                }
             };
 
             return Success(data);

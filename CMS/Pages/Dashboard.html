@@ -10,14 +10,6 @@
 
         <div class="dashboard-view">
 
-            <div class="settlement">
-                <ul>
-                    <li><big>{{dashboard.data.totalBookingAmount | currency}}</big><strong>Total<br />Transactions</strong></li>
-                    <li><big>{{dashboard.data.agrishareCommission | currency}}</big><strong>AgriShare<br />Commission</strong></li>
-                    <li><big>{{dashboard.data.totalBookingAmount - dashboard.data.agrishareCommission | currency}}</big><strong>Paid<br />Out</strong></li>
-                </ul>
-            </div>
-
             <div class="overview">
                 <ul>
                     <li><big>{{dashboard.data.activeListingCount}}</big><strong>Live<br />Listings</strong></li>
@@ -27,19 +19,32 @@
                 </ul>
             </div>
 
+            <h2 flex>
+                <span style="flex: 1">Finance</span>
+                <span flex style="align-items: center">
+                    <gl-date gl-placeholder="From" ng-model="dashboard.activity.filter.startDate"></gl-date>
+                    <span>&nbsp;→&nbsp;</span>
+                    <gl-date gl-placeholder="To" ng-model="dashboard.activity.filter.endDate"></gl-date>
+                </span>
+            </h2>
+
+            <div class="settlement">
+                <ul>
+                    <li><big>{{dashboard.data.totalBookingAmount | currency}}</big><strong>Total<br />Transactions</strong></li>
+                    <li><big>{{dashboard.data.agrishareCommission | currency}}</big><strong>AgriShare<br />Commission</strong></li>
+                    <li><big>{{dashboard.data.totalBookingAmount - dashboard.data.agrishareCommission | currency}}</big><strong>Paid<br />Out</strong></li>
+                </ul>
+            </div>
+
             <div class="activity">
                 <h2 class="filter">
-                    <a ng-click="dashboard.activity.filter.type='User';dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.type=='User'}">User</a>
-                    <a ng-click="dashboard.activity.filter.type='All';dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.type=='All'}">All</a>
+                    <a ng-click="dashboard.activity.filter.type='User'" ng-class="{'active':dashboard.activity.filter.type=='User'}">User</a>
+                    <a ng-click="dashboard.activity.filter.type='All'" ng-class="{'active':dashboard.activity.filter.type=='All'}">All</a>
                     <span>&nbsp;</span>
-                    <a ng-click="dashboard.activity.filter.timespan=7;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.timespan==7}">7 days</a>
-                    <a ng-click="dashboard.activity.filter.timespan=30;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.timespan==30}">30 days</a>
-                    <a ng-click="dashboard.activity.filter.timespan=0;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.timespan==0}">Lifetime</a>
-                    <span>&nbsp;</span>
-                    <a ng-click="dashboard.activity.filter.category=0;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.category==0}">All</a>
-                    <a ng-click="dashboard.activity.filter.category=1;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.category==1}">Tractors</a>
-                    <a ng-click="dashboard.activity.filter.category=2;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.category==2}">Lorries</a>
-                    <a ng-click="dashboard.activity.filter.category=3;dashboard.fetch()" ng-class="{'active':dashboard.activity.filter.category==3}">Processing</a>
+                    <a ng-click="dashboard.activity.filter.category=0" ng-class="{'active':dashboard.activity.filter.category==0}">All</a>
+                    <a ng-click="dashboard.activity.filter.category=1" ng-class="{'active':dashboard.activity.filter.category==1}">Tractors</a>
+                    <a ng-click="dashboard.activity.filter.category=2" ng-class="{'active':dashboard.activity.filter.category==2}">Lorries</a>
+                    <a ng-click="dashboard.activity.filter.category=3" ng-class="{'active':dashboard.activity.filter.category==3}">Processing</a>
                 </h2>
                 <ul>
                     <li>
@@ -135,9 +140,12 @@
                 </ul>
             </div>
 
+            <h2>Bookings by location</h2>
+            <div id="heatmap" style="width: 100%; height: 450px; background-color: #ccc"></div>
+
         </div>
 
-</ag-section>
+    </ag-section>
 
     <ag-status-bar></ag-status-bar>
 
