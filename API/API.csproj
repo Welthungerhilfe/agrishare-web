@@ -133,6 +133,7 @@
     <Compile Include="Code\ExceptionFilter.cs" />
     <Compile Include="Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\App\ConfigController.cs" />
     <Compile Include="Controllers\CMS\JournalsController.cs" />
     <Compile Include="Controllers\CMS\SettlementController.cs" />
     <Compile Include="Controllers\CMS\DashboardController.cs" />
