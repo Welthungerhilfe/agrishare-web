@@ -30,3 +30,5 @@ C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Debug\CMS.csproj.CoreCom
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Debug\CMS.csproj.CopyComplete
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Debug\Agrishare.CMS.dll
 C:\Users\brad\Documents\Working Files\Agrishare\CMS\obj\Debug\Agrishare.CMS.pdb
+C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\EPPlus.dll
+C:\Users\brad\Documents\Working Files\Agrishare\CMS\bin\EPPlus.xml

@@ -17,7 +17,7 @@
 
         <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
-                <row class="setting" flex>
+                <row class="setting" flex ng-click="app.go('/settings/edit/'+item.Id+'?'+app.returnUrlQs())">
                     <strong>{{item.Title}}</strong>
                     <span>{{item.Value}}</span>
                 </row>

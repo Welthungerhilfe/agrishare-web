@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsC0964722E30C69382B70088C17F38C8AACD0080D54CA390086B050C6C751F1EA))]
+[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsDB633E7A7BF69C17D36D29DAE3C032B55A091733AE78D8805E373F195850146C))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -17,19 +17,19 @@ namespace Edm_EntityMappingGeneratedViews
     /// <Summary>
     /// The type contains views for EntitySets and AssociationSets that were generated at design time.
     /// </Summary>
-    public sealed class ViewsForBaseEntitySetsC0964722E30C69382B70088C17F38C8AACD0080D54CA390086B050C6C751F1EA : System.Data.Mapping.EntityViewContainer
+    public sealed class ViewsForBaseEntitySetsDB633E7A7BF69C17D36D29DAE3C032B55A091733AE78D8805E373F195850146C : System.Data.Mapping.EntityViewContainer
     {
         
         /// <Summary>
         /// The constructor stores the views for the extents and also the hash values generated based on the metadata and mapping closure and views.
         /// </Summary>
-        public ViewsForBaseEntitySetsC0964722E30C69382B70088C17F38C8AACD0080D54CA390086B050C6C751F1EA()
+        public ViewsForBaseEntitySetsDB633E7A7BF69C17D36D29DAE3C032B55A091733AE78D8805E373F195850146C()
         {
             this.EdmEntityContainerName = "AgrishareEntities";
             this.StoreEntityContainerName = "AgrishareModelStoreContainer";
-            this.HashOverMappingClosure = "be0c8e99e3e9c98ea0d39b71d9e6446d6614e14f6f9568dd5734b7277e7a6335";
-            this.HashOverAllExtentViews = "658590966c80e459761825178b0b8c82945da9a209951673316355507d1401bd";
-            this.ViewCount = 32;
+            this.HashOverMappingClosure = "a67a97527d75ecdd60094cb5e3f3c7b4f1ebad83dcc186c755b0cf03526c809b";
+            this.HashOverAllExtentViews = "3e5598833e002da975e5196efef2fb974ad742bb4e782adc31dec0bde50e9bf3";
+            this.ViewCount = 34;
         }
         
         /// <Summary>
@@ -165,6 +165,14 @@ namespace Edm_EntityMappingGeneratedViews
             {
                 return GetView31();
             }
+            if ((index == 32))
+            {
+                return GetView32();
+            }
+            if ((index == 33))
+            {
+                return GetView33();
+            }
             throw new System.IndexOutOfRangeException();
         }
         
@@ -173,7 +181,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// </Summary>
         private System.Collections.Generic.KeyValuePair<string, string> GetView0()
         {
-            System.Text.StringBuilder viewString = new System.Text.StringBuilder(2093);
+            System.Text.StringBuilder viewString = new System.Text.StringBuilder(2267);
             viewString.Append("\r\n    SELECT VALUE -- Constructing Bookings\r\n        [AgrishareModel.Store.Booki");
             viewString.Append("ngs](T1.Bookings_Id, T1.Bookings_ForId, T1.Bookings_UserId, T1.Bookings_ListingI");
             viewString.Append("d, T1.Bookings_ServiceId, T1.Bookings_Location, T1.Bookings_Latitude, T1.Booking");
@@ -181,26 +189,28 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("gs_DestinationLongitude, T1.Bookings_Quantity, T1.Bookings_Distance, T1.Bookings");
             viewString.Append("_IncludeFuel, T1.Bookings_StartDate, T1.Bookings_EndDate, T1.Bookings_Price, T1.");
             viewString.Append("Bookings_HireCost, T1.Bookings_FuelCost, T1.Bookings_TransportCost, T1.Bookings_");
-            viewString.Append("AdditionalInformation, T1.Bookings_StatusId, T1.Bookings_DateCreated, T1.Booking");
-            viewString.Append("s_LastModified, T1.Bookings_Deleted)\r\n    FROM (\r\n        SELECT \r\n            T");
-            viewString.Append(".Id AS Bookings_Id, \r\n            CAST(T.ForId AS [Edm.Int16]) AS Bookings_ForId");
-            viewString.Append(", \r\n            T.UserId AS Bookings_UserId, \r\n            T.ListingId AS Bookin");
-            viewString.Append("gs_ListingId, \r\n            T.ServiceId AS Bookings_ServiceId, \r\n            T.L");
-            viewString.Append("ocation AS Bookings_Location, \r\n            T.Latitude AS Bookings_Latitude, \r\n ");
-            viewString.Append("           T.Longitude AS Bookings_Longitude, \r\n            T.Destination AS Boo");
-            viewString.Append("kings_Destination, \r\n            T.DestinationLatitude AS Bookings_DestinationLa");
-            viewString.Append("titude, \r\n            T.DestinationLongitude AS Bookings_DestinationLongitude, \r");
-            viewString.Append("\n            T.Quantity AS Bookings_Quantity, \r\n            T.Distance AS Bookin");
-            viewString.Append("gs_Distance, \r\n            T.IncludeFuel AS Bookings_IncludeFuel, \r\n            ");
-            viewString.Append("T.StartDate AS Bookings_StartDate, \r\n            T.EndDate AS Bookings_EndDate, ");
-            viewString.Append("\r\n            T.Price AS Bookings_Price, \r\n            T.HireCost AS Bookings_Hi");
-            viewString.Append("reCost, \r\n            T.FuelCost AS Bookings_FuelCost, \r\n            T.Transport");
-            viewString.Append("Cost AS Bookings_TransportCost, \r\n            T.AdditionalInformation AS Booking");
-            viewString.Append("s_AdditionalInformation, \r\n            CAST(T.StatusId AS [Edm.Int16]) AS Bookin");
-            viewString.Append("gs_StatusId, \r\n            T.DateCreated AS Bookings_DateCreated, \r\n            ");
-            viewString.Append("T.LastModified AS Bookings_LastModified, \r\n            T.Deleted AS Bookings_Del");
-            viewString.Append("eted, \r\n            True AS _from0\r\n        FROM AgrishareEntities.Bookings AS T");
-            viewString.Append("\r\n    ) AS T1");
+            viewString.Append("TransportDistance, T1.Bookings_AdditionalInformation, T1.Bookings_TotalVolume, T");
+            viewString.Append("1.Bookings_StatusId, T1.Bookings_DateCreated, T1.Bookings_LastModified, T1.Booki");
+            viewString.Append("ngs_Deleted)\r\n    FROM (\r\n        SELECT \r\n            T.Id AS Bookings_Id, \r\n  ");
+            viewString.Append("          CAST(T.ForId AS [Edm.Int16]) AS Bookings_ForId, \r\n            T.UserId");
+            viewString.Append(" AS Bookings_UserId, \r\n            T.ListingId AS Bookings_ListingId, \r\n        ");
+            viewString.Append("    T.ServiceId AS Bookings_ServiceId, \r\n            T.Location AS Bookings_Loca");
+            viewString.Append("tion, \r\n            T.Latitude AS Bookings_Latitude, \r\n            T.Longitude A");
+            viewString.Append("S Bookings_Longitude, \r\n            T.Destination AS Bookings_Destination, \r\n   ");
+            viewString.Append("         T.DestinationLatitude AS Bookings_DestinationLatitude, \r\n            T.");
+            viewString.Append("DestinationLongitude AS Bookings_DestinationLongitude, \r\n            T.Quantity ");
+            viewString.Append("AS Bookings_Quantity, \r\n            T.Distance AS Bookings_Distance, \r\n         ");
+            viewString.Append("   T.IncludeFuel AS Bookings_IncludeFuel, \r\n            T.StartDate AS Bookings_");
+            viewString.Append("StartDate, \r\n            T.EndDate AS Bookings_EndDate, \r\n            T.Price AS");
+            viewString.Append(" Bookings_Price, \r\n            T.HireCost AS Bookings_HireCost, \r\n            T.");
+            viewString.Append("FuelCost AS Bookings_FuelCost, \r\n            T.TransportCost AS Bookings_Transpo");
+            viewString.Append("rtCost, \r\n            T.TransportDistance AS Bookings_TransportDistance, \r\n     ");
+            viewString.Append("       T.AdditionalInformation AS Bookings_AdditionalInformation, \r\n            ");
+            viewString.Append("T.TotalVolume AS Bookings_TotalVolume, \r\n            CAST(T.StatusId AS [Edm.Int");
+            viewString.Append("16]) AS Bookings_StatusId, \r\n            T.DateCreated AS Bookings_DateCreated, ");
+            viewString.Append("\r\n            T.LastModified AS Bookings_LastModified, \r\n            T.Deleted A");
+            viewString.Append("S Bookings_Deleted, \r\n            True AS _from0\r\n        FROM AgrishareEntities");
+            viewString.Append(".Bookings AS T\r\n    ) AS T1");
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareModelStoreContainer.Bookings", viewString.ToString());
         }
         
@@ -262,24 +272,25 @@ namespace Edm_EntityMappingGeneratedViews
                     "e, T1.Listings_Description, T1.Listings_Location, T1.Listings_Latitude, T1.Listi" +
                     "ngs_Longitude, T1.Listings_Brand, T1.Listings_HorsePower, T1.Listings_Year, T1.L" +
                     "istings_ConditionId, T1.Listings_GroupServices, T1.Listings_Photos, T1.Listings_" +
-                    "AvailableWithoutFuel, T1.Listings_AverageRating, T1.Listings_RatingCount, T1.Lis" +
-                    "tings_StatusId, T1.Listings_DateCreated, T1.Listings_LastModified, T1.Listings_D" +
-                    "eleted)\r\n    FROM (\r\n        SELECT \r\n            T.Id AS Listings_Id, \r\n       " +
-                    "     T.UserId AS Listings_UserId, \r\n            T.CategoryId AS Listings_Categor" +
-                    "yId, \r\n            T.Title AS Listings_Title, \r\n            T.Description AS Lis" +
-                    "tings_Description, \r\n            T.Location AS Listings_Location, \r\n            " +
-                    "T.Latitude AS Listings_Latitude, \r\n            T.Longitude AS Listings_Longitude" +
-                    ", \r\n            T.Brand AS Listings_Brand, \r\n            T.HorsePower AS Listing" +
-                    "s_HorsePower, \r\n            T.Year AS Listings_Year, \r\n            CAST(T.Condit" +
-                    "ionId AS [Edm.Int16]) AS Listings_ConditionId, \r\n            T.GroupServices AS " +
-                    "Listings_GroupServices, \r\n            T.PhotoPaths AS Listings_Photos, \r\n       " +
-                    "     T.AvailableWithoutFuel AS Listings_AvailableWithoutFuel, \r\n            T.Av" +
-                    "erageRating AS Listings_AverageRating, \r\n            T.RatingCount AS Listings_R" +
-                    "atingCount, \r\n            CAST(T.StatusId AS [Edm.Int16]) AS Listings_StatusId, " +
-                    "\r\n            T.DateCreated AS Listings_DateCreated, \r\n            T.LastModifie" +
-                    "d AS Listings_LastModified, \r\n            T.Deleted AS Listings_Deleted, \r\n     " +
-                    "       True AS _from0\r\n        FROM AgrishareEntities.Listings AS T\r\n    ) AS T1" +
-                    "");
+                    "AvailableWithoutFuel, T1.Listings_AvailableWithFuel, T1.Listings_AverageRating, " +
+                    "T1.Listings_RatingCount, T1.Listings_StatusId, T1.Listings_DateCreated, T1.Listi" +
+                    "ngs_LastModified, T1.Listings_Deleted)\r\n    FROM (\r\n        SELECT \r\n           " +
+                    " T.Id AS Listings_Id, \r\n            T.UserId AS Listings_UserId, \r\n            T" +
+                    ".CategoryId AS Listings_CategoryId, \r\n            T.Title AS Listings_Title, \r\n " +
+                    "           T.Description AS Listings_Description, \r\n            T.Location AS Li" +
+                    "stings_Location, \r\n            T.Latitude AS Listings_Latitude, \r\n            T." +
+                    "Longitude AS Listings_Longitude, \r\n            T.Brand AS Listings_Brand, \r\n    " +
+                    "        T.HorsePower AS Listings_HorsePower, \r\n            T.Year AS Listings_Ye" +
+                    "ar, \r\n            CAST(T.ConditionId AS [Edm.Int16]) AS Listings_ConditionId, \r\n" +
+                    "            T.GroupServices AS Listings_GroupServices, \r\n            T.PhotoPath" +
+                    "s AS Listings_Photos, \r\n            T.AvailableWithoutFuel AS Listings_Available" +
+                    "WithoutFuel, \r\n            T.AvailableWithFuel AS Listings_AvailableWithFuel, \r\n" +
+                    "            T.AverageRating AS Listings_AverageRating, \r\n            T.RatingCou" +
+                    "nt AS Listings_RatingCount, \r\n            CAST(T.StatusId AS [Edm.Int16]) AS Lis" +
+                    "tings_StatusId, \r\n            T.DateCreated AS Listings_DateCreated, \r\n         " +
+                    "   T.LastModified AS Listings_LastModified, \r\n            T.Deleted AS Listings_" +
+                    "Deleted, \r\n            True AS _from0\r\n        FROM AgrishareEntities.Listings A" +
+                    "S T\r\n    ) AS T1");
         }
         
         /// <Summary>
@@ -314,16 +325,18 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareModelStoreContainer.Transactions", @"
     SELECT VALUE -- Constructing Transactions
-        [AgrishareModel.Store.Transactions](T1.Transactions_Id, T1.Transactions_BookingId, T1.Transactions_BookingUserId, T1.Transactions_Reference, T1.Transactions_Amount, T1.Transactions_StatusId, T1.Transactions_Log, T1.Transactions_DateCreated, T1.Transactions_LastModified, T1.Transactions_Deleted)
+        [AgrishareModel.Store.Transactions](T1.Transactions_Id, T1.Transactions_ClientCorrelator, T1.Transactions_BookingId, T1.Transactions_BookingUserId, T1.Transactions_Reference, T1.Transactions_Amount, T1.Transactions_StatusId, T1.Transactions_Log, T1.Transactions_Error, T1.Transactions_DateCreated, T1.Transactions_LastModified, T1.Transactions_Deleted)
     FROM (
         SELECT 
             T.Id AS Transactions_Id, 
+            T.ClientCorrelator AS Transactions_ClientCorrelator, 
             T.BookingId AS Transactions_BookingId, 
             T.BookingUserId AS Transactions_BookingUserId, 
             T.Reference AS Transactions_Reference, 
             T.Amount AS Transactions_Amount, 
             CAST(T.StatusId AS [Edm.Int16]) AS Transactions_StatusId, 
             T.Log AS Transactions_Log, 
+            T.Error AS Transactions_Error, 
             T.DateCreated AS Transactions_DateCreated, 
             T.LastModified AS Transactions_LastModified, 
             T.Deleted AS Transactions_Deleted, 
@@ -342,24 +355,25 @@ namespace Edm_EntityMappingGeneratedViews
                     "s_Telephone, T1.Users_GenderId, T1.Users_DateOfBirth, T1.Users_Password, T1.User" +
                     "s_Salt, T1.Users_AuthToken, T1.Users_FailedLoginAttempts, T1.Users_VerificationC" +
                     "ode, T1.Users_VerificationCodeExpiry, T1.Users_NotificationPreferences, T1.Users" +
-                    "_InterestId, T1.Users_SignalRConnectionId, T1.Users_StatusId, T1.Users_RoleList," +
-                    " T1.Users_DateCreated, T1.Users_LastModified, T1.Users_Deleted)\r\n    FROM (\r\n   " +
-                    "     SELECT \r\n            T.Id AS Users_Id, \r\n            T.FirstName AS Users_F" +
-                    "irstName, \r\n            T.LastName AS Users_LastName, \r\n            T.EmailAddre" +
-                    "ss AS Users_EmailAddress, \r\n            T.Telephone AS Users_Telephone, \r\n      " +
-                    "      CAST(T.GenderId AS [Edm.Int16]) AS Users_GenderId, \r\n            T.DateOfB" +
-                    "irth AS Users_DateOfBirth, \r\n            T.Password AS Users_Password, \r\n       " +
-                    "     T.Salt AS Users_Salt, \r\n            T.AuthToken AS Users_AuthToken, \r\n     " +
-                    "       T.FailedLoginAttempts AS Users_FailedLoginAttempts, \r\n            T.Verif" +
-                    "icationCode AS Users_VerificationCode, \r\n            T.VerificationCodeExpiry AS" +
-                    " Users_VerificationCodeExpiry, \r\n            T.NotificationPreferences AS Users_" +
-                    "NotificationPreferences, \r\n            CAST(T.InterestId AS [Edm.Int16]) AS User" +
-                    "s_InterestId, \r\n            T.SignalRConnectionId AS Users_SignalRConnectionId, " +
-                    "\r\n            CAST(T.StatusId AS [Edm.Int16]) AS Users_StatusId, \r\n            T" +
-                    ".RoleList AS Users_RoleList, \r\n            T.DateCreated AS Users_DateCreated, \r" +
-                    "\n            T.LastModified AS Users_LastModified, \r\n            T.Deleted AS Us" +
-                    "ers_Deleted, \r\n            True AS _from0\r\n        FROM AgrishareEntities.Users " +
-                    "AS T\r\n    ) AS T1");
+                    "_InterestId, T1.Users_LanguageId, T1.Users_SignalRConnectionId, T1.Users_StatusI" +
+                    "d, T1.Users_RoleList, T1.Users_DateCreated, T1.Users_LastModified, T1.Users_Dele" +
+                    "ted)\r\n    FROM (\r\n        SELECT \r\n            T.Id AS Users_Id, \r\n            T" +
+                    ".FirstName AS Users_FirstName, \r\n            T.LastName AS Users_LastName, \r\n   " +
+                    "         T.EmailAddress AS Users_EmailAddress, \r\n            T.Telephone AS User" +
+                    "s_Telephone, \r\n            CAST(T.GenderId AS [Edm.Int16]) AS Users_GenderId, \r\n" +
+                    "            T.DateOfBirth AS Users_DateOfBirth, \r\n            T.Password AS User" +
+                    "s_Password, \r\n            T.Salt AS Users_Salt, \r\n            T.AuthToken AS Use" +
+                    "rs_AuthToken, \r\n            T.FailedLoginAttempts AS Users_FailedLoginAttempts, " +
+                    "\r\n            T.VerificationCode AS Users_VerificationCode, \r\n            T.Veri" +
+                    "ficationCodeExpiry AS Users_VerificationCodeExpiry, \r\n            T.Notification" +
+                    "Preferences AS Users_NotificationPreferences, \r\n            CAST(T.InterestId AS" +
+                    " [Edm.Int16]) AS Users_InterestId, \r\n            CAST(T.LanguageId AS [Edm.Int16" +
+                    "]) AS Users_LanguageId, \r\n            T.SignalRConnectionId AS Users_SignalRConn" +
+                    "ectionId, \r\n            CAST(T.StatusId AS [Edm.Int16]) AS Users_StatusId, \r\n   " +
+                    "         T.RoleList AS Users_RoleList, \r\n            T.DateCreated AS Users_Date" +
+                    "Created, \r\n            T.LastModified AS Users_LastModified, \r\n            T.Del" +
+                    "eted AS Users_Deleted, \r\n            True AS _from0\r\n        FROM AgrishareEntit" +
+                    "ies.Users AS T\r\n    ) AS T1");
         }
         
         /// <Summary>
@@ -369,12 +383,13 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareModelStoreContainer.Ratings", @"
     SELECT VALUE -- Constructing Ratings
-        [AgrishareModel.Store.Ratings](T1.Ratings_Id, T1.Ratings_ListingId, T1.Ratings_UserId, T1.Ratings_Comments, T1.Ratings_Rating, T1.Ratings_DateCreated, T1.Ratings_LastModified, T1.Ratings_Deleted)
+        [AgrishareModel.Store.Ratings](T1.Ratings_Id, T1.Ratings_ListingId, T1.Ratings_UserId, T1.Ratings_BookingId, T1.Ratings_Comments, T1.Ratings_Rating, T1.Ratings_DateCreated, T1.Ratings_LastModified, T1.Ratings_Deleted)
     FROM (
         SELECT 
             T.Id AS Ratings_Id, 
             T.ListingId AS Ratings_ListingId, 
             T.UserId AS Ratings_UserId, 
+            T.BookingId AS Ratings_BookingId, 
             T.Comments AS Ratings_Comments, 
             T.Stars AS Ratings_Rating, 
             T.DateCreated AS Ratings_DateCreated, 
@@ -463,7 +478,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// </Summary>
         private System.Collections.Generic.KeyValuePair<string, string> GetView11()
         {
-            System.Text.StringBuilder viewString = new System.Text.StringBuilder(2082);
+            System.Text.StringBuilder viewString = new System.Text.StringBuilder(2252);
             viewString.Append("\r\n    SELECT VALUE -- Constructing Bookings\r\n        [AgrishareModel.Booking](T1");
             viewString.Append(".Booking_Id, T1.Booking_ListingId, T1.Booking_ServiceId, T1.Booking_ForId, T1.Bo");
             viewString.Append("oking_UserId, T1.Booking_Location, T1.Booking_Latitude, T1.Booking_Longitude, T1");
@@ -472,25 +487,27 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("Cost, T1.Booking_TransportCost, T1.Booking_StatusId, T1.Booking_DateCreated, T1.");
             viewString.Append("Booking_LastModified, T1.Booking_Deleted, T1.Booking_DestinationLatitude, T1.Boo");
             viewString.Append("king_DestinationLongitude, T1.Booking_Destination, T1.Booking_AdditionalInformat");
-            viewString.Append("ion)\r\n    FROM (\r\n        SELECT \r\n            T.Id AS Booking_Id, \r\n           ");
-            viewString.Append(" T.ListingId AS Booking_ListingId, \r\n            T.ServiceId AS Booking_ServiceI");
-            viewString.Append("d, \r\n            CAST(T.ForId AS [AgrishareModel.BookingFor]) AS Booking_ForId, ");
-            viewString.Append("\r\n            T.UserId AS Booking_UserId, \r\n            T.Location AS Booking_Lo");
-            viewString.Append("cation, \r\n            T.Latitude AS Booking_Latitude, \r\n            T.Longitude ");
-            viewString.Append("AS Booking_Longitude, \r\n            T.Quantity AS Booking_Quantity, \r\n          ");
-            viewString.Append("  T.Distance AS Booking_Distance, \r\n            T.IncludeFuel AS Booking_Include");
-            viewString.Append("Fuel, \r\n            T.StartDate AS Booking_StartDate, \r\n            T.EndDate AS");
-            viewString.Append(" Booking_EndDate, \r\n            T.Price AS Booking_Price, \r\n            T.HireCo");
-            viewString.Append("st AS Booking_HireCost, \r\n            T.FuelCost AS Booking_FuelCost, \r\n        ");
-            viewString.Append("    T.TransportCost AS Booking_TransportCost, \r\n            CAST(T.StatusId AS [");
-            viewString.Append("AgrishareModel.BookingStatus]) AS Booking_StatusId, \r\n            T.DateCreated ");
-            viewString.Append("AS Booking_DateCreated, \r\n            T.LastModified AS Booking_LastModified, \r\n");
-            viewString.Append("            T.Deleted AS Booking_Deleted, \r\n            T.DestinationLatitude AS");
-            viewString.Append(" Booking_DestinationLatitude, \r\n            T.DestinationLongitude AS Booking_De");
-            viewString.Append("stinationLongitude, \r\n            T.Destination AS Booking_Destination, \r\n      ");
-            viewString.Append("      T.AdditionalInformation AS Booking_AdditionalInformation, \r\n            Tr");
-            viewString.Append("ue AS _from0\r\n        FROM AgrishareModelStoreContainer.Bookings AS T\r\n    ) AS ");
-            viewString.Append("T1");
+            viewString.Append("ion, T1.Booking_TotalVolume, T1.Booking_TransportDistance)\r\n    FROM (\r\n        ");
+            viewString.Append("SELECT \r\n            T.Id AS Booking_Id, \r\n            T.ListingId AS Booking_Li");
+            viewString.Append("stingId, \r\n            T.ServiceId AS Booking_ServiceId, \r\n            CAST(T.Fo");
+            viewString.Append("rId AS [AgrishareModel.BookingFor]) AS Booking_ForId, \r\n            T.UserId AS ");
+            viewString.Append("Booking_UserId, \r\n            T.Location AS Booking_Location, \r\n            T.La");
+            viewString.Append("titude AS Booking_Latitude, \r\n            T.Longitude AS Booking_Longitude, \r\n  ");
+            viewString.Append("          T.Quantity AS Booking_Quantity, \r\n            T.Distance AS Booking_Di");
+            viewString.Append("stance, \r\n            T.IncludeFuel AS Booking_IncludeFuel, \r\n            T.Star");
+            viewString.Append("tDate AS Booking_StartDate, \r\n            T.EndDate AS Booking_EndDate, \r\n      ");
+            viewString.Append("      T.Price AS Booking_Price, \r\n            T.HireCost AS Booking_HireCost, \r\n");
+            viewString.Append("            T.FuelCost AS Booking_FuelCost, \r\n            T.TransportCost AS Boo");
+            viewString.Append("king_TransportCost, \r\n            CAST(T.StatusId AS [AgrishareModel.BookingStat");
+            viewString.Append("us]) AS Booking_StatusId, \r\n            T.DateCreated AS Booking_DateCreated, \r\n");
+            viewString.Append("            T.LastModified AS Booking_LastModified, \r\n            T.Deleted AS B");
+            viewString.Append("ooking_Deleted, \r\n            T.DestinationLatitude AS Booking_DestinationLatitu");
+            viewString.Append("de, \r\n            T.DestinationLongitude AS Booking_DestinationLongitude, \r\n    ");
+            viewString.Append("        T.Destination AS Booking_Destination, \r\n            T.AdditionalInformat");
+            viewString.Append("ion AS Booking_AdditionalInformation, \r\n            T.TotalVolume AS Booking_Tot");
+            viewString.Append("alVolume, \r\n            T.TransportDistance AS Booking_TransportDistance, \r\n    ");
+            viewString.Append("        True AS _from0\r\n        FROM AgrishareModelStoreContainer.Bookings AS T\r");
+            viewString.Append("\n    ) AS T1");
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareEntities.Bookings", viewString.ToString());
         }
         
@@ -551,25 +568,26 @@ namespace Edm_EntityMappingGeneratedViews
                     "Listing_Id, T1.Listing_UserId, T1.Listing_CategoryId, T1.Listing_Title, T1.Listi" +
                     "ng_Description, T1.Listing_AverageRating, T1.Listing_RatingCount, T1.Listing_Loc" +
                     "ation, T1.Listing_Latitude, T1.Listing_Longitude, T1.Listing_Brand, T1.Listing_H" +
-                    "orsePower, T1.Listing_Year, T1.Listing_ConditionId, T1.Listing_GroupServices, T1" +
-                    ".Listing_PhotoPaths, T1.Listing_StatusId, T1.Listing_DateCreated, T1.Listing_Las" +
-                    "tModified, T1.Listing_Deleted, T1.Listing_AvailableWithoutFuel)\r\n    FROM (\r\n   " +
-                    "     SELECT \r\n            T.Id AS Listing_Id, \r\n            T.UserId AS Listing_" +
-                    "UserId, \r\n            T.CategoryId AS Listing_CategoryId, \r\n            T.Title " +
-                    "AS Listing_Title, \r\n            T.Description AS Listing_Description, \r\n        " +
-                    "    T.AverageRating AS Listing_AverageRating, \r\n            T.RatingCount AS Lis" +
-                    "ting_RatingCount, \r\n            T.Location AS Listing_Location, \r\n            T." +
-                    "Latitude AS Listing_Latitude, \r\n            T.Longitude AS Listing_Longitude, \r\n" +
-                    "            T.Brand AS Listing_Brand, \r\n            T.HorsePower AS Listing_Hors" +
-                    "ePower, \r\n            T.Year AS Listing_Year, \r\n            CAST(T.ConditionId A" +
-                    "S [AgrishareModel.ListingCondition]) AS Listing_ConditionId, \r\n            T.Gro" +
-                    "upServices AS Listing_GroupServices, \r\n            T.Photos AS Listing_PhotoPath" +
-                    "s, \r\n            CAST(T.StatusId AS [AgrishareModel.ListingStatus]) AS Listing_S" +
-                    "tatusId, \r\n            T.DateCreated AS Listing_DateCreated, \r\n            T.Las" +
-                    "tModified AS Listing_LastModified, \r\n            T.Deleted AS Listing_Deleted, \r" +
-                    "\n            T.AvailableWithoutFuel AS Listing_AvailableWithoutFuel, \r\n         " +
-                    "   True AS _from0\r\n        FROM AgrishareModelStoreContainer.Listings AS T\r\n    " +
-                    ") AS T1");
+                    "orsePower, T1.Listing_Year, T1.Listing_AvailableWithoutFuel, T1.Listing_Availabl" +
+                    "eWithFuel, T1.Listing_ConditionId, T1.Listing_GroupServices, T1.Listing_PhotoPat" +
+                    "hs, T1.Listing_StatusId, T1.Listing_DateCreated, T1.Listing_LastModified, T1.Lis" +
+                    "ting_Deleted)\r\n    FROM (\r\n        SELECT \r\n            T.Id AS Listing_Id, \r\n  " +
+                    "          T.UserId AS Listing_UserId, \r\n            T.CategoryId AS Listing_Cate" +
+                    "goryId, \r\n            T.Title AS Listing_Title, \r\n            T.Description AS L" +
+                    "isting_Description, \r\n            T.AverageRating AS Listing_AverageRating, \r\n  " +
+                    "          T.RatingCount AS Listing_RatingCount, \r\n            T.Location AS List" +
+                    "ing_Location, \r\n            T.Latitude AS Listing_Latitude, \r\n            T.Long" +
+                    "itude AS Listing_Longitude, \r\n            T.Brand AS Listing_Brand, \r\n          " +
+                    "  T.HorsePower AS Listing_HorsePower, \r\n            T.Year AS Listing_Year, \r\n  " +
+                    "          T.AvailableWithoutFuel AS Listing_AvailableWithoutFuel, \r\n            " +
+                    "T.AvailableWithFuel AS Listing_AvailableWithFuel, \r\n            CAST(T.Condition" +
+                    "Id AS [AgrishareModel.ListingCondition]) AS Listing_ConditionId, \r\n            T" +
+                    ".GroupServices AS Listing_GroupServices, \r\n            T.Photos AS Listing_Photo" +
+                    "Paths, \r\n            CAST(T.StatusId AS [AgrishareModel.ListingStatus]) AS Listi" +
+                    "ng_StatusId, \r\n            T.DateCreated AS Listing_DateCreated, \r\n            T" +
+                    ".LastModified AS Listing_LastModified, \r\n            T.Deleted AS Listing_Delete" +
+                    "d, \r\n            True AS _from0\r\n        FROM AgrishareModelStoreContainer.Listi" +
+                    "ngs AS T\r\n    ) AS T1");
         }
         
         /// <Summary>
@@ -604,16 +622,18 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareEntities.Transactions", @"
     SELECT VALUE -- Constructing Transactions
-        [AgrishareModel.Transaction](T1.Transaction_Id, T1.Transaction_BookingId, T1.Transaction_BookingUserId, T1.Transaction_Reference, T1.Transaction_Amount, T1.Transaction_StatusId, T1.Transaction_Log, T1.Transaction_DateCreated, T1.Transaction_LastModified, T1.Transaction_Deleted)
+        [AgrishareModel.Transaction](T1.Transaction_Id, T1.Transaction_ClientCorrelator, T1.Transaction_BookingId, T1.Transaction_BookingUserId, T1.Transaction_Reference, T1.Transaction_Amount, T1.Transaction_StatusId, T1.Transaction_Log, T1.Transaction_Error, T1.Transaction_DateCreated, T1.Transaction_LastModified, T1.Transaction_Deleted)
     FROM (
         SELECT 
             T.Id AS Transaction_Id, 
+            T.ClientCorrelator AS Transaction_ClientCorrelator, 
             T.BookingId AS Transaction_BookingId, 
             T.BookingUserId AS Transaction_BookingUserId, 
             T.Reference AS Transaction_Reference, 
             T.Amount AS Transaction_Amount, 
             CAST(T.StatusId AS [AgrishareModel.TransactionStatus]) AS Transaction_StatusId, 
             T.Log AS Transaction_Log, 
+            T.Error AS Transaction_Error, 
             T.DateCreated AS Transaction_DateCreated, 
             T.LastModified AS Transaction_LastModified, 
             T.Deleted AS Transaction_Deleted, 
@@ -633,23 +653,24 @@ namespace Edm_EntityMappingGeneratedViews
                     "_InterestId, T1.User_RoleList, T1.User_Password, T1.User_Salt, T1.User_AuthToken" +
                     ", T1.User_FailedLoginAttempts, T1.User_VerificationCode, T1.User_VerificationCod" +
                     "eExpiry, T1.User_SignalRConnectionId, T1.User_StatusId, T1.User_DateCreated, T1." +
-                    "User_LastModified, T1.User_Deleted)\r\n    FROM (\r\n        SELECT \r\n            T." +
-                    "Id AS User_Id, \r\n            T.FirstName AS User_FirstName, \r\n            T.Last" +
-                    "Name AS User_LastName, \r\n            T.EmailAddress AS User_EmailAddress, \r\n    " +
-                    "        T.Telephone AS User_Telephone, \r\n            CAST(T.GenderId AS [Agrisha" +
-                    "reModel.Gender]) AS User_GenderId, \r\n            T.DateOfBirth AS User_DateOfBir" +
-                    "th, \r\n            T.NotificationPreferences AS User_NotificationPreferences, \r\n " +
-                    "           CAST(T.InterestId AS [AgrishareModel.Interest]) AS User_InterestId, \r" +
-                    "\n            T.RoleList AS User_RoleList, \r\n            T.Password AS User_Passw" +
-                    "ord, \r\n            T.Salt AS User_Salt, \r\n            T.AuthToken AS User_AuthTo" +
-                    "ken, \r\n            T.FailedLoginAttempts AS User_FailedLoginAttempts, \r\n        " +
-                    "    T.VerificationCode AS User_VerificationCode, \r\n            T.VerificationCod" +
-                    "eExpiry AS User_VerificationCodeExpiry, \r\n            T.SignalRConnectionId AS U" +
-                    "ser_SignalRConnectionId, \r\n            CAST(T.StatusId AS [AgrishareModel.UserSt" +
-                    "atus]) AS User_StatusId, \r\n            T.DateCreated AS User_DateCreated, \r\n    " +
-                    "        T.LastModified AS User_LastModified, \r\n            T.Deleted AS User_Del" +
-                    "eted, \r\n            True AS _from0\r\n        FROM AgrishareModelStoreContainer.Us" +
-                    "ers AS T\r\n    ) AS T1");
+                    "User_LastModified, T1.User_Deleted, T1.User_LanguageId)\r\n    FROM (\r\n        SEL" +
+                    "ECT \r\n            T.Id AS User_Id, \r\n            T.FirstName AS User_FirstName, " +
+                    "\r\n            T.LastName AS User_LastName, \r\n            T.EmailAddress AS User_" +
+                    "EmailAddress, \r\n            T.Telephone AS User_Telephone, \r\n            CAST(T." +
+                    "GenderId AS [AgrishareModel.Gender]) AS User_GenderId, \r\n            T.DateOfBir" +
+                    "th AS User_DateOfBirth, \r\n            T.NotificationPreferences AS User_Notifica" +
+                    "tionPreferences, \r\n            CAST(T.InterestId AS [AgrishareModel.Interest]) A" +
+                    "S User_InterestId, \r\n            T.RoleList AS User_RoleList, \r\n            T.Pa" +
+                    "ssword AS User_Password, \r\n            T.Salt AS User_Salt, \r\n            T.Auth" +
+                    "Token AS User_AuthToken, \r\n            T.FailedLoginAttempts AS User_FailedLogin" +
+                    "Attempts, \r\n            T.VerificationCode AS User_VerificationCode, \r\n         " +
+                    "   T.VerificationCodeExpiry AS User_VerificationCodeExpiry, \r\n            T.Sign" +
+                    "alRConnectionId AS User_SignalRConnectionId, \r\n            CAST(T.StatusId AS [A" +
+                    "grishareModel.UserStatus]) AS User_StatusId, \r\n            T.DateCreated AS User" +
+                    "_DateCreated, \r\n            T.LastModified AS User_LastModified, \r\n            T" +
+                    ".Deleted AS User_Deleted, \r\n            CAST(T.LanguageId AS [AgrishareModel.Lan" +
+                    "guage]) AS User_LanguageId, \r\n            True AS _from0\r\n        FROM Agrishare" +
+                    "ModelStoreContainer.Users AS T\r\n    ) AS T1");
         }
         
         /// <Summary>
@@ -659,7 +680,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareEntities.Ratings", @"
     SELECT VALUE -- Constructing Ratings
-        [AgrishareModel.Rating](T1.Rating_Id, T1.Rating_ListingId, T1.Rating_UserId, T1.Rating_Comments, T1.Rating_Stars, T1.Rating_DateCreated, T1.Rating_LastModified, T1.Rating_Deleted)
+        [AgrishareModel.Rating](T1.Rating_Id, T1.Rating_ListingId, T1.Rating_UserId, T1.Rating_Comments, T1.Rating_Stars, T1.Rating_DateCreated, T1.Rating_LastModified, T1.Rating_Deleted, T1.Rating_BookingId)
     FROM (
         SELECT 
             T.Id AS Rating_Id, 
@@ -670,6 +691,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.DateCreated AS Rating_DateCreated, 
             T.LastModified AS Rating_LastModified, 
             T.Deleted AS Rating_Deleted, 
+            T.BookingId AS Rating_BookingId, 
             True AS _from0
         FROM AgrishareModelStoreContainer.Ratings AS T
     ) AS T1");
@@ -981,6 +1003,50 @@ namespace Edm_EntityMappingGeneratedViews
             T.Deleted AS Template_Deleted, 
             True AS _from0
         FROM AgrishareModelStoreContainer.Templates AS T
+    ) AS T1");
+        }
+        
+        /// <Summary>
+        /// return view for AgrishareModelStoreContainer.Blogs
+        /// </Summary>
+        private System.Collections.Generic.KeyValuePair<string, string> GetView32()
+        {
+            return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareModelStoreContainer.Blogs", @"
+    SELECT VALUE -- Constructing Blogs
+        [AgrishareModel.Store.Blogs](T1.Blogs_Id, T1.Blogs_Title, T1.Blogs_Photo, T1.Blogs_Content, T1.Blogs_DateCreated, T1.Blogs_LastModified, T1.Blogs_Deleted)
+    FROM (
+        SELECT 
+            T.Id AS Blogs_Id, 
+            T.Title AS Blogs_Title, 
+            T.PhotoPath AS Blogs_Photo, 
+            T.Content AS Blogs_Content, 
+            T.DateCreated AS Blogs_DateCreated, 
+            T.LastModified AS Blogs_LastModified, 
+            T.Deleted AS Blogs_Deleted, 
+            True AS _from0
+        FROM AgrishareEntities.Blogs AS T
+    ) AS T1");
+        }
+        
+        /// <Summary>
+        /// return view for AgrishareEntities.Blogs
+        /// </Summary>
+        private System.Collections.Generic.KeyValuePair<string, string> GetView33()
+        {
+            return new System.Collections.Generic.KeyValuePair<string, string>("AgrishareEntities.Blogs", @"
+    SELECT VALUE -- Constructing Blogs
+        [AgrishareModel.Blog](T1.Blog_Id, T1.Blog_Title, T1.Blog_PhotoPath, T1.Blog_Content, T1.Blog_DateCreated, T1.Blog_LastModified, T1.Blog_Deleted)
+    FROM (
+        SELECT 
+            T.Id AS Blog_Id, 
+            T.Title AS Blog_Title, 
+            T.Photo AS Blog_PhotoPath, 
+            T.Content AS Blog_Content, 
+            T.DateCreated AS Blog_DateCreated, 
+            T.LastModified AS Blog_LastModified, 
+            T.Deleted AS Blog_Deleted, 
+            True AS _from0
+        FROM AgrishareModelStoreContainer.Blogs AS T
     ) AS T1");
         }
     }

@@ -80,6 +80,17 @@ namespace Agrishare.Core.Entities
             }
         }
 
+        private static string _domainName { get; set; }
+        public static string DomainName
+        {
+            get
+            {
+                if (_domainName.IsEmpty())
+                    _domainName = Find(Key: "Domain Name").Value;
+                return _domainName;
+            }
+        }
+
         #endregion
 
         public static string EncryptionPassword = "@DzaRtTxBBCTwG&53Ryh*t#x#m87Kg%$aH7P";

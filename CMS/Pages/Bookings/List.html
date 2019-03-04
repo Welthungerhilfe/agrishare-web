@@ -14,13 +14,37 @@
 
     <ag-section ag-controller="list">
 
+        <div class="summary-view" ng-show="!list.busy && list.data.length>0 && !list.filter">
+            <div>
+                <strong>{{list.summary.BookingsMade}}</strong>
+                <small>Bookings Made</small>
+            </div>
+            <div>
+                <strong>{{list.summary.ConfirmedBookings}}</strong>
+                <small>Confirmed Bookings</small>
+            </div>
+            <div>
+                <strong>{{list.summary.PaidBookings}}</strong>
+                <small>Paid Bookings</small>
+            </div>
+            <div>
+                <strong>{{list.summary.CompletedBookings}}</strong>
+                <small>Completed Bookings</small>
+            </div>
+            <ul>
+                <li><strong>{{list.summary.DeclinedBookings}}</strong> Declined Bookings</li>
+                <li><strong>{{list.summary.CancelledBookings}}</strong> Cancelled Bookings</li>
+                <li><strong>{{list.summary.IncompleteBookings}}</strong> Incomplete Bookings</li>
+            </ul>
+        </div>
+
         <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
                 <calendar>
                     <small>{{item.StartDate | date : 'MMM'}}</small>
                     <big>{{item.StartDate | date : 'dd'}}</big>
                 </calendar>
-                <row class="booking">
+                <row class="booking" ng-click="app.go('/bookings/detail/'+item.Id+'?'+app.returnUrlQs())">
                     <div>
                         <strong>{{item.User.FirstName}} {{item.User.LastName}}</strong><br />
                         <small>{{item.Listing.Category.Title}} &gt; {{item.Listing.Title}}</small>
@@ -36,7 +60,8 @@
                 <action>
                     <gl-popup-menu gl-position="top right">
                         <gl-menu-item gl-icon="visibility" ng-click="app.go('/bookings/detail/'+item.Id+'?'+app.returnUrlQs())">View</gl-menu-item>
-                        <gl-menu-item gl-icon="delete" ng-if="item.StatusId==0" ng-click="list.delete($index, app.apiUrl + '/bookings/delete?id=' + item.Id)">Delete</gl-menu-item>
+                        <gl-menu-item gl-icon="cancel" ng-if="item.StatusId!=3 && item.StatusId!=4" ng-click="list.async($index, app.apiUrl + '/cms/bookings/cancel?id=' + item.Id)">Cancel booking</gl-menu-item>
+                        <gl-menu-item gl-icon="delete" ng-if="item.StatusId==0" ng-click="list.delete($index, app.apiUrl + '/cms/bookings/delete?id=' + item.Id)">Delete</gl-menu-item>
                     </gl-popup-menu>
                 </action>
             </div>

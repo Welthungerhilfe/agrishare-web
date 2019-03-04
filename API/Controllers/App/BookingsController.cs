@@ -18,6 +18,10 @@ namespace Agrishare.API.Controllers.App
             if (!ModelState.IsValid)
                 return Error(ModelState);
 
+            var service = Entities.Service.Find(Id: Model.ServiceId);
+            if (service == null)
+                return Error("Invalid service selected");
+
             var booking = new Entities.Booking
             {
                 DestinationLatitude = Model.DestinationLatitude,
@@ -29,45 +33,21 @@ namespace Agrishare.API.Controllers.App
                 Location = Model.Location,
                 Longitude = Model.Longitude,
                 Quantity = Model.Quantity,
-                Service = Entities.Service.Find(Id: Model.ServiceId),
+                Service = service,
+                Listing = service.Listing,
                 StartDate = Model.StartDate,
+                EndDate = Model.EndDate,
                 StatusId = Entities.BookingStatus.Pending,
                 User = CurrentUser,
-                AdditionalInformation = Model.AdditionalInformation
-            };
-
-            if (booking.Service == null)
-                return Error("Invalid service selected");
-
-            booking.Listing = booking.Service.Listing;
-
-            if (booking.Service.CategoryId == Entities.Category.LorriesId)
-            {
-                var depotToPickup = Location.GetDistance(Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude), Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude));
-                var pickupToDropoff = Location.GetDistance(Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude), Convert.ToDouble(booking.DestinationLatitude), Convert.ToDouble(booking.DestinationLongitude));
-                var dropoffToDepot = Location.GetDistance(Convert.ToDouble(booking.DestinationLatitude), Convert.ToDouble(booking.DestinationLongitude), Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude));
-                booking.Distance = ((decimal)depotToPickup / 1000) + ((decimal)pickupToDropoff / 1000) + ((decimal)dropoffToDepot / 1000);
-                booking.HireCost = (decimal)pickupToDropoff * booking.Service.PricePerQuantityUnit;
-                booking.Quantity = (decimal)pickupToDropoff;
-            }
-            else if (booking.Service.Mobile)
-            {
-                var distance = Location.GetDistance(Convert.ToDouble(booking.Listing.Latitude), Convert.ToDouble(booking.Listing.Longitude), Convert.ToDouble(booking.Latitude), Convert.ToDouble(booking.Longitude));
-                booking.Distance = (decimal)distance / 1000 * 2;
-                booking.HireCost = booking.Quantity * booking.Service.PricePerQuantityUnit;
-            }
-            else
-            {
-                booking.Distance = 0;
-                booking.HireCost = booking.Quantity * booking.Service.PricePerQuantityUnit;
-            }
-
-            var days = Math.Ceiling(booking.Service.TimePerQuantityUnit * booking.Quantity / 8) - 1;
-            booking.EndDate = booking.StartDate.AddDays((double)days);
-
-            booking.FuelCost = booking.Quantity * booking.Service.FuelPerQuantityUnit * booking.Service.FuelPrice;
-            booking.TransportCost = booking.Service.Mobile ? booking.Distance * booking.Service.PricePerDistanceUnit : 0;
-            booking.Price = booking.HireCost + booking.FuelCost + booking.TransportCost;
+                AdditionalInformation = Model.AdditionalInformation,
+                TotalVolume = Model.TotalVolume,
+                HireCost = Model.HireCost,
+                FuelCost = Model.FuelCost,
+                TransportCost = Model.TransportCost,
+                Price = Model.HireCost + Model.FuelCost + Model.TransportCost,
+                Distance = Model.Distance,
+                TransportDistance = Model.TransportDistance
+            };       
 
             if (booking.Save())
             {
@@ -171,6 +151,8 @@ namespace Agrishare.API.Controllers.App
                     TypeId = Entities.NotificationType.BookingCancelled,
                     User = Entities.User.Find(Id: booking.UserId)
                 }.Save(Notify: true);
+
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.DeclineBooking, booking.Service.CategoryId);
 
                 return Success(new
                 {
@@ -298,8 +280,8 @@ namespace Agrishare.API.Controllers.App
         public object OfferingList(int PageIndex = 0, int PageSize = 25)
         {
             var startDate = DateTime.Today.StartOfDay().AddDays(-(DateTime.Today.Day - 1));
-            var monthlySpend = Entities.Booking.SeekingSummary(CurrentUser.Id, startDate);
-            var totalSpend = Entities.Booking.SeekingSummary(CurrentUser.Id);
+            var monthlySpend = Entities.Booking.OfferingSummary(CurrentUser.Id, startDate);
+            var totalSpend = Entities.Booking.OfferingSummary(CurrentUser.Id);
             
             var bookings = Entities.Booking.List(PageIndex: PageIndex, PageSize: PageSize, SupplierId: CurrentUser.Id);
 
@@ -390,7 +372,7 @@ namespace Agrishare.API.Controllers.App
                 return Error("You can not cancel a completed booking");
 
             if (booking.StatusId == Entities.BookingStatus.InProgress)
-                return Error("You can not cancel a booking in progress");
+                return Error("You can not cancel a paid booking that is not complete");
 
             if (DateTime.Now.AddDays(7) >= booking.StartDate)
                 return Error("You can not cancel a booking within 7 days of the start date");
@@ -398,7 +380,9 @@ namespace Agrishare.API.Controllers.App
             booking.StatusId = Entities.BookingStatus.Cancelled;
             if (booking.Save())
             {
-                // TODO refund users
+                var transactions = Entities.Transaction.List(BookingId: booking.Id);
+                foreach(var transaction in transactions)
+                    transaction.RequestEcoCashRefund();
 
                 var notifications = Entities.Notification.List(BookingId: booking.Id, Type: Entities.NotificationType.BookingCancelled);
                 foreach (var notification in notifications)
@@ -421,7 +405,7 @@ namespace Agrishare.API.Controllers.App
                     GroupId = Entities.NotificationGroup.Offering,
                     TypeId = Entities.NotificationType.BookingCancelled,
                     User = Entities.User.Find(Id: booking.Listing.UserId)
-                }.Save(Notify: true);
+                }.Save(Notify: false);
 
                 Entities.Counter.Hit(booking.UserId, Entities.Counters.CancelBooking, booking.Service.CategoryId);
 

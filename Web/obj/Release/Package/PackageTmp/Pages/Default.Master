@@ -1,0 +1,54 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Default.master.cs" Inherits="Agrishare.Web.Pages.Default" %>
+
+<!DOCTYPE html>
+
+<html ng-app="agrishareApp">
+<head runat="server">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,400i,700,700i" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <title>AgriShare</title>    
+    <meta name="viewport" content="width=device-width" />
+    <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+</head>
+<body id="Body" runat="server" ng-controller="AppController">
+    <form id="form1" runat="server">
+
+        <header>
+            <div>
+                <a href="/"><img src="/Resources/Images/WHH-Logo.svg" title="Welthungerhilfe" /></a>
+            </div>
+            <div>     
+                <a href="/">
+                    <strong>AgriShare</strong>
+                    <small>Connecting you to farm equipment</small>
+                </a>
+            </div>
+            <nav ng-class="{ 'visible': menu.visible }">
+                <a ng-click="menu.visible=false"><img src="/Resources/Images/Icon-Close.svg" /></a>
+                <ul runat="server" id="Menu" />               
+            </nav>
+            <div>
+                <a ng-click="menu.visible=true"><img src="/Resources/Images/Icon-Menu.svg" /></a>
+            </div>
+        </header>
+
+        <main>
+            <asp:PlaceHolder runat="server" ID="FeedbackPrompt" Visible="false">
+                <p class="feedback"><asp:Literal runat="server" ID="FeedbackMessage" /></p>
+            </asp:PlaceHolder>
+            <asp:ContentPlaceHolder ID="Content" runat="server" />
+        </main>
+
+        <footer>
+            <p>
+                &copy; Copyright <%=DateTime.Now.Year %> <a href="https://www.welthungerhilfe.org/">Welthungerhilfe</a>. All rights reserved.
+            </p>
+            <p>
+                <span>Digital solution by</span> <a href="https://www.c2.co.zw/"><img src="/Resources/Images/C2-Logo.svg" title="C2 Digital" /></a>
+            </p>
+        </footer>
+
+    </form>
+</body>
+</html>

@@ -29,6 +29,7 @@ ui-view {
         > ag-section {
             flex: 1;
             display: flex;
+            overflow: auto;
 
             > ng-transclude {
                 flex: 1;
@@ -74,5 +75,49 @@ ui-view {
         span {
             color: gray;
         }
+    }
+}
+
+.summary-view {
+    background: #ddd;
+    padding: 50px;
+    display: flex;
+
+    div, ul {
+        flex: 1;
+        margin: 0 5px;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        background: white;
+        padding: 10px;
+        border-radius: 100px;
+
+        strong {
+            font-size: 1.45em;
+            color: #666;
+        }
+
+        small {
+            color: #999;
+        }
+
+        &:first-child {
+            background-color: $pink;
+
+            strong, small {
+                color: white;
+            }
+        }
+    }
+
+    ul {
+        padding: 0 10px;
+        margin-left: 20px;
+        list-style: none;
+        border-left: solid 3px #999;
     }
 }

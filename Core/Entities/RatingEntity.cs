@@ -17,9 +17,9 @@ namespace Agrishare.Core.Entities
         public static string DefaultSort = "DateCreated DESC";
         public string Title => User?.Title ?? "User";
 
-        public static Rating Find(int Id = 0)
+        public static Rating Find(int Id = 0, int BookingId = 0)
         {
-            if (Id == 0)
+            if (Id == 0 && BookingId == 0)
                 return new Rating
                 {
                     DateCreated = DateTime.UtcNow,
@@ -32,6 +32,9 @@ namespace Agrishare.Core.Entities
 
                 if (Id > 0)
                     query = query.Where(e => e.Id == Id);
+
+                if (BookingId > 0)
+                    query = query.Where(e => e.BookingId == BookingId);
 
                 return query.FirstOrDefault();
             }
@@ -60,7 +63,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int ListingId = 0)
+        public static int Count(string Keywords = "", string StartsWith = "", int UserId = 0, int ListingId = 0, int Stars = 0)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -77,6 +80,9 @@ namespace Agrishare.Core.Entities
 
                 if (ListingId > 0)
                     query = query.Where(o => o.ListingId == ListingId);
+
+                if (Stars > 0)
+                    query = query.Where(o => o.Stars == Stars);
 
                 return query.Count();
             }
@@ -142,12 +148,19 @@ namespace Agrishare.Core.Entities
             {
                 Id,
                 ListingId,
+                BookingId,
                 User = User?.Json(),
                 Title,
                 Comments,
                 Stars,
                 DateCreated
             };
+        }
+
+        public static decimal AverageRating()
+        {
+            using (var ctx = new AgrishareEntities())
+                return ctx.Ratings.Where(o => !o.Deleted).Select(o => o.Stars).DefaultIfEmpty(0).Average();
         }
     }
 }

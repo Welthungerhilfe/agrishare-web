@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
 </head>
-<body ng-controller="AppController">
+<body id="Body" runat="server" ng-controller="AppController">
     <form id="form1" runat="server">
 
         <header>
@@ -26,13 +26,7 @@
             </div>
             <nav ng-class="{ 'visible': menu.visible }">
                 <a ng-click="menu.visible=false"><img src="/Resources/Images/Icon-Close.svg" /></a>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about/seeking">Seeking</a></li>
-                    <li><a href="/about/offering">Offering</a></li>
-                    <li><a href="/about/how-it-works">About</a></li>
-                    <li><a href="/account/get-started" class="button">Get Started</a></li>
-                </ul>
+                <ul runat="server" id="Menu" />               
             </nav>
             <div>
                 <a ng-click="menu.visible=true"><img src="/Resources/Images/Icon-Menu.svg" /></a>
@@ -40,17 +34,30 @@
         </header>
 
         <main>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+            <asp:PlaceHolder runat="server" ID="FeedbackPrompt" Visible="false">
+                <p class="feedback"><asp:Literal runat="server" ID="FeedbackMessage" /></p>
+            </asp:PlaceHolder>
+            <asp:ContentPlaceHolder ID="Content" runat="server" />
         </main>
 
         <footer>
-            <p>
-                &copy; Copyright <%=DateTime.Now.Year %> <a href="https://www.welthungerhilfe.org/">Welthungerhilfe</a>. All rights reserved.
-            </p>
-            <p>
-                <span>Digital solution by</span> <a href="https://www.c2.co.zw/"><img src="/Resources/Images/C2-Logo.svg" title="C2 Digital" /></a>
-            </p>
+            <ul>
+                <li><a href="/about">About</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/about/faqs">FAQs</a></li>
+                <li><a href="/about/contact">Contact</a></li>
+                <li><a href="/about/terms">Terms &amp; Conditions</a></li>
+                <li><a href="/about/privacy">Privacy Policy</a></li>
+                <li><a href="/about/rules">App Rules</a></li>
+            </ul>
+            <div>
+                <p>                
+                    &copy; Copyright <%=DateTime.Now.Year %> <a href="https://www.welthungerhilfe.org/">Welthungerhilfe</a>. All rights reserved.
+                </p>
+                <p>
+                    <span>Digital solution by</span> <a href="https://www.c2.co.zw/"><img src="/Resources/Images/C2-Logo.svg" title="C2 Digital" /></a>
+                </p>
+            </div>
         </footer>
 
     </form>

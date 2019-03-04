@@ -114,6 +114,11 @@ namespace Agrishare.Core.Entities
             var services = Services;
             Services = null;
 
+            var user = User;
+            if (user != null)
+                UserId = user.Id;
+            User = null;
+
             var category = Category;
             if (category != null)
                 CategoryId = category.Id;
@@ -125,6 +130,7 @@ namespace Agrishare.Core.Entities
                 success = Update();
 
             Category = category;
+            User = user;
 
             if (success)
             {
@@ -146,6 +152,8 @@ namespace Agrishare.Core.Entities
 
         private bool Add()
         {
+            StatusId = ListingStatus.Live;
+
             using (var ctx = new AgrishareEntities())
             {
                 ctx.Listings.Attach(this);
@@ -192,6 +200,7 @@ namespace Agrishare.Core.Entities
                 Condition,
                 GroupServices,
                 AvailableWithoutFuel,
+                AvailableWithFuel,
                 Photos = Photos?.Select(e => e.JSON()),
                 AverageRating,
                 RatingCount,

@@ -40,6 +40,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -127,18 +128,23 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\Authorize.cs" />
-    <Compile Include="App_Code\BaseApiController.cs" />
-    <Compile Include="App_Code\ExceptionFilter.cs" />
-    <Compile Include="App_Code\ValidateViewModelAttribute.cs" />
+    <Compile Include="Code\Authorize.cs" />
+    <Compile Include="Code\BaseApiController.cs" />
+    <Compile Include="Code\ExceptionFilter.cs" />
+    <Compile Include="Code\ValidateViewModelAttribute.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\App\ConfigController.cs" />
+    <Compile Include="Controllers\CMS\JournalsController.cs" />
+    <Compile Include="Controllers\CMS\SettlementController.cs" />
     <Compile Include="Controllers\CMS\DashboardController.cs" />
+    <Compile Include="Controllers\CMS\BlogsController.cs" />
     <Compile Include="Controllers\CMS\RatingsController.cs" />
     <Compile Include="Controllers\CMS\LogController.cs" />
     <Compile Include="Controllers\CMS\SettingsController.cs" />
     <Compile Include="Controllers\CMS\BookingsController.cs" />
     <Compile Include="Controllers\CMS\ListingsController.cs" />
     <Compile Include="Controllers\CMS\TemplatesController.cs" />
+    <Compile Include="Controllers\CMS\FaqsController.cs" />
     <Compile Include="Controllers\CMS\UsersController.cs" />
     <Compile Include="Controllers\App\NotificationsController.cs" />
     <Compile Include="Controllers\App\RatingsController.cs" />
@@ -156,6 +162,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ContactModel.cs" />
+    <Compile Include="Models\ReconcileModel.cs" />
     <Compile Include="Models\ListingModel.cs" />
     <Compile Include="Models\RatingModel.cs" />
     <Compile Include="Models\BookingModel.cs" />

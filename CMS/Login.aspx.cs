@@ -94,7 +94,8 @@ namespace Agrishare.CMS
             {
                 Value = Core.Utils.Encryption.EncryptWithRC4(AuthToken, Config.EncryptionSalt),
                 Expires = DateTime.Now.AddDays(30),
-                Path = "/"
+                Path = "/",
+                Domain = Config.DomainName
             };
             HttpContext.Current.Response.Cookies.Add(cookie);
         }

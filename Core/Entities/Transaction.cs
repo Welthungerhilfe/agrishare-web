@@ -15,12 +15,15 @@ namespace Agrishare.Core.Entities
     public partial class Transaction
     {
         public int Id { get; set; }
+        public string ClientCorrelator { get; set; }
         public int BookingId { get; set; }
         public int BookingUserId { get; set; }
-        public string Reference { get; set; }
+        public string ServerReference { get; set; }
+        public string EcoCashReference { get; set; }
         public decimal Amount { get; set; }
         public TransactionStatus StatusId { get; set; }
         public string Log { get; set; }
+        public string Error { get; set; }
         public System.DateTime DateCreated { get; set; }
         public System.DateTime LastModified { get; set; }
         public bool Deleted { get; set; }

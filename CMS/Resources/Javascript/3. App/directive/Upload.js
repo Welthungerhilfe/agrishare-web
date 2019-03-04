@@ -43,8 +43,8 @@ agrishareApp.directive('glUpload', function ($timeout, App, Upload, Utils) {
                     '<ul ng-show="ngModel[\'' + attrs.glModelAttribute + '\']">' +
                     '<li>' +
                     '<span ng-hide="ngModel[\'' + attrs.glModelAttribute + '\'].IsImage"><i class="material-icons">attachment</i></span>' +
-                    '<span ng-show="ngModel[\'' + attrs.glModelAttribute + '\'].IsImage" style="background-image:url({{ngModel[\'' + attrs.glModelAttribute + '\'].ThumbPath}})"></span>' +
-                    '<strong>{{ngModel[\'' + attrs.glModelAttribute + '\'].Title}}</strong>' +
+                    '<span ng-show="ngModel[\'' + attrs.glModelAttribute + '\'].IsImage" style="background-image:url({{ngModel[\'' + attrs.glModelAttribute + '\'].Thumb}})"></span>' +
+                    '<strong>{{ngModel[\'' + attrs.glModelAttribute + '\'].Filename}}</strong>' +
                     '<gl-icon-button gl-icon="delete_outline" ng-click="ngModel[\'' + attrs.glModelAttribute + '\']=null;validity(0)"></gl-icon-button>' +
                     '</li>' +
                     '</ul>' +

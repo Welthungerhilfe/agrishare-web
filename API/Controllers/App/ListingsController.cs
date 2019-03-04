@@ -50,6 +50,7 @@ namespace Agrishare.API.Controllers.App
             var listing = new Entities.Listing
             {
                 AvailableWithoutFuel = Model.AvailableWithoutFuel,
+                AvailableWithFuel = Model.AvailableWithFuel,
                 Brand = Model.Brand,
                 CategoryId = Model.CategoryId,
                 ConditionId = Model.ConditionId,
@@ -86,6 +87,12 @@ namespace Agrishare.API.Controllers.App
 
             if (listing.Services.Count == 0)
                 return Error("You must enable at least on service");
+
+            if (listing.CategoryId == Entities.Category.LorriesId && listing.Services.First().TotalVolume == 0)
+                return Error("Please enter a valid Total Volume");
+
+            if (listing.CategoryId == Entities.Category.LorriesId || listing.CategoryId == Entities.Category.ProcessingId)
+                listing.AvailableWithFuel = listing.AvailableWithoutFuel = true;
 
             var photos = new List<string>();
             if (Model.Photos != null)
@@ -124,6 +131,7 @@ namespace Agrishare.API.Controllers.App
                 return Error("Listing not found");
 
             listing.AvailableWithoutFuel = Model.AvailableWithoutFuel;
+            listing.AvailableWithFuel = Model.AvailableWithFuel;
             listing.Brand = Model.Brand;
             listing.Category = null;
             listing.CategoryId = Model.CategoryId;
@@ -136,7 +144,6 @@ namespace Agrishare.API.Controllers.App
             listing.Location = Model.Location;            
             listing.Title = Model.Title;
             listing.Year = Model.Year;
-
 
             listing.Services = new List<Entities.Service>();
             foreach (var service in Model.Services)
@@ -189,6 +196,10 @@ namespace Agrishare.API.Controllers.App
             if (listing?.Id == 0 || listing?.UserId != CurrentUser.Id)
                 return Error("Listing not found");
 
+            var bookings = Entities.Booking.Count(ListingId: listing.Id, StartDate: DateTime.Now, Upcoming: true);
+            if (bookings > 0)
+                return Error("Can not delete listing - you have upcoming bookings");
+
             if (listing.Delete())
                 return Success(new
                 {
@@ -200,7 +211,7 @@ namespace Agrishare.API.Controllers.App
 
         [Route("listings/availability")]
         [AcceptVerbs("GET")]
-        public object Availability(int ListingId, DateTime StartDate, DateTime EndDate)
+        public object Availability(int ListingId, DateTime StartDate, DateTime EndDate, int Days = 1)
         {
             var listing = Entities.Listing.Find(Id: ListingId);
             if (listing == null || listing.Id == 0)
@@ -213,7 +224,13 @@ namespace Agrishare.API.Controllers.App
             var date = StartDate;
             while (date <= EndDate)
             {
-                var available = bookings.Where(o => o.StartDate <= date.StartOfDay() && o.EndDate >= date.EndOfDay()).Count() == 0;
+                var start = date.StartOfDay();
+                var end = date.AddDays(Days - 1).EndOfDay();
+
+                var available = bookings.Where(o => 
+                    (o.StatusId == Entities.BookingStatus.Approved || o.StatusId == Entities.BookingStatus.InProgress || o.StatusId == Entities.BookingStatus.Pending || o.StatusId == Entities.BookingStatus.Incomplete) && 
+                    o.StartDate <= end && 
+                    o.EndDate >= start).Count() == 0;
 
                 list.Add(new
                 {

@@ -1,0 +1,22 @@
+﻿
+<div ng-controller="FormViewController" ag-title="Reconcile" ag-selected-url="#/journals/list" ag-api-route="/cms/journals/reconcile/">
+
+    <ag-title-bar></ag-title-bar>
+
+    <ag-section ag-controller="form">
+
+        <form>
+
+            <gl-upload gl-label="Excel File" ng-model="form.entity" gl-model-attribute="ExcelFile" gl-required="true"></gl-upload>
+
+        </form>
+
+    </ag-section>
+
+    <ag-status-bar>
+
+        <gl-icon-button ng-click="form.save()" class="accent" ng-disabled="EditForm.$invalid || form.busy" ng-if="form.entity">Save</gl-icon-button>
+
+    </ag-status-bar>
+
+</div>

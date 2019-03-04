@@ -41,7 +41,7 @@ namespace Agrishare.Core.Entities
         }
 
         public static List<Booking> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", int ListingId = 0, int UserId = 0, 
-            int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null, BookingStatus Status = BookingStatus.None)
+            int SupplierId = 0, DateTime? StartDate = null, DateTime? EndDate = null, BookingStatus Status = BookingStatus.None, bool Upcoming = false)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -70,6 +70,9 @@ namespace Agrishare.Core.Entities
 
                 if (Status != BookingStatus.None)
                     query = query.Where(e => e.StatusId == Status);
+
+                if (Upcoming)
+                    query = query.Where(e => e.StatusId == BookingStatus.Approved || e.StatusId == BookingStatus.InProgress);
 
                 query = query.OrderBy(Sort.Coalesce(DefaultSort));
 
@@ -148,6 +151,26 @@ namespace Agrishare.Core.Entities
                 return query.Select(o => o.Price).DefaultIfEmpty(0).Sum();
             }
 
+        }
+
+        public static List<Booking> SettlementReport(DateTime StartDate, DateTime EndDate)
+        {
+            using (var ctx = new AgrishareEntities())
+            {
+                var query = ctx.Bookings.Include(o => o.Listing).Include(o => o.Listing.User).Where(o => !o.Deleted);
+
+                query = query.Where(o => o.StatusId == BookingStatus.Complete && !o.PaidOut);
+
+                var startDate = StartDate.StartOfDay();
+                query = query.Where(o => o.EndDate >= startDate);
+
+                var endDate = EndDate.StartOfDay();
+                query = query.Where(o => o.StartDate <= endDate);
+
+                query = query.OrderBy(o => o.DateCreated);
+
+                return query.ToList();
+            }
         }
 
         public bool Save()
@@ -237,7 +260,9 @@ namespace Agrishare.Core.Entities
                 HireCost,
                 FuelCost,
                 TransportCost,
+                TransportDistance,
                 AdditionalInformation,
+                TotalVolume,
                 StatusId,
                 Status,
                 DateCreated

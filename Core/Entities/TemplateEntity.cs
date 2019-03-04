@@ -168,8 +168,8 @@ namespace Agrishare.Core.Entities
         public static string FormatCurrency(decimal Amount)
         {
             if (Amount < 0)
-                return "-&dollar;" + Math.Abs(Amount).ToString("N2");
-            return "&dollar;" + Amount.ToString("N2");
+                return "-&#36;" + Math.Abs(Amount).ToString("N2");
+            return "&#36;" + Amount.ToString("N2");
         }
 
         #endregion

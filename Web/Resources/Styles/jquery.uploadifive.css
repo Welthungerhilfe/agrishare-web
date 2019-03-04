@@ -1,0 +1,83 @@
+/*
+UploadiFive
+Copyright (c) 2012 Reactive Apps, Ronnie Garcia
+*/
+
+.uploadifive-button {
+	text-align: center;
+	text-transform: uppercase;
+    border: none;
+    color: #777777;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: #ddd;
+    border: none;
+    font-size: .8em;
+    border-radius: 3px;
+    padding: 2px 10px;
+    cursor: pointer;
+    height: auto !important;
+}
+
+div.media-upload input[type=file] {
+    display: block; 
+}
+
+.uploadifive-button:hover {
+	background-color: #ccc;
+}
+.uploadifive-queue-item {
+    background-color: #222;
+    color: #ddd;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font: 12px Arial, Helvetica, Sans-serif;
+    margin: 10px auto;
+    /*width: 400px;*/
+    padding: 10px;
+}
+div.media-upload div.progress {
+    float: none;
+    width: 100%;
+    height: 3px;
+}
+
+.uploadifive-queue-item .close {
+	background: url('/Resources/Images/Uploadify-Cancel.png') 0 0 no-repeat;
+	display: block;
+	float: right;
+	height: 16px;
+	text-indent: -9999px;
+	width: 16px;
+}
+.uploadifive-queue-item .progress {
+	height: 3px;
+	margin-top: 5px;
+	width: 100%;
+}
+.uploadifive-queue-item .progress-bar {
+	background-color: #0072BC;
+	height: 3px;
+	width: 0;
+}
+
+.uploadifive-preview {
+    overflow: auto;
+}
+
+.uploadifive-preview > div {
+    float: left;
+    width: 25%;
+    padding: 0 5px 5px 0;
+}
+
+.uploadifive-preview > div > div {
+    width: 100%;
+    height: 0;
+    padding-top: 100%;
+    background-color: #ccc;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

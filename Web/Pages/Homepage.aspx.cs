@@ -11,7 +11,7 @@ namespace Agrishare.Web.Pages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Master.Body.Attributes["class"] += " home ";
         }
     }
 }

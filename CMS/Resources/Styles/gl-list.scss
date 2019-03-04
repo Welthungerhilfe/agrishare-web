@@ -102,9 +102,19 @@ gl-list {
 
             row {
                 flex: 1;
+                cursor: pointer;
 
                 small {
                     color: gray;
+                }
+
+                &.blog {
+                    display: flex;
+                    align-items: center;
+
+                    > strong {
+                        flex: 1;
+                    }
                 }
 
                 &.booking {

@@ -20,6 +20,7 @@ namespace Agrishare.Core.Entities
         public string Interest => $"{InterestId}".ExplodeCamelCase();
         public string Gender => $"{GenderId}".ExplodeCamelCase();
         public string Status => $"{StatusId}".ExplodeCamelCase();
+        public string Language => $"{LanguageId}".ExplodeCamelCase();
 
         private List<Role> roles { get; set; }
         public List<Role> Roles
@@ -28,7 +29,7 @@ namespace Agrishare.Core.Entities
             {
                 if (roles == null)
                     roles = RoleList?.Split(',').Where(e => !e.Trim().IsEmpty()).Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true)).ToList();
-                return roles;
+                return roles ?? new List<Role>();
             }
             set
             {
@@ -77,7 +78,7 @@ namespace Agrishare.Core.Entities
             }
         }
 
-        public static List<User> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string StartsWith = "", bool Deleted = false)
+        public static List<User> List(int PageIndex = 0, int PageSize = int.MaxValue, string Sort = "", string Keywords = "", string StartsWith = "", Gender Gender = Entities.Gender.None, int FailedLoginAttempts = 0, bool Deleted = false)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -88,12 +89,18 @@ namespace Agrishare.Core.Entities
 
                 if (!StartsWith.IsEmpty())
                     query = query.Where(o => (o.FirstName + " " + o.LastName).ToLower().StartsWith(Keywords.ToLower()));
+
+                if (Gender != Gender.None)
+                    query = query.Where(o => o.GenderId == Gender);
+
+                if (FailedLoginAttempts > 0)
+                    query = query.Where(o => o.FailedLoginAttempts > 0);
 
                 return query.OrderBy(Sort.Coalesce(DefaultSort)).Skip(PageIndex * PageSize).Take(PageSize).ToList();
             }
         }
 
-        public static int Count(string Keywords = "", string StartsWith = "", bool Deleted = false)
+        public static int Count(string Keywords = "", string StartsWith = "", Gender Gender = Entities.Gender.None, int FailedLoginAttempts = 0, bool Deleted = false)
         {
             using (var ctx = new AgrishareEntities())
             {
@@ -104,6 +111,12 @@ namespace Agrishare.Core.Entities
 
                 if (!StartsWith.IsEmpty())
                     query = query.Where(o => (o.FirstName + " " + o.LastName).ToLower().StartsWith(Keywords.ToLower()));
+
+                if (Gender != Gender.None)
+                    query = query.Where(o => o.GenderId == Gender);
+
+                if (FailedLoginAttempts > 0)
+                    query = query.Where(o => o.FailedLoginAttempts > 0);
 
                 return query.Count();
             }
@@ -167,10 +180,11 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Id,
+                Title,
                 FirstName,
                 LastName,
                 Telephone,
-                Title
+                Language
             };
         }
 
@@ -199,7 +213,9 @@ namespace Agrishare.Core.Entities
                     Email = (NotificationPreferences & (int)Agrishare.Core.Entities.NotificationPreferences.Email) > 0
                 },
                 InterestId,
-                Interest
+                Interest,
+                LanguageId,
+                Language
             };
         }
 
@@ -224,6 +240,8 @@ namespace Agrishare.Core.Entities
                 Interest,
                 StatusId,
                 Status,
+                LanguageId,
+                Language,
                 Roles,
                 DateCreated,
                 LastModified
@@ -270,7 +288,7 @@ namespace Agrishare.Core.Entities
                 VerificationCodeExpiry = DateTime.UtcNow.AddDays(1);
                 Save();
             }
-            var message = $"Your verification code is {VerificationCode}";
+            var message = string.Format(Translations.Translate("Verification Code", LanguageId), VerificationCode);
             return SMS.SendMessage(Telephone, message);
         }
 

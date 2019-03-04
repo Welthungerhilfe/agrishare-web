@@ -15,14 +15,37 @@
 
     <ag-section ag-controller="list">
 
+        <div class="summary-view" ng-show="!list.busy && list.data.length>0 && !list.filter">
+            <div>
+                <strong>{{list.summary.Total}}</strong>
+                <small>Users</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Active}}</strong>
+                <small>Active Users</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Male}}</strong>
+                <small>Male</small>
+            </div>
+            <div>
+                <strong>{{list.summary.Female}}</strong>
+                <small>Female</small>
+            </div>
+            <ul>
+                <li><strong>{{list.summary.Deleted}}</strong> Deleted Users</li>
+                <li><strong>{{list.summary.LockedOut}}</strong> Locked Out Users</li>
+            </ul>
+        </div>
+
         <gl-list gl-controller="list" gl-infinite="list.next()">
             <div ng-repeat="item in list.data">
                 <icon>
                     <i class="material-icons">person</i>
                 </icon>
-                <row>
-                    <strong>{{item.FirstName}} {{item.LastName}}</strong><br/>
-                    <small>{{item.Telephone}}</small>
+                <row ng-click="app.go('/users/detail/'+item.Id+'?'+app.returnUrlQs())">
+                    <strong>{{item.FirstName}} {{item.LastName}}</strong><br />
+                    <small>{{item.Telephone}} &bull; {{item.Language}}</small>
                 </row>
                 <action>
                     <gl-popup-menu gl-position="top right">
@@ -30,7 +53,7 @@
                         <gl-menu-item gl-icon="local_shipping" ng-click="app.go('/listings/list/filter/userid/'+item.Id+'?'+app.returnUrlQs())">Listings</gl-menu-item>
                         <gl-menu-item gl-icon="account_balance_wallet" ng-click="app.go('/bookings/list/filter/userid/'+item.Id+'?'+app.returnUrlQs())">Bookings</gl-menu-item>
                         <gl-menu-item gl-icon="edit" ng-click="app.go('/users/edit/'+item.Id+'?'+app.returnUrlQs())">Edit</gl-menu-item>
-                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/users/delete?id=' + item.Id)">Delete</gl-menu-item>
+                        <gl-menu-item gl-icon="delete" ng-click="list.delete($index, app.apiUrl + '/cms/users/delete?id=' + item.Id)">Delete</gl-menu-item>
                     </gl-popup-menu>
                 </action>
             </div>

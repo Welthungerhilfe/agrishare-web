@@ -20,5 +20,7 @@ namespace Agrishare.API.Models
         public string EmailAddress { get; set; }
         public Gender GenderId { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public Language? LanguageId { get; set; }
+
     }
 }

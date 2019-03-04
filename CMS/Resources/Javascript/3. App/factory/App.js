@@ -19,6 +19,7 @@ agrishareApp.factory('App', function ($location, Utils) {
             { title: "Dashboard", icon: "assessment", url: "#/dashboard" },
             { title: "Listings", icon: "local_shipping", url: "#/listings/list" },
             { title: "Bookings", icon: "account_balance_wallet", url: "#/bookings/list" },
+            { title: "Ledger", icon: "receipt", url: "#/journals/list" },
             { title: "Users", icon: "person", url: "#/users/list" },
             {
                 title: "Deleted", icon: "delete_sweep", submenu: [
@@ -28,6 +29,8 @@ agrishareApp.factory('App', function ($location, Utils) {
             },
             {
                 title: "Admin", icon: "settings", submenu: [
+                    { title: "Blog", url: "#/blogs/list" },
+                    { title: "FAQs", url: "#/faqs/list" },
                     { title: "Log", url: "#/log/list" },
                     { title: "Settings", url: "#/settings/list" },
                     { title: "Templates", url: "#/templates/list" }
@@ -44,6 +47,10 @@ agrishareApp.factory('App', function ($location, Utils) {
 
         returnUrlQs: function () {
             return 'return=' + encodeURIComponent(location.hash);
+        },
+
+        redirect: function (url) {
+            location.href = url;
         },
 
         go: function (url) {

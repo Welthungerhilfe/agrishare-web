@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -28,6 +30,8 @@ namespace Agrishare.Core.Entities
             return new
             {
                 Filename,
+                Name,
+                Extension,
                 Thumb = $"{Config.CDNURL}/{ThumbName}",
                 Zoom = $"{Config.CDNURL}/{ZoomName}"
             };
@@ -103,6 +107,10 @@ namespace Agrishare.Core.Entities
                 bitmap.Save(MapPath(Destination), Codec, encoder);
                 success = true;
             }
+            catch
+            {
+                return false;
+            }
             finally
             {
                 if (stream != null) stream.Dispose();
@@ -160,7 +168,7 @@ namespace Agrishare.Core.Entities
         #region Utils
 
         private static string _cdnAbsolutePath { get; set; }
-        private static string CDNAbsolutePath
+        public static string CDNAbsolutePath
         {
             get
             {
@@ -227,7 +235,7 @@ namespace Agrishare.Core.Entities
             var gb = mb / 1024;
             return $"{Math.Round(gb, 2)}GB";
         }
-
+        
         #endregion
     }
 }

@@ -36,7 +36,16 @@ namespace Agrishare.API.Models
 
         [Required]
         public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public string AdditionalInformation { get; set; }
+
+        public decimal TotalVolume { get; set; }
+
+        public decimal HireCost { get; set; }
+        public decimal FuelCost { get; set; }
+        public decimal TransportCost { get; set; }
+        public decimal TransportDistance { get; set; }
+        public decimal Distance { get; set; }
     }
 }

@@ -19,7 +19,7 @@
                 <icon>
                     <i class="material-icons">person</i>
                 </icon>
-                <row>
+                <row ng-click="app.go('/deleted/users/detail/'+item.Id+'?'+app.returnUrlQs())">
                     <strong>{{item.FirstName}} {{item.LastName}}</strong><br/>
                     <small>{{item.Telephone}}</small>
                 </row>

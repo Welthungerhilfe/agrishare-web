@@ -119,6 +119,9 @@ namespace Agrishare.Core.Entities
 
         public bool Delete()
         {
+            Booking = null;
+            User = null;
+
             if (Id == 0)
                 return false;
 

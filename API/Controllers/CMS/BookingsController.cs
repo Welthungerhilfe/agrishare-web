@@ -25,12 +25,34 @@ namespace Agrishare.API.Controllers.CMS
                     title = $"{user.FirstName} {user.LastName}";
             }
 
+            int bookingsMade = 0, confirmedBookings = 0, paidBookings = 0, completedBookings = 0, declinedBookings = 0, cancelledBookings = 0, incompleteBookings = 0;
+            if (PageIndex == 0)
+            {
+                bookingsMade = Entities.Counter.Count(Event: Entities.Counters.Book);
+                confirmedBookings = Entities.Counter.Count(Event: Entities.Counters.ConfirmBooking);
+                paidBookings = Entities.Counter.Count(Event: Entities.Counters.CompletePayment);
+                completedBookings = Entities.Counter.Count(Event: Entities.Counters.CompleteBooking);
+                declinedBookings = Entities.Counter.Count(Event: Entities.Counters.DeclineBooking);
+                cancelledBookings = Entities.Counter.Count(Event: Entities.Counters.CancelBooking);
+                incompleteBookings = Entities.Counter.Count(Event: Entities.Counters.IncompleteBooking);
+            }
+
             var data = new
             {
                 Count = recordCount,
                 Sort = Entities.Booking.DefaultSort,
                 List = list.Select(e => e.Json()),
-                Title = title
+                Title = title,
+                Summary = new
+                {
+                    BookingsMade = bookingsMade,
+                    ConfirmedBookings = confirmedBookings,
+                    PaidBookings = paidBookings,
+                    CompletedBookings = completedBookings,
+                    DeclinedBookings = declinedBookings,
+                    CancelledBookings = cancelledBookings,
+                    IncompleteBookings = incompleteBookings
+                }
             };
 
             return Success(data);
@@ -42,7 +64,8 @@ namespace Agrishare.API.Controllers.CMS
         {
             var data = new
             {
-                Entity = Entities.Booking.Find(Id: Id).Json()
+                Entity = Entities.Booking.Find(Id: Id).Json(),
+                Transactions = Entities.Transaction.List(BookingId: Id).Select(e => e.Json())
             };
 
             return Success(data);
@@ -62,6 +85,107 @@ namespace Agrishare.API.Controllers.CMS
                 });
 
             return Error();
+        }
+
+        [Route("bookings/transactions/poll")]
+        [AcceptVerbs("GET")]
+        public object PollEcoCash(int BookingId)
+        {
+            var booking = Entities.Booking.Find(Id: BookingId);
+            if (booking == null || booking.UserId != CurrentUser.Id)
+                return Error("Transaction not found");
+
+            var transactions = Entities.Transaction.List(BookingId: booking.Id);
+            foreach (var transaction in transactions)
+                transaction.RequestEcoCashStatus();
+
+            var data = new
+            {
+                Entity = booking.Json(),
+                Transactions = Entities.Transaction.List(BookingId: booking.Id).Select(e => e.Json()),
+                Feedback = $"Finished updating transaction statuses"
+            };
+
+            return Success(data);
+        }
+
+        [Route("bookings/cancel")]
+        [AcceptVerbs("GET")]
+        public object CancelBooking(int Id = 0)
+        {
+            var booking = Entities.Booking.Find(Id: Id);
+            if (booking == null || booking.Id == 0)
+                return Error("Booking not found");
+
+            if (booking.StatusId == Entities.BookingStatus.Complete)
+                return Error("You can not cancel a completed booking");
+
+            if (booking.StatusId == Entities.BookingStatus.InProgress)
+                return Error("You can not cancel a paid booking that is not complete");
+
+            booking.StatusId = Entities.BookingStatus.Cancelled;
+            if (booking.Save())
+            {
+                var transactions = Entities.Transaction.List(BookingId: booking.Id);
+                foreach (var transaction in transactions)
+                    transaction.RequestEcoCashRefund();
+
+                var notifications = Entities.Notification.List(BookingId: booking.Id, Type: Entities.NotificationType.BookingCancelled);
+                foreach (var notification in notifications)
+                {
+                    notification.StatusId = Entities.NotificationStatus.Complete;
+                    notification.Save();
+                }
+
+                new Entities.Notification
+                {
+                    Booking = booking,
+                    GroupId = Entities.NotificationGroup.Seeking,
+                    TypeId = Entities.NotificationType.BookingCancelled,
+                    User = Entities.User.Find(Id: booking.UserId)
+                }.Save(Notify: true);
+
+                new Entities.Notification
+                {
+                    Booking = booking,
+                    GroupId = Entities.NotificationGroup.Offering,
+                    TypeId = Entities.NotificationType.BookingCancelled,
+                    User = Entities.User.Find(Id: booking.Listing.UserId)
+                }.Save(Notify: false);
+
+                Entities.Counter.Hit(booking.UserId, Entities.Counters.CancelBooking, booking.Service.CategoryId);
+
+                var data = new
+                {
+                    Entity = booking.Json(),
+                    Transactions = Entities.Transaction.List(BookingId: booking.Id).Select(e => e.Json()),
+                    Feedback = $"Booking was cancelled"
+                };
+
+                return Success(data);
+            }
+
+            return Error("An unknown error occurred");
+        }
+
+        [Route("bookings/transactions/refund")]
+        [AcceptVerbs("GET")]
+        public object RefundTransaction(int Id = 0)
+        {
+            var transaction = Entities.Transaction.Find(Id: Id);
+
+            if (transaction.RequestEcoCashRefund())
+            {
+                var data = new
+                {
+                    Entity = Entities.Booking.Find(Id: Id).Json(),
+                    Transactions = Entities.Transaction.List(BookingId: Id).Select(e => e.Json())
+                };
+
+                return Success(data);
+            }
+            else
+                return Error("Unable to process refund");
         }
     }
 }

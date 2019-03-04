@@ -1,1 +1,0 @@
-.gl-checkbox>div{display:flex;flex-direction:column;max-height:200px;overflow:auto;align-items:flex-start;padding:8px}.gl-checkbox>div>div{display:flex;align-items:center;padding:3px;cursor:pointer;border-radius:2px;transition:all .4s ease;width:100%}.gl-checkbox>div>div:hover{background:#ddd}.gl-checkbox>div>div>i{margin-right:10px}
