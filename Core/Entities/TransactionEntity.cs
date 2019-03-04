@@ -16,6 +16,7 @@ namespace Agrishare.Core.Entities
 {
     public partial class Transaction : IEntity
     {
+        public static bool LivePayments => Convert.ToBoolean(Config.Find(Key: "Live Payments")?.Value ?? "True");
         public static decimal AgriShareCommission => Convert.ToDecimal(Config.Find(Key: "AgriShare Commission").Value);
 
         public static string DefaultSort = "DateCreated DESC";
@@ -186,6 +187,15 @@ namespace Agrishare.Core.Entities
         {
             Save();
 
+            if (!LivePayments)
+            {
+                ServerReference = "DEMO-" + Guid.NewGuid().ToString();
+                StatusId = TransactionStatus.PendingSubscriberValidation;
+                Save();
+
+                return true;
+            }
+
             var resourceUri = $"{EcoCashUrl}transactions/amount";
             
             var json = JsonConvert.SerializeObject(new
@@ -275,57 +285,66 @@ namespace Agrishare.Core.Entities
         {
             var previousStatusId = StatusId;
 
-            var resourceUri = $"{EcoCashUrl}{SanitiseMobileNumber(BookingUser.Telephone)}/transactions/amount/{ClientCorrelator}";
-
-            var client = new RestClient(resourceUri)
+            if (LivePayments)
             {
-                Authenticator = new HttpBasicAuthenticator(EcoCashUsername, EcoCashPassword)
-            };
+                var resourceUri = $"{EcoCashUrl}{SanitiseMobileNumber(BookingUser.Telephone)}/transactions/amount/{ClientCorrelator}";
 
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Cache-Control", "no-cache");
-            request.AddHeader("Content-Type", "application/json");
-            var response = client.Execute<dynamic>(request);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                try
+                var client = new RestClient(resourceUri)
                 {
-                    Error = response.Data["text"];
-                }
-                catch { }
+                    Authenticator = new HttpBasicAuthenticator(EcoCashUsername, EcoCashPassword)
+                };
 
-                try
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("Cache-Control", "no-cache");
+                request.AddHeader("Content-Type", "application/json");
+                var response = client.Execute<dynamic>(request);
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    var status = response.Data["transactionOperationStatus"];
-                    if (status == "COMPLETED")
-                        StatusId = TransactionStatus.Completed;
-                    else if (status == "PENDING SUBSCRIBER VALIDATION")
-                        StatusId = TransactionStatus.PendingSubscriberValidation;
-                    else if (status == "TRANSACTION TIMEDOUT")
-                        StatusId = TransactionStatus.TransactionTimedout;
-                    else
-                        StatusId = TransactionStatus.Failed;
-
-                    if (StatusId == TransactionStatus.Completed)
+                    try
                     {
-                        if (EcoCashLog)
-                            Log += Environment.NewLine + JsonConvert.SerializeObject(response);
-
-                        ServerReference = response.Data["serverReferenceCode"];
-                        EcoCashReference = response.Data["ecocashReference"];
+                        Error = response.Data["text"];
                     }
-                    
+                    catch { }
+
+                    try
+                    {
+                        var status = response.Data["transactionOperationStatus"];
+                        if (status == "COMPLETED")
+                            StatusId = TransactionStatus.Completed;
+                        else if (status == "PENDING SUBSCRIBER VALIDATION")
+                            StatusId = TransactionStatus.PendingSubscriberValidation;
+                        else if (status == "TRANSACTION TIMEDOUT")
+                            StatusId = TransactionStatus.TransactionTimedout;
+                        else
+                            StatusId = TransactionStatus.Failed;
+
+                        if (StatusId == TransactionStatus.Completed)
+                        {
+                            if (EcoCashLog)
+                                Log += Environment.NewLine + JsonConvert.SerializeObject(response);
+
+                            ServerReference = response.Data["serverReferenceCode"];
+                            EcoCashReference = response.Data["ecocashReference"];
+                        }
+
+                    }
+                    catch
+                    {
+                        StatusId = TransactionStatus.Error;
+                        Save();
+                        return;
+                    }
                 }
-                catch
-                {
+                else
                     StatusId = TransactionStatus.Error;
-                    Save();
-                    return;
-                }
+
             }
             else
-                StatusId = TransactionStatus.Error;
+            {
+                StatusId = TransactionStatus.Completed;
+                EcoCashReference = "ECO-" + Guid.NewGuid().ToString();
+            }
 
             Save();
 
@@ -388,6 +407,30 @@ namespace Agrishare.Core.Entities
             Id = 0;
             ClientCorrelator = Guid.NewGuid().ToString();
             Log = string.Empty;
+
+            if (!LivePayments)
+            {
+                StatusId = TransactionStatus.Completed;
+
+                Amount *= -1;
+
+                var originalTransaction = Find(Id: originalId);
+                originalTransaction.StatusId = TransactionStatus.Refunded;
+                originalTransaction.Save();
+
+                new Journal
+                {
+                    Amount = Amount,
+                    BookingId = BookingId,
+                    EcoCashReference = EcoCashReference,
+                    Reconciled = false,
+                    Title = $"Payment refunded to {BookingUser.Name} {BookingUser.Telephone}",
+                    TypeId = JournalType.Refund,
+                    UserId = BookingUser.Id
+                }.Save();
+
+                return true;
+            }
 
             var resourceUri = $"{EcoCashUrl}transactions/refund";
 
