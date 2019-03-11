@@ -50,6 +50,8 @@ agrishareApp.controller('FormViewController', function ($attrs, $controller, $ht
             headers: App.authorizationHeader()
         })
             .then(function (response) {
+                form.data = response.data;
+                form.entity = response.data.Entity;
                 if (response.data.DownloadUrl)
                     location.href = response.data.DownloadUrl;
                 var feedback = response.data.Feedback ? response.data.Feedback : "Details saved";

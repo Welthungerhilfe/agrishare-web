@@ -145,6 +145,7 @@
     <Compile Include="Controllers\CMS\ListingsController.cs" />
     <Compile Include="Controllers\CMS\TemplatesController.cs" />
     <Compile Include="Controllers\CMS\FaqsController.cs" />
+    <Compile Include="Controllers\CMS\SmsController.cs" />
     <Compile Include="Controllers\CMS\UsersController.cs" />
     <Compile Include="Controllers\App\NotificationsController.cs" />
     <Compile Include="Controllers\App\RatingsController.cs" />

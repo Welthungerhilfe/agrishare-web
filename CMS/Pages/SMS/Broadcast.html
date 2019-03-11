@@ -1,0 +1,28 @@
+﻿
+<div ng-controller="FormViewController" ag-title="Broadcast SMS" ag-selected-url="#/sms/broadcast" ag-api-route="/cms/sms/">
+
+    <ag-title-bar></ag-title-bar>
+
+    <ag-section ag-controller="form">
+
+        <div ng-if="form.entity.Sent" class="feedback">
+            <i class="material-icons md-48">sentiment_very_satisfied</i><span>SMS broadcast sent</span>
+        </div>
+
+        <form ng-if="!form.entity.Sent">
+
+            <h2>Message</h2>
+            <p>Your message will be broadcast to {{form.entity.RecipientCount}} recipients.</p>            
+            <gl-textbox gl-label="Message" ng-model="form.entity.Message" gl-required="true"></gl-textbox>
+
+        </form>
+
+    </ag-section>
+
+    <ag-status-bar>
+
+        <gl-icon-button ng-click="form.save()" class="accent" ng-disabled="EditForm.$invalid || form.busy" ng-if="form.entity && !form.entity.Sent">Save</gl-icon-button>
+
+    </ag-status-bar>
+
+</div>

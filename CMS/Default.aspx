@@ -27,7 +27,7 @@
                 <a class="material-icons" ng-click="app.menuVisible=false" ng-if="app.menuVisible">close</a>
             </h1>
             <ul ng-class="{'visible': app.menuVisible}">
-                <li ng-repeat="item in app.menu" ng-class="{'selected': item.url==app.selectedUrl, 'active': item.active}">
+                <li ng-repeat="item in app.menu" ng-class="{'selected': item.url==app.selectedUrl, 'active': item.active}" ng-if="app.hasRoles(item.roles)">
                     <a ng-href="{{item.url}}" ng-click="item.active=!item.active">
                         <i class="material-icons">{{item.icon}}</i>
                         <span>{{item.title}}</span>

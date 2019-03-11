@@ -46,13 +46,15 @@ namespace Agrishare.CMS
             Page.Header.Controls.Add(new Literal { Text = $@"<script type=""text/javascript"" src=""/script-{version}.js""></script>" });
 
             Body.Attributes.Add("ag-api-url", Config.APIURL);
-            Body.Attributes.Add("ng-init", $"app.user={CurrentUser.ProfileJsonString()}");
+            Body.Attributes.Add("ng-init", $"app.user={CurrentUser.CmsJsonString()}");
 
             base.OnPreRender(e);
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var userRoles = CurrentUser.Roles ?? new List<Role>();
+
             if (Request.QueryString["logout"] == "true")
             {
                 CurrentUser.AuthToken = string.Empty;
@@ -67,7 +69,7 @@ namespace Agrishare.CMS
 
                 Response.Redirect("/login.aspx");
             }
-            else if (!CurrentUser.Roles?.Contains(Role.Administrator) ?? true)
+            else if (!userRoles.Contains(Role.Administrator) && !userRoles.Contains(Role.Dashboard))
                 Response.Redirect("/login.aspx");
         }
 

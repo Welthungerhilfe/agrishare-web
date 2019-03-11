@@ -23,7 +23,7 @@
             <gl-textbox gl-label="Telephone" ng-model="form.entity.Telephone" gl-required="true"></gl-textbox>
 
             <h2>Access Control</h2>
-            <gl-textbox gl-label="Password" ng-model="form.entity.ClearPassword" ng-if="form.entity.Id==0" gl-type="password"></gl-textbox>
+            <gl-textbox gl-label="PIN" ng-model="form.entity.ClearPassword" ng-if="form.entity.Id==0" gl-type="password"></gl-textbox>
             <gl-checkbox-list gl-label="Roles" ng-model="form.entity.Roles" gl-source="form.data.Roles" gl-required="true" gl-selection="Id"></gl-checkbox-list>
 
         </form>

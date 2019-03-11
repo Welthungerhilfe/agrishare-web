@@ -8,7 +8,7 @@ using Entities = Agrishare.Core.Entities;
 
 namespace Agrishare.API.Controllers.CMS
 {
-    [@Authorize(Roles="Administrator")]
+    [@Authorize(Roles="Administrator, Dashboard")]
     [RoutePrefix("cms")]
     public class CmsDashboardController : BaseApiController
     {

@@ -85,7 +85,11 @@ namespace Agrishare.API.Controllers.CMS
                 User.DateOfBirth = User.DateOfBirth.Value.AddMinutes(UTCOffset);
 
             if (User.Id > 0)
-                User.Password = Entities.User.Find(Id: User.Id).Password;
+            {
+                var u = Entities.User.Find(Id: User.Id);
+                User.Password = u.Password;
+                User.Salt = u.Salt;
+            }
 
             if (User.Save())
                 return Success(new
