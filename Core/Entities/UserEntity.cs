@@ -29,12 +29,11 @@ namespace Agrishare.Core.Entities
             {
                 if (roles == null)
                     roles = RoleList?.Split(',').Where(e => !e.Trim().IsEmpty()).Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true)).ToList();
-                return roles ?? new List<Role>();
+                return roles;
             }
             set
             {
                 roles = value;
-                RoleList = string.Join(",", roles);
             }
         }
 
@@ -48,6 +47,10 @@ namespace Agrishare.Core.Entities
             if (!AuthToken.IsEmpty())
             {
                 var item = Cache.Instance.Get<User>(CacheKey(AuthToken));
+
+                // HACK to remove duplicates from roles list
+                item.Roles = item.Roles.Distinct().ToList();
+
                 if (item != null)
                     return item;
             }
@@ -132,6 +135,9 @@ namespace Agrishare.Core.Entities
                 Password = Utils.Encryption.GetSHAHash(ClearPassword, Salt);
             }
 
+            if (Roles != null)
+                RoleList = string.Join(",", Roles);
+
             if (Id == 0)
                 success = Add();
             else
@@ -191,6 +197,23 @@ namespace Agrishare.Core.Entities
         public string ProfileJsonString()
         {
             return JsonConvert.SerializeObject(ProfileJson(), Formatting.None);
+        }
+
+        public string CmsJsonString()
+        {
+            return JsonConvert.SerializeObject(CmsJson(), Formatting.None);
+        }
+
+        public object CmsJson()
+        {
+            return new
+            {
+                Id,
+                FirstName,
+                LastName,
+                AuthToken,
+                Roles = Roles.Select(e => $"{e}".ExplodeCamelCase()).ToList()
+            };
         }
 
         public object ProfileJson()
@@ -308,4 +331,6 @@ namespace Agrishare.Core.Entities
 
         #endregion
     }
+
+
 }

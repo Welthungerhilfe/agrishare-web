@@ -16,24 +16,25 @@ agrishareApp.factory('App', function ($location, Utils) {
         returnUrl: '',
 
         menu: [
-            { title: "Dashboard", icon: "assessment", url: "#/dashboard" },
-            { title: "Listings", icon: "local_shipping", url: "#/listings/list" },
-            { title: "Bookings", icon: "account_balance_wallet", url: "#/bookings/list" },
-            { title: "Ledger", icon: "receipt", url: "#/journals/list" },
-            { title: "Users", icon: "person", url: "#/users/list" },
+            { title: "Dashboard", icon: "assessment", url: "#/dashboard", roles: 'Administrator,Dashboard' },
+            { title: "Listings", icon: "local_shipping", url: "#/listings/list", roles: 'Administrator' },
+            { title: "Bookings", icon: "account_balance_wallet", url: "#/bookings/list", roles: 'Administrator' },
+            { title: "Ledger", icon: "receipt", url: "#/journals/list", roles: 'Administrator' },
+            { title: "Users", icon: "person", url: "#/users/list", roles: 'Administrator' },
             {
-                title: "Deleted", icon: "delete_sweep", submenu: [
-                    { title: "Listings", url: "#/deleted/listings/list" },
-                    { title: "Users", url: "#/deleted/users/list" }
+                title: "Deleted", icon: "delete_sweep", roles: 'Administrator', submenu: [
+                    { title: "Listings", url: "#/deleted/listings/list", roles: 'Administrator' },
+                    { title: "Users", url: "#/deleted/users/list", roles: 'Administrator' }
                 ]
             },
             {
-                title: "Admin", icon: "settings", submenu: [
-                    { title: "Blog", url: "#/blogs/list" },
-                    { title: "FAQs", url: "#/faqs/list" },
-                    { title: "Log", url: "#/log/list" },
-                    { title: "Settings", url: "#/settings/list" },
-                    { title: "Templates", url: "#/templates/list" }
+                title: "Admin", icon: "settings", roles: 'Administrator', submenu: [
+                    { title: "Blog", url: "#/blogs/list", roles: 'Administrator' },
+                    { title: "Broadcast SMS", url: "#/sms/broadcast", roles: 'Administrator' },
+                    { title: "FAQs", url: "#/faqs/list", roles: 'Administrator' },
+                    { title: "Log", url: "#/log/list", roles: 'Administrator' },
+                    { title: "Settings", url: "#/settings/list", roles: 'Administrator' },
+                    { title: "Templates", url: "#/templates/list", roles: 'Administrator' }
                 ]
             }
         ],
@@ -43,6 +44,16 @@ agrishareApp.factory('App', function ($location, Utils) {
                 "Authorization": App.user.AuthToken,
                 'UTCOffset': moment().utcOffset()
             };
+        },
+
+        hasRole: function (role) {
+            return this.user.Roles.includes(role);
+        },
+
+        hasRoles: function (roles) {
+            return this.user.Roles.filter(function (n) {
+                return roles.indexOf(n) !== -1;
+            }).length > 0;
         },
 
         returnUrlQs: function () {

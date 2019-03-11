@@ -2,7 +2,7 @@
 <div ng-controller="DashboardViewController" ag-title="Dashboard" ag-selected-url="#/dashboard" ag-api-route="/cms/dashboard/summary">
 
     <ag-title-bar>
-        <gl-icon-button gl-icon="receipt" ng-click="app.redirect(app.apiUrl + '/cms/settlement/report')">Download Settlement Report</gl-icon-button>
+        <gl-icon-button gl-icon="receipt" ng-click="app.redirect(app.apiUrl + '/cms/settlement/report')" ng-if="app.hasRole('Administrator')">Download Settlement Report</gl-icon-button>
 
     </ag-title-bar>
 

@@ -3,6 +3,7 @@
     public enum Role: int
     {
         Administrator = 1,
-        User = 2
+        User = 2,
+        Dashboard = 3
     }
 }

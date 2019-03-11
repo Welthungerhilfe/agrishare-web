@@ -95,7 +95,45 @@ namespace Agrishare.Core.Utils
                 return false;
             }
 
-            
+
+        }
+
+        public static bool SendMessages(List<string> Recipients, string Message)
+        {
+            var recipientList = String.Join(",", Recipients);
+
+            if (!Live)
+            {
+                Entities.Log.Debug("SMS.SendMessages", $"To: {recipientList} Message: {Message}");
+                return true;
+            }
+
+            try
+            {
+                var url = $"https://www.txt.co.zw/Remote/SendMessage";
+                var client = new RestClient(url);
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("Cache-Control", "no-cache");
+                request.AddParameter("undefined", $"username={Username}&Recipients={recipientList}&Body={Message}&sending_number={Sender}", ParameterType.RequestBody);
+
+                var response = client.Execute(request);
+
+                if (Log)
+                    Entities.Log.Debug("SMS.SendMessages", url + Environment.NewLine + JsonConvert.SerializeObject(response));
+
+                if (response.Content.StartsWith("SUCCESS"))
+                    return true;
+
+                Entities.Log.Error("SMS.SendMessages", JsonConvert.SerializeObject(response));
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Entities.Log.Error("SMS.SendMessages", ex);
+                return false;
+            }
+
+
         }
     }
 }

@@ -73,7 +73,7 @@ namespace Agrishare.CMS
         {
             var user = Core.Entities.User.Find(Telephone: ResetMobileNumber.Text);
 
-            if (user.Id > 0 && user.VerificationCode == ResetSmsCode.Text && user.VerificationCodeExpiry <= DateTime.Now)
+            if (user.Id > 0 && user.VerificationCode == ResetSmsCode.Text && user.VerificationCodeExpiry >= DateTime.Now)
             {
                 user.ClearPassword = ResetNewPin.Text;
                 user.FailedLoginAttempts = 0;

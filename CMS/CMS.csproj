@@ -99,6 +99,7 @@
     <Content Include="Pages\Login.html" />
     <Content Include="Pages\Log\Detail.html" />
     <Content Include="Pages\Log\List.html" />
+    <Content Include="Pages\SMS\Broadcast.html" />
     <Content Include="Pages\Templates\Detail.html" />
     <Content Include="Pages\Templates\Edit.html" />
     <Content Include="Pages\Templates\List.html" />
