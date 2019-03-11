@@ -62,14 +62,25 @@ namespace Agrishare.API.Controllers.App
             user.RoleList = $"{Entities.Role.User}";
             user.NotificationPreferences = (int)Entities.NotificationPreferences.PushNotifications + (int)Entities.NotificationPreferences.SMS;
             user.StatusId = Entities.UserStatus.Pending;
+
+            if (!Entities.User.VerificationRequired)
+            {
+                user.StatusId = UserStatus.Verified;
+                if (user.AuthToken.IsEmpty())
+                    user.AuthToken = Guid.NewGuid().ToString();
+            }
+
             if (user.Save())
             {
                 Entities.Counter.Hit(CurrentUser.Id, Entities.Counters.Register);
 
-                if (!user.SendVerificationCode())
+                if (Entities.User.VerificationRequired)
                 {
-                    user.Delete();
-                    return Error("Unable to send verification code - please try again");
+                    if (!user.SendVerificationCode())
+                    {
+                        user.Delete();
+                        return Error("Unable to send verification code - please try again");
+                    }
                 }
 
                 return Success(new

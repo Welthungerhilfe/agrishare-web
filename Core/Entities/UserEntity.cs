@@ -12,6 +12,8 @@ namespace Agrishare.Core.Entities
 {
     public partial class User : IEntity
     {
+        public static bool VerificationRequired => Convert.ToBoolean(Config.Find(Key: "User Verification Required")?.Value ?? "True");
+
         public static string AuthCookieName = "agrishare";
         public static string DefaultSort = "FirstName";
         public string FullName => $"{FirstName} {LastName}".Trim();
