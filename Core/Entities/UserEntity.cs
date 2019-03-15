@@ -29,8 +29,10 @@ namespace Agrishare.Core.Entities
         {
             get
             {
-                if (roles == null)
+                if (roles == null || roles.Count == 0)
                     roles = RoleList?.Split(',').Where(e => !e.Trim().IsEmpty()).Select(e => (Role)Enum.Parse(typeof(Role), e.Trim(), true)).ToList();
+                if (roles == null)
+                    roles = new List<Role>();
                 return roles;
             }
             set
@@ -50,11 +52,12 @@ namespace Agrishare.Core.Entities
             {
                 var item = Cache.Instance.Get<User>(CacheKey(AuthToken));
 
-                // HACK to remove duplicates from roles list
-                item.Roles = item.Roles.Distinct().ToList();
-
                 if (item != null)
+                {
+                    // HACK to remove duplicates from roles list
+                    item.Roles = item.Roles.Distinct().ToList();
                     return item;
+                }
             }
 
             if (Id == 0 && EmailAddress.IsEmpty() && Telephone.IsEmpty() && AuthToken.IsEmpty())
